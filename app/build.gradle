@@ -34,10 +34,13 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 dependencies {
     implementation 'com.github.SimpleMobileTools:Simple-Commons:14033f9b50'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 }
