@@ -6,6 +6,7 @@ import android.inputmethodservice.KeyboardView
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
+import com.simplemobiletools.commons.extensions.performHapticFeedback
 import com.simplemobiletools.keyboard.R
 
 // based on https://www.androidauthority.com/lets-build-custom-keyboard-android-832362/
@@ -56,6 +57,7 @@ class SimpleKeyboardIME : InputMethodService(), KeyboardView.OnKeyboardActionLis
                 }
             }
         }
+        keyboardView?.performHapticFeedback()
     }
 
     override fun onText(text: CharSequence?) {}
