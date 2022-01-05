@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <input-method xmlns:android="http://schemas.android.com/apk/res/android"
     android:icon="@mipmap/ic_launcher"
-    android:settingsActivity="com.simplemobiletools.keyboard.activities.SettingsActivity"
-    android:supportsSwitchingToNextInputMethod="true">
+    android:settingsActivity="com.simplemobiletools.keyboard.activities.SettingsActivity">
 
-    <subtype
-        android:imeSubtypeMode="Keyboard"
-        android:label="english" />
+    <subtype android:imeSubtypeMode="Keyboard" />
 
 </input-method>

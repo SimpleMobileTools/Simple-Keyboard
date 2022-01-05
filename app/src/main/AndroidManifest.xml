@@ -24,7 +24,7 @@
         <activity android:name=".activities.MainActivity" />
 
         <service
-            android:name=".helpers.SimpleKeyboardIME"
+            android:name=".services.SimpleKeyboardIME"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <meta-data
