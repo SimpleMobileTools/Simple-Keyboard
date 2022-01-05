@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Simple Keyboard</string>
     <string name="app_launcher_name">Keyboard</string>
+    <string name="redirection_note">Please enable Simple Keyboard on the next screen, to make it an available keyboard. Press \'Back\' once enabled.</string>
 </resources>
