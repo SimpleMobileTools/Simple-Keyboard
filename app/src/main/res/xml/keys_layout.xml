@@ -8,45 +8,6 @@
     android:verticalGap="3px">
     <Row>
         <Key
-            android:codes="49"
-            android:keyEdgeFlags="left"
-            android:keyLabel="1" />
-        <Key
-            android:codes="50"
-            android:keyLabel="2" />
-        <Key
-            android:codes="51"
-            android:keyLabel="3" />
-        <Key
-            android:codes="52"
-            android:keyLabel="4" />
-        <Key
-            android:codes="53"
-            android:keyLabel="5" />
-        <Key
-            android:codes="54"
-            android:keyLabel="6" />
-        <Key
-            android:codes="55"
-            android:keyLabel="7" />
-        <Key
-            android:codes="56"
-            android:keyLabel="8" />
-        <Key
-            android:codes="57"
-            android:keyLabel="9" />
-        <Key
-            android:codes="48"
-            android:keyLabel="0" />
-        <Key
-            android:codes="-5"
-            android:isRepeatable="true"
-            android:keyWidth="20%p"
-            android:keyEdgeFlags="right"
-            android:keyLabel="DEL" />
-    </Row>
-    <Row>
-        <Key
             android:codes="113"
             android:keyEdgeFlags="left"
             android:keyLabel="q" />
@@ -108,14 +69,11 @@
         <Key
             android:codes="108"
             android:keyLabel="l" />
-        <Key
-            android:codes="35,64"
-            android:keyEdgeFlags="right"
-            android:keyLabel="\# \@" />
     </Row>
     <Row>
         <Key
             android:codes="-1"
+            android:keyWidth="15%p"
             android:keyEdgeFlags="left"
             android:keyLabel="CAPS" />
         <Key
@@ -140,12 +98,12 @@
             android:codes="109"
             android:keyLabel="m" />
         <Key
-            android:codes="46"
-            android:keyLabel="." />
-        <Key
-            android:codes="63,33,58"
+            android:codes="-5"
+            android:iconPreview="@null"
+            android:isRepeatable="true"
+            android:keyWidth="15%p"
             android:keyEdgeFlags="right"
-            android:keyLabel="\? ! :" />
+            android:keyIcon="@drawable/ic_arrow_left_vector" />
     </Row>
     <Row android:rowEdgeFlags="bottom">
         <Key
@@ -154,14 +112,14 @@
             android:keyEdgeFlags="left"
             android:keyLabel="," />
         <Key
-            android:codes="47"
-            android:keyWidth="10%p"
-            android:keyLabel="/" />
-        <Key
             android:codes="32"
+            android:iconPreview="@null"
             android:isRepeatable="true"
             android:keyWidth="60%p"
-            android:keyLabel="SPACE" />
+            android:keyLabel="" />
+        <Key
+            android:codes="46"
+            android:keyLabel="." />
         <Key
             android:codes="-4"
             android:keyWidth="20%p"

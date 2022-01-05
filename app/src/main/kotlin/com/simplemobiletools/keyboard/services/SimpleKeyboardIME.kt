@@ -38,7 +38,6 @@ class SimpleKeyboardIME : InputMethodService(), KeyboardView.OnKeyboardActionLis
                     } else {
                         inputConnection.commitText("", 1)
                     }
-                    caps = !caps
                     keyboard!!.isShifted = caps
                     keyboardView!!.invalidateAllKeys()
                 }
