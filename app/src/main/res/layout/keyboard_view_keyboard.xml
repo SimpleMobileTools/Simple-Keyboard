@@ -1,7 +1,7 @@
-<android.inputmethodservice.KeyboardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.simplemobiletools.keyboard.views.MyKeyboardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/keyboard_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentBottom="true"
     android:background="@color/default_background_color"
-    android:keyPreviewLayout="@layout/keyboard_preview" />
+    android:keyPreviewLayout="@layout/keyboard_key_preview" />

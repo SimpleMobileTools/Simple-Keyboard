@@ -2,24 +2,24 @@ package com.simplemobiletools.keyboard.services
 
 import android.inputmethodservice.InputMethodService
 import android.inputmethodservice.Keyboard
-import android.inputmethodservice.KeyboardView
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
 import com.simplemobiletools.commons.extensions.performHapticFeedback
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.views.MyKeyboardView
 
 // based on https://www.androidauthority.com/lets-build-custom-keyboard-android-832362/
-class SimpleKeyboardIME : InputMethodService(), KeyboardView.OnKeyboardActionListener {
+class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionListener {
     private var keyboard: Keyboard? = null
-    private var keyboardView: KeyboardView? = null
+    private var keyboardView: MyKeyboardView? = null
     private var caps = false
 
     override fun onCreateInputView(): View {
-        keyboardView = layoutInflater.inflate(R.layout.keyboard_view, null) as KeyboardView
+        keyboardView = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null) as MyKeyboardView
         keyboard = Keyboard(this, R.xml.keys_layout)
         keyboardView!!.keyboard = keyboard
-        keyboardView!!.setOnKeyboardActionListener(this)
+        keyboardView!!.onKeyboardActionListener = this
         return keyboardView!!
     }
 

@@ -2,4 +2,34 @@
 
     <style name="AppTheme" parent="AppTheme.Base" />
 
+    <declare-styleable name="KeyboardView">
+        <attr name="keyboardViewStyle" format="reference" />
+        <!-- Image for the key. This image needs to be a StateListDrawable, with the following
+             possible states: normal, pressed, checkable, checkable+pressed, checkable+checked,
+             checkable+checked+pressed. -->
+        <attr name="keyBackground" format="reference" />
+        <!-- Size of the text for character keys. -->
+        <attr name="keyTextSize" format="dimension" />
+        <!-- Size of the text for custom keys with some text and no icon. -->
+        <attr name="labelTextSize" format="dimension" />
+        <!-- Color to use for the label in a key. -->
+        <attr name="keyTextColor" format="color" />
+        <!-- Layout resource for key press feedback. -->
+        <attr name="keyPreviewLayout" format="reference" />
+        <!-- Vertical offset of the key press feedback from the key. -->
+        <attr name="keyPreviewOffset" format="dimension" />
+        <!-- Height of the key press feedback popup. -->
+        <attr name="keyPreviewHeight" format="dimension" />
+        <!-- Amount to offset the touch Y coordinate by, for bias correction. -->
+        <attr name="verticalCorrection" format="dimension" />
+        <!-- Layout resource for popup keyboards. -->
+        <attr name="popupLayout" format="reference" />
+        <attr name="shadowColor" format="color" />
+        <!-- Horizontal offset of the text shadow. -->
+        <attr name="shadowDx" format="dimension" />
+        <!-- Vertical offset of the text shadow. -->
+        <attr name="shadowDy" format="dimension" />
+        <!-- Blur radius of the text shadow. -->
+        <attr name="shadowRadius" format="dimension" />
+    </declare-styleable>
 </resources>
