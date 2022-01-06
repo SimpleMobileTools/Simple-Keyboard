@@ -2,12 +2,10 @@ package com.simplemobiletools.keyboard.views
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.*
 import android.graphics.Paint.Align
 import android.graphics.drawable.Drawable
 import android.inputmethodservice.Keyboard
-import android.inputmethodservice.KeyboardView
 import android.media.AudioManager
 import android.os.Handler
 import android.os.Message
@@ -19,8 +17,6 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.widget.PopupWindow
 import android.widget.TextView
-import com.simplemobiletools.commons.extensions.getResolution
-import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.keyboard.R
 import java.util.*
 
