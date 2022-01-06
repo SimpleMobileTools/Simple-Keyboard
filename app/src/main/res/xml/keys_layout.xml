@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:horizontalGap="3px"
-    android:keyWidth="10%p"
+    android:keyWidth="10%"
     android:keyHeight="60dp"
     android:keyBackground="@color/color_primary_dark"
     android:keyTextColor="@color/color_accent"
@@ -43,6 +42,7 @@
     <Row>
         <Key
             android:codes="97"
+            android:horizontalGap="5%"
             android:keyEdgeFlags="left"
             android:keyLabel="a" />
         <Key
