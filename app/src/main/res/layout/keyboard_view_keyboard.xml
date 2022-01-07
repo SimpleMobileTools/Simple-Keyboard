@@ -1,8 +1,7 @@
 <com.simplemobiletools.keyboard.views.MyKeyboardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/keyboard_view"
+    style="@style/Widget.KeyboardView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentBottom="true"
-    android:background="@color/default_background_color"
-    style="@style/Widget.KeyboardView"
-    android:keyPreviewLayout="@layout/keyboard_key_preview" />
+    android:background="@color/md_grey_800_dark" />
