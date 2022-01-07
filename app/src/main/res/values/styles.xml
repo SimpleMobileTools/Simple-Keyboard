@@ -21,7 +21,7 @@
         <item name="shadowRadius">2.75</item>
     </style>
 
-    <declare-styleable name="KeyboardView">
+    <declare-styleable name="MyKeyboardView">
         <attr name="keyboardViewStyle" format="reference" />
         <!-- Image for the key. This image needs to be a StateListDrawable, with the following
              possible states: normal, pressed, checkable, checkable+pressed, checkable+checked,

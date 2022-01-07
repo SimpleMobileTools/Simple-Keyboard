@@ -35,12 +35,7 @@ import java.util.*
  * @attr ref android.R.styleable#KeyboardView_popupLayout
  *
  */
-class MyKeyboardView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet?,
-    defStyleAttr: Int = R.attr.keyboardViewStyle,
-    defStyleRes: Int = 0
-) :
+class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int = R.attr.keyboardViewStyle, defStyleRes: Int = 0) :
     View(context, attrs, defStyleAttr, defStyleRes), View.OnClickListener {
 
     /**
@@ -249,7 +244,7 @@ class MyKeyboardView @JvmOverloads constructor(
     }
 
     init {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.KeyboardView, defStyleAttr, defStyleRes)
+        val a = context.obtainStyledAttributes(attrs, R.styleable.MyKeyboardView, defStyleAttr, defStyleRes)
         val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         var previewLayout = 0
         val keyTextSize = 0
@@ -257,21 +252,20 @@ class MyKeyboardView @JvmOverloads constructor(
         for (i in 0 until n) {
             val attr = a.getIndex(i)
             when (attr) {
-                R.styleable.KeyboardView_keyBackground -> mKeyBackground = a.getDrawable(attr)
-                R.styleable.KeyboardView_verticalCorrection -> mVerticalCorrection = a.getDimensionPixelOffset(attr, 0)
-                R.styleable.KeyboardView_keyPreviewLayout -> previewLayout = a.getResourceId(attr, 0)
-                R.styleable.KeyboardView_keyPreviewOffset -> mPreviewOffset = a.getDimensionPixelOffset(attr, 0)
-                R.styleable.KeyboardView_keyPreviewHeight -> mPreviewHeight = a.getDimensionPixelSize(attr, 80)
-                R.styleable.KeyboardView_keyTextSize -> mKeyTextSize = a.getDimensionPixelSize(attr, 18)
-                R.styleable.KeyboardView_keyTextColor -> mKeyTextColor = a.getColor(attr, -0x1000000)
-                R.styleable.KeyboardView_labelTextSize -> mLabelTextSize = a.getDimensionPixelSize(attr, 14)
-                R.styleable.KeyboardView_popupLayout -> mPopupLayout = a.getResourceId(attr, 0)
-                R.styleable.KeyboardView_shadowColor -> mShadowColor = a.getColor(attr, 0)
-                R.styleable.KeyboardView_shadowRadius -> mShadowRadius = a.getFloat(attr, 0f)
+                R.styleable.MyKeyboardView_keyBackground -> mKeyBackground = a.getDrawable(attr)
+                R.styleable.MyKeyboardView_verticalCorrection -> mVerticalCorrection = a.getDimensionPixelOffset(attr, 0)
+                R.styleable.MyKeyboardView_keyPreviewLayout -> previewLayout = a.getResourceId(attr, 0)
+                R.styleable.MyKeyboardView_keyPreviewOffset -> mPreviewOffset = a.getDimensionPixelOffset(attr, 0)
+                R.styleable.MyKeyboardView_keyPreviewHeight -> mPreviewHeight = a.getDimensionPixelSize(attr, 80)
+                R.styleable.MyKeyboardView_keyTextSize -> mKeyTextSize = a.getDimensionPixelSize(attr, 18)
+                R.styleable.MyKeyboardView_keyTextColor -> mKeyTextColor = a.getColor(attr, -0x1000000)
+                R.styleable.MyKeyboardView_labelTextSize -> mLabelTextSize = a.getDimensionPixelSize(attr, 14)
+                R.styleable.MyKeyboardView_popupLayout -> mPopupLayout = a.getResourceId(attr, 0)
+                R.styleable.MyKeyboardView_shadowColor -> mShadowColor = a.getColor(attr, 0)
+                R.styleable.MyKeyboardView_shadowRadius -> mShadowRadius = a.getFloat(attr, 0f)
             }
         }
 
-        mKeyBackground = resources.getDrawable(R.drawable.keyboard_popup_panel_background, context.theme)
         mBackgroundDimAmount = 0.5f
         mPreviewPopup = PopupWindow(context)
         if (previewLayout != 0) {
@@ -282,6 +276,7 @@ class MyKeyboardView @JvmOverloads constructor(
         } else {
             isPreviewEnabled = false
         }
+
         mPreviewPopup.isTouchable = false
         mPopupKeyboard = PopupWindow(context)
         mPopupKeyboard.setBackgroundDrawable(null)
@@ -303,12 +298,12 @@ class MyKeyboardView @JvmOverloads constructor(
         resetMultiTap()
     }
 
+    @SuppressLint("HandlerLeak")
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         initGestureDetector()
         if (mHandler == null) {
             mHandler = object : Handler() {
-                @SuppressLint("HandlerLeak")
                 override fun handleMessage(msg: Message) {
                     when (msg.what) {
                         MSG_SHOW_PREVIEW -> showKey(msg.arg1)
@@ -327,11 +322,11 @@ class MyKeyboardView @JvmOverloads constructor(
     private fun initGestureDetector() {
         if (mGestureDetector == null) {
             mGestureDetector = GestureDetector(context, object : SimpleOnGestureListener() {
-                override fun onFling(
-                    me1: MotionEvent, me2: MotionEvent,
-                    velocityX: Float, velocityY: Float
-                ): Boolean {
-                    if (mPossiblePoly) return false
+                override fun onFling(me1: MotionEvent, me2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+                    if (mPossiblePoly) {
+                        return false
+                    }
+
                     val absX = Math.abs(velocityX)
                     val absY = Math.abs(velocityY)
                     val deltaX = me2.x - me1.x
@@ -380,16 +375,7 @@ class MyKeyboardView @JvmOverloads constructor(
             mGestureDetector!!.setIsLongpressEnabled(false)
         }
     }
-    /**
-     * Returns the current keyboard being displayed by this view.
-     * @return the currently attached keyboard
-     * @see .setKeyboard
-     */// Remove any pending messages
-    // Hint to reallocate the buffer if the size changed
-    // Not really necessary to do every time, but will free up views
-    // Switching to a different keyboard should abort any pending keys so that the key up
-    // doesn't get delivered to the old or new keyboard
-    // Until the next ACTION_DOWN
+
     /**
      * Attaches a keyboard to this view. The keyboard can be switched at any time and the
      * view will re-layout itself to accommodate the keyboard.
@@ -404,6 +390,7 @@ class MyKeyboardView @JvmOverloads constructor(
             if (mKeyboard != null) {
                 showPreview(NOT_A_KEY)
             }
+
             // Remove any pending messages
             removeMessages()
             mKeyboard = keyboard
@@ -414,7 +401,8 @@ class MyKeyboardView @JvmOverloads constructor(
             mKeyboardChanged = true
             invalidateAllKeys()
             computeProximityThreshold(keyboard)
-            mMiniKeyboardCache.clear() // Not really necessary to do every time, but will free up views
+            mMiniKeyboardCache.clear()
+            // Not really necessary to do every time, but will free up views
             // Switching to a different keyboard should abort any pending keys so that the key up
             // doesn't get delivered to the old or new keyboard
             mAbortKey = true // Until the next ACTION_DOWN
@@ -446,9 +434,10 @@ class MyKeyboardView @JvmOverloads constructor(
     var isShifted: Boolean = false
         get() = if (mKeyboard != null) {
             mKeyboard!!.isShifted
-        } else false
+        } else {
+            false
+        }
 
-    fun setVerticalCorrection(verticalOffset: Int) {}
     fun setPopupParent(v: View) {
         mPopupParent = v
     }
@@ -470,11 +459,11 @@ class MyKeyboardView @JvmOverloads constructor(
     }
 
     private fun adjustCase(label: CharSequence): CharSequence? {
-        var label: CharSequence? = label
-        if (mKeyboard!!.isShifted && label != null && label.length < 3 && Character.isLowerCase(label[0])) {
-            label = label.toString().toUpperCase()
+        var newLabel: CharSequence? = label
+        if (mKeyboard!!.isShifted && newLabel != null && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
+            newLabel = newLabel.toString().toUpperCase()
         }
-        return label
+        return newLabel
     }
 
     public override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -497,15 +486,22 @@ class MyKeyboardView @JvmOverloads constructor(
      * @param keyboard
      */
     private fun computeProximityThreshold(keyboard: Keyboard?) {
-        if (keyboard == null) return
-        val keys = mKeys ?: return
+        if (keyboard == null) {
+            return
+        }
+
+        val keys = mKeys
         val length = keys.size
         var dimensionSum = 0
         for (i in 0 until length) {
             val key = keys[i]
             dimensionSum += Math.min(key.width, key.height) + key.gap
         }
-        if (dimensionSum < 0 || length == 0) return
+
+        if (dimensionSum < 0 || length == 0) {
+            return
+        }
+
         mProximityThreshold = (dimensionSum * 1.4f / length).toInt()
         mProximityThreshold *= mProximityThreshold // Square it
     }
@@ -529,9 +525,7 @@ class MyKeyboardView @JvmOverloads constructor(
 
     private fun onBufferDraw() {
         if (mBuffer == null || mKeyboardChanged) {
-            if (mBuffer == null || mKeyboardChanged &&
-                (mBuffer!!.width != width || mBuffer!!.height != height)
-            ) {
+            if (mBuffer == null || mKeyboardChanged && (mBuffer!!.width != width || mBuffer!!.height != height)) {
                 // Make sure our bitmap is at least 1x1
                 val width = Math.max(1, width)
                 val height = Math.max(1, height)
@@ -541,7 +535,11 @@ class MyKeyboardView @JvmOverloads constructor(
             invalidateAllKeys()
             mKeyboardChanged = false
         }
-        if (mKeyboard == null) return
+
+        if (mKeyboard == null) {
+            return
+        }
+
         mCanvas!!.save()
         val canvas = mCanvas
         canvas!!.clipRect(mDirtyRect)
@@ -557,10 +555,15 @@ class MyKeyboardView @JvmOverloads constructor(
         var drawSingleKey = false
         if (invalidKey != null && canvas.getClipBounds(clipRegion)) {
             // Is clipRegion completely contained within the invalidated key?
-            if (invalidKey.x + kbdPaddingLeft - 1 <= clipRegion.left && invalidKey.y + kbdPaddingTop - 1 <= clipRegion.top && invalidKey.x + invalidKey.width + kbdPaddingLeft + 1 >= clipRegion.right && invalidKey.y + invalidKey.height + kbdPaddingTop + 1 >= clipRegion.bottom) {
+            if (invalidKey.x + kbdPaddingLeft - 1 <= clipRegion.left &&
+                invalidKey.y + kbdPaddingTop - 1 <= clipRegion.top &&
+                invalidKey.x + invalidKey.width + kbdPaddingLeft + 1 >= clipRegion.right &&
+                invalidKey.y + invalidKey.height + kbdPaddingTop + 1 >= clipRegion.bottom
+            ) {
                 drawSingleKey = true
             }
         }
+
         canvas.drawColor(0x00000000, PorterDuff.Mode.CLEAR)
         val keyCount = keys.size
         for (i in 0 until keyCount) {
@@ -568,17 +571,22 @@ class MyKeyboardView @JvmOverloads constructor(
             if (drawSingleKey && invalidKey !== key) {
                 continue
             }
+
             val drawableState = key.currentDrawableState
             keyBackground!!.state = drawableState
 
             // Switch the character to uppercase if shift is pressed
-            val label = if (key.label == null) null else adjustCase(key.label).toString()
+            val label = if (key.label == null) {
+                null
+            } else {
+                adjustCase(key.label).toString()
+            }
+
             val bounds = keyBackground.bounds
-            if (key.width != bounds.right ||
-                key.height != bounds.bottom
-            ) {
+            if (key.width != bounds.right || key.height != bounds.bottom) {
                 keyBackground.setBounds(0, 0, key.width, key.height)
             }
+
             canvas.translate((key.x + kbdPaddingLeft).toFloat(), (key.y + kbdPaddingTop).toFloat())
             keyBackground.draw(canvas)
             if (label != null) {
@@ -590,6 +598,7 @@ class MyKeyboardView @JvmOverloads constructor(
                     paint.textSize = mKeyTextSize.toFloat()
                     paint.typeface = Typeface.DEFAULT
                 }
+
                 // Draw a drop shadow for the text
                 paint.setShadowLayer(mShadowRadius, 0f, 0f, mShadowColor)
                 // Draw the text
@@ -603,9 +612,7 @@ class MyKeyboardView @JvmOverloads constructor(
                 val drawableX = (key.width - padding.left - padding.right - key.icon.intrinsicWidth) / 2 + padding.left
                 val drawableY = (key.height - padding.top - padding.bottom - key.icon.intrinsicHeight) / 2 + paddingTop
                 canvas.translate(drawableX.toFloat(), drawableY.toFloat())
-                key.icon.setBounds(
-                    0, 0, key.icon.intrinsicWidth, key.icon.intrinsicHeight
-                )
+                key.icon.setBounds(0, 0, key.icon.intrinsicWidth, key.icon.intrinsicHeight)
                 key.icon.draw(canvas)
                 canvas.translate(-drawableX.toFloat(), -drawableY.toFloat())
             }
@@ -634,31 +641,35 @@ class MyKeyboardView @JvmOverloads constructor(
 
     private fun getKeyIndices(x: Int, y: Int, allKeys: IntArray?): Int {
         val keys = mKeys
-        var primaryIndex: Int = NOT_A_KEY
-        var closestKey: Int = NOT_A_KEY
+        var primaryIndex = NOT_A_KEY
+        var closestKey = NOT_A_KEY
         var closestKeyDist = mProximityThreshold + 1
         Arrays.fill(mDistances, Int.MAX_VALUE)
         val nearestKeyIndices = mKeyboard!!.getNearestKeys(x, y)
         val keyCount = nearestKeyIndices.size
+
         for (i in 0 until keyCount) {
-            val key = keys!![nearestKeyIndices[i]]
+            val key = keys[nearestKeyIndices[i]]
             var dist = 0
             val isInside = key.isInside(x, y)
             if (isInside) {
                 primaryIndex = nearestKeyIndices[i]
             }
-            if (((isProximityCorrectionEnabled
-                    && key.squaredDistanceFrom(x, y).also { dist = it } < mProximityThreshold)
-                    || isInside)
-                && key.codes[0] > 32
-            ) {
+
+            if (((isProximityCorrectionEnabled && key.squaredDistanceFrom(x, y).also {
+                    dist = it
+                } < mProximityThreshold) || isInside) && key.codes[0] > 32) {
                 // Find insertion point
                 val nCodes = key.codes.size
                 if (dist < closestKeyDist) {
                     closestKeyDist = dist
                     closestKey = nearestKeyIndices[i]
                 }
-                if (allKeys == null) continue
+
+                if (allKeys == null) {
+                    continue
+                }
+
                 for (j in mDistances.indices) {
                     if (mDistances[j] > dist) {
                         // Make space for nCodes codes
@@ -670,6 +681,7 @@ class MyKeyboardView @JvmOverloads constructor(
                             allKeys, j, allKeys, j + nCodes,
                             allKeys.size - j - nCodes
                         )
+
                         for (c in 0 until nCodes) {
                             allKeys[j + c] = key.codes[c]
                             mDistances[j + c] = dist
@@ -679,9 +691,11 @@ class MyKeyboardView @JvmOverloads constructor(
                 }
             }
         }
+
         if (primaryIndex == NOT_A_KEY) {
             primaryIndex = closestKey
         }
+
         return primaryIndex
     }
 
@@ -693,7 +707,7 @@ class MyKeyboardView @JvmOverloads constructor(
                 onKeyboardActionListener!!.onRelease(NOT_A_KEY)
             } else {
                 var code = key.codes[0]
-                //TextEntryState.keyPressedAt(key, x, y);
+                // TextEntryState.keyPressedAt(key, x, y);
                 val codes = IntArray(MAX_NEARBY_KEYS)
                 Arrays.fill(codes, NOT_A_KEY)
                 getKeyIndices(x, y, codes)
@@ -721,7 +735,13 @@ class MyKeyboardView @JvmOverloads constructor(
         return if (mInMultiTap) {
             // Multi-tap
             mPreviewLabel.setLength(0)
-            mPreviewLabel.append(key.codes[if (mTapCount < 0) 0 else mTapCount].toChar())
+            val codeTapCount = if (mTapCount < 0) {
+                0
+            } else {
+                mTapCount
+            }
+
+            mPreviewLabel.append(key.codes[codeTapCount].toChar())
             adjustCase(mPreviewLabel)
         } else {
             adjustCase(key.label)
@@ -749,21 +769,19 @@ class MyKeyboardView @JvmOverloads constructor(
                     AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED, keyCode
                 )
             }
-            if (mCurrentKeyIndex != NOT_A_KEY && keys!!.size > mCurrentKeyIndex) {
+            if (mCurrentKeyIndex != NOT_A_KEY && keys.size > mCurrentKeyIndex) {
                 val newKey = keys[mCurrentKeyIndex]
                 newKey.onPressed()
                 invalidateKey(mCurrentKeyIndex)
                 val keyCode = newKey.codes[0]
-                sendAccessibilityEventForUnicodeCharacter(
-                    AccessibilityEvent.TYPE_VIEW_HOVER_ENTER,
-                    keyCode
-                )
+                sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER, keyCode)
                 // TODO: We need to implement AccessibilityNodeProvider for this view.
                 sendAccessibilityEventForUnicodeCharacter(
                     AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, keyCode
                 )
             }
         }
+
         // If key changed and preview is on ...
         if (oldKeyIndex != mCurrentKeyIndex && isPreviewEnabled) {
             mHandler!!.removeMessages(MSG_SHOW_PREVIEW)
@@ -775,6 +793,7 @@ class MyKeyboardView @JvmOverloads constructor(
                     )
                 }
             }
+
             if (keyIndex != NOT_A_KEY) {
                 if (previewPopup.isShowing && mPreviewText!!.visibility == VISIBLE) {
                     // Show right away, if it's already visible and finger is moving around
@@ -792,39 +811,40 @@ class MyKeyboardView @JvmOverloads constructor(
     private fun showKey(keyIndex: Int) {
         val previewPopup = mPreviewPopup
         val keys = mKeys
-        if (keyIndex < 0 || keyIndex >= mKeys!!.size) return
-        val key = keys!![keyIndex]
+        if (keyIndex < 0 || keyIndex >= mKeys.size) {
+            return
+        }
+
+        val key = keys[keyIndex]
         if (key.icon != null) {
-            mPreviewText!!.setCompoundDrawables(
-                null, null, null,
-                if (key.iconPreview != null) key.iconPreview else key.icon
-            )
-            mPreviewText!!.setText(null)
+            val bottomDrawable = if (key.iconPreview != null) {
+                key.iconPreview
+            } else {
+                key.icon
+            }
+            mPreviewText!!.setCompoundDrawables(null, null, null, bottomDrawable)
+            mPreviewText!!.text = null
         } else {
             mPreviewText!!.setCompoundDrawables(null, null, null, null)
             mPreviewText!!.text = getPreviewText(key)
             if (key.label.length > 1 && key.codes.size < 2) {
                 mPreviewText!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, mKeyTextSize.toFloat())
-                mPreviewText!!.setTypeface(Typeface.DEFAULT_BOLD)
+                mPreviewText!!.typeface = Typeface.DEFAULT_BOLD
             } else {
                 mPreviewText!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPreviewTextSizeLarge.toFloat())
-                mPreviewText!!.setTypeface(Typeface.DEFAULT)
+                mPreviewText!!.typeface = Typeface.DEFAULT
             }
         }
-        mPreviewText!!.measure(
-            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
-            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
-        )
-        val popupWidth = Math.max(
-            mPreviewText!!.measuredWidth, key.width
-                + mPreviewText!!.paddingLeft + mPreviewText!!.paddingRight
-        )
+
+        mPreviewText!!.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED))
+        val popupWidth = Math.max(mPreviewText!!.measuredWidth, key.width + mPreviewText!!.paddingLeft + mPreviewText!!.paddingRight)
         val popupHeight = mPreviewHeight
         val lp = mPreviewText!!.layoutParams
         if (lp != null) {
             lp.width = popupWidth
             lp.height = popupHeight
         }
+
         if (!mPreviewCentered) {
             mPopupPreviewX = key.x - mPreviewText!!.paddingLeft + paddingLeft
             mPopupPreviewY = key.y - popupHeight + mPreviewOffset
@@ -833,13 +853,19 @@ class MyKeyboardView @JvmOverloads constructor(
             mPopupPreviewX = 160 - mPreviewText!!.measuredWidth / 2
             mPopupPreviewY = -mPreviewText!!.measuredHeight
         }
+
         mHandler!!.removeMessages(MSG_REMOVE_PREVIEW)
         getLocationInWindow(mCoordinates)
         mCoordinates[0] += mMiniKeyboardOffsetX // Offset may be zero
         mCoordinates[1] += mMiniKeyboardOffsetY // Offset may be zero
 
         // Set the preview background state
-        mPreviewText!!.background.state = if (key.popupResId != 0) LONG_PRESSABLE_STATE_SET else EMPTY_STATE_SET
+        mPreviewText!!.background.state = if (key.popupResId != 0) {
+            LONG_PRESSABLE_STATE_SET
+        } else {
+            EMPTY_STATE_SET
+        }
+
         mPopupPreviewX += mCoordinates[0]
         mPopupPreviewY += mCoordinates[1]
 
@@ -855,6 +881,7 @@ class MyKeyboardView @JvmOverloads constructor(
             }
             mPopupPreviewY += popupHeight
         }
+
         if (previewPopup.isShowing) {
             previewPopup.update(
                 mPopupPreviewX, mPopupPreviewY,
@@ -863,10 +890,7 @@ class MyKeyboardView @JvmOverloads constructor(
         } else {
             previewPopup.width = popupWidth
             previewPopup.height = popupHeight
-            previewPopup.showAtLocation(
-                mPopupParent, Gravity.NO_GRAVITY,
-                mPopupPreviewX, mPopupPreviewY
-            )
+            previewPopup.showAtLocation(mPopupParent, Gravity.NO_GRAVITY, mPopupPreviewX, mPopupPreviewY)
         }
         mPreviewText!!.visibility = VISIBLE
     }
@@ -875,16 +899,15 @@ class MyKeyboardView @JvmOverloads constructor(
         if (mAccessibilityManager.isEnabled) {
             val event = AccessibilityEvent.obtain(eventType)
             onInitializeAccessibilityEvent(event)
-            val text: String
-            when (code) {
-                Keyboard.KEYCODE_ALT -> text = context.getString(R.string.keyboardview_keycode_alt)
-                Keyboard.KEYCODE_CANCEL -> text = context.getString(R.string.keyboardview_keycode_cancel)
-                Keyboard.KEYCODE_DELETE -> text = context.getString(R.string.keyboardview_keycode_delete)
-                Keyboard.KEYCODE_DONE -> text = context.getString(R.string.keyboardview_keycode_done)
-                Keyboard.KEYCODE_MODE_CHANGE -> text = context.getString(R.string.keyboardview_keycode_mode_change)
-                Keyboard.KEYCODE_SHIFT -> text = context.getString(R.string.keyboardview_keycode_shift)
-                '\n'.toInt() -> text = context.getString(R.string.keyboardview_keycode_enter)
-                else -> text = code.toChar().toString()
+            val text: String = when (code) {
+                Keyboard.KEYCODE_ALT -> context.getString(R.string.keyboardview_keycode_alt)
+                Keyboard.KEYCODE_CANCEL -> context.getString(R.string.keyboardview_keycode_cancel)
+                Keyboard.KEYCODE_DELETE -> context.getString(R.string.keyboardview_keycode_delete)
+                Keyboard.KEYCODE_DONE -> context.getString(R.string.keyboardview_keycode_done)
+                Keyboard.KEYCODE_MODE_CHANGE -> context.getString(R.string.keyboardview_keycode_mode_change)
+                Keyboard.KEYCODE_SHIFT -> context.getString(R.string.keyboardview_keycode_shift)
+                '\n'.toInt() -> context.getString(R.string.keyboardview_keycode_enter)
+                else -> code.toChar().toString()
             }
             event.text.add(text)
             mAccessibilityManager.sendAccessibilityEvent(event)
@@ -914,6 +937,7 @@ class MyKeyboardView @JvmOverloads constructor(
         if (keyIndex < 0 || keyIndex >= mKeys.size) {
             return
         }
+
         val key = mKeys[keyIndex]
         mInvalidatedKey = key
         mDirtyRect.union(
@@ -932,15 +956,18 @@ class MyKeyboardView @JvmOverloads constructor(
         if (mPopupLayout == 0) {
             return false
         }
+
         if (mCurrentKey < 0 || mCurrentKey >= mKeys.size) {
             return false
         }
+
         val popupKey = mKeys[mCurrentKey]
         val result = onLongPress(popupKey)
         if (result) {
             mAbortKey = true
             showPreview(NOT_A_KEY)
         }
+
         return result
     }
 
@@ -956,9 +983,7 @@ class MyKeyboardView @JvmOverloads constructor(
         if (popupKeyboardId != 0) {
             mMiniKeyboardContainer = mMiniKeyboardCache[popupKey]
             if (mMiniKeyboardContainer == null) {
-                val inflater = context.getSystemService(
-                    Context.LAYOUT_INFLATER_SERVICE
-                ) as LayoutInflater
+                val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
                 mMiniKeyboardContainer = inflater.inflate(mPopupLayout, null)
                 mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.keyboardView) as MyKeyboardView
                 val closeButton = mMiniKeyboardContainer!!.findViewById<View>(R.id.closeButton)
@@ -987,16 +1012,14 @@ class MyKeyboardView @JvmOverloads constructor(
                         onKeyboardActionListener!!.onRelease(primaryCode)
                     }
                 }
+
                 //mInputView.setSuggest(mSuggest);
-                val keyboard: Keyboard
-                keyboard = if (popupKey.popupCharacters != null) {
-                    Keyboard(
-                        context, popupKeyboardId,
-                        popupKey.popupCharacters, -1, paddingLeft + paddingRight
-                    )
+                val keyboard: Keyboard = if (popupKey.popupCharacters != null) {
+                    Keyboard(context, popupKeyboardId, popupKey.popupCharacters, -1, paddingLeft + paddingRight)
                 } else {
                     Keyboard(context, popupKeyboardId)
                 }
+
                 mMiniKeyboard!!.keyboard = keyboard
                 mMiniKeyboard!!.setPopupParent(this)
                 mMiniKeyboardContainer!!.measure(
@@ -1005,15 +1028,14 @@ class MyKeyboardView @JvmOverloads constructor(
                 )
                 mMiniKeyboardCache[popupKey] = mMiniKeyboardContainer
             } else {
-                mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(
-                    R.id.keyboardView
-                ) as MyKeyboardView
+                mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.keyboardView) as MyKeyboardView
             }
+
             getLocationInWindow(mCoordinates)
             mPopupX = popupKey.x + paddingLeft
             mPopupY = popupKey.y + paddingTop
             mPopupX = mPopupX + popupKey.width - mMiniKeyboardContainer!!.measuredWidth
-            mPopupY = mPopupY - mMiniKeyboardContainer!!.measuredHeight
+            mPopupY -= mMiniKeyboardContainer!!.measuredHeight
             val x = mPopupX + mMiniKeyboardContainer!!.paddingRight + mCoordinates[0]
             val y = mPopupY + mMiniKeyboardContainer!!.paddingBottom + mCoordinates[1]
             mMiniKeyboard!!.setPopupOffset(if (x < 0) 0 else x, y)
@@ -1032,17 +1054,10 @@ class MyKeyboardView @JvmOverloads constructor(
 
     override fun onHoverEvent(event: MotionEvent): Boolean {
         if (mAccessibilityManager.isTouchExplorationEnabled && event.pointerCount == 1) {
-            val action = event.action
-            when (action) {
-                MotionEvent.ACTION_HOVER_ENTER -> {
-                    event.action = MotionEvent.ACTION_DOWN
-                }
-                MotionEvent.ACTION_HOVER_MOVE -> {
-                    event.action = MotionEvent.ACTION_MOVE
-                }
-                MotionEvent.ACTION_HOVER_EXIT -> {
-                    event.action = MotionEvent.ACTION_UP
-                }
+            when (event.action) {
+                MotionEvent.ACTION_HOVER_ENTER -> event.action = MotionEvent.ACTION_DOWN
+                MotionEvent.ACTION_HOVER_MOVE -> event.action = MotionEvent.ACTION_MOVE
+                MotionEvent.ACTION_HOVER_EXIT -> event.action = MotionEvent.ACTION_UP
             }
             return onTouchEvent(event)
         }
@@ -1059,10 +1074,7 @@ class MyKeyboardView @JvmOverloads constructor(
         if (pointerCount != mOldPointerCount) {
             if (pointerCount == 1) {
                 // Send a down event for the latest pointer
-                val down = MotionEvent.obtain(
-                    now, now, MotionEvent.ACTION_DOWN,
-                    me.x, me.y, me.metaState
-                )
+                val down = MotionEvent.obtain(now, now, MotionEvent.ACTION_DOWN, me.x, me.y, me.metaState)
                 result = onModifiedTouchEvent(down, false)
                 down.recycle()
                 // If it's an up action, then deliver the up as well.
@@ -1071,10 +1083,7 @@ class MyKeyboardView @JvmOverloads constructor(
                 }
             } else {
                 // Send an up event for the last pointer
-                val up = MotionEvent.obtain(
-                    now, now, MotionEvent.ACTION_UP,
-                    mOldPointerX, mOldPointerY, me.metaState
-                )
+                val up = MotionEvent.obtain(now, now, MotionEvent.ACTION_UP, mOldPointerX, mOldPointerY, me.metaState)
                 result = onModifiedTouchEvent(up, true)
                 up.recycle()
             }
@@ -1093,24 +1102,29 @@ class MyKeyboardView @JvmOverloads constructor(
     }
 
     private fun onModifiedTouchEvent(me: MotionEvent, possiblePoly: Boolean): Boolean {
-        var touchX: Int = me.x.toInt() - paddingLeft
-        var touchY: Int = me.y.toInt() - paddingTop
-        if (touchY >= -mVerticalCorrection) touchY += mVerticalCorrection
+        var touchX = me.x.toInt() - paddingLeft
+        var touchY = me.y.toInt() - paddingTop
+        if (touchY >= -mVerticalCorrection) {
+            touchY += mVerticalCorrection
+        }
+
         val action = me.action
         val eventTime = me.eventTime
         val keyIndex = getKeyIndices(touchX, touchY, null)
         mPossiblePoly = possiblePoly
 
         // Track the last few movements to look for spurious swipes.
-        if (action == MotionEvent.ACTION_DOWN) mSwipeTracker.clear()
+        if (action == MotionEvent.ACTION_DOWN) {
+            mSwipeTracker.clear()
+        }
+
         mSwipeTracker.addMovement(me)
 
         // Ignore all motion events until a DOWN.
-        if (mAbortKey
-            && action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_CANCEL
-        ) {
+        if (mAbortKey && action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_CANCEL) {
             return true
         }
+
         if (mGestureDetector!!.onTouchEvent(me)) {
             showPreview(NOT_A_KEY)
             mHandler!!.removeMessages(MSG_REPEAT)
@@ -1123,6 +1137,7 @@ class MyKeyboardView @JvmOverloads constructor(
         if (mMiniKeyboardOnScreen && action != MotionEvent.ACTION_CANCEL) {
             return true
         }
+
         when (action) {
             MotionEvent.ACTION_DOWN -> {
                 mAbortKey = false
@@ -1138,7 +1153,14 @@ class MyKeyboardView @JvmOverloads constructor(
                 mDownTime = me.eventTime
                 mLastMoveTime = mDownTime
                 checkMultiTap(eventTime, keyIndex)
-                onKeyboardActionListener!!.onPress(if (keyIndex != NOT_A_KEY) mKeys[keyIndex].codes[0] else 0)
+
+                val onPressKey = if (keyIndex != NOT_A_KEY) {
+                    mKeys[keyIndex].codes[0]
+                } else {
+                    0
+                }
+
+                onKeyboardActionListener!!.onPress(onPressKey)
 
                 var wasHandled = false
                 if (mCurrentKey >= 0 && mKeys[mCurrentKey].repeatable) {
@@ -1152,6 +1174,7 @@ class MyKeyboardView @JvmOverloads constructor(
                         wasHandled = true
                     }
                 }
+
                 if (!wasHandled && mCurrentKey != NOT_A_KEY) {
                     val msg = mHandler!!.obtainMessage(MSG_LONGPRESS, me)
                     mHandler!!.sendMessageDelayed(msg, LONGPRESS_TIMEOUT.toLong())
@@ -1202,6 +1225,7 @@ class MyKeyboardView @JvmOverloads constructor(
                     mCurrentKey = keyIndex
                     mCurrentKeyTime = 0
                 }
+
                 if (mCurrentKeyTime < mLastKeyTime && mCurrentKeyTime < DEBOUNCE_TIME && mLastKey != NOT_A_KEY) {
                     mCurrentKey = mLastKey
                     touchX = mLastCodeX
@@ -1303,9 +1327,7 @@ class MyKeyboardView @JvmOverloads constructor(
         val key = mKeys[keyIndex]
         if (key.codes.size > 1) {
             mInMultiTap = true
-            if (eventTime < mLastTapTime + MULTITAP_INTERVAL
-                && keyIndex == mLastSentIndex
-            ) {
+            if (eventTime < mLastTapTime + MULTITAP_INTERVAL && keyIndex == mLastSentIndex) {
                 mTapCount = (mTapCount + 1) % key.codes.size
                 return
             } else {
@@ -1313,12 +1335,18 @@ class MyKeyboardView @JvmOverloads constructor(
                 return
             }
         }
+
         if (eventTime > mLastTapTime + MULTITAP_INTERVAL || keyIndex != mLastSentIndex) {
             resetMultiTap()
         }
     }
 
     private class SwipeTracker {
+        companion object {
+            const val NUM_PAST = 4
+            const val LONGEST_PAST_TIME = 200
+        }
+
         val mPastX = FloatArray(NUM_PAST)
         val mPastY = FloatArray(NUM_PAST)
         val mPastTime = LongArray(NUM_PAST)
@@ -1333,19 +1361,15 @@ class MyKeyboardView @JvmOverloads constructor(
             val time = ev.eventTime
             val N = ev.historySize
             for (i in 0 until N) {
-                addPoint(
-                    ev.getHistoricalX(i), ev.getHistoricalY(i),
-                    ev.getHistoricalEventTime(i)
-                )
+                addPoint(ev.getHistoricalX(i), ev.getHistoricalY(i), ev.getHistoricalEventTime(i))
             }
             addPoint(ev.x, ev.y, time)
         }
 
         private fun addPoint(x: Float, y: Float, time: Long) {
             var drop = -1
-            var i: Int
             val pastTime = mPastTime
-            i = 0
+            var i = 0
             while (i < NUM_PAST) {
                 if (pastTime[i] == 0L) {
                     break
@@ -1354,9 +1378,11 @@ class MyKeyboardView @JvmOverloads constructor(
                 }
                 i++
             }
+
             if (i == NUM_PAST && drop < 0) {
                 drop = 0
             }
+
             if (drop == i) drop--
             val pastX = mPastX
             val pastY = mPastY
@@ -1372,6 +1398,7 @@ class MyKeyboardView @JvmOverloads constructor(
             pastY[i] = y
             pastTime[i] = time
             i++
+
             if (i < NUM_PAST) {
                 pastTime[i] = 0
             }
@@ -1394,23 +1421,38 @@ class MyKeyboardView @JvmOverloads constructor(
                 }
                 N++
             }
+
             for (i in 1 until N) {
                 val dur = (pastTime[i] - oldestTime).toInt()
                 if (dur == 0) continue
                 var dist = pastX[i] - oldestX
                 var vel = dist / dur * units // pixels/frame.
-                accumX = if (accumX == 0f) vel else (accumX + vel) * .5f
+                accumX = if (accumX == 0f) {
+                    vel
+                } else {
+                    (accumX + vel) * .5f
+                }
+
                 dist = pastY[i] - oldestY
                 vel = dist / dur * units // pixels/frame.
-                accumY = if (accumY == 0f) vel else (accumY + vel) * .5f
+                accumY = if (accumY == 0f) {
+                    vel
+                } else {
+                    (accumY + vel) * .5f
+                }
             }
-            xVelocity = if (accumX < 0.0f) Math.max(accumX, -maxVelocity) else Math.min(accumX, maxVelocity)
-            yVelocity = if (accumY < 0.0f) Math.max(accumY, -maxVelocity) else Math.min(accumY, maxVelocity)
-        }
 
-        companion object {
-            const val NUM_PAST = 4
-            const val LONGEST_PAST_TIME = 200
+            xVelocity = if (accumX < 0.0f) {
+                Math.max(accumX, -maxVelocity)
+            } else {
+                Math.min(accumX, maxVelocity)
+            }
+
+            yVelocity = if (accumY < 0.0f) {
+                Math.max(accumY, -maxVelocity)
+            } else {
+                Math.min(accumY, maxVelocity)
+            }
         }
     }
 }
