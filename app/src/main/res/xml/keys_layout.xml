@@ -75,7 +75,7 @@
             android:codes="-1"
             android:keyWidth="15%p"
             android:keyEdgeFlags="left"
-            android:keyLabel="CAPS" />
+            android:keyIcon="@drawable/ic_caps_outline_vector" />
         <Key
             android:codes="122"
             android:keyLabel="z" />
@@ -123,8 +123,7 @@
         <Key
             android:codes="-4"
             android:keyWidth="20%p"
-            android:keyBackground="@color/colorPrimary"
             android:keyEdgeFlags="right"
-            android:keyLabel="DONE" />
+            android:keyIcon="@drawable/ic_enter_vector" />
     </Row>
 </Keyboard>
