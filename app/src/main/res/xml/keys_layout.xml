@@ -103,7 +103,7 @@
             android:isRepeatable="true"
             android:keyWidth="15%p"
             android:keyEdgeFlags="right"
-            android:keyIcon="@drawable/ic_arrow_left_vector" />
+            android:keyIcon="@drawable/ic_clear_vector" />
     </Row>
     <Row android:rowEdgeFlags="bottom">
         <Key
