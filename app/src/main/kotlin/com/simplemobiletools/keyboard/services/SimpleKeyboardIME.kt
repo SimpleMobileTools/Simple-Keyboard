@@ -1,7 +1,6 @@
 package com.simplemobiletools.keyboard.services
 
 import android.inputmethodservice.InputMethodService
-import android.inputmethodservice.Keyboard
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View

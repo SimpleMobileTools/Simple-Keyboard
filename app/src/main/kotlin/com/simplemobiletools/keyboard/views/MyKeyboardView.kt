@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.Paint.Align
 import android.graphics.drawable.Drawable
-import android.inputmethodservice.Keyboard
 import android.media.AudioManager
 import android.os.Handler
 import android.os.Message
@@ -22,7 +21,7 @@ import com.simplemobiletools.keyboard.helpers.MyKeyboard
 import java.util.*
 
 /**
- * A view that renders a virtual [Keyboard]. It handles rendering of keys and
+ * A view that renders a virtual [MyKeyboard]. It handles rendering of keys and
  * detecting key presses and touch movements.
  *
  * @attr ref android.R.styleable#KeyboardView_keyBackground
@@ -383,7 +382,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     /**
      * Attaches a keyboard to this view. The keyboard can be switched at any time and the
      * view will re-layout itself to accommodate the keyboard.
-     * @see Keyboard
+     * @see MyKeyboard
      *
      * @see .getKeyboard
      * @param keyboard the keyboard to display in this view
@@ -912,7 +911,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * Invalidates a key so that it will be redrawn on the next repaint. Use this method if only
      * one key is changing it's content. Any changes that affect the position or size of the key
      * may not be honored.
-     * @param keyIndex the index of the key in the attached [Keyboard].
+     * @param keyIndex the index of the key in the attached [MyKeyboard].
      * @see .invalidateAllKeys
      */
     fun invalidateKey(keyIndex: Int) {

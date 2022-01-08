@@ -193,11 +193,7 @@ class MyKeyboard {
 
         constructor(res: Resources, parent: MyKeyboard, parser: XmlResourceParser?) {
             this.parent = parent
-            var a = res.obtainAttributes(
-                Xml.asAttributeSet(parser),
-                R.styleable.Keyboard
-            )
-
+            var a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.Keyboard)
             defaultWidth = getDimensionOrFraction(a, R.styleable.Keyboard_keyWidth, parent.mDisplayWidth, parent.mDefaultWidth)
             defaultHeight = getDimensionOrFraction(a, R.styleable.Keyboard_keyHeight, parent.mDisplayHeight, parent.mDefaultHeight)
             defaultHorizontalGap = getDimensionOrFraction(a, R.styleable.Keyboard_horizontalGap, parent.mDisplayWidth, parent.mDefaultHorizontalGap)
@@ -522,7 +518,6 @@ class MyKeyboard {
         val dm = context.resources.displayMetrics
         mDisplayWidth = dm.widthPixels
         mDisplayHeight = dm.heightPixels
-        //Log.v(TAG, "keyboard's display metrics:" + dm);
         mDefaultHorizontalGap = 0
         mDefaultWidth = mDisplayWidth / 10
         mDefaultVerticalGap = 0
