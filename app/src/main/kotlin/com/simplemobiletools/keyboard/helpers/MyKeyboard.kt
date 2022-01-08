@@ -20,7 +20,6 @@ import android.content.res.Resources
 import android.content.res.TypedArray
 import android.content.res.XmlResourceParser
 import android.graphics.drawable.Drawable
-import android.inputmethodservice.Keyboard
 import android.text.TextUtils
 import android.util.TypedValue
 import android.util.Xml
@@ -71,7 +70,6 @@ class MyKeyboard {
 
     /** Is the keyboard in the shifted state  */
     var isShifted = false
-        private set
 
     /** Key instance for the shift key, if present  */
     private val mShiftKeys = arrayOf<Key?>(null, null)
@@ -92,17 +90,15 @@ class MyKeyboard {
      */
     /** Total height of the keyboard, including the padding and keys  */
     var height = 0
-        private set
 
     /**
      * Total width of the keyboard, including left side gaps and keys, but not any gaps on the
      * right side.
      */
     var minWidth = 0
-        private set
 
     /** List of keys in this keyboard  */
-    private var mKeys: MutableList<Key?>? = null
+    var mKeys: MutableList<Key?>? = null
 
     /** List of modifier keys such as Shift & Alt, if any  */
     private var mModifierKeys: MutableList<Key?>? = null
@@ -122,8 +118,6 @@ class MyKeyboard {
     private val rows = ArrayList<Row?>()
 
     companion object {
-        const val TAG = "Keyboard"
-
         // Keyboard XML Tags
         private const val TAG_KEYBOARD = "Keyboard"
         private const val TAG_ROW = "Row"
@@ -160,7 +154,7 @@ class MyKeyboard {
 
     /**
      * Container for keys in the keyboard. All keys in a row are at the same Y-coordinate.
-     * Some of the key size defaults can be overridden per row from what the [Keyboard]
+     * Some of the key size defaults can be overridden per row from what the [MyKeyboard]
      * defines.
      * @attr ref android.R.styleable#Keyboard_keyWidth
      * @attr ref android.R.styleable#Keyboard_keyHeight
@@ -185,7 +179,7 @@ class MyKeyboard {
 
         /**
          * Edge flags for this row of keys. Possible values that can be assigned are
-         * [EDGE_TOP][Keyboard.EDGE_TOP] and [EDGE_BOTTOM][Keyboard.EDGE_BOTTOM]
+         * [EDGE_TOP][MyKeyboard.EDGE_TOP] and [EDGE_BOTTOM][MyKeyboard.EDGE_BOTTOM]
          */
         var rowEdgeFlags = 0
 
@@ -242,7 +236,7 @@ class MyKeyboard {
         var codes = ArrayList<Int>()
 
         /** Label to display  */
-        var label: CharSequence? = null
+        var label: CharSequence = ""
 
         /** Icon to display instead of a label. Icon takes precedence over a label  */
         var icon: Drawable? = null
@@ -283,8 +277,8 @@ class MyKeyboard {
         /**
          * Flags that specify the anchoring to edges of the keyboard for detecting touch events
          * that are just out of the boundary of the key. This is a bit mask of
-         * [Keyboard.EDGE_LEFT], [Keyboard.EDGE_RIGHT], [Keyboard.EDGE_TOP] and
-         * [Keyboard.EDGE_BOTTOM].
+         * [MyKeyboard.EDGE_LEFT], [MyKeyboard.EDGE_RIGHT], [MyKeyboard.EDGE_TOP] and
+         * [MyKeyboard.EDGE_BOTTOM].
          */
         var edgeFlags: Int
 
@@ -292,7 +286,7 @@ class MyKeyboard {
         var modifier = false
 
         /** The keyboard that this key belongs to  */
-        private val keyboard: MyKeyboard
+        private val keyboard: MyKeyboard = parent.parent
 
         /**
          * If this key pops up a mini keyboard, this is the resource id for the XML layout for that
@@ -332,46 +326,29 @@ class MyKeyboard {
             }
 
             iconPreview = a.getDrawable(R.styleable.Keyboard_Key_iconPreview)
-            if (iconPreview != null) {
-                iconPreview!!.setBounds(
-                    0, 0, iconPreview!!.intrinsicWidth,
-                    iconPreview!!.intrinsicHeight
-                )
-            }
-            popupCharacters = a.getText(
-                R.styleable.Keyboard_Key_popupCharacters
-            )
-            popupResId = a.getResourceId(
-                R.styleable.Keyboard_Key_popupKeyboard, 0
-            )
-            repeatable = a.getBoolean(
-                R.styleable.Keyboard_Key_isRepeatable, false
-            )
-            modifier = a.getBoolean(
-                R.styleable.Keyboard_Key_isModifier, false
-            )
-            sticky = a.getBoolean(
-                R.styleable.Keyboard_Key_isSticky, false
-            )
+            iconPreview?.setBounds(0, 0, iconPreview!!.intrinsicWidth, iconPreview!!.intrinsicHeight)
+
+            popupCharacters = a.getText(R.styleable.Keyboard_Key_popupCharacters)
+            popupResId = a.getResourceId(R.styleable.Keyboard_Key_popupKeyboard, 0)
+            repeatable = a.getBoolean(R.styleable.Keyboard_Key_isRepeatable, false)
+            modifier = a.getBoolean(R.styleable.Keyboard_Key_isModifier, false)
+            sticky = a.getBoolean(R.styleable.Keyboard_Key_isSticky, false)
             edgeFlags = a.getInt(R.styleable.Keyboard_Key_keyEdgeFlags, 0)
             edgeFlags = edgeFlags or parent.rowEdgeFlags
-            icon = a.getDrawable(
-                R.styleable.Keyboard_Key_keyIcon
-            )
-            if (icon != null) {
-                icon!!.setBounds(0, 0, icon!!.intrinsicWidth, icon!!.intrinsicHeight)
-            }
+            icon = a.getDrawable(R.styleable.Keyboard_Key_keyIcon)
+
+            icon?.setBounds(0, 0, icon!!.intrinsicWidth, icon!!.intrinsicHeight)
+
             label = a.getText(R.styleable.Keyboard_Key_keyLabel)
             text = a.getText(R.styleable.Keyboard_Key_keyOutputText)
             if (!TextUtils.isEmpty(label)) {
-                codes = arrayListOf(label!![0].toInt())
+                codes = arrayListOf(label[0].toInt())
             }
             a.recycle()
         }
 
         /** Create an empty key with no attributes.  */
         init {
-            keyboard = parent.parent
             height = parent.defaultHeight
             width = parent.defaultWidth
             gap = parent.defaultHorizontalGap
@@ -415,7 +392,7 @@ class MyKeyboard {
         fun parseCSV(value: String): ArrayList<Int> {
             var count = 0
             var lastIndex = 0
-            if (value.length > 0) {
+            if (value.isNotEmpty()) {
                 count++
                 while (value.indexOf(",", lastIndex + 1).also { lastIndex = it } > 0) {
                     count++
@@ -496,26 +473,12 @@ class MyKeyboard {
             }
 
         companion object {
-            private val KEY_STATE_NORMAL_ON = intArrayOf(
-                android.R.attr.state_checkable,
-                android.R.attr.state_checked
-            )
-            private val KEY_STATE_PRESSED_ON = intArrayOf(
-                android.R.attr.state_pressed,
-                android.R.attr.state_checkable,
-                android.R.attr.state_checked
-            )
-            private val KEY_STATE_NORMAL_OFF = intArrayOf(
-                android.R.attr.state_checkable
-            )
-            private val KEY_STATE_PRESSED_OFF = intArrayOf(
-                android.R.attr.state_pressed,
-                android.R.attr.state_checkable
-            )
+            private val KEY_STATE_NORMAL_ON = intArrayOf(android.R.attr.state_checkable, android.R.attr.state_checked)
+            private val KEY_STATE_PRESSED_ON = intArrayOf(android.R.attr.state_pressed, android.R.attr.state_checkable, android.R.attr.state_checked)
+            private val KEY_STATE_NORMAL_OFF = intArrayOf(android.R.attr.state_checkable)
+            private val KEY_STATE_PRESSED_OFF = intArrayOf(android.R.attr.state_pressed, android.R.attr.state_checkable)
             private val KEY_STATE_NORMAL = intArrayOf()
-            private val KEY_STATE_PRESSED = intArrayOf(
-                android.R.attr.state_pressed
-            )
+            private val KEY_STATE_PRESSED = intArrayOf(android.R.attr.state_pressed)
         }
     }
 
@@ -539,7 +502,6 @@ class MyKeyboard {
         mDefaultVerticalGap = 0
         mDefaultHeight = mDefaultWidth
         mKeys = ArrayList()
-        mModifierKeys = ArrayList()
         mKeyboardMode = modeId
         loadKeyboard(context, context.resources.getXml(xmlLayoutResId))
     }
@@ -566,7 +528,6 @@ class MyKeyboard {
         mDefaultVerticalGap = 0
         mDefaultHeight = mDefaultWidth
         mKeys = ArrayList()
-        mModifierKeys = ArrayList()
         mKeyboardMode = modeId
         loadKeyboard(context, context.resources.getXml(xmlLayoutResId))
     }
@@ -587,10 +548,8 @@ class MyKeyboard {
      * number of keys that can fit in a row, it will be ignored. If this number is -1, the
      * keyboard will fit as many keys as possible in each row.
      */
-    constructor(
-        context: Context, layoutTemplateResId: Int,
-        characters: CharSequence, columns: Int, horizontalPadding: Int
-    ) : this(context, layoutTemplateResId) {
+    constructor(context: Context, layoutTemplateResId: Int, characters: CharSequence, columns: Int, horizontalPadding: Int) :
+        this(context, layoutTemplateResId) {
         var x = 0
         var y = 0
         var column = 0
@@ -602,15 +561,15 @@ class MyKeyboard {
         row.verticalGap = mDefaultVerticalGap
         row.rowEdgeFlags = EDGE_TOP or EDGE_BOTTOM
         val maxColumns = if (columns == -1) Int.MAX_VALUE else columns
-        for (i in 0 until characters.length) {
-            val c = characters[i]
-            if (column >= maxColumns
-                || x + mDefaultWidth + horizontalPadding > mDisplayWidth
+        for (element in characters) {
+            val c = element
+            if (column >= maxColumns || x + mDefaultWidth + horizontalPadding > mDisplayWidth
             ) {
                 x = 0
                 y += mDefaultVerticalGap + mDefaultHeight
                 column = 0
             }
+
             val key = Key(row)
             key.x = x
             key.y = y
@@ -654,32 +613,24 @@ class MyKeyboard {
                 }
             }
         }
+
         minWidth = newWidth
         // TODO: This does not adjust the vertical placement according to the new size.
         // The main problem in the previous code was horizontal placement/size, but we should
         // also recalculate the vertical sizes/positions when we get this resize call.
     }
 
-    val keys: List<Key?>?
-        get() = mKeys
-    val modifierKeys: List<Key?>?
-        get() = mModifierKeys
-
     fun setShifted(shiftState: Boolean): Boolean {
         for (shiftKey in mShiftKeys) {
-            if (shiftKey != null) {
-                shiftKey.on = shiftState
-            }
+            shiftKey?.on = shiftState
         }
+
         if (isShifted != shiftState) {
             isShifted = shiftState
             return true
         }
         return false
     }
-
-    val shiftKeyIndex: Int
-        get() = shiftKeyIndices[0]
 
     private fun computeNearestNeighbors() {
         // Round-up so we don't have any pixels outside the grid
@@ -720,11 +671,11 @@ class MyKeyboard {
      * @return the array of integer indices for the nearest keys to the given point. If the given
      * point is out of range, then an array of size zero is returned.
      */
-    fun getNearestKeys(x: Int, y: Int): IntArray? {
-        if (x >= 0 && x < minWidth && y >= 0 && y < height) {
+    fun getNearestKeys(x: Int, y: Int): IntArray {
+        if (x in 0 until minWidth && y >= 0 && y < height) {
             val index: Int = y / mCellHeight * GRID_WIDTH + x / mCellWidth
             if (index < GRID_SIZE) {
-                return mGridNeighbors[index]
+                return mGridNeighbors[index]!!
             }
         }
         return IntArray(0)
@@ -809,41 +760,20 @@ class MyKeyboard {
     private fun skipToEndOfRow(parser: XmlResourceParser) {
         var event: Int
         while (parser.next().also { event = it } != XmlResourceParser.END_DOCUMENT) {
-            if (event == XmlResourceParser.END_TAG
-                && parser.name == TAG_ROW
-            ) {
+            if (event == XmlResourceParser.END_TAG && parser.name == TAG_ROW) {
                 break
             }
         }
     }
 
     private fun parseKeyboardAttributes(res: Resources, parser: XmlResourceParser) {
-        val a = res.obtainAttributes(
-            Xml.asAttributeSet(parser),
-            R.styleable.Keyboard
-        )
-        mDefaultWidth = getDimensionOrFraction(
-            a,
-            R.styleable.Keyboard_keyWidth,
-            mDisplayWidth, mDisplayWidth / 10
-        )
-        mDefaultHeight = getDimensionOrFraction(
-            a,
-            R.styleable.Keyboard_keyHeight,
-            mDisplayHeight, 50
-        )
-        mDefaultHorizontalGap = getDimensionOrFraction(
-            a,
-            R.styleable.Keyboard_horizontalGap,
-            mDisplayWidth, 0
-        )
-        mDefaultVerticalGap = getDimensionOrFraction(
-            a,
-            R.styleable.Keyboard_verticalGap,
-            mDisplayHeight, 0
-        )
+        val a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.Keyboard)
+        mDefaultWidth = getDimensionOrFraction(a, R.styleable.Keyboard_keyWidth, mDisplayWidth, mDisplayWidth / 10)
+        mDefaultHeight = getDimensionOrFraction(a, R.styleable.Keyboard_keyHeight, mDisplayHeight, 50)
+        mDefaultHorizontalGap = getDimensionOrFraction(a, R.styleable.Keyboard_horizontalGap, mDisplayWidth, 0)
+        mDefaultVerticalGap = getDimensionOrFraction(a, R.styleable.Keyboard_verticalGap, mDisplayHeight, 0)
         mProximityThreshold = (mDefaultWidth * SEARCH_DISTANCE) as Int
-        mProximityThreshold = mProximityThreshold * mProximityThreshold // Square it for comparison
+        mProximityThreshold *= mProximityThreshold // Square it for comparison
         a.recycle()
     }
 }

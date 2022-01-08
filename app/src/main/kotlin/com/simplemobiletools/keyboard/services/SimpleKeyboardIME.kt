@@ -7,17 +7,18 @@ import android.view.KeyEvent
 import android.view.View
 import com.simplemobiletools.commons.extensions.performHapticFeedback
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.helpers.MyKeyboard
 import com.simplemobiletools.keyboard.views.MyKeyboardView
 
 // based on https://www.androidauthority.com/lets-build-custom-keyboard-android-832362/
 class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionListener {
-    private var keyboard: Keyboard? = null
+    private var keyboard: MyKeyboard? = null
     private var keyboardView: MyKeyboardView? = null
     private var caps = false
 
     override fun onCreateInputView(): View {
         keyboardView = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null) as MyKeyboardView
-        keyboard = Keyboard(this, R.xml.keys_layout)
+        keyboard = MyKeyboard(this, R.xml.keys_layout)
         keyboardView!!.setKeyboard(keyboard!!)
         keyboardView!!.onKeyboardActionListener = this
         return keyboardView!!
@@ -31,7 +32,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         val inputConnection = currentInputConnection
         if (inputConnection != null) {
             when (primaryCode) {
-                Keyboard.KEYCODE_DELETE -> {
+                MyKeyboard.KEYCODE_DELETE -> {
                     val selectedText = inputConnection.getSelectedText(0)
                     if (TextUtils.isEmpty(selectedText)) {
                         inputConnection.deleteSurroundingText(1, 0)
@@ -41,12 +42,12 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     keyboard!!.isShifted = caps
                     keyboardView!!.invalidateAllKeys()
                 }
-                Keyboard.KEYCODE_SHIFT -> {
+                MyKeyboard.KEYCODE_SHIFT -> {
                     caps = !caps
                     keyboard!!.isShifted = caps
                     keyboardView!!.invalidateAllKeys()
                 }
-                Keyboard.KEYCODE_DONE -> inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
+                MyKeyboard.KEYCODE_DONE -> inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
                 else -> {
                     var code = primaryCode.toChar()
                     if (Character.isLetter(code) && caps) {

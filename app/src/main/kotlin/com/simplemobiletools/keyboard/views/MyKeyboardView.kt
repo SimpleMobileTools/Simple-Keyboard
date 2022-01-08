@@ -18,6 +18,7 @@ import android.view.accessibility.AccessibilityManager
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.helpers.MyKeyboard
 import java.util.*
 
 /**
@@ -96,7 +97,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         fun swipeUp()
     }
 
-    private var mKeyboard: Keyboard? = null
+    private var mKeyboard: MyKeyboard? = null
     private var mCurrentKeyIndex: Int = NOT_A_KEY
 
     private var mLabelTextSize = 0
@@ -121,8 +122,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mPopupParent: View
     private var mMiniKeyboardOffsetX = 0
     private var mMiniKeyboardOffsetY = 0
-    private val mMiniKeyboardCache: MutableMap<Keyboard.Key, View?>
-    private var mKeys = ArrayList<Keyboard.Key>()
+    private val mMiniKeyboardCache: MutableMap<MyKeyboard.Key, View?>
+    private var mKeys = ArrayList<MyKeyboard.Key>()
     /**
      * Returns the [OnKeyboardActionListener] object.
      * @return the listener attached to this keyboard
@@ -178,7 +179,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mRepeatKeyIndex: Int = NOT_A_KEY
     private var mPopupLayout = 0
     private var mAbortKey = false
-    private var mInvalidatedKey: Keyboard.Key? = null
+    private var mInvalidatedKey: MyKeyboard.Key? = null
     private val mClipRegion = Rect(0, 0, 0, 0)
     private var mPossiblePoly = false
     private val mSwipeTracker: SwipeTracker = SwipeTracker()
@@ -225,7 +226,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     companion object {
         private const val NOT_A_KEY = -1
-        private val KEY_DELETE = intArrayOf(Keyboard.KEYCODE_DELETE)
+        private val KEY_DELETE = intArrayOf(MyKeyboard.KEYCODE_DELETE)
         private val LONG_PRESSABLE_STATE_SET = intArrayOf(R.attr.state_long_pressable)
         private const val MSG_SHOW_PREVIEW = 1
         private const val MSG_REMOVE_PREVIEW = 2
@@ -387,7 +388,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @see .getKeyboard
      * @param keyboard the keyboard to display in this view
      */
-    fun setKeyboard(keyboard: Keyboard) {
+    fun setKeyboard(keyboard: MyKeyboard) {
         if (mKeyboard != null) {
             showPreview(NOT_A_KEY)
         }
@@ -395,8 +396,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         // Remove any pending messages
         removeMessages()
         mKeyboard = keyboard
-        val keys = mKeyboard!!.keys
-        mKeys = keys.toMutableList() as ArrayList<Keyboard.Key>
+        val keys = mKeyboard!!.mKeys
+        mKeys = keys!!.toMutableList() as ArrayList<MyKeyboard.Key>
         requestLayout()
         // Hint to reallocate the buffer if the size changed
         mKeyboardChanged = true
@@ -416,12 +417,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @see KeyboardView.isShifted
      */
     fun setShifted(shifted: Boolean): Boolean {
-        if (mKeyboard != null) {
-            if (mKeyboard!!.setShifted(shifted)) {
-                // The whole keyboard probably needs to be redrawn
-                invalidateAllKeys()
-                return true
-            }
+        if (mKeyboard?.setShifted(shifted) == true) {
+            // The whole keyboard probably needs to be redrawn
+            invalidateAllKeys()
+            return true
         }
         return false
     }
@@ -433,11 +432,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @see KeyboardView.setShifted
      */
     fun isShifted(): Boolean {
-        return if (mKeyboard != null) {
-            mKeyboard!!.isShifted
-        } else {
-            false
-        }
+        return mKeyboard?.isShifted ?: false
     }
 
     fun setPopupParent(v: View) {
@@ -487,7 +482,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * the touch distance from a key's center to avoid taking a square root.
      * @param keyboard
      */
-    private fun computeProximityThreshold(keyboard: Keyboard?) {
+    private fun computeProximityThreshold(keyboard: MyKeyboard?) {
         if (keyboard == null) {
             return
         }
@@ -510,9 +505,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     public override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        if (mKeyboard != null) {
-            //mKeyboard.resize(w, h)
-        }
+        mKeyboard?.resize(w, h)
         // Release the buffer, if any and it will be reallocated on the next draw
         mBuffer = null
     }
@@ -578,11 +571,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             keyBackground!!.state = drawableState
 
             // Switch the character to uppercase if shift is pressed
-            val label = if (key.label == null) {
-                null
-            } else {
-                adjustCase(key.label).toString()
-            }
+            val label = adjustCase(key.label)?.toString()
 
             val bounds = keyBackground.bounds
             if (key.width != bounds.right || key.height != bounds.bottom) {
@@ -611,11 +600,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 // Turn off drop shadow
                 paint.setShadowLayer(0f, 0f, 0f, 0)
             } else if (key.icon != null) {
-                val drawableX = (key.width - padding.left - padding.right - key.icon.intrinsicWidth) / 2 + padding.left
-                val drawableY = (key.height - key.icon.intrinsicHeight) / 2
+                val drawableX = (key.width - padding.left - padding.right - key.icon!!.intrinsicWidth) / 2 + padding.left
+                val drawableY = (key.height - key.icon!!.intrinsicHeight) / 2
                 canvas.translate(drawableX.toFloat(), drawableY.toFloat())
-                key.icon.setBounds(0, 0, key.icon.intrinsicWidth, key.icon.intrinsicHeight)
-                key.icon.draw(canvas)
+                key.icon!!.setBounds(0, 0, key.icon!!.intrinsicWidth, key.icon!!.intrinsicHeight)
+                key.icon!!.draw(canvas)
                 canvas.translate(-drawableX.toFloat(), -drawableY.toFloat())
             }
             canvas.translate((-key.x - kbdPaddingLeft).toFloat(), (-key.y - kbdPaddingTop).toFloat())
@@ -708,7 +697,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 // Multi-tap
                 if (mInMultiTap) {
                     if (mTapCount != -1) {
-                        onKeyboardActionListener!!.onKey(Keyboard.KEYCODE_DELETE, KEY_DELETE)
+                        onKeyboardActionListener!!.onKey(MyKeyboard.KEYCODE_DELETE, KEY_DELETE)
                     } else {
                         mTapCount = 0
                     }
@@ -725,7 +714,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     /**
      * Handle multi-tap keys by producing the key label for the current multi-tap state.
      */
-    private fun getPreviewText(key: Keyboard.Key): CharSequence? {
+    private fun getPreviewText(key: MyKeyboard.Key): CharSequence? {
         return if (mInMultiTap) {
             // Multi-tap
             mPreviewLabel.setLength(0)
@@ -835,10 +824,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val popupWidth = Math.max(mPreviewText!!.measuredWidth, key.width + mPreviewText!!.paddingLeft + mPreviewText!!.paddingRight)
         val popupHeight = mPreviewHeight
         val lp = mPreviewText!!.layoutParams
-        if (lp != null) {
-            lp.width = popupWidth
-            lp.height = popupHeight
-        }
+        lp?.width = popupWidth
+        lp?.height = popupHeight
 
         if (!mPreviewCentered) {
             mPopupPreviewX = key.x - mPreviewText!!.paddingLeft + paddingLeft
@@ -895,12 +882,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val event = AccessibilityEvent.obtain(eventType)
             onInitializeAccessibilityEvent(event)
             val text: String = when (code) {
-                Keyboard.KEYCODE_ALT -> context.getString(R.string.keyboardview_keycode_alt)
-                Keyboard.KEYCODE_CANCEL -> context.getString(R.string.keyboardview_keycode_cancel)
-                Keyboard.KEYCODE_DELETE -> context.getString(R.string.keyboardview_keycode_delete)
-                Keyboard.KEYCODE_DONE -> context.getString(R.string.keyboardview_keycode_done)
-                Keyboard.KEYCODE_MODE_CHANGE -> context.getString(R.string.keyboardview_keycode_mode_change)
-                Keyboard.KEYCODE_SHIFT -> context.getString(R.string.keyboardview_keycode_shift)
+                MyKeyboard.KEYCODE_ALT -> context.getString(R.string.keyboardview_keycode_alt)
+                MyKeyboard.KEYCODE_CANCEL -> context.getString(R.string.keyboardview_keycode_cancel)
+                MyKeyboard.KEYCODE_DELETE -> context.getString(R.string.keyboardview_keycode_delete)
+                MyKeyboard.KEYCODE_DONE -> context.getString(R.string.keyboardview_keycode_done)
+                MyKeyboard.KEYCODE_MODE_CHANGE -> context.getString(R.string.keyboardview_keycode_mode_change)
+                MyKeyboard.KEYCODE_SHIFT -> context.getString(R.string.keyboardview_keycode_shift)
                 '\n'.toInt() -> context.getString(R.string.keyboardview_keycode_enter)
                 else -> code.toChar().toString()
             }
@@ -973,7 +960,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @return true if the long press is handled, false otherwise. Subclasses should call the
      * method on the base class if the subclass doesn't wish to handle the call.
      */
-    protected fun onLongPress(popupKey: Keyboard.Key): Boolean {
+    protected fun onLongPress(popupKey: MyKeyboard.Key): Boolean {
         val popupKeyboardId = popupKey.popupResId
         if (popupKeyboardId != 0) {
             mMiniKeyboardContainer = mMiniKeyboardCache[popupKey]
@@ -1009,10 +996,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
 
                 //mInputView.setSuggest(mSuggest);
-                val keyboard: Keyboard = if (popupKey.popupCharacters != null) {
-                    Keyboard(context, popupKeyboardId, popupKey.popupCharacters, -1, paddingLeft + paddingRight)
+                val keyboard = if (popupKey.popupCharacters != null) {
+                    MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!, -1, paddingLeft + paddingRight)
                 } else {
-                    Keyboard(context, popupKeyboardId)
+                    MyKeyboard(context, popupKeyboardId)
                 }
 
                 mMiniKeyboard!!.setKeyboard(keyboard)
@@ -1282,11 +1269,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun removeMessages() {
-        if (mHandler != null) {
-            mHandler!!.removeMessages(MSG_REPEAT)
-            mHandler!!.removeMessages(MSG_LONGPRESS)
-            mHandler!!.removeMessages(MSG_SHOW_PREVIEW)
-        }
+        mHandler?.removeMessages(MSG_REPEAT)
+        mHandler?.removeMessages(MSG_LONGPRESS)
+        mHandler?.removeMessages(MSG_SHOW_PREVIEW)
     }
 
     public override fun onDetachedFromWindow() {
