@@ -242,26 +242,31 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     init {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.MyKeyboardView, defStyleAttr, defStyleRes)
+        val attributes = context.theme.obtainStyledAttributes(attrs, R.styleable.MyKeyboardView, defStyleAttr, defStyleRes)
         val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         var previewLayout = 0
         val keyTextSize = 0
-        val n = a.indexCount
-        for (i in 0 until n) {
-            val attr = a.getIndex(i)
-            when (attr) {
-                R.styleable.MyKeyboardView_keyBackground -> mKeyBackground = a.getDrawable(attr)
-                R.styleable.MyKeyboardView_verticalCorrection -> mVerticalCorrection = a.getDimensionPixelOffset(attr, 0)
-                R.styleable.MyKeyboardView_keyPreviewLayout -> previewLayout = a.getResourceId(attr, 0)
-                R.styleable.MyKeyboardView_keyPreviewOffset -> mPreviewOffset = a.getDimensionPixelOffset(attr, 0)
-                R.styleable.MyKeyboardView_keyPreviewHeight -> mPreviewHeight = a.getDimensionPixelSize(attr, 80)
-                R.styleable.MyKeyboardView_keyTextSize -> mKeyTextSize = a.getDimensionPixelSize(attr, 18)
-                R.styleable.MyKeyboardView_keyTextColor -> mKeyTextColor = a.getColor(attr, -0x1000000)
-                R.styleable.MyKeyboardView_labelTextSize -> mLabelTextSize = a.getDimensionPixelSize(attr, 14)
-                R.styleable.MyKeyboardView_popupLayout -> mPopupLayout = a.getResourceId(attr, 0)
-                R.styleable.MyKeyboardView_shadowColor -> mShadowColor = a.getColor(attr, 0)
-                R.styleable.MyKeyboardView_shadowRadius -> mShadowRadius = a.getFloat(attr, 0f)
+        val n = attributes.indexCount
+
+        try {
+            for (i in 0 until n) {
+                val attr = attributes.getIndex(i)
+                when (attr) {
+                    R.styleable.MyKeyboardView_keyBackground -> mKeyBackground = attributes.getDrawable(attr)
+                    R.styleable.MyKeyboardView_verticalCorrection -> mVerticalCorrection = attributes.getDimensionPixelOffset(attr, 0)
+                    R.styleable.MyKeyboardView_keyPreviewLayout -> previewLayout = attributes.getResourceId(attr, 0)
+                    R.styleable.MyKeyboardView_keyPreviewOffset -> mPreviewOffset = attributes.getDimensionPixelOffset(attr, 0)
+                    R.styleable.MyKeyboardView_keyPreviewHeight -> mPreviewHeight = attributes.getDimensionPixelSize(attr, 80)
+                    R.styleable.MyKeyboardView_keyTextSize -> mKeyTextSize = attributes.getDimensionPixelSize(attr, 18)
+                    R.styleable.MyKeyboardView_keyTextColor -> mKeyTextColor = attributes.getColor(attr, -0x1000000)
+                    R.styleable.MyKeyboardView_labelTextSize -> mLabelTextSize = attributes.getDimensionPixelSize(attr, 14)
+                    R.styleable.MyKeyboardView_popupLayout -> mPopupLayout = attributes.getResourceId(attr, 0)
+                    R.styleable.MyKeyboardView_shadowColor -> mShadowColor = attributes.getColor(attr, 0)
+                    R.styleable.MyKeyboardView_shadowRadius -> mShadowRadius = attributes.getFloat(attr, 0f)
+                }
             }
+        } finally {
+            attributes.recycle()
         }
 
         mBackgroundDimAmount = 0.5f
