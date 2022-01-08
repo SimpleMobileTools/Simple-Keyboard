@@ -566,7 +566,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 continue
             }
 
-            val drawableState = key.currentDrawableState
+            val drawableState = key.getCurrentDrawableState()
             keyBackground!!.state = drawableState
 
             // Switch the character to uppercase if shift is pressed
@@ -579,7 +579,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             canvas.translate((key.x + kbdPaddingLeft).toFloat(), (key.y + kbdPaddingTop).toFloat())
             keyBackground.draw(canvas)
-            if (label != null) {
+            if (label?.isNotEmpty() == true) {
                 // For characters, use large font. For labels like "Done", use small font.
                 if (label.length > 1 && key.codes.size < 2) {
                     paint.textSize = mLabelTextSize.toFloat()

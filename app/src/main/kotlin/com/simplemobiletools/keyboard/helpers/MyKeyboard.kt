@@ -209,6 +209,16 @@ class MyKeyboard {
      * @attr ref android.R.styleable#Keyboard_Key_keyEdgeFlags
      */
     class Key(parent: Row) {
+        companion object {
+            private val KEY_STATE_NORMAL = intArrayOf()
+            private val KEY_STATE_NORMAL_ON = intArrayOf(android.R.attr.state_checkable, android.R.attr.state_checked)
+            private val KEY_STATE_NORMAL_OFF = intArrayOf(android.R.attr.state_checkable)
+
+            private val KEY_STATE_PRESSED = intArrayOf(android.R.attr.state_pressed)
+            private val KEY_STATE_PRESSED_ON = intArrayOf(android.R.attr.state_pressed, android.R.attr.state_checkable, android.R.attr.state_checked)
+            private val KEY_STATE_PRESSED_OFF = intArrayOf(android.R.attr.state_pressed, android.R.attr.state_checkable)
+        }
+
         /** All the key codes (unicode or custom code) that this key could generate, zero'th being the most important.  */
         var codes = ArrayList<Int>()
 
@@ -414,38 +424,28 @@ class MyKeyboard {
          * @return the drawable state of the key.
          * @see android.graphics.drawable.StateListDrawable.setState
          */
-        val currentDrawableState: IntArray
-            get() {
-                var states: IntArray = KEY_STATE_NORMAL
-                if (on) {
+        fun getCurrentDrawableState(): IntArray {
+            var states: IntArray = KEY_STATE_NORMAL
+            if (on) {
+                states = if (pressed) {
+                    KEY_STATE_PRESSED_ON
+                } else {
+                    KEY_STATE_NORMAL_ON
+                }
+            } else {
+                if (sticky) {
                     states = if (pressed) {
-                        KEY_STATE_PRESSED_ON
+                        KEY_STATE_PRESSED_OFF
                     } else {
-                        KEY_STATE_NORMAL_ON
+                        KEY_STATE_NORMAL_OFF
                     }
                 } else {
-                    if (sticky) {
-                        states = if (pressed) {
-                            KEY_STATE_PRESSED_OFF
-                        } else {
-                            KEY_STATE_NORMAL_OFF
-                        }
-                    } else {
-                        if (pressed) {
-                            states = KEY_STATE_PRESSED
-                        }
+                    if (pressed) {
+                        states = KEY_STATE_PRESSED
                     }
                 }
-                return states
             }
-
-        companion object {
-            private val KEY_STATE_NORMAL_ON = intArrayOf(android.R.attr.state_checkable, android.R.attr.state_checked)
-            private val KEY_STATE_PRESSED_ON = intArrayOf(android.R.attr.state_pressed, android.R.attr.state_checkable, android.R.attr.state_checked)
-            private val KEY_STATE_NORMAL_OFF = intArrayOf(android.R.attr.state_checkable)
-            private val KEY_STATE_PRESSED_OFF = intArrayOf(android.R.attr.state_pressed, android.R.attr.state_checkable)
-            private val KEY_STATE_NORMAL = intArrayOf()
-            private val KEY_STATE_PRESSED = intArrayOf(android.R.attr.state_pressed)
+            return states
         }
     }
 
@@ -712,7 +712,7 @@ class MyKeyboard {
         mDefaultHeight = getDimensionOrFraction(a, R.styleable.Keyboard_keyHeight, mDisplayHeight, 50)
         mDefaultHorizontalGap = getDimensionOrFraction(a, R.styleable.Keyboard_horizontalGap, mDisplayWidth, 0)
         mDefaultVerticalGap = getDimensionOrFraction(a, R.styleable.Keyboard_verticalGap, mDisplayHeight, 0)
-        mProximityThreshold = (mDefaultWidth * SEARCH_DISTANCE) as Int
+        mProximityThreshold = (mDefaultWidth * SEARCH_DISTANCE).toInt()
         mProximityThreshold *= mProximityThreshold // Square it for comparison
         a.recycle()
     }
