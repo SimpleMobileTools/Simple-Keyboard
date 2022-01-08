@@ -608,7 +608,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 paint.setShadowLayer(0f, 0f, 0f, 0)
             } else if (key.icon != null) {
                 val drawableX = (key.width - padding.left - padding.right - key.icon.intrinsicWidth) / 2 + padding.left
-                val drawableY = (key.height - padding.top - padding.bottom - key.icon.intrinsicHeight) / 2 + paddingTop
+                val drawableY = (key.height - key.icon.intrinsicHeight) / 2
                 canvas.translate(drawableX.toFloat(), drawableY.toFloat())
                 key.icon.setBounds(0, 0, key.icon.intrinsicWidth, key.icon.intrinsicHeight)
                 key.icon.draw(canvas)
