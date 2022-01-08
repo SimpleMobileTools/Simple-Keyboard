@@ -18,7 +18,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     override fun onCreateInputView(): View {
         keyboardView = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null) as MyKeyboardView
         keyboard = Keyboard(this, R.xml.keys_layout)
-        keyboardView!!.keyboard = keyboard
+        keyboardView!!.setKeyboard(keyboard!!)
         keyboardView!!.onKeyboardActionListener = this
         return keyboardView!!
     }

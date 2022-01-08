@@ -382,29 +382,27 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @see .getKeyboard
      * @param keyboard the keyboard to display in this view
      */
-    var keyboard: Keyboard?
-        get() = mKeyboard
-        set(keyboard) {
-            if (mKeyboard != null) {
-                showPreview(NOT_A_KEY)
-            }
-
-            // Remove any pending messages
-            removeMessages()
-            mKeyboard = keyboard
-            val keys = mKeyboard!!.keys
-            mKeys = keys.toMutableList() as ArrayList<Keyboard.Key>
-            requestLayout()
-            // Hint to reallocate the buffer if the size changed
-            mKeyboardChanged = true
-            invalidateAllKeys()
-            computeProximityThreshold(keyboard)
-            mMiniKeyboardCache.clear()
-            // Not really necessary to do every time, but will free up views
-            // Switching to a different keyboard should abort any pending keys so that the key up
-            // doesn't get delivered to the old or new keyboard
-            mAbortKey = true // Until the next ACTION_DOWN
+    fun setKeyboard(keyboard: Keyboard) {
+        if (mKeyboard != null) {
+            showPreview(NOT_A_KEY)
         }
+
+        // Remove any pending messages
+        removeMessages()
+        mKeyboard = keyboard
+        val keys = mKeyboard!!.keys
+        mKeys = keys.toMutableList() as ArrayList<Keyboard.Key>
+        requestLayout()
+        // Hint to reallocate the buffer if the size changed
+        mKeyboardChanged = true
+        invalidateAllKeys()
+        computeProximityThreshold(keyboard)
+        mMiniKeyboardCache.clear()
+        // Not really necessary to do every time, but will free up views
+        // Switching to a different keyboard should abort any pending keys so that the key up
+        // doesn't get delivered to the old or new keyboard
+        mAbortKey = true // Until the next ACTION_DOWN
+    }
 
     /**
      * Sets the state of the shift key of the keyboard, if any.
@@ -429,12 +427,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * no shift key on the keyboard or there is no keyboard attached, it returns false.
      * @see KeyboardView.setShifted
      */
-    var isShifted: Boolean = false
-        get() = if (mKeyboard != null) {
+    fun isShifted(): Boolean {
+        return if (mKeyboard != null) {
             mKeyboard!!.isShifted
         } else {
             false
         }
+    }
 
     fun setPopupParent(v: View) {
         mPopupParent = v
@@ -1010,7 +1009,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     Keyboard(context, popupKeyboardId)
                 }
 
-                mMiniKeyboard!!.keyboard = keyboard
+                mMiniKeyboard!!.setKeyboard(keyboard)
                 mMiniKeyboard!!.setPopupParent(this)
                 mMiniKeyboardContainer!!.measure(
                     MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
@@ -1029,7 +1028,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val x = mPopupX + mMiniKeyboardContainer!!.paddingRight + mCoordinates[0]
             val y = mPopupY + mMiniKeyboardContainer!!.paddingBottom + mCoordinates[1]
             mMiniKeyboard!!.setPopupOffset(if (x < 0) 0 else x, y)
-            mMiniKeyboard!!.isShifted = isShifted
+            mMiniKeyboard!!.setShifted(isShifted())
             mPopupKeyboard.contentView = mMiniKeyboardContainer
             mPopupKeyboard.width = mMiniKeyboardContainer!!.measuredWidth
             mPopupKeyboard.height = mMiniKeyboardContainer!!.measuredHeight
