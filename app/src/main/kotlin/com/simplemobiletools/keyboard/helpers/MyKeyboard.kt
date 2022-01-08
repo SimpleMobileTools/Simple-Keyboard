@@ -73,28 +73,14 @@ class MyKeyboard {
 
     /** Key instance for the shift key, if present  */
     private val mShiftKeys = arrayOf<Key?>(null, null)
-    /**
-     * @hide
-     */
+
     /** Key index for the shift key, if present  */
     val shiftKeyIndices = intArrayOf(-1, -1)
 
-    /** Current key width, while loading the keyboard  */
-    private val mKeyWidth = 0
-
-    /** Current key height, while loading the keyboard  */
-    private val mKeyHeight = 0
-    /**
-     * Returns the total height of the keyboard
-     * @return the total height of the keyboard
-     */
     /** Total height of the keyboard, including the padding and keys  */
     var height = 0
 
-    /**
-     * Total width of the keyboard, including left side gaps and keys, but not any gaps on the
-     * right side.
-     */
+    /** Total width of the keyboard, including left side gaps and keys, but not any gaps on the right side. */
     var minWidth = 0
 
     /** List of keys in this keyboard  */
@@ -118,7 +104,6 @@ class MyKeyboard {
     private val rows = ArrayList<Row?>()
 
     companion object {
-        // Keyboard XML Tags
         private const val TAG_KEYBOARD = "Keyboard"
         private const val TAG_ROW = "Row"
         private const val TAG_KEY = "Key"
@@ -225,10 +210,7 @@ class MyKeyboard {
      * @attr ref android.R.styleable#Keyboard_Key_keyEdgeFlags
      */
     class Key(parent: Row) {
-        /**
-         * All the key codes (unicode or custom code) that this key could generate, zero'th
-         * being the most important.
-         */
+        /** All the key codes (unicode or custom code) that this key could generate, zero'th being the most important.  */
         var codes = ArrayList<Int>()
 
         /** Label to display  */
@@ -284,10 +266,7 @@ class MyKeyboard {
         /** The keyboard that this key belongs to  */
         private val keyboard: MyKeyboard = parent.parent
 
-        /**
-         * If this key pops up a mini keyboard, this is the resource id for the XML layout for that
-         * keyboard.
-         */
+        /** If this key pops up a mini keyboard, this is the resource id for the XML layout for that keyboard.  */
         var popupResId = 0
 
         /** Whether this key repeats itself when held down  */
@@ -309,6 +288,7 @@ class MyKeyboard {
             width = getDimensionOrFraction(a, R.styleable.Keyboard_keyWidth, keyboard.mDisplayWidth, parent.defaultWidth)
             height = getDimensionOrFraction(a, R.styleable.Keyboard_keyHeight, keyboard.mDisplayHeight, parent.defaultHeight)
             gap = getDimensionOrFraction(a, R.styleable.Keyboard_horizontalGap, keyboard.mDisplayWidth, parent.defaultHorizontalGap)
+
             a.recycle()
             a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.Keyboard_Key)
             this.x += gap
@@ -351,11 +331,7 @@ class MyKeyboard {
             edgeFlags = parent.rowEdgeFlags
         }
 
-        /**
-         * Informs the key that it has been pressed, in case it needs to change its appearance or
-         * state.
-         * @see .onReleased
-         */
+        /** Informs the key that it has been pressed, in case it needs to change its appearance or state.  */
         fun onPressed() {
             pressed = !pressed
         }
@@ -487,10 +463,7 @@ class MyKeyboard {
      * @param width sets width of keyboard
      * @param height sets height of keyboard
      */
-    constructor(
-        context: Context, @XmlRes xmlLayoutResId: Int, modeId: Int, width: Int,
-        height: Int
-    ) {
+    constructor(context: Context, @XmlRes xmlLayoutResId: Int, modeId: Int, width: Int, height: Int) {
         mDisplayWidth = width
         mDisplayHeight = height
         mDefaultHorizontalGap = 0
@@ -558,8 +531,7 @@ class MyKeyboard {
         val maxColumns = if (columns == -1) Int.MAX_VALUE else columns
         for (element in characters) {
             val c = element
-            if (column >= maxColumns || x + mDefaultWidth + horizontalPadding > mDisplayWidth
-            ) {
+            if (column >= maxColumns || x + mDefaultWidth + horizontalPadding > mDisplayWidth) {
                 x = 0
                 y += mDefaultVerticalGap + mDefaultHeight
                 column = 0
@@ -624,6 +596,7 @@ class MyKeyboard {
             isShifted = shiftState
             return true
         }
+
         return false
     }
 
