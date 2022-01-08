@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,11 +10,10 @@
         android:id="@+id/keyboardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="@android:color/transparent"
-        android:keyPreviewLayout="@layout/keyboard_key_preview"
-        android:keyTextSize="22sp"
-        android:popupLayout="@layout/keyboard_popup_keyboard"
+        app:keyPreviewLayout="@layout/keyboard_key_preview"
+        app:keyTextSize="22sp"
+        app:popupLayout="@layout/keyboard_popup_keyboard"
         tools:ignore="ResourceCycle" />
 
     <ImageButton
@@ -23,7 +23,6 @@
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:background="@android:color/transparent"
-        android:clickable="true"
         android:src="@drawable/ic_cross_vector" />
 
 </LinearLayout>

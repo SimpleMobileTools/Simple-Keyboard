@@ -24,9 +24,9 @@ import android.text.TextUtils
 import android.util.TypedValue
 import android.util.Xml
 import androidx.annotation.XmlRes
+import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.keyboard.R
-import org.xmlpull.v1.XmlPullParserException
-import java.io.IOException
+import java.io.FileNotFoundException
 import java.util.*
 
 /**
@@ -87,7 +87,7 @@ class MyKeyboard {
     var mKeys: MutableList<Key?>? = null
 
     /** List of modifier keys such as Shift & Alt, if any  */
-    private var mModifierKeys: MutableList<Key?>? = null
+    private var mModifierKeys = ArrayList<Key?>()
 
     /** Width of the screen available to fit the keyboard  */
     private var mDisplayWidth = 0
@@ -160,6 +160,7 @@ class MyKeyboard {
 
         /** Vertical gap following this row.  */
         var verticalGap = 0
+
         var mKeys = ArrayList<Key>()
 
         /**
@@ -255,8 +256,7 @@ class MyKeyboard {
         /**
          * Flags that specify the anchoring to edges of the keyboard for detecting touch events
          * that are just out of the boundary of the key. This is a bit mask of
-         * [MyKeyboard.EDGE_LEFT], [MyKeyboard.EDGE_RIGHT], [MyKeyboard.EDGE_TOP] and
-         * [MyKeyboard.EDGE_BOTTOM].
+         * [MyKeyboard.EDGE_LEFT], [MyKeyboard.EDGE_RIGHT], [MyKeyboard.EDGE_TOP] and [MyKeyboard.EDGE_BOTTOM].
          */
         var edgeFlags: Int
 
@@ -275,8 +275,7 @@ class MyKeyboard {
         /** Create a key with the given top-left coordinate and extract its attributes from
          * the XML parser.
          * @param res resources associated with the caller's context
-         * @param parent the row that this key belongs to. The row must already be attached to
-         * a [Keyboard].
+         * @param parent the row that this key belongs to. The row must already be attached to a [MyKeyboard].
          * @param x the x coordinate of the top-left
          * @param y the y coordinate of the top-left
          * @param parser the XML parser containing the attributes for this key
@@ -315,8 +314,9 @@ class MyKeyboard {
 
             icon?.setBounds(0, 0, icon!!.intrinsicWidth, icon!!.intrinsicHeight)
 
-            label = a.getText(R.styleable.Keyboard_Key_keyLabel)
+            label = a.getText(R.styleable.Keyboard_Key_keyLabel) ?: ""
             text = a.getText(R.styleable.Keyboard_Key_keyOutputText)
+
             if (!TextUtils.isEmpty(label)) {
                 codes = arrayListOf(label[0].toInt())
             }
@@ -378,6 +378,7 @@ class MyKeyboard {
                 try {
                     values[count++] = st.nextToken().toInt()
                 } catch (nfe: NumberFormatException) {
+                    mydebug("NumberFormatException $nfe")
                 }
             }
             return values
@@ -454,26 +455,6 @@ class MyKeyboard {
         }
     }
 
-    /**
-     * Creates a keyboard from the given xml key layout file. Weeds out rows
-     * that have a keyboard mode defined but don't match the specified mode.
-     * @param context the application or service context
-     * @param xmlLayoutResId the resource file that contains the keyboard layout and keys.
-     * @param modeId keyboard mode identifier
-     * @param width sets width of keyboard
-     * @param height sets height of keyboard
-     */
-    constructor(context: Context, @XmlRes xmlLayoutResId: Int, modeId: Int, width: Int, height: Int) {
-        mDisplayWidth = width
-        mDisplayHeight = height
-        mDefaultHorizontalGap = 0
-        mDefaultWidth = mDisplayWidth / 10
-        mDefaultVerticalGap = 0
-        mDefaultHeight = mDefaultWidth
-        mKeys = ArrayList()
-        mKeyboardMode = modeId
-        loadKeyboard(context, context.resources.getXml(xmlLayoutResId))
-    }
     /**
      * Creates a keyboard from the given xml key layout file. Weeds out rows
      * that have a keyboard mode defined but don't match the specified mode.
@@ -640,12 +621,12 @@ class MyKeyboard {
      * point is out of range, then an array of size zero is returned.
      */
     fun getNearestKeys(x: Int, y: Int): IntArray {
-        if (x in 0 until minWidth && y >= 0 && y < height) {
+        /*if (x in 0 until minWidth && y >= 0 && y < height) {
             val index: Int = y / mCellHeight * GRID_WIDTH + x / mCellWidth
             if (index < GRID_SIZE) {
                 return mGridNeighbors[index]!!
             }
-        }
+        }*/
         return IntArray(0)
     }
 
@@ -660,25 +641,24 @@ class MyKeyboard {
     private fun loadKeyboard(context: Context, parser: XmlResourceParser) {
         var inKey = false
         var inRow = false
-        val leftMostKey = false
         var row = 0
         var x = 0
         var y = 0
         var key: Key? = null
         var currentRow: Row? = null
         val res = context.resources
-        var skipRow = false
         try {
             var event: Int
             while (parser.next().also { event = it } != XmlResourceParser.END_DOCUMENT) {
                 if (event == XmlResourceParser.START_TAG) {
                     val tag = parser.name
                     if (TAG_ROW == tag) {
+                        //mydebug("row $currentRow")
                         inRow = true
                         x = 0
                         currentRow = createRowFromXml(res, parser)
                         rows.add(currentRow)
-                        skipRow = currentRow.mode != 0 && currentRow.mode != mKeyboardMode
+                        val skipRow = currentRow.mode != 0 && currentRow.mode != mKeyboardMode
                         if (skipRow) {
                             skipToEndOfRow(parser)
                             inRow = false
@@ -696,9 +676,9 @@ class MyKeyboard {
                                     break
                                 }
                             }
-                            mModifierKeys!!.add(key)
+                            mModifierKeys.add(key)
                         } else if (key.codes[0] == KEYCODE_ALT) {
-                            mModifierKeys!!.add(key)
+                            mModifierKeys.add(key)
                         }
                         currentRow.mKeys.add(key)
                     } else if (TAG_KEYBOARD == tag) {
@@ -719,12 +699,12 @@ class MyKeyboard {
                     }
                 }
             }
-        } catch (e: Exception) {
+        } catch (e: FileNotFoundException) {
+            mydebug("Exception $e")
         }
         height = y - mDefaultVerticalGap
     }
 
-    @Throws(XmlPullParserException::class, IOException::class)
     private fun skipToEndOfRow(parser: XmlResourceParser) {
         var event: Int
         while (parser.next().also { event = it } != XmlResourceParser.END_DOCUMENT) {
