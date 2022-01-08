@@ -1,6 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/keyboard_popup_panel_background"
@@ -10,11 +8,7 @@
         android:id="@+id/keyboardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:keyPreviewLayout="@layout/keyboard_key_preview"
-        app:keyTextSize="22sp"
-        app:popupLayout="@layout/keyboard_popup_keyboard"
-        tools:ignore="ResourceCycle" />
+        android:background="@android:color/transparent" />
 
     <ImageButton
         android:id="@+id/closeButton"
