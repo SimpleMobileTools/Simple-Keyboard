@@ -460,7 +460,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun adjustCase(label: CharSequence): CharSequence? {
         var newLabel: CharSequence? = label
-        if (mKeyboard!!.isShifted && newLabel != null && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
+        if (newLabel != null && newLabel.isNotEmpty() && mKeyboard!!.isShifted && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
             newLabel = newLabel.toString().toUpperCase()
         }
         return newLabel
