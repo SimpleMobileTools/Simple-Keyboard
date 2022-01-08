@@ -24,9 +24,7 @@ import android.text.TextUtils
 import android.util.TypedValue
 import android.util.Xml
 import androidx.annotation.XmlRes
-import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.keyboard.R
-import java.io.FileNotFoundException
 import java.util.*
 
 /**
@@ -311,7 +309,6 @@ class MyKeyboard {
             edgeFlags = a.getInt(R.styleable.Keyboard_Key_keyEdgeFlags, 0)
             edgeFlags = edgeFlags or parent.rowEdgeFlags
             icon = a.getDrawable(R.styleable.Keyboard_Key_keyIcon)
-
             icon?.setBounds(0, 0, icon!!.intrinsicWidth, icon!!.intrinsicHeight)
 
             label = a.getText(R.styleable.Keyboard_Key_keyLabel) ?: ""
@@ -339,10 +336,8 @@ class MyKeyboard {
         /**
          * Changes the pressed state of the key.
          *
-         *
          * Toggled state of the key will be flipped when all the following conditions are
          * fulfilled:
-         *
          *
          *  * This is a sticky key, that is, [.sticky] is `true`.
          *  * The parameter `inside` is `true`.
@@ -378,7 +373,6 @@ class MyKeyboard {
                 try {
                     values[count++] = st.nextToken().toInt()
                 } catch (nfe: NumberFormatException) {
-                    mydebug("NumberFormatException $nfe")
                 }
             }
             return values
@@ -653,7 +647,6 @@ class MyKeyboard {
                 if (event == XmlResourceParser.START_TAG) {
                     val tag = parser.name
                     if (TAG_ROW == tag) {
-                        //mydebug("row $currentRow")
                         inRow = true
                         x = 0
                         currentRow = createRowFromXml(res, parser)
@@ -699,8 +692,7 @@ class MyKeyboard {
                     }
                 }
             }
-        } catch (e: FileNotFoundException) {
-            mydebug("Exception $e")
+        } catch (e: Exception) {
         }
         height = y - mDefaultVerticalGap
     }
