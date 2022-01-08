@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<MyKeyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
     app:keyBackground="@color/color_primary_dark"
     app:keyHeight="60dp"
     app:keyTextColor="@color/color_accent"
@@ -126,4 +126,4 @@
             app:keyIcon="@drawable/ic_enter_vector"
             app:keyWidth="20%p" />
     </Row>
-</MyKeyboard>
+</Keyboard>

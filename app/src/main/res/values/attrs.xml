@@ -34,7 +34,7 @@
         <attr name="shadowRadius" format="float" />
     </declare-styleable>
 
-    <declare-styleable name="Keyboard">
+    <declare-styleable name="MyKeyboard">
         <!-- Default width of a key, in pixels or percentage of display width. -->
         <attr name="keyWidth" format="dimension|fraction" />
         <!-- Default height of a key, in pixels or percentage of display width. -->
@@ -45,7 +45,7 @@
         <attr name="verticalGap" format="dimension|fraction" />
     </declare-styleable>
 
-    <declare-styleable name="Keyboard_Row">
+    <declare-styleable name="MyKeyboard_Row">
         <!-- Row edge flags. -->
         <attr name="rowEdgeFlags">
             <!-- Row is anchored to the top of the keyboard. -->
@@ -57,7 +57,7 @@
         <attr name="keyboardMode" format="reference" />
     </declare-styleable>
 
-    <declare-styleable name="Keyboard_Key">
+    <declare-styleable name="MyKeyboard_Key">
         <!-- The unicode value or comma-separated values that this key outputs. -->
         <attr name="codes" format="integer|string" />
         <!-- The XML keyboard layout of any popup keyboard. -->

@@ -20,7 +20,6 @@ import android.content.res.Resources
 import android.content.res.TypedArray
 import android.content.res.XmlResourceParser
 import android.graphics.drawable.Drawable
-import android.text.TextUtils
 import android.util.TypedValue
 import android.util.Xml
 import androidx.annotation.XmlRes
@@ -177,16 +176,16 @@ class MyKeyboard {
 
         constructor(res: Resources, parent: MyKeyboard, parser: XmlResourceParser?) {
             this.parent = parent
-            var a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.Keyboard)
-            defaultWidth = getDimensionOrFraction(a, R.styleable.Keyboard_keyWidth, parent.mDisplayWidth, parent.mDefaultWidth)
-            defaultHeight = getDimensionOrFraction(a, R.styleable.Keyboard_keyHeight, parent.mDisplayHeight, parent.mDefaultHeight)
-            defaultHorizontalGap = getDimensionOrFraction(a, R.styleable.Keyboard_horizontalGap, parent.mDisplayWidth, parent.mDefaultHorizontalGap)
-            verticalGap = getDimensionOrFraction(a, R.styleable.Keyboard_verticalGap, parent.mDisplayHeight, parent.mDefaultVerticalGap)
+            var a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard)
+            defaultWidth = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, parent.mDisplayWidth, parent.mDefaultWidth)
+            defaultHeight = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyHeight, parent.mDisplayHeight, parent.mDefaultHeight)
+            defaultHorizontalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, parent.mDisplayWidth, parent.mDefaultHorizontalGap)
+            verticalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_verticalGap, parent.mDisplayHeight, parent.mDefaultVerticalGap)
 
             a.recycle()
-            a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.Keyboard_Row)
-            rowEdgeFlags = a.getInt(R.styleable.Keyboard_Row_rowEdgeFlags, 0)
-            mode = a.getResourceId(R.styleable.Keyboard_Row_keyboardMode, 0)
+            a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard_Row)
+            rowEdgeFlags = a.getInt(R.styleable.MyKeyboard_Row_rowEdgeFlags, 0)
+            mode = a.getResourceId(R.styleable.MyKeyboard_Row_keyboardMode, 0)
         }
     }
 
@@ -291,40 +290,40 @@ class MyKeyboard {
         constructor(res: Resources, parent: Row, x: Int, y: Int, parser: XmlResourceParser?) : this(parent) {
             this.x = x
             this.y = y
-            var a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.Keyboard)
-            width = getDimensionOrFraction(a, R.styleable.Keyboard_keyWidth, keyboard.mDisplayWidth, parent.defaultWidth)
-            height = getDimensionOrFraction(a, R.styleable.Keyboard_keyHeight, keyboard.mDisplayHeight, parent.defaultHeight)
-            gap = getDimensionOrFraction(a, R.styleable.Keyboard_horizontalGap, keyboard.mDisplayWidth, parent.defaultHorizontalGap)
+            var a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard)
+            width = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, keyboard.mDisplayWidth, parent.defaultWidth)
+            height = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyHeight, keyboard.mDisplayHeight, parent.defaultHeight)
+            gap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, keyboard.mDisplayWidth, parent.defaultHorizontalGap)
 
             a.recycle()
-            a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.Keyboard_Key)
+            a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard_Key)
             this.x += gap
             val codesValue = TypedValue()
 
-            a.getValue(R.styleable.Keyboard_Key_codes, codesValue)
+            a.getValue(R.styleable.MyKeyboard_Key_codes, codesValue)
             if (codesValue.type == TypedValue.TYPE_INT_DEC || codesValue.type == TypedValue.TYPE_INT_HEX) {
                 codes = arrayListOf(codesValue.data)
             } else if (codesValue.type == TypedValue.TYPE_STRING) {
                 codes = parseCSV(codesValue.string.toString())
             }
 
-            iconPreview = a.getDrawable(R.styleable.Keyboard_Key_iconPreview)
+            iconPreview = a.getDrawable(R.styleable.MyKeyboard_Key_iconPreview)
             iconPreview?.setBounds(0, 0, iconPreview!!.intrinsicWidth, iconPreview!!.intrinsicHeight)
 
-            popupCharacters = a.getText(R.styleable.Keyboard_Key_popupCharacters)
-            popupResId = a.getResourceId(R.styleable.Keyboard_Key_popupKeyboard, 0)
-            repeatable = a.getBoolean(R.styleable.Keyboard_Key_isRepeatable, false)
-            modifier = a.getBoolean(R.styleable.Keyboard_Key_isModifier, false)
-            sticky = a.getBoolean(R.styleable.Keyboard_Key_isSticky, false)
-            edgeFlags = a.getInt(R.styleable.Keyboard_Key_keyEdgeFlags, 0)
+            popupCharacters = a.getText(R.styleable.MyKeyboard_Key_popupCharacters)
+            popupResId = a.getResourceId(R.styleable.MyKeyboard_Key_popupKeyboard, 0)
+            repeatable = a.getBoolean(R.styleable.MyKeyboard_Key_isRepeatable, false)
+            modifier = a.getBoolean(R.styleable.MyKeyboard_Key_isModifier, false)
+            sticky = a.getBoolean(R.styleable.MyKeyboard_Key_isSticky, false)
+            edgeFlags = a.getInt(R.styleable.MyKeyboard_Key_keyEdgeFlags, 0)
             edgeFlags = edgeFlags or parent.rowEdgeFlags
-            icon = a.getDrawable(R.styleable.Keyboard_Key_keyIcon)
+            icon = a.getDrawable(R.styleable.MyKeyboard_Key_keyIcon)
             icon?.setBounds(0, 0, icon!!.intrinsicWidth, icon!!.intrinsicHeight)
 
-            label = a.getText(R.styleable.Keyboard_Key_keyLabel) ?: ""
-            text = a.getText(R.styleable.Keyboard_Key_keyOutputText)
+            label = a.getText(R.styleable.MyKeyboard_Key_keyLabel) ?: ""
+            text = a.getText(R.styleable.MyKeyboard_Key_keyOutputText)
 
-            if (!TextUtils.isEmpty(label)) {
+            if (label.isNotEmpty()) {
                 codes = arrayListOf(label[0].toInt())
             }
             a.recycle()
@@ -707,11 +706,11 @@ class MyKeyboard {
     }
 
     private fun parseKeyboardAttributes(res: Resources, parser: XmlResourceParser) {
-        val a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.Keyboard)
-        mDefaultWidth = getDimensionOrFraction(a, R.styleable.Keyboard_keyWidth, mDisplayWidth, mDisplayWidth / 10)
-        mDefaultHeight = getDimensionOrFraction(a, R.styleable.Keyboard_keyHeight, mDisplayHeight, 50)
-        mDefaultHorizontalGap = getDimensionOrFraction(a, R.styleable.Keyboard_horizontalGap, mDisplayWidth, 0)
-        mDefaultVerticalGap = getDimensionOrFraction(a, R.styleable.Keyboard_verticalGap, mDisplayHeight, 0)
+        val a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard)
+        mDefaultWidth = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, mDisplayWidth, mDisplayWidth / 10)
+        mDefaultHeight = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyHeight, mDisplayHeight, 50)
+        mDefaultHorizontalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, mDisplayWidth, 0)
+        mDefaultVerticalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_verticalGap, mDisplayHeight, 0)
         mProximityThreshold = (mDefaultWidth * SEARCH_DISTANCE).toInt()
         mProximityThreshold *= mProximityThreshold // Square it for comparison
         a.recycle()
