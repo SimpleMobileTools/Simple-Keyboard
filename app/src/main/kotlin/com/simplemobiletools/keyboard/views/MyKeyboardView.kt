@@ -763,6 +763,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED, keyCode
                 )
             }
+
             if (mCurrentKeyIndex != NOT_A_KEY && keys.size > mCurrentKeyIndex) {
                 val newKey = keys[mCurrentKeyIndex]
                 newKey.onPressed()
