@@ -144,7 +144,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @see .isPreviewEnabled
      */
     var isPreviewEnabled = true
-    private val mShowTouchPoints = true
     private var mPopupPreviewX = 0
     private var mPopupPreviewY = 0
     private var mLastX = 0
@@ -225,7 +224,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     var mHandler: Handler? = null
 
     companion object {
-        private const val DEBUG = false
         private const val NOT_A_KEY = -1
         private val KEY_DELETE = intArrayOf(Keyboard.KEYCODE_DELETE)
         private val LONG_PRESSABLE_STATE_SET = intArrayOf(R.attr.state_long_pressable)
@@ -618,22 +616,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
             canvas.translate((-key.x - kbdPaddingLeft).toFloat(), (-key.y - kbdPaddingTop).toFloat())
         }
+
         mInvalidatedKey = null
         // Overlay a dark rectangle to dim the keyboard
         if (mMiniKeyboardOnScreen) {
             paint.color = (mBackgroundDimAmount * 0xFF).toInt() shl 24
             canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
         }
-        if (DEBUG && mShowTouchPoints) {
-            paint.alpha = 128
-            paint.color = -0x10000
-            canvas.drawCircle(mStartX.toFloat(), mStartY.toFloat(), 3f, paint)
-            canvas.drawLine(mStartX.toFloat(), mStartY.toFloat(), mLastX.toFloat(), mLastY.toFloat(), paint)
-            paint.color = -0xffff01
-            canvas.drawCircle(mLastX.toFloat(), mLastY.toFloat(), 3f, paint)
-            paint.color = -0xff0100
-            canvas.drawCircle(((mStartX + mLastX) / 2).toFloat(), ((mStartY + mLastY) / 2).toFloat(), 2f, paint)
-        }
+
         mCanvas!!.restore()
         mDrawPending = false
         mDirtyRect.setEmpty()
