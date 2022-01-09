@@ -742,14 +742,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 oldKey.onReleased(mCurrentKeyIndex == NOT_A_KEY)
                 invalidateKey(oldKeyIndex)
                 val keyCode = oldKey.codes[0]
-                sendAccessibilityEventForUnicodeCharacter(
-                    AccessibilityEvent.TYPE_VIEW_HOVER_EXIT,
-                    keyCode
-                )
-                // TODO: We need to implement AccessibilityNodeProvider for this view.
-                sendAccessibilityEventForUnicodeCharacter(
-                    AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED, keyCode
-                )
+                sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT, keyCode)
+                sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED, keyCode)
             }
 
             if (mCurrentKeyIndex != NOT_A_KEY && keys.size > mCurrentKeyIndex) {
@@ -758,10 +752,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 invalidateKey(mCurrentKeyIndex)
                 val keyCode = newKey.codes[0]
                 sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER, keyCode)
-                // TODO: We need to implement AccessibilityNodeProvider for this view.
-                sendAccessibilityEventForUnicodeCharacter(
-                    AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, keyCode
-                )
+                sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, keyCode)
             }
         }
 
@@ -863,17 +854,16 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mPopupPreviewY += popupHeight
         }
 
-        if (previewPopup.isShowing) {
-            previewPopup.update(
-                mPopupPreviewX, mPopupPreviewY,
-                popupWidth, popupHeight
-            )
-        } else {
-            previewPopup.width = popupWidth
-            previewPopup.height = popupHeight
-            previewPopup.showAtLocation(mPopupParent, Gravity.NO_GRAVITY, mPopupPreviewX, mPopupPreviewY)
+        if (key.label.isNotEmpty()) {
+            if (previewPopup.isShowing) {
+                previewPopup.update(mPopupPreviewX, mPopupPreviewY, popupWidth, popupHeight)
+            } else {
+                previewPopup.width = popupWidth
+                previewPopup.height = popupHeight
+                previewPopup.showAtLocation(mPopupParent, Gravity.NO_GRAVITY, mPopupPreviewX, mPopupPreviewY)
+            }
+            mPreviewText!!.visibility = VISIBLE
         }
-        mPreviewText!!.visibility = VISIBLE
     }
 
     private fun sendAccessibilityEventForUnicodeCharacter(eventType: Int, code: Int) {

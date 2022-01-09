@@ -115,7 +115,6 @@
             app:codes="32"
             app:iconPreview="@null"
             app:isRepeatable="true"
-            app:keyLabel=""
             app:keyWidth="60%p" />
         <Key
             app:codes="46"
