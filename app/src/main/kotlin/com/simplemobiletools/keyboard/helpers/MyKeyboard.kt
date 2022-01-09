@@ -20,6 +20,7 @@ import android.content.res.Resources
 import android.content.res.TypedArray
 import android.content.res.XmlResourceParser
 import android.graphics.drawable.Drawable
+import android.util.SparseArray
 import android.util.TypedValue
 import android.util.Xml
 import androidx.annotation.XmlRes
@@ -96,7 +97,7 @@ class MyKeyboard {
     private var mKeyboardMode = 0
     private var mCellWidth = 0
     private var mCellHeight = 0
-    private var mGridNeighbors = ArrayList<IntArray?>()
+    private var mGridNeighbors: SparseArray<IntArray?>? = null
     private var mProximityThreshold = 0
     private val rows = ArrayList<Row?>()
 
@@ -578,7 +579,7 @@ class MyKeyboard {
         // Round-up so we don't have any pixels outside the grid
         mCellWidth = (minWidth + GRID_WIDTH - 1) / GRID_WIDTH
         mCellHeight = (height + GRID_HEIGHT - 1) / GRID_HEIGHT
-        mGridNeighbors = ArrayList<IntArray?>()
+        mGridNeighbors = SparseArray<IntArray?>(GRID_SIZE)
         val indices = IntArray(mKeys!!.size)
         val gridWidth: Int = GRID_WIDTH * mCellWidth
         val gridHeight: Int = GRID_HEIGHT * mCellHeight
@@ -597,9 +598,10 @@ class MyKeyboard {
                         indices[count++] = i
                     }
                 }
+
                 val cell = IntArray(count)
                 System.arraycopy(indices, 0, cell, 0, count)
-                mGridNeighbors[y / mCellHeight * GRID_WIDTH + x / mCellWidth] = cell
+                mGridNeighbors!!.put(y / mCellHeight * GRID_WIDTH + x / mCellWidth, cell)
                 y += mCellHeight
             }
             x += mCellWidth
@@ -614,12 +616,16 @@ class MyKeyboard {
      * point is out of range, then an array of size zero is returned.
      */
     fun getNearestKeys(x: Int, y: Int): IntArray {
-        /*if (x in 0 until minWidth && y >= 0 && y < height) {
-            val index: Int = y / mCellHeight * GRID_WIDTH + x / mCellWidth
+        if (mGridNeighbors == null) {
+            computeNearestNeighbors()
+        }
+
+        if (x in 0 until minWidth && y >= 0 && y < height) {
+            val index = y / mCellHeight * GRID_WIDTH + x / mCellWidth
             if (index < GRID_SIZE) {
-                return mGridNeighbors[index]!!
+                return mGridNeighbors!![index]!!
             }
-        }*/
+        }
         return IntArray(0)
     }
 
