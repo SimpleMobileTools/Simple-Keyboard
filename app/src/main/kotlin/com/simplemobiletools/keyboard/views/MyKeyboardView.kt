@@ -797,7 +797,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 key.icon
             }
             mPreviewText!!.setCompoundDrawables(null, null, null, bottomDrawable)
-            mPreviewText!!.text = null
         } else {
             mPreviewText!!.setCompoundDrawables(null, null, null, null)
             mPreviewText!!.text = getPreviewText(key)
