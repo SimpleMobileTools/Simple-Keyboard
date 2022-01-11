@@ -599,6 +599,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 // Turn off drop shadow
                 paint.setShadowLayer(0f, 0f, 0f, 0)
             } else if (key.icon != null) {
+                if (key.codes.size == 1 && key.codes.contains(-1)) {
+                    val drawableId = if (isShifted()) {
+                        R.drawable.ic_caps_vector
+                    } else {
+                        R.drawable.ic_caps_outline_vector
+                    }
+                    key.icon = resources.getDrawable(drawableId)
+                }
+
                 val drawableX = (key.width - padding.left - padding.right - key.icon!!.intrinsicWidth) / 2 + padding.left
                 val drawableY = (key.height - key.icon!!.intrinsicHeight) / 2
                 canvas.translate(drawableX.toFloat(), drawableY.toFloat())
