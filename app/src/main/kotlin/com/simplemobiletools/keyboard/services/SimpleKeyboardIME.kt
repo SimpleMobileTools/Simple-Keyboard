@@ -23,7 +23,9 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         return keyboardView!!
     }
 
-    override fun onPress(primaryCode: Int) {}
+    override fun onPress(primaryCode: Int) {
+        keyboardView?.performHapticFeedback()
+    }
 
     override fun onRelease(primaryCode: Int) {}
 
@@ -56,7 +58,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 }
             }
         }
-        keyboardView?.performHapticFeedback()
     }
 
     override fun onText(text: CharSequence?) {}
