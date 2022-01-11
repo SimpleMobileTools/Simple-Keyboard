@@ -871,6 +871,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 previewPopup.showAtLocation(mPopupParent, Gravity.NO_GRAVITY, mPopupPreviewX, mPopupPreviewY)
             }
             mPreviewText!!.visibility = VISIBLE
+        } else {
+            previewPopup.dismiss()
         }
     }
 
