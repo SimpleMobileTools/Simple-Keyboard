@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.Paint.Align
 import android.graphics.drawable.Drawable
+import android.inputmethodservice.KeyboardView
 import android.media.AudioManager
 import android.os.Handler
 import android.os.Message
@@ -18,6 +19,9 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.helpers.MyKeyboard
+import com.simplemobiletools.keyboard.helpers.SHIFT_OFF
+import com.simplemobiletools.keyboard.helpers.SHIFT_ON_ONE_CHAR
+import com.simplemobiletools.keyboard.helpers.SHIFT_ON_PERMANENT
 import java.util.*
 
 /**
@@ -415,13 +419,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @return true if the shift key state changed, false if there was no change
      * @see KeyboardView.isShifted
      */
-    fun setShifted(shifted: Boolean): Boolean {
-        if (mKeyboard?.setShifted(shifted) == true) {
+    fun setShifted(shiftState: Int) {
+        if (mKeyboard?.setShifted(shiftState) == true) {
             // The whole keyboard probably needs to be redrawn
             invalidateAllKeys()
-            return true
         }
-        return false
     }
 
     /**
@@ -431,7 +433,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @see KeyboardView.setShifted
      */
     fun isShifted(): Boolean {
-        return mKeyboard?.isShifted ?: false
+        return mKeyboard?.shiftState ?: SHIFT_OFF > SHIFT_OFF
     }
 
     fun setPopupParent(v: View) {
@@ -456,7 +458,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun adjustCase(label: CharSequence): CharSequence? {
         var newLabel: CharSequence? = label
-        if (newLabel != null && newLabel.isNotEmpty() && mKeyboard!!.isShifted && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
+        if (newLabel != null && newLabel.isNotEmpty() && mKeyboard!!.shiftState > SHIFT_OFF && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
             newLabel = newLabel.toString().toUpperCase()
         }
         return newLabel
@@ -598,12 +600,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 )
                 // Turn off drop shadow
                 paint.setShadowLayer(0f, 0f, 0f, 0)
-            } else if (key.icon != null) {
+            } else if (key.icon != null && mKeyboard != null) {
                 if (key.codes.size == 1 && key.codes.contains(-1)) {
-                    val drawableId = if (isShifted()) {
-                        R.drawable.ic_caps_vector
-                    } else {
-                        R.drawable.ic_caps_outline_vector
+                    val drawableId = when (mKeyboard!!.shiftState) {
+                        SHIFT_OFF -> R.drawable.ic_caps_outline_vector
+                        SHIFT_ON_ONE_CHAR -> R.drawable.ic_caps_vector
+                        else -> R.drawable.ic_caps_underlined_vector
                     }
                     key.icon = resources.getDrawable(drawableId)
                 }
@@ -808,7 +810,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mPreviewText!!.setCompoundDrawables(null, null, null, bottomDrawable)
         } else {
             mPreviewText!!.setCompoundDrawables(null, null, null, null)
-            mPreviewText!!.text = getPreviewText(key)
+            try {
+                mPreviewText!!.text = getPreviewText(key)
+            } catch (ignored: Exception) {
+            }
+
             if (key.label.length > 1 && key.codes.size < 2) {
                 mPreviewText!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, mKeyTextSize.toFloat())
                 mPreviewText!!.typeface = Typeface.DEFAULT_BOLD
@@ -1020,7 +1026,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val x = mPopupX + mMiniKeyboardContainer!!.paddingRight + mCoordinates[0]
             val y = mPopupY + mMiniKeyboardContainer!!.paddingBottom + mCoordinates[1]
             mMiniKeyboard!!.setPopupOffset(if (x < 0) 0 else x, y)
-            mMiniKeyboard!!.setShifted(isShifted())
+
+            val miniShiftStatus = if (isShifted()) SHIFT_ON_PERMANENT else SHIFT_OFF
+            mMiniKeyboard!!.setShifted(miniShiftStatus)
             mPopupKeyboard.contentView = mMiniKeyboardContainer
             mPopupKeyboard.width = mMiniKeyboardContainer!!.measuredWidth
             mPopupKeyboard.height = mMiniKeyboardContainer!!.measuredHeight

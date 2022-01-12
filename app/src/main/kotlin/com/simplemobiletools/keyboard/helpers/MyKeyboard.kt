@@ -67,7 +67,7 @@ class MyKeyboard {
     protected var mDefaultVerticalGap = 0
 
     /** Is the keyboard in the shifted state  */
-    var isShifted = false
+    var shiftState = SHIFT_OFF
 
     /** Key instance for the shift key, if present  */
     private val mShiftKeys = arrayOf<Key?>(null, null)
@@ -562,13 +562,13 @@ class MyKeyboard {
         // also recalculate the vertical sizes/positions when we get this resize call.
     }
 
-    fun setShifted(shiftState: Boolean): Boolean {
+    fun setShifted(shiftState: Int): Boolean {
         for (shiftKey in mShiftKeys) {
-            shiftKey?.on = shiftState
+            shiftKey?.on = shiftState > SHIFT_OFF
         }
 
-        if (isShifted != shiftState) {
-            isShifted = shiftState
+        if (this.shiftState != shiftState) {
+            this.shiftState = shiftState
             return true
         }
 
