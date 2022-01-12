@@ -51,9 +51,6 @@ import java.util.*
  * @attr ref android.R.styleable#Keyboard_verticalGap
  */
 class MyKeyboard {
-    /** Keyboard label  */
-    private val mLabel: CharSequence? = null
-
     /** Horizontal gap default for all rows  */
     protected var mDefaultHorizontalGap = 0
 
@@ -252,9 +249,6 @@ class MyKeyboard {
         /** The current pressed state of this key  */
         var pressed = false
 
-        /** If this is a sticky key, is it on?  */
-        var on = false
-
         /** Text to output when pressed. This can be multiple characters, like ".com"  */
         var text: CharSequence? = null
 
@@ -343,29 +337,6 @@ class MyKeyboard {
             pressed = !pressed
         }
 
-        /**
-         * Changes the pressed state of the key.
-         *
-         * Toggled state of the key will be flipped when all the following conditions are
-         * fulfilled:
-         *
-         *  * This is a sticky key, that is, [.sticky] is `true`.
-         *  * The parameter `inside` is `true`.
-         *  * [android.os.Build.VERSION.SDK_INT] is greater than
-         * [android.os.Build.VERSION_CODES.LOLLIPOP_MR1].
-         *
-         *
-         * @param inside whether the finger was released inside the key. Works only on Android M and
-         * later. See the method document for details.
-         * @see .onPressed
-         */
-        fun onReleased(inside: Boolean) {
-            pressed = !pressed
-            if (sticky && inside) {
-                on = !on
-            }
-        }
-
         fun parseCSV(value: String): ArrayList<Int> {
             var count = 0
             var lastIndex = 0
@@ -417,35 +388,6 @@ class MyKeyboard {
             val xDist = this.x + width / 2 - x
             val yDist = this.y + height / 2 - y
             return xDist * xDist + yDist * yDist
-        }
-
-        /**
-         * Returns the drawable state for the key, based on the current state and type of the key.
-         * @return the drawable state of the key.
-         * @see android.graphics.drawable.StateListDrawable.setState
-         */
-        fun getCurrentDrawableState(): IntArray {
-            var states: IntArray = KEY_STATE_NORMAL
-            if (on) {
-                states = if (pressed) {
-                    KEY_STATE_PRESSED_ON
-                } else {
-                    KEY_STATE_NORMAL_ON
-                }
-            } else {
-                if (sticky) {
-                    states = if (pressed) {
-                        KEY_STATE_PRESSED_OFF
-                    } else {
-                        KEY_STATE_NORMAL_OFF
-                    }
-                } else {
-                    if (pressed) {
-                        states = KEY_STATE_PRESSED
-                    }
-                }
-            }
-            return states
         }
     }
 
@@ -563,10 +505,6 @@ class MyKeyboard {
     }
 
     fun setShifted(shiftState: Int): Boolean {
-        for (shiftKey in mShiftKeys) {
-            shiftKey?.on = shiftState > SHIFT_OFF
-        }
-
         if (this.shiftState != shiftState) {
             this.shiftState = shiftState
             return true

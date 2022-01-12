@@ -568,13 +568,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 continue
             }
 
-            val drawableState = key.getCurrentDrawableState()
-            keyBackground!!.state = drawableState
-
             // Switch the character to uppercase if shift is pressed
             val label = adjustCase(key.label)?.toString()
-
-            val bounds = keyBackground.bounds
+            val bounds = keyBackground!!.bounds
             if (key.width != bounds.right || key.height != bounds.bottom) {
                 keyBackground.setBounds(0, 0, key.width, key.height)
             }
@@ -750,7 +746,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         if (oldKeyIndex != mCurrentKeyIndex) {
             if (oldKeyIndex != NOT_A_KEY && keys.size > oldKeyIndex) {
                 val oldKey = keys[oldKeyIndex]
-                oldKey.onReleased(mCurrentKeyIndex == NOT_A_KEY)
                 invalidateKey(oldKeyIndex)
                 val keyCode = oldKey.codes[0]
                 sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT, keyCode)
