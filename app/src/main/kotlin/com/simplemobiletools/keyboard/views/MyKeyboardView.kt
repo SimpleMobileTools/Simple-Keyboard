@@ -40,7 +40,7 @@ import java.util.*
  *
  */
 class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int = R.attr.keyboardViewStyle, defStyleRes: Int = 0) :
-    View(context, attrs, defStyleAttr, defStyleRes), View.OnClickListener {
+    View(context, attrs, defStyleAttr, defStyleRes) {
 
     /**
      * Listener for virtual keyboard events.
@@ -188,6 +188,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private val mSwipeTracker: SwipeTracker = SwipeTracker()
     private val mSwipeThreshold: Int
     private val mDisambiguateSwipe: Boolean
+    private var mPopupStartX = 0f
 
     // Variables for dealing with multiple pointers
     private var mOldPointerCount = 1
@@ -446,14 +447,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         if (mPreviewPopup.isShowing) {
             mPreviewPopup.dismiss()
         }
-    }
-
-    /**
-     * Popup keyboard close button clicked.
-     * @hide
-     */
-    override fun onClick(v: View) {
-        dismissPopupKeyboard()
     }
 
     private fun adjustCase(label: CharSequence): CharSequence? {
@@ -968,8 +961,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
                 mMiniKeyboardContainer = inflater.inflate(mPopupLayout, null)
                 mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.keyboardView) as MyKeyboardView
-                val closeButton = mMiniKeyboardContainer!!.findViewById<View>(R.id.closeButton)
-                closeButton?.setOnClickListener(this)
 
                 mMiniKeyboard!!.onKeyboardActionListener = object : OnKeyboardActionListener {
                     override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
@@ -983,7 +974,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     }
 
                     override fun swipeLeft() {}
+
                     override fun swipeRight() {}
+
                     override fun swipeUp() {}
                     override fun swipeDown() {}
                     override fun onPress(primaryCode: Int) {
@@ -1053,7 +1046,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         // deal with the typical multi-pointer behavior of two-thumb typing
         val pointerCount = me.pointerCount
         val action = me.action
-        var result = false
+        var result: Boolean
         val now = me.eventTime
         if (pointerCount != mOldPointerCount) {
             if (pointerCount == 1) {
@@ -1081,7 +1074,24 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 result = true
             }
         }
+
         mOldPointerCount = pointerCount
+
+        // handle moving between alternative popup characters by swiping
+        if (mPopupKeyboard.isShowing) {
+            when (action) {
+                MotionEvent.ACTION_DOWN -> {
+                    mPopupStartX = me.x
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val diff = me.x - mPopupStartX
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    dismissPopupKeyboard()
+                }
+            }
+        }
+
         return result
     }
 
@@ -1186,6 +1196,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         }
                     }
                 }
+
                 if (!continueLongPress) {
                     // Cancel old longpress
                     mHandler!!.removeMessages(MSG_LONGPRESS)
@@ -1232,6 +1243,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 invalidateKey(mCurrentKey)
             }
         }
+
         mLastX = touchX
         mLastY = touchY
         return true
@@ -1271,9 +1283,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun removeMessages() {
-        mHandler?.removeMessages(MSG_REPEAT)
-        mHandler?.removeMessages(MSG_LONGPRESS)
-        mHandler?.removeMessages(MSG_SHOW_PREVIEW)
+        mHandler?.apply {
+            removeMessages(MSG_REPEAT)
+            removeMessages(MSG_LONGPRESS)
+            removeMessages(MSG_SHOW_PREVIEW)
+        }
     }
 
     public override fun onDetachedFromWindow() {
@@ -1357,17 +1371,21 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 drop = 0
             }
 
-            if (drop == i) drop--
+            if (drop == i) {
+                drop--
+            }
+
             val pastX = mPastX
             val pastY = mPastY
             if (drop >= 0) {
                 val start = drop + 1
-                val count: Int = NUM_PAST - drop - 1
+                val count = NUM_PAST - drop - 1
                 System.arraycopy(pastX, start, pastX, 0, count)
                 System.arraycopy(pastY, start, pastY, 0, count)
                 System.arraycopy(pastTime, start, pastTime, 0, count)
                 i -= drop + 1
             }
+
             pastX[i] = x
             pastY[i] = y
             pastTime[i] = time
