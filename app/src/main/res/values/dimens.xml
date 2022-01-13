@@ -1,3 +1,3 @@
 <resources>
-
+    <dimen name="popup_max_move_distance">60dp</dimen>
 </resources>

@@ -189,6 +189,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private val mSwipeThreshold: Int
     private val mDisambiguateSwipe: Boolean
     private var mPopupStartX = 0f
+    private var mPopupMaxMoveDistance = 0f
 
     // Variables for dealing with multiple pointers
     private var mOldPointerCount = 1
@@ -303,6 +304,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mDisambiguateSwipe = false//resources.getBoolean(R.bool.config_swipeDisambiguation)
         mAccessibilityManager = (context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager)
         mAudioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        mPopupMaxMoveDistance = context.resources.getDimension(R.dimen.popup_max_move_distance)
         resetMultiTap()
     }
 
@@ -1084,7 +1086,17 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     mPopupStartX = me.x
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    val diff = me.x - mPopupStartX
+                    if (mMiniKeyboard != null) {
+                        val diff = me.x - mPopupStartX
+                        val coords = intArrayOf(0, 0)
+                        mMiniKeyboard!!.getLocationOnScreen(coords)
+                        if (coords[0] - me.x > mPopupMaxMoveDistance ||                                 // left
+                            me.x - (coords[0] + mMiniKeyboard!!.width) > mPopupMaxMoveDistance ||       // right
+                            me.y > mPopupMaxMoveDistance                                                // bottom
+                        ) {
+                            dismissPopupKeyboard()
+                        }
+                    }
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     dismissPopupKeyboard()
