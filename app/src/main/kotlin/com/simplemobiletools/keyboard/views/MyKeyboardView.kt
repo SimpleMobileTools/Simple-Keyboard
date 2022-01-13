@@ -1289,14 +1289,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
     }
 
-    fun handleBack(): Boolean {
-        if (mPopupKeyboard.isShowing) {
-            dismissPopupKeyboard()
-            return true
-        }
-        return false
-    }
-
     private fun resetMultiTap() {
         mLastSentIndex = NOT_A_KEY
         mTapCount = 0
