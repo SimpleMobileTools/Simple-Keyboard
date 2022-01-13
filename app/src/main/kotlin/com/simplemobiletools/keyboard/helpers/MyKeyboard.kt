@@ -206,16 +206,6 @@ class MyKeyboard {
      * @attr ref android.R.styleable#Keyboard_Key_keyEdgeFlags
      */
     class Key(parent: Row) {
-        companion object {
-            private val KEY_STATE_NORMAL = intArrayOf()
-            private val KEY_STATE_NORMAL_ON = intArrayOf(android.R.attr.state_checkable, android.R.attr.state_checked)
-            private val KEY_STATE_NORMAL_OFF = intArrayOf(android.R.attr.state_checkable)
-
-            private val KEY_STATE_PRESSED = intArrayOf(android.R.attr.state_pressed)
-            private val KEY_STATE_PRESSED_ON = intArrayOf(android.R.attr.state_pressed, android.R.attr.state_checkable, android.R.attr.state_checked)
-            private val KEY_STATE_PRESSED_OFF = intArrayOf(android.R.attr.state_pressed, android.R.attr.state_checkable)
-        }
-
         /** All the key codes (unicode or custom code) that this key could generate, zero'th being the most important.  */
         var codes = ArrayList<Int>()
 
