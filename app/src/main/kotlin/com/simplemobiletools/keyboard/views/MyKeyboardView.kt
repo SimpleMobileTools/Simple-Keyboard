@@ -1011,11 +1011,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             getLocationInWindow(mCoordinates)
             mPopupX = popupKey.x + paddingLeft
             mPopupY = popupKey.y + paddingTop
-            mPopupX = mPopupX + popupKey.width - mMiniKeyboardContainer!!.measuredWidth
+
+            val widthToUse = mMiniKeyboardContainer!!.measuredWidth - (popupKey.popupCharacters!!.length / 2) * popupKey.width
+            mPopupX = mPopupX + popupKey.width - widthToUse
             mPopupY -= mMiniKeyboardContainer!!.measuredHeight
             val x = mPopupX + mMiniKeyboardContainer!!.paddingRight + mCoordinates[0]
             val y = mPopupY + mMiniKeyboardContainer!!.paddingBottom + mCoordinates[1]
-            mMiniKeyboard!!.setPopupOffset(if (x < 0) 0 else x, y)
+            val xOffset = Math.max(0, x)
+            mMiniKeyboard!!.setPopupOffset(xOffset, y)
 
             val miniShiftStatus = if (isShifted()) SHIFT_ON_PERMANENT else SHIFT_OFF
             mMiniKeyboard!!.setShifted(miniShiftStatus)
