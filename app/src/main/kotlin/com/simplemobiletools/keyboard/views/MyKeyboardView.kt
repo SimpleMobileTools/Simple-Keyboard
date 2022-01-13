@@ -188,7 +188,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private val mSwipeTracker: SwipeTracker = SwipeTracker()
     private val mSwipeThreshold: Int
     private val mDisambiguateSwipe: Boolean
-    private var mPopupStartX = 0f
     private var mPopupMaxMoveDistance = 0f
 
     // Variables for dealing with multiple pointers
@@ -976,9 +975,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     }
 
                     override fun swipeLeft() {}
-
                     override fun swipeRight() {}
-
                     override fun swipeUp() {}
                     override fun swipeDown() {}
                     override fun onPress(primaryCode: Int) {
@@ -1085,14 +1082,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         // handle moving between alternative popup characters by swiping
         if (mPopupKeyboard.isShowing) {
             when (action) {
-                MotionEvent.ACTION_DOWN -> {
-                    mPopupStartX = me.x
-                }
                 MotionEvent.ACTION_MOVE -> {
                     if (mMiniKeyboard != null) {
-                        val diff = me.x - mPopupStartX
                         val coords = intArrayOf(0, 0)
                         mMiniKeyboard!!.getLocationOnScreen(coords)
+                        val widthPerKey = mMiniKeyboard!!.width / mMiniKeyboard!!.mKeys.size
+                        var selectedKeyIndex = Math.floor((me.x - coords[0]) / widthPerKey.toDouble()).toInt()
+                        selectedKeyIndex = Math.max(0, Math.min(selectedKeyIndex, mMiniKeyboard!!.mKeys.size - 1))
+
                         if (coords[0] - me.x > mPopupMaxMoveDistance ||                                 // left
                             me.x - (coords[0] + mMiniKeyboard!!.width) > mPopupMaxMoveDistance ||       // right
                             me.y > mPopupMaxMoveDistance                                                // bottom
