@@ -9,35 +9,55 @@
         <Key
             app:codes="113"
             app:keyEdgeFlags="left"
-            app:keyLabel="q" />
+            app:keyLabel="q"
+            app:popupCharacters="1"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="119"
-            app:keyLabel="w" />
+            app:keyLabel="w"
+            app:popupCharacters="2"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="101"
-            app:keyLabel="e" />
+            app:keyLabel="e"
+            app:popupCharacters="3"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="114"
-            app:keyLabel="r" />
+            app:keyLabel="r"
+            app:popupCharacters="4"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="116"
-            app:keyLabel="t" />
+            app:keyLabel="t"
+            app:popupCharacters="5"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="121"
-            app:keyLabel="y" />
+            app:keyLabel="y"
+            app:popupCharacters="6"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="117"
-            app:keyLabel="u" />
+            app:keyLabel="u"
+            app:popupCharacters="7"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="105"
-            app:keyLabel="i" />
+            app:keyLabel="i"
+            app:popupCharacters="8"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="111"
-            app:keyLabel="o" />
+            app:keyLabel="o"
+            app:popupCharacters="9"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="112"
             app:keyEdgeFlags="right"
-            app:keyLabel="p" />
+            app:keyLabel="p"
+            app:popupCharacters="0"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
     </Row>
     <Row>
         <Key

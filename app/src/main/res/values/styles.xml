@@ -19,4 +19,8 @@
         <item name="shadowColor">#BB000000</item>
         <item name="shadowRadius">2.75</item>
     </style>
+
+    <style name="Widget.KeyboardViewPopup" parent="Widget.KeyboardView">
+        <item name="keyTextSize">26sp</item>
+    </style>
 </resources>

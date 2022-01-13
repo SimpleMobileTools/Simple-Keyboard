@@ -435,7 +435,12 @@ class MyKeyboard {
         row.defaultHorizontalGap = mDefaultHorizontalGap
         row.verticalGap = mDefaultVerticalGap
         row.rowEdgeFlags = EDGE_TOP or EDGE_BOTTOM
-        val maxColumns = if (columns == -1) Int.MAX_VALUE else columns
+        val maxColumns = if (columns == -1) {
+            Int.MAX_VALUE
+        } else {
+            columns
+        }
+
         for (element in characters) {
             val c = element
             if (column >= maxColumns || x + mDefaultWidth + horizontalPadding > mDisplayWidth) {
