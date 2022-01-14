@@ -27,7 +27,7 @@ android {
 
     flavorDimensions "variants"
     productFlavors {
-        basic {}
+        core {}
         fdroid {}
     }
 
