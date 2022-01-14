@@ -1099,6 +1099,16 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     }
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    if (mMiniKeyboard != null) {
+                        val coords = intArrayOf(0, 0)
+                        mMiniKeyboard!!.getLocationOnScreen(coords)
+                        val keys = mMiniKeyboard!!.mKeys
+                        val widthPerKey = mMiniKeyboard!!.width / keys.size
+                        var selectedKeyIndex = Math.floor((me.x - coords[0]) / widthPerKey.toDouble()).toInt()
+                        selectedKeyIndex = Math.max(0, Math.min(selectedKeyIndex, keys.size - 1))
+                        val selectedKeyCodes = keys[selectedKeyIndex].codes
+                        onKeyboardActionListener!!.onKey(selectedKeyCodes[0], selectedKeyCodes.toIntArray())
+                    }
                     dismissPopupKeyboard()
                 }
             }
