@@ -322,11 +322,6 @@ class MyKeyboard {
             edgeFlags = parent.rowEdgeFlags
         }
 
-        /** Informs the key that it has been pressed, in case it needs to change its appearance or state.  */
-        fun onPressed() {
-            pressed = !pressed
-        }
-
         fun parseCSV(value: String): ArrayList<Int> {
             var count = 0
             var lastIndex = 0

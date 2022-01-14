@@ -127,6 +127,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mMiniKeyboardOffsetY = 0
     private val mMiniKeyboardCache: MutableMap<MyKeyboard.Key, View?>
     private var mKeys = ArrayList<MyKeyboard.Key>()
+    private var mMiniKeyboardSelectedKeyIndex = -1
     /**
      * Returns the [OnKeyboardActionListener] object.
      * @return the listener attached to this keyboard
@@ -569,6 +570,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 keyBackground.setBounds(0, 0, key.width, key.height)
             }
 
+            keyBackground.state = if (key.pressed) {
+                intArrayOf(android.R.attr.state_pressed)
+            } else {
+                intArrayOf()
+            }
+
             canvas.translate((key.x + kbdPaddingLeft).toFloat(), (key.y + kbdPaddingTop).toFloat())
             keyBackground.draw(canvas)
             if (label?.isNotEmpty() == true) {
@@ -748,7 +755,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             if (mCurrentKeyIndex != NOT_A_KEY && keys.size > mCurrentKeyIndex) {
                 val newKey = keys[mCurrentKeyIndex]
-                newKey.onPressed()
                 invalidateKey(mCurrentKeyIndex)
                 val keyCode = newKey.codes[0]
                 sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER, keyCode)
@@ -938,7 +944,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         val popupKey = mKeys[mCurrentKey]
-        val result = onLongPress(popupKey)
+        val result = onLongPress(popupKey, me)
         if (result) {
             mAbortKey = true
             showPreview(NOT_A_KEY)
@@ -954,7 +960,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @return true if the long press is handled, false otherwise. Subclasses should call the
      * method on the base class if the subclass doesn't wish to handle the call.
      */
-    protected fun onLongPress(popupKey: MyKeyboard.Key): Boolean {
+    protected fun onLongPress(popupKey: MyKeyboard.Key, me: MotionEvent): Boolean {
         val popupKeyboardId = popupKey.popupResId
         if (popupKeyboardId != 0) {
             mMiniKeyboardContainer = mMiniKeyboardCache[popupKey]
@@ -1016,6 +1022,20 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val y = mPopupY + mMiniKeyboardContainer!!.paddingBottom + mCoordinates[1]
             val xOffset = Math.max(0, x)
             mMiniKeyboard!!.setPopupOffset(xOffset, y)
+
+            // make sure we highlight the proper key right after long pressing it, before any ACTION_MOVE event occurs
+            val miniKeyboardX = if (xOffset + mMiniKeyboard!!.measuredWidth <= measuredWidth) {
+                xOffset
+            } else {
+                measuredWidth - mMiniKeyboard!!.measuredWidth
+            }
+            var selectedKeyIndex = Math.floor((me.x - miniKeyboardX) / popupKey.width.toDouble()).toInt()
+            selectedKeyIndex = Math.max(0, Math.min(selectedKeyIndex, mMiniKeyboard!!.mKeys.size - 1))
+            for (i in 0 until mMiniKeyboard!!.mKeys.size) {
+                mMiniKeyboard!!.mKeys[i].pressed = i == selectedKeyIndex
+            }
+            mMiniKeyboardSelectedKeyIndex = selectedKeyIndex
+            mMiniKeyboard!!.invalidateAllKeys()
 
             val miniShiftStatus = if (isShifted()) SHIFT_ON_PERMANENT else SHIFT_OFF
             mMiniKeyboard!!.setShifted(miniShiftStatus)
@@ -1089,6 +1109,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         val widthPerKey = mMiniKeyboard!!.width / mMiniKeyboard!!.mKeys.size
                         var selectedKeyIndex = Math.floor((me.x - coords[0]) / widthPerKey.toDouble()).toInt()
                         selectedKeyIndex = Math.max(0, Math.min(selectedKeyIndex, mMiniKeyboard!!.mKeys.size - 1))
+                        if (selectedKeyIndex != mMiniKeyboardSelectedKeyIndex) {
+                            for (i in 0 until mMiniKeyboard!!.mKeys.size) {
+                                mMiniKeyboard!!.mKeys[i].pressed = i == selectedKeyIndex
+                            }
+                            mMiniKeyboardSelectedKeyIndex = selectedKeyIndex
+                            mMiniKeyboard!!.invalidateAllKeys()
+                        }
 
                         if (coords[0] - me.x > mPopupMaxMoveDistance ||                                 // left
                             me.x - (coords[0] + mMiniKeyboard!!.width) > mPopupMaxMoveDistance ||       // right
@@ -1109,6 +1136,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         val selectedKeyCodes = keys[selectedKeyIndex].codes
                         onKeyboardActionListener!!.onKey(selectedKeyCodes[0], selectedKeyCodes.toIntArray())
                     }
+                    mMiniKeyboardSelectedKeyIndex = -1
                     dismissPopupKeyboard()
                 }
             }
