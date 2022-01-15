@@ -3,7 +3,6 @@
     app:keyBackground="@color/color_primary_dark"
     app:keyHeight="60dp"
     app:keyTextColor="@color/color_accent"
-    app:keyWidth="10%"
     app:verticalGap="3px">
     <Row>
         <Key
