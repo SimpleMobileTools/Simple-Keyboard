@@ -898,13 +898,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val event = AccessibilityEvent.obtain(eventType)
             onInitializeAccessibilityEvent(event)
             val text: String = when (code) {
-                MyKeyboard.KEYCODE_ALT -> context.getString(R.string.keyboardview_keycode_alt)
-                MyKeyboard.KEYCODE_CANCEL -> context.getString(R.string.keyboardview_keycode_cancel)
-                MyKeyboard.KEYCODE_DELETE -> context.getString(R.string.keyboardview_keycode_delete)
-                MyKeyboard.KEYCODE_DONE -> context.getString(R.string.keyboardview_keycode_done)
-                MyKeyboard.KEYCODE_MODE_CHANGE -> context.getString(R.string.keyboardview_keycode_mode_change)
-                MyKeyboard.KEYCODE_SHIFT -> context.getString(R.string.keyboardview_keycode_shift)
-                '\n'.toInt() -> context.getString(R.string.keyboardview_keycode_enter)
+                MyKeyboard.KEYCODE_DELETE -> context.getString(R.string.keycode_delete)
+                MyKeyboard.KEYCODE_DONE -> context.getString(R.string.keycode_enter)
+                MyKeyboard.KEYCODE_MODE_CHANGE -> context.getString(R.string.keycode_mode_change)
+                MyKeyboard.KEYCODE_SHIFT -> context.getString(R.string.keycode_shift)
                 else -> code.toChar().toString()
             }
             event.text.add(text)
