@@ -212,6 +212,9 @@ class MyKeyboard {
         /** Label to display  */
         var label: CharSequence = ""
 
+        /** First row of letters can also be used for inserting numbers by long pressing them, show those numbers */
+        var topSmallNumber: String = ""
+
         /** Icon to display instead of a label. Icon takes precedence over a label  */
         var icon: Drawable? = null
 
@@ -307,6 +310,7 @@ class MyKeyboard {
 
             label = a.getText(R.styleable.MyKeyboard_Key_keyLabel) ?: ""
             text = a.getText(R.styleable.MyKeyboard_Key_keyOutputText)
+            topSmallNumber = a.getString(R.styleable.MyKeyboard_Key_topSmallNumber) ?: ""
 
             if (label.isNotEmpty()) {
                 codes = arrayListOf(label[0].toInt())

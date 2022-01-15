@@ -87,5 +87,7 @@
         <attr name="keyIcon" format="reference" />
         <!-- Mode of the keyboard. If the mode doesn't match the requested keyboard mode, the key will be skipped. -->
         <attr name="keyboardMode" />
+        <!-- Top small number shown above letters of the first row. -->
+        <attr name="topSmallNumber" format="string" />
     </declare-styleable>
 </resources>

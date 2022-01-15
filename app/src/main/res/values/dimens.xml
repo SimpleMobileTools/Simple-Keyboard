@@ -1,3 +1,5 @@
 <resources>
     <dimen name="popup_max_move_distance">60dp</dimen>
+    <dimen name="top_small_number_margin_width">12dp</dimen>
+    <dimen name="top_small_number_margin_height">18dp</dimen>
 </resources>

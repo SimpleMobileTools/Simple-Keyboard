@@ -11,53 +11,63 @@
             app:keyEdgeFlags="left"
             app:keyLabel="q"
             app:popupCharacters="1"
-            app:popupKeyboard="@xml/keyboard_popup_template" />
+            app:popupKeyboard="@xml/keyboard_popup_template"
+            app:topSmallNumber="1" />
         <Key
             app:codes="119"
             app:keyLabel="w"
             app:popupCharacters="2"
-            app:popupKeyboard="@xml/keyboard_popup_template" />
+            app:popupKeyboard="@xml/keyboard_popup_template"
+            app:topSmallNumber="2" />
         <Key
             app:codes="101"
             app:keyLabel="e"
             app:popupCharacters="3"
-            app:popupKeyboard="@xml/keyboard_popup_template" />
+            app:popupKeyboard="@xml/keyboard_popup_template"
+            app:topSmallNumber="3" />
         <Key
             app:codes="114"
             app:keyLabel="r"
             app:popupCharacters="4"
-            app:popupKeyboard="@xml/keyboard_popup_template" />
+            app:popupKeyboard="@xml/keyboard_popup_template"
+            app:topSmallNumber="4" />
         <Key
             app:codes="116"
             app:keyLabel="t"
             app:popupCharacters="5"
-            app:popupKeyboard="@xml/keyboard_popup_template" />
+            app:popupKeyboard="@xml/keyboard_popup_template"
+            app:topSmallNumber="5" />
         <Key
             app:codes="121"
             app:keyLabel="y"
             app:popupCharacters="6"
-            app:popupKeyboard="@xml/keyboard_popup_template" />
+            app:popupKeyboard="@xml/keyboard_popup_template"
+            app:topSmallNumber="6" />
         <Key
             app:codes="117"
             app:keyLabel="u"
             app:popupCharacters="7"
-            app:popupKeyboard="@xml/keyboard_popup_template" />
+            app:popupKeyboard="@xml/keyboard_popup_template"
+            app:topSmallNumber="7" />
         <Key
             app:codes="105"
             app:keyLabel="i"
             app:popupCharacters="8"
-            app:popupKeyboard="@xml/keyboard_popup_template" />
+            app:popupKeyboard="@xml/keyboard_popup_template"
+            app:topSmallNumber="8" />
         <Key
             app:codes="111"
             app:keyLabel="o"
             app:popupCharacters="9"
-            app:popupKeyboard="@xml/keyboard_popup_template" />
+            app:popupKeyboard="@xml/keyboard_popup_template"
+            app:topSmallNumber="9" />
         <Key
             app:codes="112"
             app:keyEdgeFlags="right"
             app:keyLabel="p"
             app:popupCharacters="0"
-            app:popupKeyboard="@xml/keyboard_popup_template" />
+            app:popupKeyboard="@xml/keyboard_popup_template"
+            app:topSmallNumber="0" />
     </Row>
     <Row>
         <Key

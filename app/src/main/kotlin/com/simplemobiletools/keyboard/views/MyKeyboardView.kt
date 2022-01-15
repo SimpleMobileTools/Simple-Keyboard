@@ -17,6 +17,7 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.widget.PopupWindow
 import android.widget.TextView
+import com.simplemobiletools.commons.extensions.adjustAlpha
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.helpers.MyKeyboard
 import com.simplemobiletools.keyboard.helpers.SHIFT_OFF
@@ -190,6 +191,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private val mSwipeThreshold: Int
     private val mDisambiguateSwipe: Boolean
     private var mPopupMaxMoveDistance = 0f
+    private var topSmallNumberSize = 0f
+    private var topSmallNumberMarginWidth = 0f
+    private var topSmallNumberMarginHeight = 0f
 
     // Variables for dealing with multiple pointers
     private var mOldPointerCount = 1
@@ -299,12 +303,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mPaint.alpha = 255
         mPadding = Rect(0, 0, 0, 0)
         mMiniKeyboardCache = HashMap()
-        mKeyBackground!!.getPadding(mPadding)
         mSwipeThreshold = (500 * resources.displayMetrics.density).toInt()
         mDisambiguateSwipe = false//resources.getBoolean(R.bool.config_swipeDisambiguation)
         mAccessibilityManager = (context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager)
         mAudioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        mPopupMaxMoveDistance = context.resources.getDimension(R.dimen.popup_max_move_distance)
+        mPopupMaxMoveDistance = resources.getDimension(R.dimen.popup_max_move_distance)
+        topSmallNumberSize = resources.getDimension(R.dimen.small_text_size)
+        topSmallNumberMarginWidth = resources.getDimension(R.dimen.top_small_number_margin_width)
+        topSmallNumberMarginHeight = resources.getDimension(R.dimen.top_small_number_margin_height)
         resetMultiTap()
     }
 
@@ -543,6 +549,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val keys = mKeys
         val invalidKey = mInvalidatedKey
         paint.color = mKeyTextColor
+        val smallLetterPaint = Paint()
+        smallLetterPaint.set(paint)
+        smallLetterPaint.apply {
+            color = paint.color.adjustAlpha(0.8f)
+            textSize = topSmallNumberSize
+            typeface = Typeface.DEFAULT
+        }
+
         var drawSingleKey = false
         if (invalidKey != null && canvas.getClipBounds(clipRegion)) {
             // Is clipRegion completely contained within the invalidated key?
@@ -595,6 +609,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     label, ((key.width - padding.left - padding.right) / 2 + padding.left).toFloat(),
                     (key.height - padding.top - padding.bottom) / 2 + (paint.textSize - paint.descent()) / 2 + padding.top, paint
                 )
+
+                if (key.topSmallNumber.isNotEmpty()) {
+                    canvas.drawText(key.topSmallNumber, key.width - topSmallNumberMarginWidth, topSmallNumberMarginHeight, smallLetterPaint)
+                }
+
                 // Turn off drop shadow
                 paint.setShadowLayer(0f, 0f, 0f, 0)
             } else if (key.icon != null && mKeyboard != null) {
