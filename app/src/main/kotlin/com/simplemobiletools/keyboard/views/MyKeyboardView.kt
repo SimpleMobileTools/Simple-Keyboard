@@ -1157,8 +1157,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         }
 
                         if (coords[0] - me.x > mPopupMaxMoveDistance ||                                 // left
-                            me.x - (coords[0] + mMiniKeyboard!!.width) > mPopupMaxMoveDistance ||       // right
-                            me.y > mPopupMaxMoveDistance                                                // bottom
+                            me.x - (coords[0] + mMiniKeyboard!!.width) > mPopupMaxMoveDistance          // right
                         ) {
                             dismissPopupKeyboard()
                         }

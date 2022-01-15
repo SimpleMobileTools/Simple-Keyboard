@@ -22,43 +22,43 @@
         <Key
             app:codes="101"
             app:keyLabel="e"
-            app:popupCharacters="3"
+            app:popupCharacters="3é"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="3" />
         <Key
             app:codes="114"
             app:keyLabel="r"
-            app:popupCharacters="4"
+            app:popupCharacters="ř4ŕ"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="4" />
         <Key
             app:codes="116"
             app:keyLabel="t"
-            app:popupCharacters="5"
+            app:popupCharacters="5ť"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="5" />
         <Key
             app:codes="121"
             app:keyLabel="y"
-            app:popupCharacters="6"
+            app:popupCharacters="6ý"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="6" />
         <Key
             app:codes="117"
             app:keyLabel="u"
-            app:popupCharacters="7"
+            app:popupCharacters="ű7üú"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="7" />
         <Key
             app:codes="105"
             app:keyLabel="i"
-            app:popupCharacters="8"
+            app:popupCharacters="8í"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="8" />
         <Key
             app:codes="111"
             app:keyLabel="o"
-            app:popupCharacters="9"
+            app:popupCharacters="őöó9ô"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="9" />
         <Key
@@ -74,13 +74,19 @@
             app:codes="97"
             app:horizontalGap="5%"
             app:keyEdgeFlags="left"
-            app:keyLabel="a" />
+            app:keyLabel="a"
+            app:popupCharacters="á"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="115"
-            app:keyLabel="s" />
+            app:keyLabel="s"
+            app:popupCharacters="š"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="100"
-            app:keyLabel="d" />
+            app:keyLabel="d"
+            app:popupCharacters="ď"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="102"
             app:keyLabel="f" />
@@ -98,7 +104,9 @@
             app:keyLabel="k" />
         <Key
             app:codes="108"
-            app:keyLabel="l" />
+            app:keyLabel="l"
+            app:popupCharacters="ĺľ"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
     </Row>
     <Row>
         <Key
@@ -108,13 +116,17 @@
             app:keyWidth="15%p" />
         <Key
             app:codes="122"
-            app:keyLabel="z" />
+            app:keyLabel="z"
+            app:popupCharacters="ž"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="120"
             app:keyLabel="x" />
         <Key
             app:codes="99"
-            app:keyLabel="c" />
+            app:keyLabel="c"
+            app:popupCharacters="č"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="118"
             app:keyLabel="v" />
@@ -123,7 +135,9 @@
             app:keyLabel="b" />
         <Key
             app:codes="110"
-            app:keyLabel="n" />
+            app:keyLabel="n"
+            app:popupCharacters="ňń"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:codes="109"
             app:keyLabel="m" />
