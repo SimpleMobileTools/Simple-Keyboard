@@ -49,6 +49,11 @@
             android:label="@string/about"
             android:parentActivityName=".activities.MainActivity" />
 
+        <activity
+            android:name="com.simplemobiletools.commons.activities.CustomizationActivity"
+            android:label="@string/customize_colors"
+            android:parentActivityName=".activities.SettingsActivity" />
+
         <activity-alias
             android:name=".activities.SplashActivity.Red"
             android:enabled="false"
