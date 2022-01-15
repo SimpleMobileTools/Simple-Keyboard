@@ -19,10 +19,7 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import com.simplemobiletools.commons.extensions.adjustAlpha
 import com.simplemobiletools.keyboard.R
-import com.simplemobiletools.keyboard.helpers.MyKeyboard
-import com.simplemobiletools.keyboard.helpers.SHIFT_OFF
-import com.simplemobiletools.keyboard.helpers.SHIFT_ON_ONE_CHAR
-import com.simplemobiletools.keyboard.helpers.SHIFT_ON_PERMANENT
+import com.simplemobiletools.keyboard.helpers.*
 import java.util.*
 
 /**
@@ -1014,7 +1011,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                 //mInputView.setSuggest(mSuggest);
                 val keyboard = if (popupKey.popupCharacters != null) {
-                    MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!, -1, paddingLeft + paddingRight)
+                    MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!, paddingLeft + paddingRight)
                 } else {
                     MyKeyboard(context, popupKeyboardId)
                 }
@@ -1048,9 +1045,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             } else {
                 measuredWidth - mMiniKeyboard!!.measuredWidth
             }
+
+            val keysCnt = mMiniKeyboard!!.mKeys.size
             var selectedKeyIndex = Math.floor((me.x - miniKeyboardX) / popupKey.width.toDouble()).toInt()
-            selectedKeyIndex = Math.max(0, Math.min(selectedKeyIndex, mMiniKeyboard!!.mKeys.size - 1))
-            for (i in 0 until mMiniKeyboard!!.mKeys.size) {
+            if (keysCnt > MAX_KEYS_PER_MINI_ROW) {
+                selectedKeyIndex += MAX_KEYS_PER_MINI_ROW
+            }
+            selectedKeyIndex = Math.max(0, Math.min(selectedKeyIndex, keysCnt - 1))
+
+            for (i in 0 until keysCnt) {
                 mMiniKeyboard!!.mKeys[i].pressed = i == selectedKeyIndex
             }
             mMiniKeyboardSelectedKeyIndex = selectedKeyIndex
@@ -1125,11 +1128,28 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     if (mMiniKeyboard != null) {
                         val coords = intArrayOf(0, 0)
                         mMiniKeyboard!!.getLocationOnScreen(coords)
-                        val widthPerKey = mMiniKeyboard!!.width / mMiniKeyboard!!.mKeys.size
+                        val keysCnt = mMiniKeyboard!!.mKeys.size
+                        val lastRowKeyCount = if (keysCnt > MAX_KEYS_PER_MINI_ROW) {
+                            Math.max(keysCnt % MAX_KEYS_PER_MINI_ROW, 1)
+                        } else {
+                            keysCnt
+                        }
+
+                        val widthPerKey = if (keysCnt > MAX_KEYS_PER_MINI_ROW) {
+                            mMiniKeyboard!!.width / MAX_KEYS_PER_MINI_ROW
+                        } else {
+                            mMiniKeyboard!!.width / lastRowKeyCount
+                        }
+
                         var selectedKeyIndex = Math.floor((me.x - coords[0]) / widthPerKey.toDouble()).toInt()
-                        selectedKeyIndex = Math.max(0, Math.min(selectedKeyIndex, mMiniKeyboard!!.mKeys.size - 1))
+                        if (keysCnt > MAX_KEYS_PER_MINI_ROW) {
+                            selectedKeyIndex = Math.max(0, selectedKeyIndex)
+                            selectedKeyIndex += MAX_KEYS_PER_MINI_ROW
+                        }
+
+                        selectedKeyIndex = Math.max(0, Math.min(selectedKeyIndex, keysCnt - 1))
                         if (selectedKeyIndex != mMiniKeyboardSelectedKeyIndex) {
-                            for (i in 0 until mMiniKeyboard!!.mKeys.size) {
+                            for (i in 0 until keysCnt) {
                                 mMiniKeyboard!!.mKeys[i].pressed = i == selectedKeyIndex
                             }
                             mMiniKeyboardSelectedKeyIndex = selectedKeyIndex
@@ -1146,14 +1166,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     if (mMiniKeyboard != null) {
-                        val coords = intArrayOf(0, 0)
-                        mMiniKeyboard!!.getLocationOnScreen(coords)
-                        val keys = mMiniKeyboard!!.mKeys
-                        val widthPerKey = mMiniKeyboard!!.width / keys.size
-                        var selectedKeyIndex = Math.floor((me.x - coords[0]) / widthPerKey.toDouble()).toInt()
-                        selectedKeyIndex = Math.max(0, Math.min(selectedKeyIndex, keys.size - 1))
-                        val selectedKeyCodes = keys[selectedKeyIndex].codes
-                        onKeyboardActionListener!!.onKey(selectedKeyCodes[0], selectedKeyCodes.toIntArray())
+                        mMiniKeyboard!!.mKeys.firstOrNull { it.pressed }?.apply {
+                            onKeyboardActionListener!!.onKey(codes[0], codes.toIntArray())
+                        }
                     }
                     mMiniKeyboardSelectedKeyIndex = -1
                     dismissPopupKeyboard()
