@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:keyBackground="@color/color_primary_dark"
+    app:keyHeight="60dp"
+    app:keyTextColor="@color/color_accent"
+    app:keyWidth="10%"
+    app:verticalGap="3px">
+    <Row>
+        <Key
+            app:codes="126"
+            app:keyEdgeFlags="left"
+            app:keyLabel="~" />
+        <Key
+            app:codes="177"
+            app:keyLabel="±" />
+        <Key
+            app:codes="215"
+            app:keyLabel="×" />
+        <Key
+            app:codes="247"
+            app:keyLabel="÷" />
+        <Key
+            app:codes="8226"
+            app:keyLabel="•" />
+        <Key
+            app:codes="176"
+            app:keyLabel="°" />
+        <Key
+            app:codes="96"
+            app:keyLabel="`" />
+        <Key
+            app:codes="180"
+            app:keyLabel="´" />
+        <Key
+            app:codes="123"
+            app:keyLabel="{" />
+        <Key
+            app:codes="125"
+            app:keyEdgeFlags="right"
+            app:keyLabel="}" />
+    </Row>
+    <Row>
+        <Key
+            app:codes="169"
+            app:keyEdgeFlags="left"
+            app:keyLabel="©" />
+        <Key
+            app:codes="163"
+            app:keyLabel="£" />
+        <Key
+            app:codes="8364"
+            app:keyLabel="€" />
+        <Key
+            app:codes="94"
+            app:keyLabel="^" />
+        <Key
+            app:codes="174"
+            app:keyLabel="®" />
+        <Key
+            app:codes="165"
+            app:keyLabel="¥" />
+        <Key
+            app:codes="95"
+            app:keyLabel="_" />
+        <Key
+            app:codes="43"
+            app:keyLabel="+" />
+        <Key
+            app:codes="91"
+            app:keyLabel="[" />
+        <Key
+            app:codes="93"
+            app:keyEdgeFlags="right"
+            app:keyLabel="]" />
+    </Row>
+    <Row>
+        <Key
+            app:codes="-1"
+            app:keyEdgeFlags="left"
+            app:keyIcon="@drawable/ic_caps_outline_vector"
+            app:keyWidth="15%p" />
+        <Key
+            app:codes="161"
+            app:keyLabel="¡" />
+        <Key
+            app:codes="60"
+            app:keyLabel="&lt;" />
+        <Key
+            app:codes="62"
+            app:keyLabel="&gt;" />
+        <Key
+            app:codes="162"
+            app:keyLabel="¢" />
+        <Key
+            app:codes="124"
+            app:keyLabel="|" />
+        <Key
+            app:codes="92"
+            app:keyLabel="\\" />
+        <Key
+            app:codes="191"
+            app:keyLabel="¿" />
+        <Key
+            app:codes="-5"
+            app:isRepeatable="true"
+            app:keyEdgeFlags="right"
+            app:keyIcon="@drawable/ic_clear_vector"
+            app:keyWidth="15%p" />
+    </Row>
+    <Row app:rowEdgeFlags="bottom">
+        <Key
+            app:codes="-2"
+            app:keyEdgeFlags="left"
+            app:keyLabel="abc"
+            app:keyWidth="15%p" />
+        <Key
+            app:codes="44"
+            app:keyLabel=","
+            app:keyWidth="10%p" />
+        <Key
+            app:codes="32"
+            app:iconPreview="@null"
+            app:isRepeatable="true"
+            app:keyWidth="45%p" />
+        <Key
+            app:codes="46"
+            app:keyLabel="." />
+        <Key
+            app:codes="-4"
+            app:keyEdgeFlags="right"
+            app:keyIcon="@drawable/ic_enter_vector"
+            app:keyWidth="20%p" />
+    </Row>
+</Keyboard>

@@ -879,7 +879,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mPopupPreviewY += popupHeight
         }
 
-        if (key.label.isNotEmpty()) {
+        if (key.label.isNotEmpty() && key.codes.firstOrNull() != KEYCODE_MODE_CHANGE) {
             if (previewPopup.isShowing) {
                 previewPopup.update(mPopupPreviewX, mPopupPreviewY, popupWidth, popupHeight)
             } else {

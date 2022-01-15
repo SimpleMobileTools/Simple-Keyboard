@@ -151,15 +151,19 @@
     </Row>
     <Row app:rowEdgeFlags="bottom">
         <Key
-            app:codes="44"
+            app:codes="-2"
             app:keyEdgeFlags="left"
+            app:keyLabel="123"
+            app:keyWidth="15%p" />
+        <Key
+            app:codes="44"
             app:keyLabel=","
             app:keyWidth="10%p" />
         <Key
             app:codes="32"
             app:iconPreview="@null"
             app:isRepeatable="true"
-            app:keyWidth="60%p" />
+            app:keyWidth="45%p" />
         <Key
             app:codes="46"
             app:keyLabel="." />

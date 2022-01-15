@@ -22,7 +22,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
     override fun onCreateInputView(): View {
         keyboardView = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null) as MyKeyboardView
-        keyboard = MyKeyboard(this, R.xml.keys_layout)
+        keyboard = MyKeyboard(this, R.xml.keys_letters)
         keyboardView!!.setKeyboard(keyboard!!)
         keyboardView!!.onKeyboardActionListener = this
         return keyboardView!!
@@ -66,6 +66,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 keyboardView!!.invalidateAllKeys()
             }
             MyKeyboard.KEYCODE_DONE -> inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
+            MyKeyboard.KEYCODE_MODE_CHANGE -> {}
             else -> {
                 var code = primaryCode.toChar()
                 if (Character.isLetter(code) && keyboard!!.shiftState > SHIFT_OFF) {
