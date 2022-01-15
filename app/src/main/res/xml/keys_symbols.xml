@@ -77,7 +77,7 @@
         <Key
             app:codes="-1"
             app:keyEdgeFlags="left"
-            app:keyIcon="@drawable/ic_caps_outline_vector"
+            app:keyLabel="=\\&lt;"
             app:keyWidth="15%p" />
         <Key
             app:codes="33"

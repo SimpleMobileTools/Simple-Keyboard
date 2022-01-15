@@ -312,7 +312,7 @@ class MyKeyboard {
             text = a.getText(R.styleable.MyKeyboard_Key_keyOutputText)
             topSmallNumber = a.getString(R.styleable.MyKeyboard_Key_topSmallNumber) ?: ""
 
-            if (label.isNotEmpty() && codes.firstOrNull() != KEYCODE_MODE_CHANGE) {
+            if (label.isNotEmpty() && codes.firstOrNull() != KEYCODE_MODE_CHANGE && codes.firstOrNull() != KEYCODE_SHIFT) {
                 codes = arrayListOf(label[0].toInt())
             }
             a.recycle()
