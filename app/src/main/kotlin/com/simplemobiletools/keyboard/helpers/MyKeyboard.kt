@@ -418,11 +418,8 @@ class MyKeyboard {
      * @param layoutTemplateResId the layout template file, containing no keys.
      * @param characters the list of characters to display on the keyboard. One key will be created
      * for each character.
-     * @param columns the number of columns of keys to display. If this number is greater than the
-     * number of keys that can fit in a row, it will be ignored. If this number is -1, the
-     * keyboard will fit as many keys as possible in each row.
      */
-    constructor(context: Context, layoutTemplateResId: Int, characters: CharSequence, columns: Int, horizontalPadding: Int) :
+    constructor(context: Context, layoutTemplateResId: Int, characters: CharSequence, horizontalPadding: Int) :
         this(context, layoutTemplateResId) {
         var x = 0
         var y = 0
@@ -434,25 +431,21 @@ class MyKeyboard {
         row.defaultHorizontalGap = mDefaultHorizontalGap
         row.verticalGap = mDefaultVerticalGap
         row.rowEdgeFlags = EDGE_TOP or EDGE_BOTTOM
-        val maxColumns = if (columns == -1) {
-            Int.MAX_VALUE
-        } else {
-            columns
-        }
 
-        for (element in characters) {
-            val c = element
-            if (column >= maxColumns || x + mDefaultWidth + horizontalPadding > mDisplayWidth) {
-                x = 0
-                y += mDefaultVerticalGap + mDefaultHeight
+        characters.forEachIndexed { index, character ->
+            val key = Key(row)
+            if (column >= MAX_KEYS_PER_MINI_ROW) {
                 column = 0
+                x = 0
+                y += mDefaultHeight
+                rows.add(row)
+                row.mKeys.clear()
             }
 
-            val key = Key(row)
             key.x = x
             key.y = y
-            key.label = c.toString()
-            key.codes = arrayListOf(c.toInt())
+            key.label = character.toString()
+            key.codes = arrayListOf(character.toInt())
             column++
             x += key.width + key.gap
             mKeys!!.add(key)
