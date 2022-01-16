@@ -418,7 +418,7 @@ class MyKeyboard {
      * @param characters the list of characters to display on the keyboard. One key will be created
      * for each character.
      */
-    constructor(context: Context, layoutTemplateResId: Int, characters: CharSequence, horizontalPadding: Int) :
+    constructor(context: Context, layoutTemplateResId: Int, characters: CharSequence) :
         this(context, layoutTemplateResId) {
         var x = 0
         var y = 0

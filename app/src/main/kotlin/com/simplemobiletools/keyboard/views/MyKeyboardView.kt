@@ -1008,7 +1008,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                 //mInputView.setSuggest(mSuggest);
                 val keyboard = if (popupKey.popupCharacters != null) {
-                    MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!, paddingLeft + paddingRight)
+                    MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!)
                 } else {
                     MyKeyboard(context, popupKeyboardId)
                 }
