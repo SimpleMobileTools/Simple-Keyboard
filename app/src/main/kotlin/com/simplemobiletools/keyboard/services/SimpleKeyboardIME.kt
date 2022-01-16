@@ -29,9 +29,14 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     private var inputType = InputType.TYPE_CLASS_TEXT
     private var enterKeyType = IME_ACTION_NONE
 
+    override fun onInitializeInterface() {
+        super.onInitializeInterface()
+        keyboard = MyKeyboard(this, R.xml.keys_letters, enterKeyType)
+    }
+
     override fun onCreateInputView(): View {
         keyboardView = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null) as MyKeyboardView
-        createKeyboard()
+        keyboardView!!.setKeyboard(keyboard!!)
         keyboardView!!.onKeyboardActionListener = this
         return keyboardView!!
     }
@@ -45,12 +50,12 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         inputType = attribute!!.inputType and InputType.TYPE_MASK_CLASS
         enterKeyType = attribute.imeOptions and (EditorInfo.IME_MASK_ACTION or EditorInfo.IME_FLAG_NO_ENTER_ACTION)
 
-        if (keyboardView != null) {
-            createKeyboard()
+        val shiftMode = when (currentInputConnection.getCursorCapsMode(attribute.inputType)) {
+            InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS -> SHIFT_ON_PERMANENT
+            InputType.TYPE_TEXT_FLAG_CAP_WORDS, InputType.TYPE_TEXT_FLAG_CAP_SENTENCES -> SHIFT_ON_ONE_CHAR
+            else -> SHIFT_OFF
         }
-    }
 
-    private fun createKeyboard() {
         val keyboardXml = when (inputType) {
             InputType.TYPE_CLASS_NUMBER, InputType.TYPE_CLASS_DATETIME, InputType.TYPE_CLASS_PHONE -> {
                 keyboardMode = KEYBOARD_SYMBOLS
@@ -63,7 +68,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         }
 
         keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
-        keyboardView!!.setKeyboard(keyboard!!)
+        keyboard!!.setShifted(shiftMode)
+        keyboardView?.setKeyboard(keyboard!!)
     }
 
     override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
