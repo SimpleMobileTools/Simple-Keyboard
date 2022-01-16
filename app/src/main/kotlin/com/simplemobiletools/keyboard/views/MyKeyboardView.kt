@@ -626,7 +626,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 val drawableX = (key.width - padding.left - padding.right - key.icon!!.intrinsicWidth) / 2 + padding.left
                 val drawableY = (key.height - key.icon!!.intrinsicHeight) / 2
                 canvas.translate(drawableX.toFloat(), drawableY.toFloat())
-                key.icon!!.setBounds(0, 0, key.icon!!.intrinsicWidth, key.icon!!.intrinsicHeight)
+
+                if (key.codes.firstOrNull() == MyKeyboard.KEYCODE_ENTER) {
+                    key.icon!!.setBounds(0, 0, (key.icon!!.intrinsicWidth * 1.2).toInt(), (key.icon!!.intrinsicHeight * 1.2).toInt())
+                } else {
+                    key.icon!!.setBounds(0, 0, key.icon!!.intrinsicWidth, key.icon!!.intrinsicHeight)
+                }
                 key.icon!!.draw(canvas)
                 canvas.translate(-drawableX.toFloat(), -drawableY.toFloat())
             }
