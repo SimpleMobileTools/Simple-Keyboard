@@ -1,9 +1,11 @@
 package com.simplemobiletools.keyboard.services
 
 import android.inputmethodservice.InputMethodService
+import android.text.InputType
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import com.simplemobiletools.commons.extensions.performHapticFeedback
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.helpers.MyKeyboard
@@ -23,10 +25,19 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     private var keyboardView: MyKeyboardView? = null
     private var lastShiftPressTS = 0L
     private var keyboardMode = KEYBOARD_LETTERS
+    private var inputType = InputType.TYPE_CLASS_TEXT
 
     override fun onCreateInputView(): View {
         keyboardView = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null) as MyKeyboardView
-        keyboard = MyKeyboard(this, R.xml.keys_letters)
+
+        val keyboardXml = when (inputType) {
+            InputType.TYPE_CLASS_NUMBER, InputType.TYPE_CLASS_DATETIME, InputType.TYPE_CLASS_PHONE -> {
+                keyboardMode = KEYBOARD_SYMBOLS
+                R.xml.keys_symbols
+            }
+            else -> R.xml.keys_letters
+        }
+        keyboard = MyKeyboard(this, keyboardXml)
         keyboardView!!.setKeyboard(keyboard!!)
         keyboardView!!.onKeyboardActionListener = this
         return keyboardView!!
@@ -36,7 +47,10 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         keyboardView?.performHapticFeedback()
     }
 
-    override fun onRelease(primaryCode: Int) {}
+    override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
+        super.onStartInput(attribute, restarting)
+        inputType = attribute!!.inputType and InputType.TYPE_MASK_CLASS
+    }
 
     override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
         val inputConnection = currentInputConnection
@@ -120,4 +134,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     override fun swipeDown() {}
 
     override fun swipeUp() {}
+
+    override fun onRelease(primaryCode: Int) {}
 }
