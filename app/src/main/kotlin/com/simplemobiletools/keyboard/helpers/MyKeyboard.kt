@@ -23,6 +23,8 @@ import android.graphics.drawable.Drawable
 import android.util.SparseArray
 import android.util.TypedValue
 import android.util.Xml
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.EditorInfo.IME_ACTION_NONE
 import androidx.annotation.XmlRes
 import com.simplemobiletools.keyboard.R
 import java.util.*
@@ -90,6 +92,9 @@ class MyKeyboard {
     /** Height of the screen  */
     private var mDisplayHeight = 0
 
+    /** What icon should we show at Enter key */
+    var mEnterKeyType = IME_ACTION_NONE
+
     /** Keyboard mode, or zero, if none.   */
     private var mKeyboardMode = 0
     private var mCellWidth = 0
@@ -108,7 +113,7 @@ class MyKeyboard {
         const val EDGE_BOTTOM = 0x08
         const val KEYCODE_SHIFT = -1
         const val KEYCODE_MODE_CHANGE = -2
-        const val KEYCODE_DONE = -4
+        const val KEYCODE_ENTER = -4
         const val KEYCODE_DELETE = -5
         const val KEYCODE_ALT = -6
 
@@ -392,7 +397,7 @@ class MyKeyboard {
      * @param xmlLayoutResId the resource file that contains the keyboard layout and keys.
      */
     @JvmOverloads
-    constructor(context: Context, @XmlRes xmlLayoutResId: Int, modeId: Int = 0) {
+    constructor(context: Context, @XmlRes xmlLayoutResId: Int, enterKeyType: Int, modeId: Int = 0) {
         val dm = context.resources.displayMetrics
         mDisplayWidth = dm.widthPixels
         mDisplayHeight = dm.heightPixels
@@ -401,6 +406,7 @@ class MyKeyboard {
         mDefaultVerticalGap = 0
         mDefaultHeight = mDefaultWidth
         mKeys = ArrayList()
+        mEnterKeyType = enterKeyType
         mKeyboardMode = modeId
         loadKeyboard(context, context.resources.getXml(xmlLayoutResId))
     }
@@ -419,7 +425,7 @@ class MyKeyboard {
      * for each character.
      */
     constructor(context: Context, layoutTemplateResId: Int, characters: CharSequence) :
-        this(context, layoutTemplateResId) {
+        this(context, layoutTemplateResId, 0) {
         var x = 0
         var y = 0
         var column = 0
@@ -601,6 +607,14 @@ class MyKeyboard {
                             mModifierKeys.add(key)
                         } else if (key.codes[0] == KEYCODE_ALT) {
                             mModifierKeys.add(key)
+                        } else if (key.codes[0] == KEYCODE_ENTER) {
+                            val enterResourceId = when (mEnterKeyType) {
+                                EditorInfo.IME_ACTION_SEARCH -> R.drawable.ic_search_vector
+                                EditorInfo.IME_ACTION_NEXT, EditorInfo.IME_ACTION_GO -> R.drawable.ic_arrow_right_vector
+                                EditorInfo.IME_ACTION_SEND -> R.drawable.ic_send_vector
+                                else -> R.drawable.ic_enter_vector
+                            }
+                            key.icon = context.resources.getDrawable(enterResourceId, context.theme)
                         }
                         currentRow.mKeys.add(key)
                     } else if (TAG_KEYBOARD == tag) {

@@ -899,7 +899,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             onInitializeAccessibilityEvent(event)
             val text: String = when (code) {
                 MyKeyboard.KEYCODE_DELETE -> context.getString(R.string.keycode_delete)
-                MyKeyboard.KEYCODE_DONE -> context.getString(R.string.keycode_enter)
+                MyKeyboard.KEYCODE_ENTER -> context.getString(R.string.keycode_enter)
                 MyKeyboard.KEYCODE_MODE_CHANGE -> context.getString(R.string.keycode_mode_change)
                 MyKeyboard.KEYCODE_SHIFT -> context.getString(R.string.keycode_shift)
                 else -> code.toChar().toString()
@@ -1010,7 +1010,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 val keyboard = if (popupKey.popupCharacters != null) {
                     MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!)
                 } else {
-                    MyKeyboard(context, popupKeyboardId)
+                    MyKeyboard(context, popupKeyboardId, 0)
                 }
 
                 mMiniKeyboard!!.setKeyboard(keyboard)

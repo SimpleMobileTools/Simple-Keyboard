@@ -21,11 +21,17 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     private val KEYBOARD_SYMBOLS = 1
     private val KEYBOARD_SYMBOLS_SHIFT = 2
 
+    private val ENTER_DEFAULT = 0
+    private val ENTER_SEARCH = 1
+    private val ENTER_GO = 2
+    private val ENTER_NEXT = 3
+
     private var keyboard: MyKeyboard? = null
     private var keyboardView: MyKeyboardView? = null
     private var lastShiftPressTS = 0L
     private var keyboardMode = KEYBOARD_LETTERS
     private var inputType = InputType.TYPE_CLASS_TEXT
+    private var enterKeyType = ENTER_DEFAULT
 
     override fun onCreateInputView(): View {
         keyboardView = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null) as MyKeyboardView
@@ -37,7 +43,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             }
             else -> R.xml.keys_letters
         }
-        keyboard = MyKeyboard(this, keyboardXml)
+
+        keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
         keyboardView!!.setKeyboard(keyboard!!)
         keyboardView!!.onKeyboardActionListener = this
         return keyboardView!!
@@ -50,6 +57,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         super.onStartInput(attribute, restarting)
         inputType = attribute!!.inputType and InputType.TYPE_MASK_CLASS
+        enterKeyType = attribute.imeOptions and (EditorInfo.IME_MASK_ACTION or EditorInfo.IME_FLAG_NO_ENTER_ACTION)
     }
 
     override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
@@ -90,12 +98,12 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                         keyboardMode = KEYBOARD_SYMBOLS
                         R.xml.keys_symbols
                     }
-                    keyboard = MyKeyboard(this, keyboardXml)
+                    keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
                     keyboardView!!.setKeyboard(keyboard!!)
                 }
                 keyboardView!!.invalidateAllKeys()
             }
-            MyKeyboard.KEYCODE_DONE -> {
+            MyKeyboard.KEYCODE_ENTER -> {
                 inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
                 inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
             }
@@ -107,7 +115,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     keyboardMode = KEYBOARD_LETTERS
                     R.xml.keys_letters
                 }
-                keyboard = MyKeyboard(this, keyboardXml)
+                keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
                 keyboardView!!.setKeyboard(keyboard!!)
             }
             else -> {
