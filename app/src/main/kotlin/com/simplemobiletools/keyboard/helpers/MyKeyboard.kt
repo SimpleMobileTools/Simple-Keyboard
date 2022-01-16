@@ -116,6 +116,7 @@ class MyKeyboard {
         const val KEYCODE_ENTER = -4
         const val KEYCODE_DELETE = -5
         const val KEYCODE_ALT = -6
+        const val KEYCODE_SPACE = 32
 
         // Variables for pre-computing nearest keys.
         private const val GRID_WIDTH = 10

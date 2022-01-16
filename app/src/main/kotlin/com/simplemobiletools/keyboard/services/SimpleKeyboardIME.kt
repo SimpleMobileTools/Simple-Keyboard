@@ -26,7 +26,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     private var keyboardView: MyKeyboardView? = null
     private var lastShiftPressTS = 0L
     private var keyboardMode = KEYBOARD_LETTERS
-    private var inputType = InputType.TYPE_CLASS_TEXT
+    private var inputTypeClass = InputType.TYPE_CLASS_TEXT
+    private var inputTypeCapsMode = InputType.TYPE_CLASS_TEXT
     private var enterKeyType = IME_ACTION_NONE
 
     override fun onInitializeInterface() {
@@ -47,16 +48,17 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         super.onStartInput(attribute, restarting)
-        inputType = attribute!!.inputType and InputType.TYPE_MASK_CLASS
+        inputTypeClass = attribute!!.inputType and InputType.TYPE_MASK_CLASS
         enterKeyType = attribute.imeOptions and (EditorInfo.IME_MASK_ACTION or EditorInfo.IME_FLAG_NO_ENTER_ACTION)
+        inputTypeCapsMode = currentInputConnection.getCursorCapsMode(attribute.inputType)
 
-        val shiftMode = when (currentInputConnection.getCursorCapsMode(attribute.inputType)) {
+        val shiftMode = when (inputTypeCapsMode) {
             InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS -> SHIFT_ON_PERMANENT
             InputType.TYPE_TEXT_FLAG_CAP_WORDS, InputType.TYPE_TEXT_FLAG_CAP_SENTENCES -> SHIFT_ON_ONE_CHAR
             else -> SHIFT_OFF
         }
 
-        val keyboardXml = when (inputType) {
+        val keyboardXml = when (inputTypeClass) {
             InputType.TYPE_CLASS_NUMBER, InputType.TYPE_CLASS_DATETIME, InputType.TYPE_CLASS_PHONE -> {
                 keyboardMode = KEYBOARD_SYMBOLS
                 R.xml.keys_symbols
@@ -140,6 +142,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 if (keyboard!!.shiftState == SHIFT_ON_ONE_CHAR) {
                     keyboard!!.shiftState = SHIFT_OFF
                     keyboardView!!.invalidateAllKeys()
+                } else if (primaryCode == MyKeyboard.KEYCODE_SPACE && keyboard!!.shiftState == SHIFT_OFF && inputTypeCapsMode == InputType.TYPE_TEXT_FLAG_CAP_WORDS) {
+                    onKey(MyKeyboard.KEYCODE_SHIFT, intArrayOf(MyKeyboard.KEYCODE_SHIFT))
                 }
             }
         }
