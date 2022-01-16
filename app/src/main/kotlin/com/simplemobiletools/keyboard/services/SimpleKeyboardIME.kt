@@ -42,7 +42,9 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     }
 
     override fun onPress(primaryCode: Int) {
-        keyboardView?.performHapticFeedback()
+        if (primaryCode != 0) {
+            keyboardView?.performHapticFeedback()
+        }
     }
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
