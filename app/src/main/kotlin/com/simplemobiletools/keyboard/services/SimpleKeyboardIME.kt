@@ -27,7 +27,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     private var lastShiftPressTS = 0L
     private var keyboardMode = KEYBOARD_LETTERS
     private var inputTypeClass = InputType.TYPE_CLASS_TEXT
-    private var inputTypeCapsMode = InputType.TYPE_CLASS_TEXT
     private var enterKeyType = IME_ACTION_NONE
 
     override fun onInitializeInterface() {
@@ -50,13 +49,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         super.onStartInput(attribute, restarting)
         inputTypeClass = attribute!!.inputType and InputType.TYPE_MASK_CLASS
         enterKeyType = attribute.imeOptions and (EditorInfo.IME_MASK_ACTION or EditorInfo.IME_FLAG_NO_ENTER_ACTION)
-        inputTypeCapsMode = currentInputConnection.getCursorCapsMode(attribute.inputType)
-
-        val shiftMode = when (inputTypeCapsMode) {
-            InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS -> SHIFT_ON_PERMANENT
-            InputType.TYPE_TEXT_FLAG_CAP_WORDS, InputType.TYPE_TEXT_FLAG_CAP_SENTENCES -> SHIFT_ON_ONE_CHAR
-            else -> SHIFT_OFF
-        }
 
         val keyboardXml = when (inputTypeClass) {
             InputType.TYPE_CLASS_NUMBER, InputType.TYPE_CLASS_DATETIME, InputType.TYPE_CLASS_PHONE -> {
@@ -70,8 +62,20 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         }
 
         keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
-        keyboard!!.setShifted(shiftMode)
         keyboardView?.setKeyboard(keyboard!!)
+        updateShiftKeyState()
+    }
+
+    private fun updateShiftKeyState() {
+        if (keyboardMode == KEYBOARD_LETTERS) {
+            val editorInfo = currentInputEditorInfo
+            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.shiftState != SHIFT_ON_PERMANENT) {
+                if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
+                    keyboard?.setShifted(SHIFT_ON_ONE_CHAR)
+                    keyboardView?.invalidateAllKeys()
+                }
+            }
+        }
     }
 
     override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
@@ -142,11 +146,10 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 if (keyboard!!.shiftState == SHIFT_ON_ONE_CHAR) {
                     keyboard!!.shiftState = SHIFT_OFF
                     keyboardView!!.invalidateAllKeys()
-                } else if (primaryCode == MyKeyboard.KEYCODE_SPACE && keyboard!!.shiftState == SHIFT_OFF && inputTypeCapsMode == InputType.TYPE_TEXT_FLAG_CAP_WORDS) {
-                    onKey(MyKeyboard.KEYCODE_SHIFT, intArrayOf(MyKeyboard.KEYCODE_SHIFT))
                 }
             }
         }
+        updateShiftKeyState()
     }
 
     override fun onText(text: CharSequence?) {}

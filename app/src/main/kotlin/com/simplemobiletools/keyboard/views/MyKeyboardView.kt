@@ -1173,10 +1173,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     }
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    if (mMiniKeyboard != null) {
-                        mMiniKeyboard!!.mKeys.firstOrNull { it.pressed }?.apply {
-                            onKeyboardActionListener!!.onKey(codes[0], codes.toIntArray())
-                        }
+                    mMiniKeyboard?.mKeys?.firstOrNull { it.pressed }?.apply {
+                        onKeyboardActionListener!!.onKey(codes[0], codes.toIntArray())
                     }
                     mMiniKeyboardSelectedKeyIndex = -1
                     dismissPopupKeyboard()
