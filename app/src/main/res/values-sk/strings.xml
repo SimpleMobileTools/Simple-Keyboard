@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Jednoduchá klávesnica</string>
+    <string name="app_launcher_name">Klávesnica</string>
+    <string name="redirection_note">Prosím povoľte Jednoduchú klávesnicu na nasledujúcej obrazovke, aby sa stala zvoliteľnou. Po povolení stlačte \'Späť\'.</string>
+    <string name="change_keyboard">Zmeniť klávesnicu</string>
+    <string name="clear_clipboard_data">Vyčistič schránku</string>
+    <string name="clear_clipboard_data_confirmation">Ste si istý, že chcete vyčistiť schránku?</string>
+    <!-- Accessibility -->
+    <string name="keycode_delete">Odstrániť</string>
+    <string name="keycode_mode_change">Zmeniť typ klávesnice</string>
+    <string name="keycode_shift">Shift</string>
+    <string name="keycode_enter">Enter</string>
+    <!-- Settings -->
+    <string name="show_clipboard_content">Zobraziť obsah schránky, ak je dostupná</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Jednoduchá klávesnica</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Ľahká klávesnica na vkladanie rôznych textov, špeciálnych znakov a čísel.</string>
+    <string name="app_long_description">
+        Rýchla a ľahká klávesnica, pomocou ktorej si môžete písať s kamošmi, alebo vkladať iný text, čísla a symboli.
+
+        Táto apka je založená na Material dizajne a má prednastavenú tmavú tému, poskytuje výbornú používateľskú skúsenosť pre ľahké používanie. Chýbajúci prístup k internetu garantuje lepšie súkromie, bezpečnosť a stabilitu ako ostatné apky.
+
+        Neobsahuje žiadne reklamy a nepotrebné oprávnenia. Je opensource, poskytuje možnosť zmeny farieb.
+
+        <b>Pozrite si celú sadu aplikácií na:</b>
+        https://www.simplemobiletools.com
+
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
+    </string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
