@@ -2,9 +2,7 @@
 <Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
     app:keyBackground="@color/color_primary_dark"
     app:keyHeight="60dp"
-    app:keyTextColor="@color/color_accent"
-    app:keyWidth="10%"
-    app:verticalGap="3px">
+    app:keyTextColor="@color/color_accent">
     <Row>
         <Key
             app:codes="49"
