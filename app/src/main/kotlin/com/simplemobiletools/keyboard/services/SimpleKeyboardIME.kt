@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.EditorInfo.IME_ACTION_NONE
 import com.simplemobiletools.commons.extensions.performHapticFeedback
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.helpers.MyKeyboard
@@ -21,31 +22,16 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     private val KEYBOARD_SYMBOLS = 1
     private val KEYBOARD_SYMBOLS_SHIFT = 2
 
-    private val ENTER_DEFAULT = 0
-    private val ENTER_SEARCH = 1
-    private val ENTER_GO = 2
-    private val ENTER_NEXT = 3
-
     private var keyboard: MyKeyboard? = null
     private var keyboardView: MyKeyboardView? = null
     private var lastShiftPressTS = 0L
     private var keyboardMode = KEYBOARD_LETTERS
     private var inputType = InputType.TYPE_CLASS_TEXT
-    private var enterKeyType = ENTER_DEFAULT
+    private var enterKeyType = IME_ACTION_NONE
 
     override fun onCreateInputView(): View {
         keyboardView = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null) as MyKeyboardView
-
-        val keyboardXml = when (inputType) {
-            InputType.TYPE_CLASS_NUMBER, InputType.TYPE_CLASS_DATETIME, InputType.TYPE_CLASS_PHONE -> {
-                keyboardMode = KEYBOARD_SYMBOLS
-                R.xml.keys_symbols
-            }
-            else -> R.xml.keys_letters
-        }
-
-        keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
-        keyboardView!!.setKeyboard(keyboard!!)
+        createKeyboard()
         keyboardView!!.onKeyboardActionListener = this
         return keyboardView!!
     }
@@ -58,6 +44,26 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         super.onStartInput(attribute, restarting)
         inputType = attribute!!.inputType and InputType.TYPE_MASK_CLASS
         enterKeyType = attribute.imeOptions and (EditorInfo.IME_MASK_ACTION or EditorInfo.IME_FLAG_NO_ENTER_ACTION)
+
+        if (keyboardView != null) {
+            createKeyboard()
+        }
+    }
+
+    private fun createKeyboard() {
+        val keyboardXml = when (inputType) {
+            InputType.TYPE_CLASS_NUMBER, InputType.TYPE_CLASS_DATETIME, InputType.TYPE_CLASS_PHONE -> {
+                keyboardMode = KEYBOARD_SYMBOLS
+                R.xml.keys_symbols
+            }
+            else -> {
+                keyboardMode = KEYBOARD_LETTERS
+                R.xml.keys_letters
+            }
+        }
+
+        keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
+        keyboardView!!.setKeyboard(keyboard!!)
     }
 
     override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
