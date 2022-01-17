@@ -1,6 +1,8 @@
 package com.simplemobiletools.keyboard.activities
 
 import android.content.Intent
+import android.graphics.drawable.LayerDrawable
+import android.graphics.drawable.RippleDrawable
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
@@ -8,6 +10,9 @@ import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
 import com.simplemobiletools.commons.extensions.appLaunched
+import com.simplemobiletools.commons.extensions.applyColorFilter
+import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
+import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.keyboard.BuildConfig
 import com.simplemobiletools.keyboard.R
@@ -37,6 +42,9 @@ class MainActivity : SimpleActivity() {
                 }
             }
         }
+
+        updateTextColors(main_holder)
+        updateChangeKeyboardColor()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -62,6 +70,12 @@ class MainActivity : SimpleActivity() {
         )
 
         startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)
+    }
+
+    private fun updateChangeKeyboardColor() {
+        val applyBackground = resources.getDrawable(R.drawable.button_background_rounded, theme) as RippleDrawable
+        (applyBackground as LayerDrawable).findDrawableByLayerId(R.id.button_background_holder).applyColorFilter(getAdjustedPrimaryColor())
+        change_keyboard.background = applyBackground
     }
 
     private fun isKeyboardEnabled(): Boolean {
