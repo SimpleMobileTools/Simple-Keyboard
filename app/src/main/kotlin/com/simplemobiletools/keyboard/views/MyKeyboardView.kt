@@ -18,7 +18,10 @@ import android.view.accessibility.AccessibilityManager
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.simplemobiletools.commons.extensions.adjustAlpha
+import com.simplemobiletools.commons.extensions.applyColorFilter
+import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
 import java.util.*
 
@@ -107,6 +110,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mShadowRadius = 0f
     private var mShadowColor = 0
     private val mBackgroundDimAmount: Float
+
+    private var mTextColor = 0
+    private var mBackgroundColor = 0
+    private var mPrimaryColor = 0
 
     private var mPreviewText: TextView? = null
     private val mPreviewPopup: PopupWindow
@@ -275,6 +282,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         } finally {
             attributes.recycle()
         }
+
+        mTextColor = context.config.textColor
+        mBackgroundColor = context.config.backgroundColor
+        mPrimaryColor = context.getAdjustedPrimaryColor()
 
         mBackgroundDimAmount = 0.5f
         mPreviewPopup = PopupWindow(context)
@@ -573,10 +584,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 continue
             }
 
+            val code = key.codes.firstOrNull() ?: -100
             var keyBackground = mKeyBackground
-            if (key.codes.firstOrNull() == MyKeyboard.KEYCODE_SPACE) {
+            if (code == MyKeyboard.KEYCODE_SPACE) {
                 keyBackground = resources.getDrawable(R.drawable.keyboard_space_background, context.theme)
-            } else if (key.codes.firstOrNull() == MyKeyboard.KEYCODE_ENTER) {
+            } else if (code == MyKeyboard.KEYCODE_ENTER) {
                 keyBackground = resources.getDrawable(R.drawable.keyboard_enter_background, context.theme)
             }
 
@@ -591,6 +603,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 key.pressed -> intArrayOf(android.R.attr.state_pressed)
                 key.focused -> intArrayOf(android.R.attr.state_focused)
                 else -> intArrayOf()
+            }
+
+            if (key.focused || code == MyKeyboard.KEYCODE_ENTER) {
+                keyBackground.applyColorFilter(mPrimaryColor)
             }
 
             canvas.translate((key.x + kbdPaddingLeft).toFloat(), (key.y + kbdPaddingTop).toFloat())
