@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- used after long pressing a key to highlight the currently selected key alternative on minikeyboard-->
+    <item android:drawable="@drawable/minikeyboard_selected_background" android:state_focused="true" />
+
+    <!-- used at clicking some keys on the main keyboard -->
+    <item android:drawable="@color/key_press_color" android:state_pressed="true" />
+</selector>

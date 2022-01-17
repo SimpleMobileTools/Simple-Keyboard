@@ -7,7 +7,7 @@
     </style>
 
     <style name="Widget.KeyboardView" parent="Widget">
-        <item name="keyBackground">@drawable/minikeyboard_key_selector</item>
+        <item name="keyBackground">@drawable/keyboard_key_selector</item>
         <item name="keyTextSize">22sp</item>
         <item name="keyTextColor">#FFFFFFFF</item>
         <item name="keyPreviewLayout">@layout/keyboard_key_preview</item>

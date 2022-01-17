@@ -247,6 +247,9 @@ class MyKeyboard {
         /** The current pressed state of this key  */
         var pressed = false
 
+        /** Focused state, used after long pressing a key and swiping to alternative keys */
+        var focused = false
+
         /** Text to output when pressed. This can be multiple characters, like ".com"  */
         var text: CharSequence? = null
 
@@ -329,6 +332,14 @@ class MyKeyboard {
             width = parent.defaultWidth
             gap = parent.defaultHorizontalGap
             edgeFlags = parent.rowEdgeFlags
+        }
+
+        fun onPressed() {
+            pressed = true
+        }
+
+        fun onReleased() {
+            pressed = false
         }
 
         fun parseCSV(value: String): ArrayList<Int> {

@@ -587,10 +587,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 keyBackground.setBounds(0, 0, key.width, key.height)
             }
 
-            keyBackground.state = if (key.pressed) {
-                intArrayOf(android.R.attr.state_pressed)
-            } else {
-                intArrayOf()
+            keyBackground.state = when {
+                key.pressed -> intArrayOf(android.R.attr.state_pressed)
+                key.focused -> intArrayOf(android.R.attr.state_focused)
+                else -> intArrayOf()
             }
 
             canvas.translate((key.x + kbdPaddingLeft).toFloat(), (key.y + kbdPaddingTop).toFloat())
@@ -605,8 +605,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     paint.typeface = Typeface.DEFAULT
                 }
 
-                // Draw a drop shadow for the text
-                paint.setShadowLayer(mShadowRadius, 0f, 0f, mShadowColor)
                 // Draw the text
                 canvas.drawText(
                     label, ((key.width - padding.left - padding.right) / 2 + padding.left).toFloat(),
@@ -769,6 +767,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         if (oldKeyIndex != mCurrentKeyIndex) {
             if (oldKeyIndex != NOT_A_KEY && keys.size > oldKeyIndex) {
                 val oldKey = keys[oldKeyIndex]
+                oldKey.onReleased()
                 invalidateKey(oldKeyIndex)
                 val keyCode = oldKey.codes[0]
                 sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT, keyCode)
@@ -777,6 +776,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             if (mCurrentKeyIndex != NOT_A_KEY && keys.size > mCurrentKeyIndex) {
                 val newKey = keys[mCurrentKeyIndex]
+
+                val code = newKey.codes.firstOrNull() ?: -100
+                if (code == MyKeyboard.KEYCODE_SHIFT || code == MyKeyboard.KEYCODE_MODE_CHANGE || code == MyKeyboard.KEYCODE_DELETE ||
+                    code == MyKeyboard.KEYCODE_ENTER || code == MyKeyboard.KEYCODE_SPACE
+                ) {
+                    newKey.onPressed()
+                }
+
                 invalidateKey(mCurrentKeyIndex)
                 val keyCode = newKey.codes[0]
                 sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER, keyCode)
@@ -1057,8 +1064,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             selectedKeyIndex = Math.max(0, Math.min(selectedKeyIndex, keysCnt - 1))
 
             for (i in 0 until keysCnt) {
-                mMiniKeyboard!!.mKeys[i].pressed = i == selectedKeyIndex
+                mMiniKeyboard!!.mKeys[i].focused = i == selectedKeyIndex
             }
+
             mMiniKeyboardSelectedKeyIndex = selectedKeyIndex
             mMiniKeyboard!!.invalidateAllKeys()
 
@@ -1153,7 +1161,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         selectedKeyIndex = Math.max(0, Math.min(selectedKeyIndex, keysCnt - 1))
                         if (selectedKeyIndex != mMiniKeyboardSelectedKeyIndex) {
                             for (i in 0 until keysCnt) {
-                                mMiniKeyboard!!.mKeys[i].pressed = i == selectedKeyIndex
+                                mMiniKeyboard!!.mKeys[i].focused = i == selectedKeyIndex
                             }
                             mMiniKeyboardSelectedKeyIndex = selectedKeyIndex
                             mMiniKeyboard!!.invalidateAllKeys()
@@ -1167,7 +1175,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     }
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    mMiniKeyboard?.mKeys?.firstOrNull { it.pressed }?.apply {
+                    mMiniKeyboard?.mKeys?.firstOrNull { it.focused }?.apply {
                         onKeyboardActionListener!!.onKey(codes[0], codes.toIntArray())
                     }
                     mMiniKeyboardSelectedKeyIndex = -1
