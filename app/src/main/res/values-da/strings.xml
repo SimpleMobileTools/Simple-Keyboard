@@ -1,2 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="keycode_shift">Shift</string>
+    <string name="app_short_description">Nemt tastatur til at indsætte alle slags tekster, specialtegn og tal</string>
+    <string name="app_title">Simpelt tastatur</string>
+    <string name="keycode_mode_change">Skift tastaturtype</string>
+    <string name="keycode_enter">Enter</string>
+    <string name="show_clipboard_content">Vis indhold i udklipsholder, hvis det er tilgængeligt</string>
+    <string name="app_name">Simpelt tastatur</string>
+    <string name="app_launcher_name">Tastatur</string>
+    <string name="redirection_note">Aktivér Simpelt tastatur på det næste skærmbillede for at gøre det til et tilgængeligt tastatur. Tryk på \'Tilbage\' når det er aktiveret.</string>
+    <string name="change_keyboard">Skift tastatur</string>
+    <string name="clear_clipboard_data">Ryd data i udklipsholder</string>
+    <string name="clear_clipboard_data_confirmation">Er du sikker på, at du vil slette data i udklipsholderen\?</string>
+    <string name="keycode_delete">Slet</string>
+    <string name="app_long_description"> En hurtig og let tastatur-app, der hjælper dig med at chatte med dine venner eller indsætte andre tekster, tal eller symboler. Den leveres med material design og mørkt tema som standard, hvilket giver en fantastisk brugeroplevelse til nemt brug. Den manglende internetadgang giver dig mere privatliv, sikkerhed og stabilitet end andre apps. Indeholder ingen annoncer eller unødvendige tilladelser. Den er med helt åben kildekode (open source), byder på tilpassede farver. <b>Se hele pakken af Simple Tools her:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
+</resources>
