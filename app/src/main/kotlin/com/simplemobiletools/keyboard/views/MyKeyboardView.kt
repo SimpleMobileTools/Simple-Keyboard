@@ -20,6 +20,7 @@ import android.widget.TextView
 import com.simplemobiletools.commons.extensions.adjustAlpha
 import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
+import com.simplemobiletools.commons.extensions.getContrastColor
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
@@ -343,6 +344,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
     }
 
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        super.onVisibilityChanged(changedView, visibility)
+        if (visibility == VISIBLE) {
+            mTextColor = context.config.textColor
+            mBackgroundColor = context.config.backgroundColor
+            mPrimaryColor = context.getAdjustedPrimaryColor()
+        }
+    }
+
     private fun initGestureDetector() {
         if (mGestureDetector == null) {
             mGestureDetector = GestureDetector(context, object : SimpleOnGestureListener() {
@@ -621,6 +631,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     paint.typeface = Typeface.DEFAULT
                 }
 
+                paint.color = if (key.focused) {
+                    mPrimaryColor.getContrastColor()
+                } else {
+                    mKeyTextColor
+                }
+
                 // Draw the text
                 canvas.drawText(
                     label, ((key.width - padding.left - padding.right) / 2 + padding.left).toFloat(),
@@ -641,6 +657,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         else -> R.drawable.ic_caps_underlined_vector
                     }
                     key.icon = resources.getDrawable(drawableId)
+                }
+
+                if (code == MyKeyboard.KEYCODE_ENTER) {
+                    key.icon!!.applyColorFilter(mPrimaryColor.getContrastColor())
                 }
 
                 val drawableX = (key.width - key.icon!!.intrinsicWidth) / 2
