@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/button_background_shape">
+    <item
+        android:id="@+id/button_background_shape"
+        android:bottom="@dimen/normal_margin"
+        android:left="@dimen/medium_margin"
+        android:right="@dimen/medium_margin"
+        android:top="@dimen/normal_margin">
         <shape android:shape="rectangle">
-            <solid android:color="@color/md_grey_800_dark" />
-            <corners android:radius="4dp" />
+            <solid android:color="@color/md_grey_700" />
+            <corners android:radius="@dimen/medium_margin" />
         </shape>
     </item>
 </layer-list>

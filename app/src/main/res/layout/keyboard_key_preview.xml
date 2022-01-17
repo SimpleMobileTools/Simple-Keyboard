@@ -1,7 +1,7 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/keyboard_key_feedback_background"
+    android:background="@drawable/minikeyboard_background"
     android:gravity="center"
     android:includeFontPadding="false"
     android:textColor="@color/md_grey_white"

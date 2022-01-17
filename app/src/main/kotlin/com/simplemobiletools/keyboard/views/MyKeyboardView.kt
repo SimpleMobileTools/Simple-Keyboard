@@ -538,7 +538,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val canvas = mCanvas
         canvas!!.clipRect(mDirtyRect)
         val paint = mPaint
-        val keyBackground = mKeyBackground
         val clipRegion = mClipRegion
         val padding = mPadding
         val kbdPaddingLeft: Int = paddingLeft
@@ -572,6 +571,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val key = keys[i]
             if (drawSingleKey && invalidKey !== key) {
                 continue
+            }
+
+            var keyBackground = mKeyBackground
+            if (key.codes.firstOrNull() == MyKeyboard.KEYCODE_SPACE) {
+                keyBackground = resources.getDrawable(R.drawable.keyboard_space_background, context.theme)
+            } else if (key.codes.firstOrNull() == MyKeyboard.KEYCODE_ENTER) {
+                keyBackground = resources.getDrawable(R.drawable.keyboard_enter_background, context.theme)
             }
 
             // Switch the character to uppercase if shift is pressed
@@ -623,22 +629,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     key.icon = resources.getDrawable(drawableId)
                 }
 
-                val iconWidthToUse = if (key.codes.firstOrNull() == MyKeyboard.KEYCODE_ENTER) {
-                    (key.icon!!.intrinsicWidth * 1.2).toInt()
-                } else {
-                    key.icon!!.intrinsicWidth
-                }
-
-                val iconHeightToUse = if (key.codes.firstOrNull() == MyKeyboard.KEYCODE_ENTER) {
-                    (key.icon!!.intrinsicHeight * 1.2).toInt()
-                } else {
-                    key.icon!!.intrinsicHeight
-                }
-
-                val drawableX = (key.width - iconWidthToUse) / 2
-                val drawableY = (key.height - iconHeightToUse) / 2
+                val drawableX = (key.width - key.icon!!.intrinsicWidth) / 2
+                val drawableY = (key.height - key.icon!!.intrinsicHeight) / 2
                 canvas.translate(drawableX.toFloat(), drawableY.toFloat())
-                key.icon!!.setBounds(0, 0, iconWidthToUse, iconHeightToUse)
+                key.icon!!.setBounds(0, 0, key.icon!!.intrinsicWidth, key.icon!!.intrinsicHeight)
                 key.icon!!.draw(canvas)
                 canvas.translate(-drawableX.toFloat(), -drawableY.toFloat())
             }
