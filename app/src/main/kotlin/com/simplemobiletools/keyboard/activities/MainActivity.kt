@@ -9,10 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
-import com.simplemobiletools.commons.extensions.appLaunched
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
-import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.keyboard.BuildConfig
 import com.simplemobiletools.keyboard.R
@@ -49,6 +46,7 @@ class MainActivity : SimpleActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+        updateMenuItemColors(menu)
         return true
     }
 
@@ -76,6 +74,7 @@ class MainActivity : SimpleActivity() {
         val applyBackground = resources.getDrawable(R.drawable.button_background_rounded, theme) as RippleDrawable
         (applyBackground as LayerDrawable).findDrawableByLayerId(R.id.button_background_holder).applyColorFilter(getAdjustedPrimaryColor())
         change_keyboard.background = applyBackground
+        change_keyboard.setTextColor(getAdjustedPrimaryColor().getContrastColor())
     }
 
     private fun isKeyboardEnabled(): Boolean {
