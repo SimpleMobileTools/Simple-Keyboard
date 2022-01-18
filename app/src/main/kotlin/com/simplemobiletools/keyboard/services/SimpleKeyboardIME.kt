@@ -151,7 +151,10 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 }
             }
         }
-        updateShiftKeyState()
+
+        if (primaryCode != MyKeyboard.KEYCODE_SHIFT) {
+            updateShiftKeyState()
+        }
     }
 
     override fun onText(text: CharSequence?) {}
