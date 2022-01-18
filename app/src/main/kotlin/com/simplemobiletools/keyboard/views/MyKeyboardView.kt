@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.graphics.Paint.Align
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.inputmethodservice.KeyboardView
 import android.media.AudioManager
@@ -107,7 +108,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private var mLabelTextSize = 0
     private var mKeyTextSize = 0
-    private var mKeyTextColor = 0
     private var mShadowRadius = 0f
     private var mShadowColor = 0
     private val mBackgroundDimAmount: Float
@@ -273,7 +273,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     R.styleable.MyKeyboardView_keyPreviewOffset -> mPreviewOffset = attributes.getDimensionPixelOffset(attr, 0)
                     R.styleable.MyKeyboardView_keyPreviewHeight -> mPreviewHeight = attributes.getDimensionPixelSize(attr, 80)
                     R.styleable.MyKeyboardView_keyTextSize -> mKeyTextSize = attributes.getDimensionPixelSize(attr, 18)
-                    R.styleable.MyKeyboardView_keyTextColor -> mKeyTextColor = attributes.getColor(attr, -0x1000000)
                     R.styleable.MyKeyboardView_labelTextSize -> mLabelTextSize = attributes.getDimensionPixelSize(attr, 14)
                     R.styleable.MyKeyboardView_popupLayout -> mPopupLayout = attributes.getResourceId(attr, 0)
                     R.styleable.MyKeyboardView_shadowColor -> mShadowColor = attributes.getColor(attr, 0)
@@ -350,6 +349,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mTextColor = context.config.textColor
             mBackgroundColor = context.config.backgroundColor
             mPrimaryColor = context.getAdjustedPrimaryColor()
+            background = ColorDrawable(mBackgroundColor)
         }
     }
 
@@ -565,7 +565,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val kbdPaddingTop: Int = paddingTop
         val keys = mKeys
         val invalidKey = mInvalidatedKey
-        paint.color = mKeyTextColor
+        paint.color = mTextColor
         val smallLetterPaint = Paint()
         smallLetterPaint.set(paint)
         smallLetterPaint.apply {
@@ -634,7 +634,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 paint.color = if (key.focused) {
                     mPrimaryColor.getContrastColor()
                 } else {
-                    mKeyTextColor
+                    mTextColor
                 }
 
                 // Draw the text
@@ -661,6 +661,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                 if (code == MyKeyboard.KEYCODE_ENTER) {
                     key.icon!!.applyColorFilter(mPrimaryColor.getContrastColor())
+                } else if (code == MyKeyboard.KEYCODE_DELETE || code == MyKeyboard.KEYCODE_SHIFT) {
+                    key.icon!!.applyColorFilter(mTextColor)
                 }
 
                 val drawableX = (key.width - key.icon!!.intrinsicWidth) / 2

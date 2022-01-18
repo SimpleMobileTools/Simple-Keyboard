@@ -13,6 +13,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.keyboard.BuildConfig
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.extensions.config
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : SimpleActivity() {
@@ -42,6 +43,7 @@ class MainActivity : SimpleActivity() {
 
         updateTextColors(main_holder)
         updateChangeKeyboardColor()
+        main_holder.setBackgroundColor(config.backgroundColor.lightenColor(3))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
