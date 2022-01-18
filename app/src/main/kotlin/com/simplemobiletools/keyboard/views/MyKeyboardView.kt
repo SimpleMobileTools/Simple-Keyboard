@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.graphics.Paint.Align
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.inputmethodservice.KeyboardView
 import android.media.AudioManager
@@ -18,13 +17,11 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.widget.PopupWindow
 import android.widget.TextView
-import com.simplemobiletools.commons.extensions.adjustAlpha
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
-import com.simplemobiletools.commons.extensions.getContrastColor
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
+import kotlinx.android.synthetic.main.keyboard_popup_keyboard.view.*
 import java.util.*
 
 /**
@@ -349,7 +346,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mTextColor = context.config.textColor
             mBackgroundColor = context.config.backgroundColor
             mPrimaryColor = context.getAdjustedPrimaryColor()
-            background = ColorDrawable(mBackgroundColor)
+
+            var newBgColor = mBackgroundColor
+            if (changedView == mini_keyboard_view) {
+                newBgColor = newBgColor.darkenColor(4)
+            }
+
+            background.applyColorFilter(newBgColor)
         }
     }
 
@@ -886,6 +889,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
         }
 
+        mPreviewText!!.background.applyColorFilter(mBackgroundColor.darkenColor(4))
         mPreviewText!!.setTextColor(mTextColor)
         mPreviewText!!.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED))
         val popupWidth = Math.max(mPreviewText!!.measuredWidth, key.width + mPreviewText!!.paddingLeft + mPreviewText!!.paddingRight)
@@ -1032,7 +1036,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             if (mMiniKeyboardContainer == null) {
                 val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
                 mMiniKeyboardContainer = inflater.inflate(mPopupLayout, null)
-                mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.keyboardView) as MyKeyboardView
+                mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.mini_keyboard_view) as MyKeyboardView
 
                 mMiniKeyboard!!.onKeyboardActionListener = object : OnKeyboardActionListener {
                     override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
@@ -1073,7 +1077,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 )
                 mMiniKeyboardCache[popupKey] = mMiniKeyboardContainer
             } else {
-                mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.keyboardView) as MyKeyboardView
+                mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.mini_keyboard_view) as MyKeyboardView
             }
 
             getLocationInWindow(mCoordinates)

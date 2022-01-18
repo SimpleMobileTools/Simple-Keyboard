@@ -4,4 +4,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentBottom="true"
-    android:background="@color/md_grey_800" />
+    android:background="@color/theme_dark_background_color" />
