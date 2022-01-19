@@ -18,6 +18,7 @@ import android.view.accessibility.AccessibilityManager
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
@@ -213,6 +214,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var topSmallNumberSize = 0f
     private var topSmallNumberMarginWidth = 0f
     private var topSmallNumberMarginHeight = 0f
+    private val mSpaceMoveThreshold: Int
 
     // Variables for dealing with multiple pointers
     private var mOldPointerCount = 1
@@ -268,7 +270,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         private val LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout()
         private const val MAX_NEARBY_KEYS = 12
         private const val MULTITAP_INTERVAL = 800 // milliseconds
-        private const val SPACE_MOVE_THRESHOLD = 20
     }
 
     init {
@@ -298,6 +299,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             attributes.recycle()
         }
 
+        mSpaceMoveThreshold = resources.getDimension(R.dimen.medium_margin).toInt()
         mTextColor = context.config.textColor
         mBackgroundColor = context.config.backgroundColor
         mPrimaryColor = context.getAdjustedPrimaryColor()
@@ -1372,13 +1374,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 if (mIsLongPressingSpace) {
                     val diff = mLastX - mLastSpaceMoveX
 
-                    if (diff < -SPACE_MOVE_THRESHOLD) {
-                        for (i in diff / SPACE_MOVE_THRESHOLD until 0) {
+                    if (diff < -mSpaceMoveThreshold) {
+                        for (i in diff / mSpaceMoveThreshold until 0) {
                             onKeyboardActionListener?.moveCursorLeft()
                         }
                         mLastSpaceMoveX = mLastX
-                    } else if (diff > SPACE_MOVE_THRESHOLD) {
-                        for (i in 0 until diff / SPACE_MOVE_THRESHOLD) {
+                    } else if (diff > mSpaceMoveThreshold) {
+                        for (i in 0 until diff / mSpaceMoveThreshold) {
                             onKeyboardActionListener?.moveCursorRight()
                         }
                         mLastSpaceMoveX = mLastX
