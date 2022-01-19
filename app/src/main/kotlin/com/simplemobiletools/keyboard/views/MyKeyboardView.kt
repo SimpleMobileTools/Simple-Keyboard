@@ -335,7 +335,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         MSG_SHOW_PREVIEW -> showKey(msg.arg1)
                         MSG_REMOVE_PREVIEW -> mPreviewText!!.visibility = INVISIBLE
                         MSG_REPEAT -> if (repeatKey()) {
-                            val repeat: Message = Message.obtain(this, MSG_REPEAT)
+                            val repeat = Message.obtain(this, MSG_REPEAT)
                             sendMessageDelayed(repeat, REPEAT_INTERVAL.toLong())
                         }
                         MSG_LONGPRESS -> openPopupIfRequired(msg.obj as MotionEvent)
