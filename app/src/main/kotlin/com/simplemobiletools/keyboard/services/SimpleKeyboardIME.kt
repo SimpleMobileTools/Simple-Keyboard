@@ -145,7 +145,13 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 }
 
                 inputConnection.commitText(code.toString(), 1)
-                if (keyboard!!.shiftState == SHIFT_ON_ONE_CHAR) {
+                if (primaryCode == MyKeyboard.KEYCODE_SPACE && keyboardMode != KEYBOARD_LETTERS) {
+                    keyboardMode = KEYBOARD_LETTERS
+                    keyboard = MyKeyboard(this, R.xml.keys_letters, enterKeyType)
+                    keyboardView!!.setKeyboard(keyboard!!)
+                }
+
+                if (keyboard!!.shiftState == SHIFT_ON_ONE_CHAR && keyboardMode == KEYBOARD_LETTERS) {
                     keyboard!!.shiftState = SHIFT_OFF
                     keyboardView!!.invalidateAllKeys()
                 }
