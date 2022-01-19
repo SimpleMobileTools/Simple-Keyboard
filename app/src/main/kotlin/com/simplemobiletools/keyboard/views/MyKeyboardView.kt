@@ -98,6 +98,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
          * Called when the user quickly moves the finger from down to up.
          */
         fun swipeUp()
+
+        /**
+         * Called when the finger has been lifted after pressing a key
+         */
+        fun onActionUp()
     }
 
     private var mKeyboard: MyKeyboard? = null
@@ -1060,6 +1065,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     override fun onRelease(primaryCode: Int) {
                         onKeyboardActionListener!!.onRelease(primaryCode)
                     }
+
+                    override fun onActionUp() {
+                        onKeyboardActionListener!!.onActionUp()
+                    }
                 }
 
                 //mInputView.setSuggest(mSuggest);
@@ -1369,6 +1378,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
                 invalidateKey(keyIndex)
                 mRepeatKeyIndex = NOT_A_KEY
+                onKeyboardActionListener!!.onActionUp()
             }
             MotionEvent.ACTION_CANCEL -> {
                 removeMessages()

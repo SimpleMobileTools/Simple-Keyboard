@@ -7,6 +7,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.EditorInfo.IME_ACTION_NONE
+import android.view.inputmethod.ExtractedTextRequest
 import com.simplemobiletools.commons.extensions.performHapticFeedback
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.helpers.MyKeyboard
@@ -28,6 +29,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     private var keyboardMode = KEYBOARD_LETTERS
     private var inputTypeClass = InputType.TYPE_CLASS_TEXT
     private var enterKeyType = IME_ACTION_NONE
+    private var switchToLetters = false
 
     override fun onInitializeInterface() {
         super.onInitializeInterface()
@@ -144,11 +146,16 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     code = Character.toUpperCase(code)
                 }
 
-                inputConnection.commitText(code.toString(), 1)
-                if (primaryCode == MyKeyboard.KEYCODE_SPACE && keyboardMode != KEYBOARD_LETTERS) {
-                    keyboardMode = KEYBOARD_LETTERS
-                    keyboard = MyKeyboard(this, R.xml.keys_letters, enterKeyType)
-                    keyboardView!!.setKeyboard(keyboard!!)
+                // If the keyboard is set to symbols and the user presses space, we usually should switch back to the letters keyboard.
+                // However, avoid doing that in cases when the EditText for example requires numbers as the input.
+                // We can detect that by the text not changing on pressing Space.
+                if (keyboardMode != KEYBOARD_LETTERS && primaryCode == MyKeyboard.KEYCODE_SPACE) {
+                    val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0).text
+                    inputConnection.commitText(code.toString(), 1)
+                    val newText = inputConnection.getExtractedText(ExtractedTextRequest(), 0).text
+                    switchToLetters = originalText != newText
+                } else {
+                    inputConnection.commitText(code.toString(), 1)
                 }
 
                 if (keyboard!!.shiftState == SHIFT_ON_ONE_CHAR && keyboardMode == KEYBOARD_LETTERS) {
@@ -160,6 +167,23 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
         if (primaryCode != MyKeyboard.KEYCODE_SHIFT) {
             updateShiftKeyState()
+        }
+    }
+
+    override fun onActionUp() {
+        if (switchToLetters) {
+            keyboardMode = KEYBOARD_LETTERS
+            keyboard = MyKeyboard(this, R.xml.keys_letters, enterKeyType)
+
+            val editorInfo = currentInputEditorInfo
+            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.shiftState != SHIFT_ON_PERMANENT) {
+                if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
+                    keyboard?.setShifted(SHIFT_ON_ONE_CHAR)
+                }
+            }
+
+            keyboardView!!.setKeyboard(keyboard!!)
+            switchToLetters = false
         }
     }
 
