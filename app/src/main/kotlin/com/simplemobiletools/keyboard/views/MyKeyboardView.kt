@@ -352,7 +352,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 newBgColor = newBgColor.darkenColor(4)
             }
 
-            background.applyColorFilter(newBgColor)
+            background.applyColorFilter(newBgColor.darkenColor(2))
         }
     }
 

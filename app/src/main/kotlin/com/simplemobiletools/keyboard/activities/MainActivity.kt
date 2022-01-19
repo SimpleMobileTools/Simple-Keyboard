@@ -43,7 +43,7 @@ class MainActivity : SimpleActivity() {
 
         updateTextColors(main_holder)
         updateChangeKeyboardColor()
-        main_holder.setBackgroundColor(config.backgroundColor.lightenColor(3))
+        main_holder.setBackgroundColor(config.backgroundColor)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
