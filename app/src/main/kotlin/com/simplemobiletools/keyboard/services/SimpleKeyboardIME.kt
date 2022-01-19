@@ -187,18 +187,24 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         }
     }
 
-    override fun moveCursorRight() {
-        currentInputConnection?.apply {
-            sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT))
-            sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_RIGHT))
-        }
+    override fun moveCursorLeft() {
+        moveCursor(false)
     }
 
-    override fun moveCursorLeft() {
-        currentInputConnection?.apply {
-            sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_LEFT))
-            sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_LEFT))
+    override fun moveCursorRight() {
+        moveCursor(true)
+    }
+
+    private fun moveCursor(moveRight: Boolean) {
+        val extractedText = currentInputConnection?.getExtractedText(ExtractedTextRequest(), 0) ?: return
+        var newCursorPosition = extractedText.selectionStart
+        newCursorPosition = if (moveRight) {
+            newCursorPosition + 1
+        } else {
+            newCursorPosition - 1
         }
+
+        currentInputConnection?.setSelection(newCursorPosition, newCursorPosition)
     }
 
     override fun onText(text: CharSequence?) {}
