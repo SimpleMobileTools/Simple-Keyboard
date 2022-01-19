@@ -1325,14 +1325,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 if (mCurrentKey >= 0 && mKeys[mCurrentKey].repeatable) {
                     mRepeatKeyIndex = mCurrentKey
 
+                    val msg = mHandler!!.obtainMessage(MSG_REPEAT)
+                    mHandler!!.sendMessageDelayed(msg, REPEAT_START_DELAY.toLong())
                     // if the user long presses Space, move the cursor after swipine left/right
                     if (mKeys[mCurrentKey].codes.firstOrNull() == MyKeyboard.KEYCODE_SPACE) {
-                        val msg = mHandler!!.obtainMessage(MSG_REPEAT)
-                        mHandler!!.sendMessageDelayed(msg, REPEAT_START_DELAY.toLong())
                         mLastSpaceMoveX = touchX
                     } else {
                         repeatKey(true)
                     }
+
                     // Delivering the key could have caused an abort
                     if (mAbortKey) {
                         mRepeatKeyIndex = NOT_A_KEY
