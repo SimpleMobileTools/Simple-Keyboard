@@ -103,6 +103,16 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
          * Called when the finger has been lifted after pressing a key
          */
         fun onActionUp()
+
+        /**
+         * Called when the user long presses Space and moves to the left
+         */
+        fun moveCursorLeft()
+
+        /**
+         * Called when the user long presses Space and moves to the right
+         */
+        fun moveCursorRight()
     }
 
     private var mKeyboard: MyKeyboard? = null
@@ -197,6 +207,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private val mSwipeTracker: SwipeTracker = SwipeTracker()
     private val mSwipeThreshold: Int
     private val mDisambiguateSwipe: Boolean
+    private var mIsLongPressingSpace = false
+    private var mLastSpaceMoveX = 0
     private var mPopupMaxMoveDistance = 0f
     private var topSmallNumberSize = 0f
     private var topSmallNumberMarginWidth = 0f
@@ -256,6 +268,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         private val LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout()
         private const val MAX_NEARBY_KEYS = 12
         private const val MULTITAP_INTERVAL = 800 // milliseconds
+        private const val SPACE_MOVE_THRESHOLD = 20
     }
 
     init {
@@ -334,7 +347,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     when (msg.what) {
                         MSG_SHOW_PREVIEW -> showKey(msg.arg1)
                         MSG_REMOVE_PREVIEW -> mPreviewText!!.visibility = INVISIBLE
-                        MSG_REPEAT -> if (repeatKey()) {
+                        MSG_REPEAT -> if (repeatKey(false)) {
                             val repeat = Message.obtain(this, MSG_REPEAT)
                             sendMessageDelayed(repeat, REPEAT_INTERVAL.toLong())
                         }
@@ -1069,6 +1082,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     override fun onActionUp() {
                         onKeyboardActionListener!!.onActionUp()
                     }
+
+                    override fun moveCursorLeft() {
+                        onKeyboardActionListener!!.moveCursorLeft()
+                    }
+
+                    override fun moveCursorRight() {
+                        onKeyboardActionListener!!.moveCursorRight()
+                    }
                 }
 
                 //mInputView.setSuggest(mSuggest);
@@ -1303,9 +1324,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 var wasHandled = false
                 if (mCurrentKey >= 0 && mKeys[mCurrentKey].repeatable) {
                     mRepeatKeyIndex = mCurrentKey
-                    val msg = mHandler!!.obtainMessage(MSG_REPEAT)
-                    mHandler!!.sendMessageDelayed(msg, REPEAT_START_DELAY.toLong())
-                    repeatKey()
+
+                    // if the user long presses Space, move the cursor after swipine left/right
+                    if (mKeys[mCurrentKey].codes.firstOrNull() == MyKeyboard.KEYCODE_SPACE) {
+                        val msg = mHandler!!.obtainMessage(MSG_REPEAT)
+                        mHandler!!.sendMessageDelayed(msg, REPEAT_START_DELAY.toLong())
+                        mLastSpaceMoveX = touchX
+                    } else {
+                        repeatKey(true)
+                    }
                     // Delivering the key could have caused an abort
                     if (mAbortKey) {
                         mRepeatKeyIndex = NOT_A_KEY
@@ -1341,7 +1368,17 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     }
                 }
 
-                if (!continueLongPress) {
+                if (mIsLongPressingSpace) {
+                    val diff = mLastX - mLastSpaceMoveX
+
+                    if (diff > SPACE_MOVE_THRESHOLD) {
+                        onKeyboardActionListener?.moveCursorRight()
+                        mLastSpaceMoveX = mLastX
+                    } else if (diff < -SPACE_MOVE_THRESHOLD) {
+                        onKeyboardActionListener?.moveCursorLeft()
+                        mLastSpaceMoveX = mLastX
+                    }
+                } else if (!continueLongPress) {
                     // Cancel old longpress
                     mHandler!!.removeMessages(MSG_LONGPRESS)
                     // Start new longpress if key has changed
@@ -1349,11 +1386,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         val msg = mHandler!!.obtainMessage(MSG_LONGPRESS, me)
                         mHandler!!.sendMessageDelayed(msg, LONGPRESS_TIMEOUT.toLong())
                     }
+
+                    showPreview(mCurrentKey)
+                    mLastMoveTime = eventTime
                 }
-                showPreview(mCurrentKey)
-                mLastMoveTime = eventTime
             }
             MotionEvent.ACTION_UP -> {
+                mLastSpaceMoveX = 0
                 removeMessages()
                 if (keyIndex == mCurrentKey) {
                     mCurrentKeyTime += eventTime - mLastMoveTime
@@ -1376,11 +1415,19 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 if (mRepeatKeyIndex == NOT_A_KEY && !mMiniKeyboardOnScreen && !mAbortKey) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
                 }
+
+                if (mKeys[mCurrentKey].codes.firstOrNull() == MyKeyboard.KEYCODE_SPACE && !mIsLongPressingSpace) {
+                    detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
+                }
+
                 invalidateKey(keyIndex)
                 mRepeatKeyIndex = NOT_A_KEY
                 onKeyboardActionListener!!.onActionUp()
+                mIsLongPressingSpace = false
             }
             MotionEvent.ACTION_CANCEL -> {
+                mIsLongPressingSpace = false
+                mLastSpaceMoveX = 0
                 removeMessages()
                 dismissPopupKeyboard()
                 mAbortKey = true
@@ -1394,9 +1441,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         return true
     }
 
-    private fun repeatKey(): Boolean {
+    private fun repeatKey(initialCall: Boolean): Boolean {
         val key = mKeys[mRepeatKeyIndex]
-        detectAndSendKey(mCurrentKey, key.x, key.y, mLastTapTime)
+        if (!initialCall && key.codes.firstOrNull() == MyKeyboard.KEYCODE_SPACE) {
+            mIsLongPressingSpace = true
+        } else {
+            detectAndSendKey(mCurrentKey, key.x, key.y, mLastTapTime)
+        }
         return true
     }
 
