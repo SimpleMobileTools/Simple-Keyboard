@@ -1372,11 +1372,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 if (mIsLongPressingSpace) {
                     val diff = mLastX - mLastSpaceMoveX
 
-                    if (diff > SPACE_MOVE_THRESHOLD) {
-                        onKeyboardActionListener?.moveCursorRight()
+                    if (diff < -SPACE_MOVE_THRESHOLD) {
+                        for (i in diff / SPACE_MOVE_THRESHOLD until 0) {
+                            onKeyboardActionListener?.moveCursorLeft()
+                        }
                         mLastSpaceMoveX = mLastX
-                    } else if (diff < -SPACE_MOVE_THRESHOLD) {
-                        onKeyboardActionListener?.moveCursorLeft()
+                    } else if (diff > SPACE_MOVE_THRESHOLD) {
+                        for (i in 0 until diff / SPACE_MOVE_THRESHOLD) {
+                            onKeyboardActionListener?.moveCursorRight()
+                        }
                         mLastSpaceMoveX = mLastX
                     }
                 } else if (!continueLongPress) {
