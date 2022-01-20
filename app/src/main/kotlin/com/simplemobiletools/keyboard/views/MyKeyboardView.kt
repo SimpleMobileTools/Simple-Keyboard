@@ -6,18 +6,17 @@ import android.graphics.*
 import android.graphics.Paint.Align
 import android.graphics.drawable.Drawable
 import android.inputmethodservice.KeyboardView
-import android.media.AudioManager
 import android.os.Handler
 import android.os.Message
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.*
-import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
@@ -35,12 +34,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         fun onPress(primaryCode: Int)
 
         /**
-         * Called when the user releases a key. This is sent after the [.onKey] is called. For keys that repeat, this is only called once.
-         * @param primaryCode the code of the key that was released
-         */
-        fun onRelease(primaryCode: Int)
-
-        /**
          * Send a key press to the listener.
          * @param primaryCode this is the key that was pressed
          * @param keyCodes the codes for all the possible alternative keys with the primary code being the first. If the primary key code is a single character
@@ -48,32 +41,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
          * are useful to correct for accidental presses of a key adjacent to the intended key.
          */
         fun onKey(primaryCode: Int, keyCodes: IntArray?)
-
-        /**
-         * Sends a sequence of characters to the listener.
-         * @param text the sequence of characters to be displayed.
-         */
-        fun onText(text: CharSequence?)
-
-        /**
-         * Called when the user quickly moves the finger from right to left.
-         */
-        fun swipeLeft()
-
-        /**
-         * Called when the user quickly moves the finger from left to right.
-         */
-        fun swipeRight()
-
-        /**
-         * Called when the user quickly moves the finger from up to down.
-         */
-        fun swipeDown()
-
-        /**
-         * Called when the user quickly moves the finger from down to up.
-         */
-        fun swipeUp()
 
         /**
          * Called when the finger has been lifted after pressing a key
@@ -222,9 +189,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     /** The accessibility manager for accessibility support  */
     private val mAccessibilityManager: AccessibilityManager
 
-    /** The audio manager for accessibility support  */
-    private val mAudioManager: AudioManager
-
     private var mHandler: Handler? = null
 
     companion object {
@@ -304,7 +268,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mSwipeThreshold = (500 * resources.displayMetrics.density).toInt()
         mDisambiguateSwipe = false//resources.getBoolean(R.bool.config_swipeDisambiguation)
         mAccessibilityManager = (context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager)
-        mAudioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         mPopupMaxMoveDistance = resources.getDimension(R.dimen.popup_max_move_distance)
         mTopSmallNumberSize = resources.getDimension(R.dimen.small_text_size)
         mTopSmallNumberMarginWidth = resources.getDimension(R.dimen.top_small_number_margin_width)
@@ -315,7 +278,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     @SuppressLint("HandlerLeak")
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        initGestureDetector()
         if (mHandler == null) {
             mHandler = object : Handler() {
                 override fun handleMessage(msg: Message) {
@@ -346,63 +308,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             background.applyColorFilter(newBgColor.darkenColor(2))
-        }
-    }
-
-    private fun initGestureDetector() {
-        if (mGestureDetector == null) {
-            mGestureDetector = GestureDetector(context, object : SimpleOnGestureListener() {
-                override fun onFling(me1: MotionEvent, me2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-                    if (mPossiblePoly) {
-                        return false
-                    }
-
-                    val absX = Math.abs(velocityX)
-                    val absY = Math.abs(velocityY)
-                    val deltaX = me2.x - me1.x
-                    val deltaY = me2.y - me1.y
-                    val travelX = width / 2 // Half the keyboard width
-                    val travelY = height / 2 // Half the keyboard height
-                    mSwipeTracker.computeCurrentVelocity(1000)
-                    val endingVelocityX: Float = mSwipeTracker.xVelocity
-                    val endingVelocityY: Float = mSwipeTracker.yVelocity
-                    var sendDownKey = false
-                    if (velocityX > mSwipeThreshold && absY < absX && deltaX > travelX) {
-                        sendDownKey = if (mDisambiguateSwipe && endingVelocityX < velocityX / 4) {
-                            true
-                        } else {
-                            swipeRight()
-                            return true
-                        }
-                    } else if (velocityX < -mSwipeThreshold && absY < absX && deltaX < -travelX) {
-                        sendDownKey = if (mDisambiguateSwipe && endingVelocityX > velocityX / 4) {
-                            true
-                        } else {
-                            swipeLeft()
-                            return true
-                        }
-                    } else if (velocityY < -mSwipeThreshold && absX < absY && deltaY < -travelY) {
-                        sendDownKey = if (mDisambiguateSwipe && endingVelocityY > velocityY / 4) {
-                            true
-                        } else {
-                            swipeUp()
-                            return true
-                        }
-                    } else if (velocityY > mSwipeThreshold && absX < absY / 2 && deltaY > travelY) {
-                        sendDownKey = if (mDisambiguateSwipe && endingVelocityY < velocityY / 4) {
-                            true
-                        } else {
-                            swipeDown()
-                            return true
-                        }
-                    }
-                    if (sendDownKey) {
-                        detectAndSendKey(mDownKey, mStartX, mStartY, me1.eventTime)
-                    }
-                    return false
-                }
-            })
-            mGestureDetector!!.setIsLongpressEnabled(false)
         }
     }
 
@@ -744,10 +649,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private fun detectAndSendKey(index: Int, x: Int, y: Int, eventTime: Long) {
         if (index != NOT_A_KEY && index < mKeys.size) {
             val key = mKeys[index]
-            if (key.text != null) {
-                onKeyboardActionListener!!.onText(key.text)
-                onKeyboardActionListener!!.onRelease(NOT_A_KEY)
-            } else {
+            if (key.text == null) {
                 var code = key.codes[0]
                 // TextEntryState.keyPressedAt(key, x, y);
                 val codes = IntArray(MAX_NEARBY_KEYS)
@@ -763,7 +665,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     code = key.codes[mTapCount]
                 }
                 onKeyboardActionListener!!.onKey(code, codes)
-                onKeyboardActionListener!!.onRelease(code)
             }
             mLastSentIndex = index
             mLastTapTime = eventTime
@@ -1033,23 +934,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
                         onKeyboardActionListener!!.onKey(primaryCode, keyCodes)
                         dismissPopupKeyboard()
+                        mydebug("onkey")
                     }
 
-                    override fun onText(text: CharSequence?) {
-                        onKeyboardActionListener!!.onText(text)
-                        dismissPopupKeyboard()
-                    }
-
-                    override fun swipeLeft() {}
-                    override fun swipeRight() {}
-                    override fun swipeUp() {}
-                    override fun swipeDown() {}
                     override fun onPress(primaryCode: Int) {
                         onKeyboardActionListener!!.onPress(primaryCode)
-                    }
-
-                    override fun onRelease(primaryCode: Int) {
-                        onKeyboardActionListener!!.onRelease(primaryCode)
                     }
 
                     override fun onActionUp() {
@@ -1065,7 +954,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     }
                 }
 
-                //mInputView.setSuggest(mSuggest);
                 val keyboard = if (popupKey.popupCharacters != null) {
                     MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!)
                 } else {
@@ -1257,13 +1145,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             return true
         }
 
-        if (mGestureDetector!!.onTouchEvent(me)) {
-            showPreview(NOT_A_KEY)
-            mHandler!!.removeMessages(MSG_REPEAT)
-            mHandler!!.removeMessages(MSG_LONGPRESS)
-            return true
-        }
-
         // Needs to be called after the gesture detector gets a turn, as it may have
         // displayed the mini keyboard
         if (mMiniKeyboardOnScreen && action != MotionEvent.ACTION_CANCEL) {
@@ -1427,22 +1308,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             detectAndSendKey(mCurrentKey, key.x, key.y, mLastTapTime)
         }
         return true
-    }
-
-    protected fun swipeRight() {
-        onKeyboardActionListener!!.swipeRight()
-    }
-
-    protected fun swipeLeft() {
-        onKeyboardActionListener!!.swipeLeft()
-    }
-
-    protected fun swipeUp() {
-        onKeyboardActionListener!!.swipeUp()
-    }
-
-    protected fun swipeDown() {
-        onKeyboardActionListener!!.swipeDown()
     }
 
     fun closing() {

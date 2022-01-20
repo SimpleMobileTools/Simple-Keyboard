@@ -206,16 +206,4 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
         currentInputConnection?.setSelection(newCursorPosition, newCursorPosition)
     }
-
-    override fun onText(text: CharSequence?) {}
-
-    override fun swipeLeft() {}
-
-    override fun swipeRight() {}
-
-    override fun swipeDown() {}
-
-    override fun swipeUp() {}
-
-    override fun onRelease(primaryCode: Int) {}
 }
