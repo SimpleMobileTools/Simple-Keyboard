@@ -18,7 +18,6 @@ import android.view.accessibility.AccessibilityManager
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
@@ -167,7 +166,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @param previewEnabled whether or not to enable the key feedback popup
      * @see .isPreviewEnabled
      */
-    var isPreviewEnabled = true
+    private var isPreviewEnabled = true
     private var mPopupPreviewX = 0
     private var mPopupPreviewY = 0
     private var mLastX = 0
@@ -183,7 +182,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * reported.
      * @param enabled whether or not the proximity correction is enabled
      */
-    var isProximityCorrectionEnabled = false
+    private var isProximityCorrectionEnabled = false
     private val mPaint: Paint
     private val mPadding: Rect
     private var mDownTime: Long = 0
@@ -211,9 +210,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mIsLongPressingSpace = false
     private var mLastSpaceMoveX = 0
     private var mPopupMaxMoveDistance = 0f
-    private var topSmallNumberSize = 0f
-    private var topSmallNumberMarginWidth = 0f
-    private var topSmallNumberMarginHeight = 0f
+    private var mTopSmallNumberSize = 0f
+    private var mTopSmallNumberMarginWidth = 0f
+    private var mTopSmallNumberMarginHeight = 0f
     private val mSpaceMoveThreshold: Int
 
     // Variables for dealing with multiple pointers
@@ -252,7 +251,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     /** The audio manager for accessibility support  */
     private val mAudioManager: AudioManager
 
-    var mHandler: Handler? = null
+    private var mHandler: Handler? = null
 
     companion object {
         private const val NOT_A_KEY = -1
@@ -333,9 +332,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mAccessibilityManager = (context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager)
         mAudioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         mPopupMaxMoveDistance = resources.getDimension(R.dimen.popup_max_move_distance)
-        topSmallNumberSize = resources.getDimension(R.dimen.small_text_size)
-        topSmallNumberMarginWidth = resources.getDimension(R.dimen.top_small_number_margin_width)
-        topSmallNumberMarginHeight = resources.getDimension(R.dimen.top_small_number_margin_height)
+        mTopSmallNumberSize = resources.getDimension(R.dimen.small_text_size)
+        mTopSmallNumberMarginWidth = resources.getDimension(R.dimen.top_small_number_margin_width)
+        mTopSmallNumberMarginHeight = resources.getDimension(R.dimen.top_small_number_margin_height)
         resetMultiTap()
     }
 
@@ -593,7 +592,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         smallLetterPaint.set(paint)
         smallLetterPaint.apply {
             color = paint.color.adjustAlpha(0.8f)
-            textSize = topSmallNumberSize
+            textSize = mTopSmallNumberSize
             typeface = Typeface.DEFAULT
         }
 
@@ -667,7 +666,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 )
 
                 if (key.topSmallNumber.isNotEmpty()) {
-                    canvas.drawText(key.topSmallNumber, key.width - topSmallNumberMarginWidth, topSmallNumberMarginHeight, smallLetterPaint)
+                    canvas.drawText(key.topSmallNumber, key.width - mTopSmallNumberMarginWidth, mTopSmallNumberMarginHeight, smallLetterPaint)
                 }
 
                 // Turn off drop shadow

@@ -57,7 +57,7 @@ class MyKeyboard {
     private val mShiftKeys = arrayOf<Key?>(null, null)
 
     /** Key index for the shift key, if present  */
-    val shiftKeyIndices = intArrayOf(-1, -1)
+    private val shiftKeyIndices = intArrayOf(-1, -1)
 
     /** Total height of the keyboard, including the padding and keys  */
     var height = 0
@@ -78,7 +78,7 @@ class MyKeyboard {
     private var mDisplayHeight = 0
 
     /** What icon should we show at Enter key */
-    var mEnterKeyType = IME_ACTION_NONE
+    private var mEnterKeyType = IME_ACTION_NONE
 
     /** Keyboard mode, or zero, if none.   */
     private var mKeyboardMode = 0
@@ -92,21 +92,20 @@ class MyKeyboard {
         private const val TAG_KEYBOARD = "Keyboard"
         private const val TAG_ROW = "Row"
         private const val TAG_KEY = "Key"
-        const val EDGE_LEFT = 0x01
-        const val EDGE_RIGHT = 0x02
-        const val EDGE_TOP = 0x04
-        const val EDGE_BOTTOM = 0x08
+        private const val EDGE_LEFT = 0x01
+        private const val EDGE_RIGHT = 0x02
+        private const val EDGE_TOP = 0x04
+        private const val EDGE_BOTTOM = 0x08
         const val KEYCODE_SHIFT = -1
         const val KEYCODE_MODE_CHANGE = -2
         const val KEYCODE_ENTER = -4
         const val KEYCODE_DELETE = -5
-        const val KEYCODE_ALT = -6
         const val KEYCODE_SPACE = 32
 
         // Variables for pre-computing nearest keys.
         private const val GRID_WIDTH = 10
         private const val GRID_HEIGHT = 5
-        private val GRID_SIZE: Int = GRID_WIDTH * GRID_HEIGHT
+        private const val GRID_SIZE = GRID_WIDTH * GRID_HEIGHT
 
         /** Number of key widths from current touch point to search for nearest keys.  */
         private const val SEARCH_DISTANCE = 1.8f
@@ -601,8 +600,6 @@ class MyKeyboard {
                                     break
                                 }
                             }
-                            mModifierKeys.add(key)
-                        } else if (key.codes[0] == KEYCODE_ALT) {
                             mModifierKeys.add(key)
                         } else if (key.codes[0] == KEYCODE_ENTER) {
                             val enterResourceId = when (mEnterKeyType) {
