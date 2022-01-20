@@ -145,9 +145,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mInvalidatedKey: MyKeyboard.Key? = null
     private val mClipRegion = Rect(0, 0, 0, 0)
     private var mPossiblePoly = false
-    private val mSwipeTracker: SwipeTracker = SwipeTracker()
-    private val mSwipeThreshold: Int
-    private val mDisambiguateSwipe: Boolean
     private var mIsLongPressingSpace = false
     private var mLastSpaceMoveX = 0
     private var mPopupMaxMoveDistance = 0f
@@ -265,8 +262,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mPaint.alpha = 255
         mPadding = Rect(0, 0, 0, 0)
         mMiniKeyboardCache = HashMap()
-        mSwipeThreshold = (500 * resources.displayMetrics.density).toInt()
-        mDisambiguateSwipe = false//resources.getBoolean(R.bool.config_swipeDisambiguation)
         mAccessibilityManager = (context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager)
         mPopupMaxMoveDistance = resources.getDimension(R.dimen.popup_max_move_distance)
         mTopSmallNumberSize = resources.getDimension(R.dimen.small_text_size)
@@ -347,9 +342,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @return true if the shift key state changed, false if there was no change
      * @see KeyboardView.isShifted
      */
-    fun setShifted(shiftState: Int) {
+    private fun setShifted(shiftState: Int) {
         if (mKeyboard?.setShifted(shiftState) == true) {
-            // The whole keyboard probably needs to be redrawn
             invalidateAllKeys()
         }
     }
@@ -360,15 +354,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * no shift key on the keyboard or there is no keyboard attached, it returns false.
      * @see KeyboardView.setShifted
      */
-    fun isShifted(): Boolean {
+    private fun isShifted(): Boolean {
         return mKeyboard?.shiftState ?: SHIFT_OFF > SHIFT_OFF
     }
 
-    fun setPopupParent(v: View) {
-        mPopupParent = v
-    }
-
-    fun setPopupOffset(x: Int, y: Int) {
+    private fun setPopupOffset(x: Int, y: Int) {
         mMiniKeyboardOffsetX = x
         mMiniKeyboardOffsetY = y
         if (mPreviewPopup.isShowing) {
@@ -439,6 +429,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         canvas.drawBitmap(mBuffer!!, 0f, 0f, null)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun onBufferDraw() {
         if (mBuffer == null || mKeyboardChanged) {
             if (mBuffer == null || mKeyboardChanged && (mBuffer!!.width != width || mBuffer!!.height != height)) {
@@ -599,7 +590,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         for (i in 0 until keyCount) {
             val key = keys[nearestKeyIndices[i]]
-            var dist = 0
+            val dist = 0
             val isInside = key.isInside(x, y)
             if (isInside) {
                 primaryIndex = nearestKeyIndices[i]
@@ -651,7 +642,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val key = mKeys[index]
             if (key.text == null) {
                 var code = key.codes[0]
-                // TextEntryState.keyPressedAt(key, x, y);
                 val codes = IntArray(MAX_NEARBY_KEYS)
                 Arrays.fill(codes, NOT_A_KEY)
                 getKeyIndices(x, y, codes)
@@ -961,7 +951,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
 
                 mMiniKeyboard!!.setKeyboard(keyboard)
-                mMiniKeyboard!!.setPopupParent(this)
+                mPopupParent = this
                 mMiniKeyboardContainer!!.measure(
                     MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
                     MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
@@ -1132,13 +1122,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val eventTime = me.eventTime
         val keyIndex = getKeyIndices(touchX, touchY, null)
         mPossiblePoly = possiblePoly
-
-        // Track the last few movements to look for spurious swipes.
-        if (action == MotionEvent.ACTION_DOWN) {
-            mSwipeTracker.clear()
-        }
-
-        mSwipeTracker.addMovement(me)
 
         // Ignore all motion events until a DOWN.
         if (mAbortKey && action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_CANCEL) {
@@ -1365,125 +1348,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         if (eventTime > mLastTapTime + MULTITAP_INTERVAL || keyIndex != mLastSentIndex) {
             resetMultiTap()
-        }
-    }
-
-    private class SwipeTracker {
-        companion object {
-            const val NUM_PAST = 4
-            const val LONGEST_PAST_TIME = 200
-        }
-
-        val mPastX = FloatArray(NUM_PAST)
-        val mPastY = FloatArray(NUM_PAST)
-        val mPastTime = LongArray(NUM_PAST)
-        var yVelocity = 0f
-        var xVelocity = 0f
-
-        fun clear() {
-            mPastTime[0] = 0
-        }
-
-        fun addMovement(ev: MotionEvent) {
-            val time = ev.eventTime
-            val N = ev.historySize
-            for (i in 0 until N) {
-                addPoint(ev.getHistoricalX(i), ev.getHistoricalY(i), ev.getHistoricalEventTime(i))
-            }
-            addPoint(ev.x, ev.y, time)
-        }
-
-        private fun addPoint(x: Float, y: Float, time: Long) {
-            var drop = -1
-            val pastTime = mPastTime
-            var i = 0
-            while (i < NUM_PAST) {
-                if (pastTime[i] == 0L) {
-                    break
-                } else if (pastTime[i] < time - LONGEST_PAST_TIME) {
-                    drop = i
-                }
-                i++
-            }
-
-            if (i == NUM_PAST && drop < 0) {
-                drop = 0
-            }
-
-            if (drop == i) {
-                drop--
-            }
-
-            val pastX = mPastX
-            val pastY = mPastY
-            if (drop >= 0) {
-                val start = drop + 1
-                val count = NUM_PAST - drop - 1
-                System.arraycopy(pastX, start, pastX, 0, count)
-                System.arraycopy(pastY, start, pastY, 0, count)
-                System.arraycopy(pastTime, start, pastTime, 0, count)
-                i -= drop + 1
-            }
-
-            pastX[i] = x
-            pastY[i] = y
-            pastTime[i] = time
-            i++
-
-            if (i < NUM_PAST) {
-                pastTime[i] = 0
-            }
-        }
-
-        @JvmOverloads
-        fun computeCurrentVelocity(units: Int, maxVelocity: Float = Float.MAX_VALUE) {
-            val pastX = mPastX
-            val pastY = mPastY
-            val pastTime = mPastTime
-            val oldestX = pastX[0]
-            val oldestY = pastY[0]
-            val oldestTime = pastTime[0]
-            var accumX = 0f
-            var accumY = 0f
-            var N = 0
-            while (N < NUM_PAST) {
-                if (pastTime[N] == 0L) {
-                    break
-                }
-                N++
-            }
-
-            for (i in 1 until N) {
-                val dur = (pastTime[i] - oldestTime).toInt()
-                if (dur == 0) continue
-                var dist = pastX[i] - oldestX
-                var vel = dist / dur * units // pixels/frame.
-                accumX = if (accumX == 0f) {
-                    vel
-                } else {
-                    (accumX + vel) * .5f
-                }
-
-                dist = pastY[i] - oldestY
-                vel = dist / dur * units // pixels/frame.
-                accumY = if (accumY == 0f) {
-                    vel
-                } else {
-                    (accumY + vel) * .5f
-                }
-            }
-
-            xVelocity = if (accumX < 0.0f) {
-                Math.max(accumX, -maxVelocity)
-            } else {
-                Math.min(accumX, maxVelocity)
-            }
-
-            yVelocity = if (accumY < 0.0f) {
-                Math.max(accumY, -maxVelocity)
-            } else {
-                Math.min(accumY, maxVelocity)
-            }
         }
     }
 }
