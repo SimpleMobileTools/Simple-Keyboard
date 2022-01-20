@@ -24,39 +24,18 @@ import com.simplemobiletools.keyboard.helpers.*
 import kotlinx.android.synthetic.main.keyboard_popup_keyboard.view.*
 import java.util.*
 
-/**
- * A view that renders a virtual [MyKeyboard]. It handles rendering of keys and
- * detecting key presses and touch movements.
- *
- * @attr ref android.R.styleable#KeyboardView_keyBackground
- * @attr ref android.R.styleable#KeyboardView_keyPreviewLayout
- * @attr ref android.R.styleable#KeyboardView_keyPreviewOffset
- * @attr ref android.R.styleable#KeyboardView_keyPreviewHeight
- * @attr ref android.R.styleable#KeyboardView_labelTextSize
- * @attr ref android.R.styleable#KeyboardView_keyTextSize
- * @attr ref android.R.styleable#KeyboardView_keyTextColor
- * @attr ref android.R.styleable#KeyboardView_verticalCorrection
- * @attr ref android.R.styleable#KeyboardView_popupLayout
- *
- */
 class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int = R.attr.keyboardViewStyle, defStyleRes: Int = 0) :
     View(context, attrs, defStyleAttr, defStyleRes) {
 
-    /**
-     * Listener for virtual keyboard events.
-     */
     interface OnKeyboardActionListener {
         /**
-         * Called when the user presses a key. This is sent before the [.onKey] is called.
-         * For keys that repeat, this is only called once.
-         * @param primaryCode the unicode of the key being pressed. If the touch is not on a valid
-         * key, the value will be zero.
+         * Called when the user presses a key. This is sent before the [.onKey] is called. For keys that repeat, this is only called once.
+         * @param primaryCode the unicode of the key being pressed. If the touch is not on a valid key, the value will be zero.
          */
         fun onPress(primaryCode: Int)
 
         /**
-         * Called when the user releases a key. This is sent after the [.onKey] is called.
-         * For keys that repeat, this is only called once.
+         * Called when the user releases a key. This is sent after the [.onKey] is called. For keys that repeat, this is only called once.
          * @param primaryCode the code of the key that was released
          */
         fun onRelease(primaryCode: Int)
@@ -64,12 +43,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         /**
          * Send a key press to the listener.
          * @param primaryCode this is the key that was pressed
-         * @param keyCodes the codes for all the possible alternative keys
-         * with the primary code being the first. If the primary key code is
-         * a single character such as an alphabet or number or symbol, the alternatives
-         * will include other characters that may be on the same key or adjacent keys.
-         * These codes are useful to correct for accidental presses of a key adjacent to
-         * the intended key.
+         * @param keyCodes the codes for all the possible alternative keys with the primary code being the first. If the primary key code is a single character
+         * such as an alphabet or number or symbol, the alternatives will include other characters that may be on the same key or adjacent keys. These codes
+         * are useful to correct for accidental presses of a key adjacent to the intended key.
          */
         fun onKey(primaryCode: Int, keyCodes: IntArray?)
 
@@ -161,8 +137,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @see .setPreviewEnabled
      */
     /**
-     * Enables or disables the key feedback popup. This is a popup that shows a magnified
-     * version of the depressed key. By default the preview is enabled.
+     * Enables or disables the key feedback popup. This is a popup that shows a magnified version of the depressed key. By default the preview is enabled.
      * @param previewEnabled whether or not to enable the key feedback popup
      * @see .isPreviewEnabled
      */
@@ -182,7 +157,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * reported.
      * @param enabled whether or not the proximity correction is enabled
      */
-    private var isProximityCorrectionEnabled = false
     private val mPaint: Paint
     private val mPadding: Rect
     private var mDownTime: Long = 0
@@ -726,9 +700,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 primaryIndex = nearestKeyIndices[i]
             }
 
-            if (((isProximityCorrectionEnabled && key.squaredDistanceFrom(x, y).also {
-                    dist = it
-                } < mProximityThreshold) || isInside) && key.codes[0] > 32) {
+            if (isInside && key.codes[0] > MyKeyboard.KEYCODE_SPACE) {
                 // Find insertion point
                 val nCodes = key.codes.size
                 if (dist < closestKeyDist) {
