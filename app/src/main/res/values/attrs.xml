@@ -13,8 +13,6 @@
         <attr name="keyTextSize" format="dimension" />
         <!-- Size of the text for custom keys with some text and no icon. -->
         <attr name="labelTextSize" format="dimension" />
-        <!-- Height of the key press feedback popup. -->
-        <attr name="keyPreviewHeight" format="dimension" />
         <!-- Amount to offset the touch Y coordinate by, for bias correction. -->
         <attr name="verticalCorrection" format="dimension" />
         <!-- Layout resource for popup keyboards. -->

@@ -203,7 +203,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 when (attr) {
                     R.styleable.MyKeyboardView_keyBackground -> mKeyBackground = attributes.getDrawable(attr)
                     R.styleable.MyKeyboardView_verticalCorrection -> mVerticalCorrection = attributes.getDimensionPixelOffset(attr, 0)
-                    R.styleable.MyKeyboardView_keyPreviewHeight -> mPreviewHeight = attributes.getDimensionPixelSize(attr, 80)
                     R.styleable.MyKeyboardView_keyTextSize -> mKeyTextSize = attributes.getDimensionPixelSize(attr, 18)
                     R.styleable.MyKeyboardView_labelTextSize -> mLabelTextSize = attributes.getDimensionPixelSize(attr, 14)
                     R.styleable.MyKeyboardView_popupLayout -> mPopupLayout = attributes.getResourceId(attr, 0)
@@ -213,6 +212,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             attributes.recycle()
         }
 
+        mPreviewHeight = resources.getDimension(R.dimen.key_height).toInt()
         mSpaceMoveThreshold = resources.getDimension(R.dimen.medium_margin).toInt()
         mTextColor = context.config.textColor
         mBackgroundColor = context.config.backgroundColor
