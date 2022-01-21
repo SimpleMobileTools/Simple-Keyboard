@@ -11,13 +11,10 @@
         <item name="keyTextSize">22sp</item>
         <item name="keyTextColor">#FFFFFFFF</item>
         <item name="keyPreviewLayout">@layout/keyboard_key_preview</item>
-        <item name="keyPreviewOffset">0dp</item>
         <item name="keyPreviewHeight">60dp</item>
         <item name="labelTextSize">16sp</item>
         <item name="popupLayout">@layout/keyboard_popup_keyboard</item>
         <item name="verticalCorrection">-10dp</item>
-        <item name="shadowColor">#BB000000</item>
-        <item name="shadowRadius">2.75</item>
     </style>
 
     <style name="Widget.KeyboardViewPopup" parent="Widget.KeyboardView">

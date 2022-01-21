@@ -17,21 +17,12 @@
         <attr name="keyTextColor" format="color" />
         <!-- Layout resource for key press feedback. -->
         <attr name="keyPreviewLayout" format="reference" />
-        <!-- Vertical offset of the key press feedback from the key. -->
-        <attr name="keyPreviewOffset" format="dimension" />
         <!-- Height of the key press feedback popup. -->
         <attr name="keyPreviewHeight" format="dimension" />
         <!-- Amount to offset the touch Y coordinate by, for bias correction. -->
         <attr name="verticalCorrection" format="dimension" />
         <!-- Layout resource for popup keyboards. -->
         <attr name="popupLayout" format="reference" />
-        <attr name="shadowColor" format="color" />
-        <!-- Horizontal offset of the text shadow. -->
-        <attr name="shadowDx" format="dimension" />
-        <!-- Vertical offset of the text shadow. -->
-        <attr name="shadowDy" format="dimension" />
-        <!-- Blur radius of the text shadow. -->
-        <attr name="shadowRadius" format="float" />
     </declare-styleable>
 
     <declare-styleable name="MyKeyboard">

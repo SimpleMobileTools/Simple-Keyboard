@@ -62,8 +62,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private var mLabelTextSize = 0
     private var mKeyTextSize = 0
-    private var mShadowRadius = 0f
-    private var mShadowColor = 0
     private val mBackgroundDimAmount: Float
 
     private var mTextColor = 0
@@ -73,7 +71,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mPreviewText: TextView? = null
     private val mPreviewPopup: PopupWindow
     private var mPreviewTextSizeLarge = 0
-    private var mPreviewOffset = 0
     private var mPreviewHeight = 0
 
     // Working variable
@@ -218,13 +215,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     R.styleable.MyKeyboardView_keyBackground -> mKeyBackground = attributes.getDrawable(attr)
                     R.styleable.MyKeyboardView_verticalCorrection -> mVerticalCorrection = attributes.getDimensionPixelOffset(attr, 0)
                     R.styleable.MyKeyboardView_keyPreviewLayout -> previewLayout = attributes.getResourceId(attr, 0)
-                    R.styleable.MyKeyboardView_keyPreviewOffset -> mPreviewOffset = attributes.getDimensionPixelOffset(attr, 0)
                     R.styleable.MyKeyboardView_keyPreviewHeight -> mPreviewHeight = attributes.getDimensionPixelSize(attr, 80)
                     R.styleable.MyKeyboardView_keyTextSize -> mKeyTextSize = attributes.getDimensionPixelSize(attr, 18)
                     R.styleable.MyKeyboardView_labelTextSize -> mLabelTextSize = attributes.getDimensionPixelSize(attr, 14)
                     R.styleable.MyKeyboardView_popupLayout -> mPopupLayout = attributes.getResourceId(attr, 0)
-                    R.styleable.MyKeyboardView_shadowColor -> mShadowColor = attributes.getColor(attr, 0)
-                    R.styleable.MyKeyboardView_shadowRadius -> mShadowRadius = attributes.getFloat(attr, 0f)
                 }
             }
         } finally {
@@ -778,7 +772,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         if (!mPreviewCentered) {
             mPopupPreviewX = key.x - mPreviewText!!.paddingLeft + paddingLeft
-            mPopupPreviewY = key.y - popupHeight + mPreviewOffset
+            mPopupPreviewY = key.y - popupHeight
         } else {
             // TODO: Fix this if centering is brought back
             mPopupPreviewX = 160 - mPreviewText!!.measuredWidth / 2
