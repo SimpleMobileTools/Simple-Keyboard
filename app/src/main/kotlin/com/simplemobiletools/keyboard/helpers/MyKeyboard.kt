@@ -1,5 +1,6 @@
 package com.simplemobiletools.keyboard.helpers
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.content.res.TypedArray
@@ -76,6 +77,7 @@ class MyKeyboard {
 
         /** Number of key widths from current touch point to search for nearest keys.  */
         private const val SEARCH_DISTANCE = 1.8f
+
         fun getDimensionOrFraction(a: TypedArray, index: Int, base: Int, defValue: Int): Int {
             val value = a.peekValue(index) ?: return defValue
             if (value.type == TypedValue.TYPE_DIMENSION) {
@@ -179,7 +181,7 @@ class MyKeyboard {
          * that are just out of the boundary of the key. This is a bit mask of
          * [MyKeyboard.EDGE_LEFT], [MyKeyboard.EDGE_RIGHT], [MyKeyboard.EDGE_TOP] and [MyKeyboard.EDGE_BOTTOM].
          */
-        var edgeFlags = 0
+        private var edgeFlags = 0
 
         /** The keyboard that this key belongs to  */
         private val keyboard: MyKeyboard = parent.parent
@@ -232,14 +234,6 @@ class MyKeyboard {
             height = parent.defaultHeight
             width = parent.defaultWidth
             gap = parent.defaultHorizontalGap
-        }
-
-        fun onPressed() {
-            pressed = true
-        }
-
-        fun onReleased() {
-            pressed = false
         }
 
         /**
@@ -420,6 +414,7 @@ class MyKeyboard {
         return Key(res, parent, x, y, parser)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun loadKeyboard(context: Context, parser: XmlResourceParser) {
         var inKey = false
         var inRow = false

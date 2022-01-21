@@ -603,7 +603,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         if (oldKeyIndex != mCurrentKeyIndex) {
             if (oldKeyIndex != NOT_A_KEY && keys.size > oldKeyIndex) {
                 val oldKey = keys[oldKeyIndex]
-                oldKey.onReleased()
+                oldKey.pressed = false
                 invalidateKey(oldKeyIndex)
                 val keyCode = oldKey.codes[0]
                 sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT, keyCode)
@@ -617,7 +617,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 if (code == MyKeyboard.KEYCODE_SHIFT || code == MyKeyboard.KEYCODE_MODE_CHANGE || code == MyKeyboard.KEYCODE_DELETE ||
                     code == MyKeyboard.KEYCODE_ENTER || code == MyKeyboard.KEYCODE_SPACE
                 ) {
-                    newKey.onPressed()
+                    newKey.pressed = true
                 }
 
                 invalidateKey(mCurrentKeyIndex)
