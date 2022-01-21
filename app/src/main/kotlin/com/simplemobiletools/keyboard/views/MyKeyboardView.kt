@@ -93,8 +93,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mLastY = 0
 
     private val mPaint: Paint
-    private var mDownTime: Long = 0
-    private var mLastMoveTime: Long = 0
+    private var mDownTime = 0L
+    private var mLastMoveTime = 0L
     private var mLastKey = 0
     private var mLastCodeX = 0
     private var mLastCodeY = 0
@@ -124,11 +124,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private val mDistances = IntArray(MAX_NEARBY_KEYS)
 
     // For multi-tap
-    private var mLastSentIndex = 0
-    private var mTapCount = 0
-    private var mLastTapTime: Long = 0
-    private var mInMultiTap = false
-    private val mPreviewLabel = StringBuilder(1)
+    private var mLastTapTime = 0L
 
     /** Whether the keyboard bitmap needs to be redrawn before it's blitted.  */
     private var mDrawPending = false
@@ -152,7 +148,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     companion object {
         private const val NOT_A_KEY = -1
-        private val KEY_DELETE = intArrayOf(MyKeyboard.KEYCODE_DELETE)
         private val LONG_PRESSABLE_STATE_SET = intArrayOf(R.attr.state_long_pressable)
         private const val MSG_SHOW_PREVIEW = 1
         private const val MSG_REMOVE_PREVIEW = 2
@@ -165,7 +160,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         private const val REPEAT_START_DELAY = 400
         private val LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout()
         private const val MAX_NEARBY_KEYS = 12
-        private const val MULTITAP_INTERVAL = 800 // milliseconds
     }
 
     init {
@@ -216,7 +210,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mTopSmallNumberSize = resources.getDimension(R.dimen.small_text_size)
         mTopSmallNumberMarginWidth = resources.getDimension(R.dimen.top_small_number_margin_width)
         mTopSmallNumberMarginHeight = resources.getDimension(R.dimen.top_small_number_margin_height)
-        resetMultiTap()
     }
 
     @SuppressLint("HandlerLeak")
@@ -555,42 +548,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private fun detectAndSendKey(index: Int, x: Int, y: Int, eventTime: Long) {
         if (index != NOT_A_KEY && index < mKeys.size) {
             val key = mKeys[index]
-            var code = key.codes[0]
+            val code = key.codes[0]
             val codes = IntArray(MAX_NEARBY_KEYS)
             Arrays.fill(codes, NOT_A_KEY)
             getKeyIndices(x, y, codes)
-            // Multi-tap
-            if (mInMultiTap) {
-                if (mTapCount != -1) {
-                    mOnKeyboardActionListener!!.onKey(MyKeyboard.KEYCODE_DELETE, KEY_DELETE)
-                } else {
-                    mTapCount = 0
-                }
-                code = key.codes[mTapCount]
-            }
             mOnKeyboardActionListener!!.onKey(code, codes)
-            mLastSentIndex = index
             mLastTapTime = eventTime
-        }
-    }
-
-    /**
-     * Handle multi-tap keys by producing the key label for the current multi-tap state.
-     */
-    private fun getPreviewText(key: MyKeyboard.Key): CharSequence? {
-        return if (mInMultiTap) {
-            // Multi-tap
-            mPreviewLabel.setLength(0)
-            val codeTapCount = if (mTapCount < 0) {
-                0
-            } else {
-                mTapCount
-            }
-
-            mPreviewLabel.append(key.codes[codeTapCount].toChar())
-            adjustCase(mPreviewLabel)
-        } else {
-            adjustCase(key.label)
         }
     }
 
@@ -666,7 +629,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         } else {
             mPreviewText!!.setCompoundDrawables(null, null, null, null)
             try {
-                mPreviewText!!.text = getPreviewText(key)
+                mPreviewText!!.text = adjustCase(key.label)
             } catch (ignored: Exception) {
             }
 
@@ -1043,7 +1006,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 mCurrentKey = keyIndex
                 mDownTime = me.eventTime
                 mLastMoveTime = mDownTime
-                checkMultiTap(eventTime, keyIndex)
 
                 val onPressKey = if (keyIndex != NOT_A_KEY) {
                     mKeys[keyIndex].codes[0]
@@ -1093,7 +1055,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                             mCurrentKeyTime += eventTime - mLastMoveTime
                             continueLongPress = true
                         } else if (mRepeatKeyIndex == NOT_A_KEY) {
-                            resetMultiTap()
                             mLastKey = mCurrentKey
                             mLastCodeX = mLastX
                             mLastCodeY = mLastY
@@ -1143,7 +1104,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 if (keyIndex == mCurrentKey) {
                     mCurrentKeyTime += eventTime - mLastMoveTime
                 } else {
-                    resetMultiTap()
                     mLastKey = mCurrentKey
                     mLastKeyTime = mCurrentKeyTime + eventTime - mLastMoveTime
                     mCurrentKey = keyIndex
@@ -1226,32 +1186,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mPopupKeyboard.dismiss()
             mMiniKeyboardOnScreen = false
             invalidateAllKeys()
-        }
-    }
-
-    private fun resetMultiTap() {
-        mLastSentIndex = NOT_A_KEY
-        mTapCount = 0
-        mLastTapTime = -1
-        mInMultiTap = false
-    }
-
-    private fun checkMultiTap(eventTime: Long, keyIndex: Int) {
-        if (keyIndex == NOT_A_KEY) return
-        val key = mKeys[keyIndex]
-        if (key.codes.size > 1) {
-            mInMultiTap = true
-            if (eventTime < mLastTapTime + MULTITAP_INTERVAL && keyIndex == mLastSentIndex) {
-                mTapCount = (mTapCount + 1) % key.codes.size
-                return
-            } else {
-                mTapCount = -1
-                return
-            }
-        }
-
-        if (eventTime > mLastTapTime + MULTITAP_INTERVAL || keyIndex != mLastSentIndex) {
-            resetMultiTap()
         }
     }
 }
