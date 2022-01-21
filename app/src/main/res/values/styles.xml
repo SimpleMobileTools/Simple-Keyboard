@@ -2,15 +2,15 @@
 
     <style name="AppTheme" parent="AppTheme.Base" />
 
-    <style name="Widget">
+    <style name="MyKeyboard">
         <item name="itemTextAppearance">?attr/itemTextAppearance</item>
     </style>
 
-    <style name="Widget.KeyboardView" parent="Widget">
+    <style name="MyKeyboardView" parent="MyKeyboard">
         <item name="keyTextSize">@dimen/keyboard_text_size</item>
     </style>
 
-    <style name="Widget.KeyboardViewPopup" parent="Widget.KeyboardView">
+    <style name="MyKeyboardViewPopup" parent="MyKeyboard">
         <item name="keyTextSize">@dimen/preview_text_size</item>
     </style>
 </resources>
