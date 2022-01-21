@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.Paint.Align
 import android.graphics.drawable.Drawable
-import android.inputmethodservice.KeyboardView
 import android.os.Handler
 import android.os.Message
 import android.util.AttributeSet

@@ -33,9 +33,6 @@ class MyKeyboard {
     /** Is the keyboard in the shifted state  */
     var mShiftState = SHIFT_OFF
 
-    /** Key instance for the shift key, if present  */
-    private val mShiftKeys = arrayOf<Key?>(null, null)
-
     /** Total height of the keyboard, including the padding and keys  */
     var mHeight = 0
 
@@ -475,15 +472,7 @@ class MyKeyboard {
                         inKey = true
                         key = createKeyFromXml(res, currentRow!!, x, y, parser)
                         mKeys!!.add(key)
-                        if (key.codes[0] == KEYCODE_SHIFT) {
-                            // Find available shift key slot and put this shift key in it
-                            for (i in mShiftKeys.indices) {
-                                if (mShiftKeys[i] == null) {
-                                    mShiftKeys[i] = key
-                                    break
-                                }
-                            }
-                        } else if (key.codes[0] == KEYCODE_ENTER) {
+                        if (key.codes[0] == KEYCODE_ENTER) {
                             val enterResourceId = when (mEnterKeyType) {
                                 EditorInfo.IME_ACTION_SEARCH -> R.drawable.ic_search_vector
                                 EditorInfo.IME_ACTION_NEXT, EditorInfo.IME_ACTION_GO -> R.drawable.ic_arrow_right_vector
