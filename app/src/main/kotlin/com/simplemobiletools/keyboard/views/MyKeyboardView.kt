@@ -93,7 +93,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     var onKeyboardActionListener: OnKeyboardActionListener? = null
     private var mVerticalCorrection = 0
     private var mProximityThreshold = 0
-    private val mPreviewCentered = false
     /**
      * Returns the enabled state of the key feedback popup.
      * @return whether or not the key feedback popup is enabled
@@ -109,8 +108,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mPopupPreviewY = 0
     private var mLastX = 0
     private var mLastY = 0
-    private var mStartX = 0
-    private var mStartY = 0
     /**
      * Returns true if proximity correction is enabled.
      */
@@ -128,18 +125,16 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mLastCodeX = 0
     private var mLastCodeY = 0
     private var mCurrentKey: Int = NOT_A_KEY
-    private var mDownKey: Int = NOT_A_KEY
-    private var mLastKeyTime: Long = 0
-    private var mCurrentKeyTime: Long = 0
+    private var mLastKeyTime = 0L
+    private var mCurrentKeyTime = 0L
     private val mKeyIndices = IntArray(12)
     private var mPopupX = 0
     private var mPopupY = 0
-    private var mRepeatKeyIndex: Int = NOT_A_KEY
+    private var mRepeatKeyIndex = NOT_A_KEY
     private var mPopupLayout = 0
     private var mAbortKey = false
     private var mInvalidatedKey: MyKeyboard.Key? = null
     private val mClipRegion = Rect(0, 0, 0, 0)
-    private var mPossiblePoly = false
     private var mIsLongPressingSpace = false
     private var mLastSpaceMoveX = 0
     private var mPopupMaxMoveDistance = 0f
@@ -770,14 +765,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         lp?.width = popupWidth
         lp?.height = popupHeight
 
-        if (!mPreviewCentered) {
-            mPopupPreviewX = key.x - mPreviewText!!.paddingLeft + paddingLeft
-            mPopupPreviewY = key.y - popupHeight
-        } else {
-            // TODO: Fix this if centering is brought back
-            mPopupPreviewX = 160 - mPreviewText!!.measuredWidth / 2
-            mPopupPreviewY = -mPreviewText!!.measuredHeight
-        }
+        mPopupPreviewX = key.x - mPreviewText!!.paddingLeft + paddingLeft
+        mPopupPreviewY = key.y - popupHeight
 
         mHandler!!.removeMessages(MSG_REMOVE_PREVIEW)
         getLocationInWindow(mCoordinates)
@@ -1020,21 +1009,21 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             if (pointerCount == 1) {
                 // Send a down event for the latest pointer
                 val down = MotionEvent.obtain(now, now, MotionEvent.ACTION_DOWN, me.x, me.y, me.metaState)
-                result = onModifiedTouchEvent(down, false)
+                result = onModifiedTouchEvent(down)
                 down.recycle()
                 // If it's an up action, then deliver the up as well.
                 if (action == MotionEvent.ACTION_UP) {
-                    result = onModifiedTouchEvent(me, true)
+                    result = onModifiedTouchEvent(me)
                 }
             } else {
                 // Send an up event for the last pointer
                 val up = MotionEvent.obtain(now, now, MotionEvent.ACTION_UP, mOldPointerX, mOldPointerY, me.metaState)
-                result = onModifiedTouchEvent(up, true)
+                result = onModifiedTouchEvent(up)
                 up.recycle()
             }
         } else {
             if (pointerCount == 1) {
-                result = onModifiedTouchEvent(me, false)
+                result = onModifiedTouchEvent(me)
                 mOldPointerX = me.x
                 mOldPointerY = me.y
             } else {
@@ -1100,7 +1089,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         return result
     }
 
-    private fun onModifiedTouchEvent(me: MotionEvent, possiblePoly: Boolean): Boolean {
+    private fun onModifiedTouchEvent(me: MotionEvent): Boolean {
         var touchX = me.x.toInt() - paddingLeft
         var touchY = me.y.toInt() - paddingTop
         if (touchY >= -mVerticalCorrection) {
@@ -1110,7 +1099,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val action = me.action
         val eventTime = me.eventTime
         val keyIndex = getKeyIndices(touchX, touchY, null)
-        mPossiblePoly = possiblePoly
 
         // Ignore all motion events until a DOWN.
         if (mAbortKey && action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_CANCEL) {
@@ -1126,15 +1114,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         when (action) {
             MotionEvent.ACTION_DOWN -> {
                 mAbortKey = false
-                mStartX = touchX
-                mStartY = touchY
                 mLastCodeX = touchX
                 mLastCodeY = touchY
                 mLastKeyTime = 0
                 mCurrentKeyTime = 0
                 mLastKey = NOT_A_KEY
                 mCurrentKey = keyIndex
-                mDownKey = keyIndex
                 mDownTime = me.eventTime
                 mLastMoveTime = mDownTime
                 checkMultiTap(eventTime, keyIndex)
