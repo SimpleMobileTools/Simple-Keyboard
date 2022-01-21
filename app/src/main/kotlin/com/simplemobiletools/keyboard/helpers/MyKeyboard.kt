@@ -24,7 +24,6 @@ import java.util.*
  * android:keyWidth="%10p"
  * android:keyHeight="50px"
  * android:horizontalGap="2px"
- * android:verticalGap="2px" &gt;
  * &lt;Row android:keyWidth="32px" &gt;
  * &lt;Key android:keyLabel="A" /&gt;
  * ...
@@ -35,7 +34,6 @@ import java.util.*
  * @attr ref android.R.styleable#Keyboard_keyWidth
  * @attr ref android.R.styleable#Keyboard_keyHeight
  * @attr ref android.R.styleable#Keyboard_horizontalGap
- * @attr ref android.R.styleable#Keyboard_verticalGap
  */
 class MyKeyboard {
     /** Horizontal gap default for all rows  */
@@ -46,9 +44,6 @@ class MyKeyboard {
 
     /** Default key height  */
     private var mDefaultHeight = 0
-
-    /** Default gap between rows  */
-    private var mDefaultVerticalGap = 0
 
     /** Is the keyboard in the shifted state  */
     var shiftState = SHIFT_OFF
@@ -122,7 +117,6 @@ class MyKeyboard {
      * @attr ref android.R.styleable#Keyboard_keyWidth
      * @attr ref android.R.styleable#Keyboard_keyHeight
      * @attr ref android.R.styleable#Keyboard_horizontalGap
-     * @attr ref android.R.styleable#Keyboard_verticalGap
      * @attr ref android.R.styleable#Keyboard_Row_rowEdgeFlags
      * @attr ref android.R.styleable#Keyboard_Row_keyboardMode
      */
@@ -135,9 +129,6 @@ class MyKeyboard {
 
         /** Default horizontal gap between keys in this row.  */
         var defaultHorizontalGap = 0
-
-        /** Vertical gap following this row.  */
-        var verticalGap = 0
 
         var mKeys = ArrayList<Key>()
 
@@ -161,7 +152,6 @@ class MyKeyboard {
             defaultWidth = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, parent.mDisplayWidth, parent.mDefaultWidth)
             defaultHeight = res.getDimension(R.dimen.key_height).toInt()
             defaultHorizontalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, parent.mDisplayWidth, parent.mDefaultHorizontalGap)
-            verticalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_verticalGap, parent.mDisplayHeight, parent.mDefaultVerticalGap)
 
             a.recycle()
             a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard_Row)
@@ -393,7 +383,6 @@ class MyKeyboard {
         mDisplayHeight = dm.heightPixels
         mDefaultHorizontalGap = 0
         mDefaultWidth = mDisplayWidth / 10
-        mDefaultVerticalGap = 0
         mDefaultHeight = mDefaultWidth
         mKeys = ArrayList()
         mEnterKeyType = enterKeyType
@@ -424,7 +413,6 @@ class MyKeyboard {
         row.defaultHeight = mDefaultHeight
         row.defaultWidth = mDefaultWidth
         row.defaultHorizontalGap = mDefaultHorizontalGap
-        row.verticalGap = mDefaultVerticalGap
         row.rowEdgeFlags = EDGE_TOP or EDGE_BOTTOM
 
         characters.forEachIndexed { index, character ->
@@ -615,15 +603,14 @@ class MyKeyboard {
                         }
                     } else if (inRow) {
                         inRow = false
-                        y += currentRow!!.verticalGap
-                        y += currentRow.defaultHeight
+                        y += currentRow!!.defaultHeight
                         row++
                     }
                 }
             }
         } catch (e: Exception) {
         }
-        height = y - mDefaultVerticalGap
+        height = y
     }
 
     private fun skipToEndOfRow(parser: XmlResourceParser) {
@@ -640,7 +627,6 @@ class MyKeyboard {
         mDefaultWidth = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, mDisplayWidth, mDisplayWidth / 10)
         mDefaultHeight = res.getDimension(R.dimen.key_height).toInt()
         mDefaultHorizontalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, mDisplayWidth, 0)
-        mDefaultVerticalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_verticalGap, mDisplayHeight, 0)
         mProximityThreshold = (mDefaultWidth * SEARCH_DISTANCE).toInt()
         mProximityThreshold *= mProximityThreshold // Square it for comparison
         a.recycle()

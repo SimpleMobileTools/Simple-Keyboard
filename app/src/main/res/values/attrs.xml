@@ -39,8 +39,6 @@
         <attr name="keyWidth" format="dimension|fraction" />
         <!-- Default horizontal gap between keys. -->
         <attr name="horizontalGap" format="dimension|fraction" />
-        <!-- Default vertical gap between rows of keys. -->
-        <attr name="verticalGap" format="dimension|fraction" />
     </declare-styleable>
 
     <declare-styleable name="MyKeyboard_Row">
