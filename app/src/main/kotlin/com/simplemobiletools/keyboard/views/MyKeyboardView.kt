@@ -93,17 +93,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     var onKeyboardActionListener: OnKeyboardActionListener? = null
     private var mVerticalCorrection = 0
     private var mProximityThreshold = 0
+
     /**
      * Returns the enabled state of the key feedback popup.
      * @return whether or not the key feedback popup is enabled
      * @see .setPreviewEnabled
      */
-    /**
-     * Enables or disables the key feedback popup. This is a popup that shows a magnified version of the depressed key. By default the preview is enabled.
-     * @param previewEnabled whether or not to enable the key feedback popup
-     * @see .isPreviewEnabled
-     */
-    private var isPreviewEnabled = true
     private var mPopupPreviewX = 0
     private var mPopupPreviewY = 0
     private var mLastX = 0
@@ -199,7 +194,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     init {
         val attributes = context.theme.obtainStyledAttributes(attrs, R.styleable.MyKeyboardView, defStyleAttr, defStyleRes)
         val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        var previewLayout = 0
         val keyTextSize = 0
         val n = attributes.indexCount
 
@@ -209,7 +203,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 when (attr) {
                     R.styleable.MyKeyboardView_keyBackground -> mKeyBackground = attributes.getDrawable(attr)
                     R.styleable.MyKeyboardView_verticalCorrection -> mVerticalCorrection = attributes.getDimensionPixelOffset(attr, 0)
-                    R.styleable.MyKeyboardView_keyPreviewLayout -> previewLayout = attributes.getResourceId(attr, 0)
                     R.styleable.MyKeyboardView_keyPreviewHeight -> mPreviewHeight = attributes.getDimensionPixelSize(attr, 80)
                     R.styleable.MyKeyboardView_keyTextSize -> mKeyTextSize = attributes.getDimensionPixelSize(attr, 18)
                     R.styleable.MyKeyboardView_labelTextSize -> mLabelTextSize = attributes.getDimensionPixelSize(attr, 14)
@@ -227,14 +220,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         mBackgroundDimAmount = 0.5f
         mPreviewPopup = PopupWindow(context)
-        if (previewLayout != 0) {
-            mPreviewText = inflate.inflate(previewLayout, null) as TextView
-            mPreviewTextSizeLarge = context.resources.getDimension(R.dimen.preview_text_size).toInt()
-            mPreviewPopup.contentView = mPreviewText
-            mPreviewPopup.setBackgroundDrawable(null)
-        } else {
-            isPreviewEnabled = false
-        }
+        mPreviewText = inflate.inflate(resources.getLayout(R.layout.keyboard_key_preview), null) as TextView
+        mPreviewTextSizeLarge = context.resources.getDimension(R.dimen.preview_text_size).toInt()
+        mPreviewPopup.contentView = mPreviewText
+        mPreviewPopup.setBackgroundDrawable(null)
 
         mPreviewPopup.isTouchable = false
         mPopupKeyboard = PopupWindow(context)
@@ -700,7 +689,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         // If key changed and preview is on ...
-        if (oldKeyIndex != mCurrentKeyIndex && isPreviewEnabled) {
+        if (oldKeyIndex != mCurrentKeyIndex) {
             mHandler!!.removeMessages(MSG_SHOW_PREVIEW)
             if (previewPopup.isShowing) {
                 if (keyIndex == NOT_A_KEY) {

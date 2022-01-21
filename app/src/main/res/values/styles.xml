@@ -9,7 +9,6 @@
     <style name="Widget.KeyboardView" parent="Widget">
         <item name="keyBackground">@drawable/keyboard_key_selector</item>
         <item name="keyTextSize">@dimen/keyboard_text_size</item>
-        <item name="keyPreviewLayout">@layout/keyboard_key_preview</item>
         <item name="keyPreviewHeight">60dp</item>
         <item name="labelTextSize">16sp</item>
         <item name="popupLayout">@layout/keyboard_popup_keyboard</item>
