@@ -68,7 +68,6 @@
         <Key
             app:codes="97"
             app:horizontalGap="5%"
-            app:keyEdgeFlags="left"
             app:keyLabel="a"
             app:popupCharacters="á"
             app:popupKeyboard="@xml/keyboard_popup_template" />
