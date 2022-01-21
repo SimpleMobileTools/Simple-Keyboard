@@ -670,12 +670,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         val key = keys[keyIndex]
         if (key.icon != null) {
-            val bottomDrawable = if (key.iconPreview != null) {
-                key.iconPreview
-            } else {
-                key.icon
-            }
-            mPreviewText!!.setCompoundDrawables(null, null, null, bottomDrawable)
+            mPreviewText!!.setCompoundDrawables(null, null, null, key.icon)
         } else {
             mPreviewText!!.setCompoundDrawables(null, null, null, null)
             try {

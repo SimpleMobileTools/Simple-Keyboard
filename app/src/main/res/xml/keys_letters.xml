@@ -138,7 +138,6 @@
             app:keyLabel="m" />
         <Key
             app:codes="-5"
-            app:iconPreview="@null"
             app:isRepeatable="true"
             app:keyEdgeFlags="right"
             app:keyIcon="@drawable/ic_clear_vector"
@@ -156,7 +155,6 @@
             app:keyWidth="10%p" />
         <Key
             app:codes="32"
-            app:iconPreview="@null"
             app:isRepeatable="true"
             app:keyWidth="45%p" />
         <Key

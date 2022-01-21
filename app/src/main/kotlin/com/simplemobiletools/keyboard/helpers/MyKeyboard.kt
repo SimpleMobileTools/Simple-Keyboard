@@ -151,7 +151,6 @@ class MyKeyboard {
      * @attr ref android.R.styleable#Keyboard_Key_codes
      * @attr ref android.R.styleable#Keyboard_Key_keyIcon
      * @attr ref android.R.styleable#Keyboard_Key_keyLabel
-     * @attr ref android.R.styleable#Keyboard_Key_iconPreview
      * @attr ref android.R.styleable#Keyboard_Key_isRepeatable
      * @attr ref android.R.styleable#Keyboard_Key_popupKeyboard
      * @attr ref android.R.styleable#Keyboard_Key_popupCharacters
@@ -169,9 +168,6 @@ class MyKeyboard {
 
         /** Icon to display instead of a label. Icon takes precedence over a label  */
         var icon: Drawable? = null
-
-        /** Preview version of the icon, for the preview popup  */
-        var iconPreview: Drawable? = null
 
         /** Width of the key, not including the gap  */
         var width: Int
@@ -240,9 +236,6 @@ class MyKeyboard {
             } else if (codesValue.type == TypedValue.TYPE_STRING) {
                 codes = parseCSV(codesValue.string.toString())
             }
-
-            iconPreview = a.getDrawable(R.styleable.MyKeyboard_Key_iconPreview)
-            iconPreview?.setBounds(0, 0, iconPreview!!.intrinsicWidth, iconPreview!!.intrinsicHeight)
 
             popupCharacters = a.getText(R.styleable.MyKeyboard_Key_popupCharacters)
             popupResId = a.getResourceId(R.styleable.MyKeyboard_Key_popupKeyboard, 0)

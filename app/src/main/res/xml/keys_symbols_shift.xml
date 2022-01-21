@@ -114,7 +114,6 @@
             app:keyWidth="10%p" />
         <Key
             app:codes="32"
-            app:iconPreview="@null"
             app:isRepeatable="true"
             app:keyWidth="45%p" />
         <Key

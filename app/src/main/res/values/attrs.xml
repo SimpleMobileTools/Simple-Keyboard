@@ -29,8 +29,6 @@
         </attr>
         <!-- Whether long-pressing on this key will make it repeat. -->
         <attr name="isRepeatable" format="boolean" />
-        <!-- The icon to show in the popup preview. -->
-        <attr name="iconPreview" format="reference" />
         <!-- The label to display on the key. -->
         <attr name="keyLabel" format="string" />
         <!-- The icon to display on the key instead of the label. -->
