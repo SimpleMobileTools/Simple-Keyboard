@@ -85,11 +85,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mKeys = ArrayList<MyKeyboard.Key>()
     private var mMiniKeyboardSelectedKeyIndex = -1
 
-    /**
-     * Returns the [OnKeyboardActionListener] object.
-     * @return the listener attached to this keyboard
-     */
-    /** Listener for [OnKeyboardActionListener].  */
     var onKeyboardActionListener: OnKeyboardActionListener? = null
     private var mVerticalCorrection = 0
     private var mProximityThreshold = 0
@@ -113,8 +108,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mRepeatKeyIndex = NOT_A_KEY
     private var mPopupLayout = 0
     private var mAbortKey = false
-    private var mInvalidatedKey: MyKeyboard.Key? = null
-    private val mClipRegion = Rect(0, 0, 0, 0)
     private var mIsLongPressingSpace = false
     private var mLastSpaceMoveX = 0
     private var mPopupMaxMoveDistance = 0f
@@ -276,13 +269,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             showPreview(NOT_A_KEY)
         }
 
-        // Remove any pending messages
         removeMessages()
         mKeyboard = keyboard
         val keys = mKeyboard!!.mKeys
         mKeys = keys!!.toMutableList() as ArrayList<MyKeyboard.Key>
         requestLayout()
-        // Hint to reallocate the buffer if the size changed
         mKeyboardChanged = true
         invalidateAllKeys()
         computeProximityThreshold(keyboard)
@@ -408,9 +399,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val canvas = mCanvas
         canvas!!.clipRect(mDirtyRect)
         val paint = mPaint
-        val clipRegion = mClipRegion
         val keys = mKeys
-        val invalidKey = mInvalidatedKey
         paint.color = mTextColor
         val smallLetterPaint = Paint()
         smallLetterPaint.set(paint)
@@ -420,26 +409,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             typeface = Typeface.DEFAULT
         }
 
-        var drawSingleKey = false
-        if (invalidKey != null && canvas.getClipBounds(clipRegion)) {
-            // Is clipRegion completely contained within the invalidated key?
-            if (invalidKey.x - 1 <= clipRegion.left &&
-                invalidKey.y - 1 <= clipRegion.top &&
-                invalidKey.x + invalidKey.width + 1 >= clipRegion.right &&
-                invalidKey.y + invalidKey.height + 1 >= clipRegion.bottom
-            ) {
-                drawSingleKey = true
-            }
-        }
-
         canvas.drawColor(0x00000000, PorterDuff.Mode.CLEAR)
         val keyCount = keys.size
         for (i in 0 until keyCount) {
             val key = keys[i]
-            if (drawSingleKey && invalidKey !== key) {
-                continue
-            }
-
             val code = key.codes.firstOrNull() ?: -100
             var keyBackground = mKeyBackground
             if (code == MyKeyboard.KEYCODE_SPACE) {
@@ -519,7 +492,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             canvas.translate(-key.x.toFloat(), -key.y.toFloat())
         }
 
-        mInvalidatedKey = null
         // Overlay a dark rectangle to dim the keyboard
         if (mMiniKeyboardOnScreen) {
             paint.color = Color.BLACK.adjustAlpha(0.3f)
@@ -812,13 +784,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @param keyIndex the index of the key in the attached [MyKeyboard].
      * @see .invalidateAllKeys
      */
-    fun invalidateKey(keyIndex: Int) {
+    private fun invalidateKey(keyIndex: Int) {
         if (keyIndex < 0 || keyIndex >= mKeys.size) {
             return
         }
 
         val key = mKeys[keyIndex]
-        mInvalidatedKey = key
         mDirtyRect.union(
             key.x, key.y,
             key.x + key.width, key.y + key.height
@@ -857,7 +828,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @return true if the long press is handled, false otherwise. Subclasses should call the
      * method on the base class if the subclass doesn't wish to handle the call.
      */
-    protected fun onLongPress(popupKey: MyKeyboard.Key, me: MotionEvent): Boolean {
+    private fun onLongPress(popupKey: MyKeyboard.Key, me: MotionEvent): Boolean {
         val popupKeyboardId = popupKey.popupResId
         if (popupKeyboardId != 0) {
             mMiniKeyboardContainer = mMiniKeyboardCache[popupKey]
@@ -946,7 +917,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mPopupKeyboard.height = mMiniKeyboardContainer!!.measuredHeight
             mPopupKeyboard.showAtLocation(this, Gravity.NO_GRAVITY, x, y)
             mMiniKeyboardOnScreen = true
-            //mMiniKeyboard.onTouchEvent(getTranslatedEvent(me));
             invalidateAllKeys()
             return true
         }
@@ -1238,7 +1208,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         return true
     }
 
-    fun closing() {
+    private fun closing() {
         if (mPreviewPopup.isShowing) {
             mPreviewPopup.dismiss()
         }
