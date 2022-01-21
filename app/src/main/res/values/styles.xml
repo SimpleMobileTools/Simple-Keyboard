@@ -21,6 +21,6 @@
     </style>
 
     <style name="Widget.KeyboardViewPopup" parent="Widget.KeyboardView">
-        <item name="keyTextSize">26sp</item>
+        <item name="keyTextSize">@dimen/preview_text_size</item>
     </style>
 </resources>

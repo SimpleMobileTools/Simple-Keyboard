@@ -16,7 +16,6 @@ import android.view.accessibility.AccessibilityManager
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
@@ -136,7 +135,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mLastKeyTime: Long = 0
     private var mCurrentKeyTime: Long = 0
     private val mKeyIndices = IntArray(12)
-    private var mGestureDetector: GestureDetector? = null
     private var mPopupX = 0
     private var mPopupY = 0
     private var mRepeatKeyIndex: Int = NOT_A_KEY
@@ -242,7 +240,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mPreviewPopup = PopupWindow(context)
         if (previewLayout != 0) {
             mPreviewText = inflate.inflate(previewLayout, null) as TextView
-            mPreviewTextSizeLarge = mPreviewText!!.textSize.toInt()
+            mPreviewTextSizeLarge = context.resources.getDimension(R.dimen.preview_text_size).toInt()
             mPreviewPopup.contentView = mPreviewText
             mPreviewPopup.setBackgroundDrawable(null)
         } else {
@@ -252,9 +250,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mPreviewPopup.isTouchable = false
         mPopupKeyboard = PopupWindow(context)
         mPopupKeyboard.setBackgroundDrawable(null)
-        //mPopupKeyboard.setClippingEnabled(false);
         mPopupParent = this
-        //mPredicting = true;
         mPaint = Paint()
         mPaint.isAntiAlias = true
         mPaint.textSize = keyTextSize.toFloat()
@@ -924,7 +920,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
                         onKeyboardActionListener!!.onKey(primaryCode, keyCodes)
                         dismissPopupKeyboard()
-                        mydebug("onkey")
                     }
 
                     override fun onPress(primaryCode: Int) {
