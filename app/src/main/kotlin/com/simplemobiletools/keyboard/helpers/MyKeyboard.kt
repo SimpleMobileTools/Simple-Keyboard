@@ -17,22 +17,7 @@ import java.util.*
 /**
  * Loads an XML description of a keyboard and stores the attributes of the keys. A keyboard
  * consists of rows of keys.
- *
- * The layout file for a keyboard contains XML that looks like the following snippet:
- * <pre>
- * &lt;Keyboard
- * android:keyWidth="%10p"
- * android:keyHeight="50px"
- * android:horizontalGap="2px"
- * &lt;Row android:keyWidth="32px" &gt;
- * &lt;Key android:keyLabel="A" /&gt;
- * ...
- * &lt;/Row&gt;
- * ...
- * &lt;/Keyboard&gt;
-</pre> *
  * @attr ref android.R.styleable#Keyboard_keyWidth
- * @attr ref android.R.styleable#Keyboard_keyHeight
  * @attr ref android.R.styleable#Keyboard_horizontalGap
  */
 class MyKeyboard {
@@ -67,7 +52,6 @@ class MyKeyboard {
     private var mEnterKeyType = IME_ACTION_NONE
 
     /** Keyboard mode, or zero, if none.   */
-    private var mKeyboardMode = 0
     private var mCellWidth = 0
     private var mCellHeight = 0
     private var mGridNeighbors: SparseArray<IntArray?>? = null
@@ -343,7 +327,6 @@ class MyKeyboard {
         mDefaultHeight = mDefaultWidth
         mKeys = ArrayList()
         mEnterKeyType = enterKeyType
-        mKeyboardMode = modeId
         loadKeyboard(context, context.resources.getXml(xmlLayoutResId))
     }
 
@@ -395,39 +378,6 @@ class MyKeyboard {
         }
         mHeight = y + mDefaultHeight
         mRows.add(row)
-    }
-
-    fun resize(newWidth: Int, newHeight: Int) {
-        val numRows = mRows.size
-        for (rowIndex in 0 until numRows) {
-            val row = mRows[rowIndex] ?: continue
-            val numKeys: Int = row.mKeys.size
-            var totalGap = 0
-            var totalWidth = 0
-            for (keyIndex in 0 until numKeys) {
-                val key: Key = row.mKeys.get(keyIndex)
-                if (keyIndex > 0) {
-                    totalGap += key.gap
-                }
-                totalWidth += key.width
-            }
-
-            if (totalGap + totalWidth > newWidth) {
-                var x = 0
-                val scaleFactor = (newWidth - totalGap).toFloat() / totalWidth
-                for (keyIndex in 0 until numKeys) {
-                    val key = row.mKeys[keyIndex]
-                    key.width *= scaleFactor.toInt()
-                    key.x = x
-                    x += key.width + key.gap
-                }
-            }
-        }
-
-        mMinWidth = newWidth
-        // TODO: This does not adjust the vertical placement according to the new size.
-        // The main problem in the previous code was horizontal placement/size, but we should
-        // also recalculate the vertical sizes/positions when we get this resize call.
     }
 
     fun setShifted(shiftState: Int): Boolean {

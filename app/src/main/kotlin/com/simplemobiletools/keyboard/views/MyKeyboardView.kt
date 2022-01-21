@@ -361,13 +361,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mProximityThreshold *= mProximityThreshold // Square it
     }
 
-    public override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
-        mKeyboard?.resize(w, h)
-        // Release the buffer, if any and it will be reallocated on the next draw
-        mBuffer = null
-    }
-
     public override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (mDrawPending || mBuffer == null || mKeyboardChanged) {
