@@ -4,5 +4,6 @@
     <dimen name="top_small_number_margin_height">18dp</dimen>
     <dimen name="key_height">60dp</dimen>
 
+    <dimen name="keyboard_text_size">22sp</dimen>
     <dimen name="preview_text_size">26sp</dimen>
 </resources>
