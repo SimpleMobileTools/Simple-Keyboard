@@ -1140,7 +1140,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     mHandler!!.sendMessageDelayed(msg, REPEAT_START_DELAY.toLong())
                     // if the user long presses Space, move the cursor after swipine left/right
                     if (mKeys[mCurrentKey].codes.firstOrNull() == MyKeyboard.KEYCODE_SPACE) {
-                        mLastSpaceMoveX = touchX
+                        mLastSpaceMoveX = -1
                     } else {
                         repeatKey(true)
                     }
@@ -1181,6 +1181,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
 
                 if (mIsLongPressingSpace) {
+                    if (mLastSpaceMoveX == -1) {
+                        mLastSpaceMoveX = mLastX
+                    }
+
                     val diff = mLastX - mLastSpaceMoveX
 
                     if (diff < -mSpaceMoveThreshold) {
