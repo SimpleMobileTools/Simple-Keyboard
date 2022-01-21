@@ -5,18 +5,8 @@
     </declare-styleable>
 
     <declare-styleable name="MyKeyboardView">
-        <attr name="keyboardViewStyle" format="reference" />
-        <!-- Image for the key. This image needs to be a StateListDrawable, with the following possible states:
-             normal, pressed, checkable, checkable+pressed, checkable+checked, checkable+checked+pressed. -->
-        <attr name="keyBackground" format="reference" />
         <!-- Size of the text for character keys. -->
         <attr name="keyTextSize" format="dimension" />
-        <!-- Size of the text for custom keys with some text and no icon. -->
-        <attr name="labelTextSize" format="dimension" />
-        <!-- Amount to offset the touch Y coordinate by, for bias correction. -->
-        <attr name="verticalCorrection" format="dimension" />
-        <!-- Layout resource for popup keyboards. -->
-        <attr name="popupLayout" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="MyKeyboard">

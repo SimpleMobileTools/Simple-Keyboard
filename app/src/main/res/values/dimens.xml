@@ -3,7 +3,9 @@
     <dimen name="top_small_number_margin_width">12dp</dimen>
     <dimen name="top_small_number_margin_height">18dp</dimen>
     <dimen name="key_height">60dp</dimen>
+    <dimen name="vertical_correction">-10dp</dimen>
 
     <dimen name="keyboard_text_size">22sp</dimen>
     <dimen name="preview_text_size">26sp</dimen>
+    <dimen name="label_text_size">16sp</dimen>      <!-- text size used at keys with longer labels, like "123" -->
 </resources>

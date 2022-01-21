@@ -22,8 +22,9 @@ import com.simplemobiletools.keyboard.helpers.*
 import kotlinx.android.synthetic.main.keyboard_popup_keyboard.view.*
 import java.util.*
 
-class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int = R.attr.keyboardViewStyle, defStyleRes: Int = 0) :
-    View(context, attrs, defStyleAttr, defStyleRes) {
+@SuppressLint("UseCompatLoadingForDrawables")
+class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int = 0) :
+    View(context, attrs, defStyleRes) {
 
     interface OnKeyboardActionListener {
         /**
@@ -62,7 +63,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private var mLabelTextSize = 0
     private var mKeyTextSize = 0
-    private val mBackgroundDimAmount: Float
 
     private var mTextColor = 0
     private var mBackgroundColor = 0
@@ -192,7 +192,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     init {
-        val attributes = context.theme.obtainStyledAttributes(attrs, R.styleable.MyKeyboardView, defStyleAttr, defStyleRes)
+        val attributes = context.obtainStyledAttributes(attrs, R.styleable.MyKeyboardView, 0, defStyleRes)
         val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val keyTextSize = 0
         val n = attributes.indexCount
@@ -201,24 +201,23 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             for (i in 0 until n) {
                 val attr = attributes.getIndex(i)
                 when (attr) {
-                    R.styleable.MyKeyboardView_keyBackground -> mKeyBackground = attributes.getDrawable(attr)
-                    R.styleable.MyKeyboardView_verticalCorrection -> mVerticalCorrection = attributes.getDimensionPixelOffset(attr, 0)
                     R.styleable.MyKeyboardView_keyTextSize -> mKeyTextSize = attributes.getDimensionPixelSize(attr, 18)
-                    R.styleable.MyKeyboardView_labelTextSize -> mLabelTextSize = attributes.getDimensionPixelSize(attr, 14)
-                    R.styleable.MyKeyboardView_popupLayout -> mPopupLayout = attributes.getResourceId(attr, 0)
                 }
             }
         } finally {
             attributes.recycle()
         }
 
+        mPopupLayout = R.layout.keyboard_popup_keyboard
+        mKeyBackground = resources.getDrawable(R.drawable.keyboard_key_selector, context.theme)
+        mVerticalCorrection = resources.getDimension(R.dimen.vertical_correction).toInt()
+        mLabelTextSize = resources.getDimension(R.dimen.label_text_size).toInt()
         mPreviewHeight = resources.getDimension(R.dimen.key_height).toInt()
         mSpaceMoveThreshold = resources.getDimension(R.dimen.medium_margin).toInt()
         mTextColor = context.config.textColor
         mBackgroundColor = context.config.backgroundColor
         mPrimaryColor = context.getAdjustedPrimaryColor()
 
-        mBackgroundDimAmount = 0.5f
         mPreviewPopup = PopupWindow(context)
         mPreviewText = inflate.inflate(resources.getLayout(R.layout.keyboard_key_preview), null) as TextView
         mPreviewTextSizeLarge = context.resources.getDimension(R.dimen.preview_text_size).toInt()
@@ -544,7 +543,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mInvalidatedKey = null
         // Overlay a dark rectangle to dim the keyboard
         if (mMiniKeyboardOnScreen) {
-            paint.color = (mBackgroundDimAmount * 0xFF).toInt() shl 24
+            paint.color = Color.BLACK.adjustAlpha(0.3f)
             canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
         }
 
