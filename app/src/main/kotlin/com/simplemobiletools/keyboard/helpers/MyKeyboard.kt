@@ -129,8 +129,6 @@ class MyKeyboard {
 
         var mKeys = ArrayList<Key>()
 
-        /** The keyboard mode for this row  */
-        var mode = 0
         var parent: MyKeyboard
 
         constructor(parent: MyKeyboard) {
@@ -157,12 +155,9 @@ class MyKeyboard {
      * @attr ref android.R.styleable#Keyboard_Key_keyIcon
      * @attr ref android.R.styleable#Keyboard_Key_keyLabel
      * @attr ref android.R.styleable#Keyboard_Key_iconPreview
-     * @attr ref android.R.styleable#Keyboard_Key_isSticky
      * @attr ref android.R.styleable#Keyboard_Key_isRepeatable
-     * @attr ref android.R.styleable#Keyboard_Key_isModifier
      * @attr ref android.R.styleable#Keyboard_Key_popupKeyboard
      * @attr ref android.R.styleable#Keyboard_Key_popupCharacters
-     * @attr ref android.R.styleable#Keyboard_Key_keyOutputText
      * @attr ref android.R.styleable#Keyboard_Key_keyEdgeFlags
      */
     class Key(parent: Row) {
@@ -190,9 +185,6 @@ class MyKeyboard {
         /** The horizontal gap before this key  */
         var gap: Int
 
-        /** Whether this key is sticky, i.e., a toggle key  */
-        var sticky = false
-
         /** X coordinate of the key in the keyboard layout  */
         var x = 0
 
@@ -205,9 +197,6 @@ class MyKeyboard {
         /** Focused state, used after long pressing a key and swiping to alternative keys */
         var focused = false
 
-        /** Text to output when pressed. This can be multiple characters, like ".com"  */
-        var text: CharSequence? = null
-
         /** Popup characters  */
         var popupCharacters: CharSequence? = null
 
@@ -217,9 +206,6 @@ class MyKeyboard {
          * [MyKeyboard.EDGE_LEFT], [MyKeyboard.EDGE_RIGHT], [MyKeyboard.EDGE_TOP] and [MyKeyboard.EDGE_BOTTOM].
          */
         var edgeFlags = 0
-
-        /** Whether this is a modifier key, such as Shift or Alt  */
-        var modifier = false
 
         /** The keyboard that this key belongs to  */
         private val keyboard: MyKeyboard = parent.parent
@@ -264,14 +250,11 @@ class MyKeyboard {
             popupCharacters = a.getText(R.styleable.MyKeyboard_Key_popupCharacters)
             popupResId = a.getResourceId(R.styleable.MyKeyboard_Key_popupKeyboard, 0)
             repeatable = a.getBoolean(R.styleable.MyKeyboard_Key_isRepeatable, false)
-            modifier = a.getBoolean(R.styleable.MyKeyboard_Key_isModifier, false)
-            sticky = a.getBoolean(R.styleable.MyKeyboard_Key_isSticky, false)
             edgeFlags = a.getInt(R.styleable.MyKeyboard_Key_keyEdgeFlags, 0)
             icon = a.getDrawable(R.styleable.MyKeyboard_Key_keyIcon)
             icon?.setBounds(0, 0, icon!!.intrinsicWidth, icon!!.intrinsicHeight)
 
             label = a.getText(R.styleable.MyKeyboard_Key_keyLabel) ?: ""
-            text = a.getText(R.styleable.MyKeyboard_Key_keyOutputText)
             topSmallNumber = a.getString(R.styleable.MyKeyboard_Key_topSmallNumber) ?: ""
 
             if (label.isNotEmpty() && codes.firstOrNull() != KEYCODE_MODE_CHANGE && codes.firstOrNull() != KEYCODE_SHIFT) {

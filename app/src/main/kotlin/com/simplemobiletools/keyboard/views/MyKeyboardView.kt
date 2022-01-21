@@ -323,7 +323,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     public override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        // Round up a little
         if (mKeyboard == null) {
             setMeasuredDimension(0, 0)
         } else {
@@ -564,22 +563,20 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private fun detectAndSendKey(index: Int, x: Int, y: Int, eventTime: Long) {
         if (index != NOT_A_KEY && index < mKeys.size) {
             val key = mKeys[index]
-            if (key.text == null) {
-                var code = key.codes[0]
-                val codes = IntArray(MAX_NEARBY_KEYS)
-                Arrays.fill(codes, NOT_A_KEY)
-                getKeyIndices(x, y, codes)
-                // Multi-tap
-                if (mInMultiTap) {
-                    if (mTapCount != -1) {
-                        onKeyboardActionListener!!.onKey(MyKeyboard.KEYCODE_DELETE, KEY_DELETE)
-                    } else {
-                        mTapCount = 0
-                    }
-                    code = key.codes[mTapCount]
+            var code = key.codes[0]
+            val codes = IntArray(MAX_NEARBY_KEYS)
+            Arrays.fill(codes, NOT_A_KEY)
+            getKeyIndices(x, y, codes)
+            // Multi-tap
+            if (mInMultiTap) {
+                if (mTapCount != -1) {
+                    onKeyboardActionListener!!.onKey(MyKeyboard.KEYCODE_DELETE, KEY_DELETE)
+                } else {
+                    mTapCount = 0
                 }
-                onKeyboardActionListener!!.onKey(code, codes)
+                code = key.codes[mTapCount]
             }
+            onKeyboardActionListener!!.onKey(code, codes)
             mLastSentIndex = index
             mLastTapTime = eventTime
         }

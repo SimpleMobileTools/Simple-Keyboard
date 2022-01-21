@@ -27,16 +27,10 @@
             <!-- Key is anchored to the right of the keyboard. -->
             <flag name="right" value="2" />
         </attr>
-        <!-- Whether this is a modifier key such as Alt or Shift. -->
-        <attr name="isModifier" format="boolean" />
-        <!-- Whether this is a toggle key. -->
-        <attr name="isSticky" format="boolean" />
         <!-- Whether long-pressing on this key will make it repeat. -->
         <attr name="isRepeatable" format="boolean" />
         <!-- The icon to show in the popup preview. -->
         <attr name="iconPreview" format="reference" />
-        <!-- The string of characters to output when this key is pressed. -->
-        <attr name="keyOutputText" format="string" />
         <!-- The label to display on the key. -->
         <attr name="keyLabel" format="string" />
         <!-- The icon to display on the key instead of the label. -->
