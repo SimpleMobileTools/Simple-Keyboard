@@ -426,7 +426,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             keyBackground.draw(canvas)
             if (label?.isNotEmpty() == true) {
                 // For characters, use large font. For labels like "Done", use small font.
-                if (label.length > 1 && key.codes.size < 2) {
+                if (label.length > 1) {
                     paint.textSize = mLabelTextSize.toFloat()
                     paint.typeface = Typeface.DEFAULT_BOLD
                 } else {
@@ -451,7 +451,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 // Turn off drop shadow
                 paint.setShadowLayer(0f, 0f, 0f, 0)
             } else if (key.icon != null && mKeyboard != null) {
-                if (key.codes.size == 1 && key.codes.contains(-1)) {
+                if (key.codes.contains(-1)) {
                     val drawableId = when (mKeyboard!!.mShiftState) {
                         SHIFT_OFF -> R.drawable.ic_caps_outline_vector
                         SHIFT_ON_ONE_CHAR -> R.drawable.ic_caps_vector
@@ -506,7 +506,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             if (isInside && key.codes[0] > MyKeyboard.KEYCODE_SPACE) {
                 // Find insertion point
-                val nCodes = key.codes.size
+                val nCodes = 1
                 if (dist < closestKeyDist) {
                     closestKeyDist = dist
                     closestKey = nearestKeyIndices[i]
