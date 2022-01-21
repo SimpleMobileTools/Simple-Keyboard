@@ -15,7 +15,7 @@
 
     <declare-styleable name="MyKeyboard_Key">
         <!-- The unicode value or comma-separated values that this key outputs. -->
-        <attr name="codes" format="integer|string" />
+        <attr name="codes" format="integer" />
         <!-- The XML keyboard layout of any popup keyboard. -->
         <attr name="popupKeyboard" format="reference" />
         <!-- The characters to display in the popup keyboard. -->

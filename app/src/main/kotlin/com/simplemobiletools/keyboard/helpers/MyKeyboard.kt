@@ -205,18 +205,11 @@ class MyKeyboard {
             width = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, keyboard.mDisplayWidth, parent.defaultWidth)
             height = parent.defaultHeight
             gap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, keyboard.mDisplayWidth, parent.defaultHorizontalGap)
+            this.x += gap
 
             a.recycle()
             a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard_Key)
-            this.x += gap
-            val codesValue = TypedValue()
-
-            a.getValue(R.styleable.MyKeyboard_Key_codes, codesValue)
-            if (codesValue.type == TypedValue.TYPE_INT_DEC || codesValue.type == TypedValue.TYPE_INT_HEX) {
-                codes = arrayListOf(codesValue.data)
-            } else if (codesValue.type == TypedValue.TYPE_STRING) {
-                codes = parseCSV(codesValue.string.toString())
-            }
+            codes = arrayListOf(a.getInt(R.styleable.MyKeyboard_Key_codes, 0))
 
             popupCharacters = a.getText(R.styleable.MyKeyboard_Key_popupCharacters)
             popupResId = a.getResourceId(R.styleable.MyKeyboard_Key_popupKeyboard, 0)
@@ -247,28 +240,6 @@ class MyKeyboard {
 
         fun onReleased() {
             pressed = false
-        }
-
-        fun parseCSV(value: String): ArrayList<Int> {
-            var count = 0
-            var lastIndex = 0
-            if (value.isNotEmpty()) {
-                count++
-                while (value.indexOf(",", lastIndex + 1).also { lastIndex = it } > 0) {
-                    count++
-                }
-            }
-
-            val values = ArrayList<Int>(count)
-            count = 0
-            val st = StringTokenizer(value, ",")
-            while (st.hasMoreTokens()) {
-                try {
-                    values[count++] = st.nextToken().toInt()
-                } catch (nfe: NumberFormatException) {
-                }
-            }
-            return values
         }
 
         /**
@@ -463,27 +434,31 @@ class MyKeyboard {
             while (parser.next().also { event = it } != XmlResourceParser.END_DOCUMENT) {
                 if (event == XmlResourceParser.START_TAG) {
                     val tag = parser.name
-                    if (TAG_ROW == tag) {
-                        inRow = true
-                        x = 0
-                        currentRow = createRowFromXml(res, parser)
-                        mRows.add(currentRow)
-                    } else if (TAG_KEY == tag) {
-                        inKey = true
-                        key = createKeyFromXml(res, currentRow!!, x, y, parser)
-                        mKeys!!.add(key)
-                        if (key.codes[0] == KEYCODE_ENTER) {
-                            val enterResourceId = when (mEnterKeyType) {
-                                EditorInfo.IME_ACTION_SEARCH -> R.drawable.ic_search_vector
-                                EditorInfo.IME_ACTION_NEXT, EditorInfo.IME_ACTION_GO -> R.drawable.ic_arrow_right_vector
-                                EditorInfo.IME_ACTION_SEND -> R.drawable.ic_send_vector
-                                else -> R.drawable.ic_enter_vector
-                            }
-                            key.icon = context.resources.getDrawable(enterResourceId, context.theme)
+                    when {
+                        TAG_ROW == tag -> {
+                            inRow = true
+                            x = 0
+                            currentRow = createRowFromXml(res, parser)
+                            mRows.add(currentRow)
                         }
-                        currentRow.mKeys.add(key)
-                    } else if (TAG_KEYBOARD == tag) {
-                        parseKeyboardAttributes(res, parser)
+                        TAG_KEY == tag -> {
+                            inKey = true
+                            key = createKeyFromXml(res, currentRow!!, x, y, parser)
+                            mKeys!!.add(key)
+                            if (key.codes[0] == KEYCODE_ENTER) {
+                                val enterResourceId = when (mEnterKeyType) {
+                                    EditorInfo.IME_ACTION_SEARCH -> R.drawable.ic_search_vector
+                                    EditorInfo.IME_ACTION_NEXT, EditorInfo.IME_ACTION_GO -> R.drawable.ic_arrow_right_vector
+                                    EditorInfo.IME_ACTION_SEND -> R.drawable.ic_send_vector
+                                    else -> R.drawable.ic_enter_vector
+                                }
+                                key.icon = context.resources.getDrawable(enterResourceId, context.theme)
+                            }
+                            currentRow.mKeys.add(key)
+                        }
+                        TAG_KEYBOARD == tag -> {
+                            parseKeyboardAttributes(res, parser)
+                        }
                     }
                 } else if (event == XmlResourceParser.END_TAG) {
                     if (inKey) {
