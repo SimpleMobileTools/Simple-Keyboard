@@ -1132,7 +1132,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         mHandler!!.sendMessageDelayed(msg, LONGPRESS_TIMEOUT.toLong())
                     }
 
-                    showPreview(mCurrentKey)
+                    if (mPopupParent.id != R.id.mini_keyboard_view) {
+                        showPreview(mCurrentKey)
+                    }
                     mLastMoveTime = eventTime
                 }
             }
