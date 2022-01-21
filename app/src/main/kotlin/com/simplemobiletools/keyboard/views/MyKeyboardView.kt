@@ -85,7 +85,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mKeys = ArrayList<MyKeyboard.Key>()
     private var mMiniKeyboardSelectedKeyIndex = -1
 
-    var onKeyboardActionListener: OnKeyboardActionListener? = null
+    var mOnKeyboardActionListener: OnKeyboardActionListener? = null
     private var mVerticalCorrection = 0
     private var mProximityThreshold = 0
     private var mPopupPreviewX = 0
@@ -303,7 +303,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @see KeyboardView.setShifted
      */
     private fun isShifted(): Boolean {
-        return mKeyboard?.shiftState ?: SHIFT_OFF > SHIFT_OFF
+        return mKeyboard?.mShiftState ?: SHIFT_OFF > SHIFT_OFF
     }
 
     private fun setPopupOffset(x: Int, y: Int) {
@@ -316,7 +316,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun adjustCase(label: CharSequence): CharSequence? {
         var newLabel: CharSequence? = label
-        if (newLabel != null && newLabel.isNotEmpty() && mKeyboard!!.shiftState > SHIFT_OFF && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
+        if (newLabel != null && newLabel.isNotEmpty() && mKeyboard!!.mShiftState > SHIFT_OFF && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
             newLabel = newLabel.toString().toUpperCase()
         }
         return newLabel
@@ -326,11 +326,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         if (mKeyboard == null) {
             setMeasuredDimension(0, 0)
         } else {
-            var width: Int = mKeyboard!!.minWidth
+            var width: Int = mKeyboard!!.mMinWidth
             if (MeasureSpec.getSize(widthMeasureSpec) < width + 10) {
                 width = MeasureSpec.getSize(widthMeasureSpec)
             }
-            setMeasuredDimension(width, mKeyboard!!.height)
+            setMeasuredDimension(width, mKeyboard!!.mHeight)
         }
     }
 
@@ -467,7 +467,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 paint.setShadowLayer(0f, 0f, 0f, 0)
             } else if (key.icon != null && mKeyboard != null) {
                 if (key.codes.size == 1 && key.codes.contains(-1)) {
-                    val drawableId = when (mKeyboard!!.shiftState) {
+                    val drawableId = when (mKeyboard!!.mShiftState) {
                         SHIFT_OFF -> R.drawable.ic_caps_outline_vector
                         SHIFT_ON_ONE_CHAR -> R.drawable.ic_caps_vector
                         else -> R.drawable.ic_caps_underlined_vector
@@ -570,13 +570,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             // Multi-tap
             if (mInMultiTap) {
                 if (mTapCount != -1) {
-                    onKeyboardActionListener!!.onKey(MyKeyboard.KEYCODE_DELETE, KEY_DELETE)
+                    mOnKeyboardActionListener!!.onKey(MyKeyboard.KEYCODE_DELETE, KEY_DELETE)
                 } else {
                     mTapCount = 0
                 }
                 code = key.codes[mTapCount]
             }
-            onKeyboardActionListener!!.onKey(code, codes)
+            mOnKeyboardActionListener!!.onKey(code, codes)
             mLastSentIndex = index
             mLastTapTime = eventTime
         }
@@ -834,26 +834,26 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 mMiniKeyboardContainer = inflater.inflate(mPopupLayout, null)
                 mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.mini_keyboard_view) as MyKeyboardView
 
-                mMiniKeyboard!!.onKeyboardActionListener = object : OnKeyboardActionListener {
+                mMiniKeyboard!!.mOnKeyboardActionListener = object : OnKeyboardActionListener {
                     override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
-                        onKeyboardActionListener!!.onKey(primaryCode, keyCodes)
+                        mOnKeyboardActionListener!!.onKey(primaryCode, keyCodes)
                         dismissPopupKeyboard()
                     }
 
                     override fun onPress(primaryCode: Int) {
-                        onKeyboardActionListener!!.onPress(primaryCode)
+                        mOnKeyboardActionListener!!.onPress(primaryCode)
                     }
 
                     override fun onActionUp() {
-                        onKeyboardActionListener!!.onActionUp()
+                        mOnKeyboardActionListener!!.onActionUp()
                     }
 
                     override fun moveCursorLeft() {
-                        onKeyboardActionListener!!.moveCursorLeft()
+                        mOnKeyboardActionListener!!.moveCursorLeft()
                     }
 
                     override fun moveCursorRight() {
-                        onKeyboardActionListener!!.moveCursorRight()
+                        mOnKeyboardActionListener!!.moveCursorRight()
                     }
                 }
 
@@ -1012,7 +1012,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     mMiniKeyboard?.mKeys?.firstOrNull { it.focused }?.apply {
-                        onKeyboardActionListener!!.onKey(codes[0], codes.toIntArray())
+                        mOnKeyboardActionListener!!.onKey(codes[0], codes.toIntArray())
                     }
                     mMiniKeyboardSelectedKeyIndex = -1
                     dismissPopupKeyboard()
@@ -1064,7 +1064,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     0
                 }
 
-                onKeyboardActionListener!!.onPress(onPressKey)
+                mOnKeyboardActionListener!!.onPress(onPressKey)
 
                 var wasHandled = false
                 if (mCurrentKey >= 0 && mKeys[mCurrentKey].repeatable) {
@@ -1123,12 +1123,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                     if (diff < -mSpaceMoveThreshold) {
                         for (i in diff / mSpaceMoveThreshold until 0) {
-                            onKeyboardActionListener?.moveCursorLeft()
+                            mOnKeyboardActionListener?.moveCursorLeft()
                         }
                         mLastSpaceMoveX = mLastX
                     } else if (diff > mSpaceMoveThreshold) {
                         for (i in 0 until diff / mSpaceMoveThreshold) {
-                            onKeyboardActionListener?.moveCursorRight()
+                            mOnKeyboardActionListener?.moveCursorRight()
                         }
                         mLastSpaceMoveX = mLastX
                     }
@@ -1176,7 +1176,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                 invalidateKey(keyIndex)
                 mRepeatKeyIndex = NOT_A_KEY
-                onKeyboardActionListener!!.onActionUp()
+                mOnKeyboardActionListener!!.onActionUp()
                 mIsLongPressingSpace = false
             }
             MotionEvent.ACTION_CANCEL -> {

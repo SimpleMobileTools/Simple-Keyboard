@@ -39,7 +39,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     override fun onCreateInputView(): View {
         keyboardView = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null) as MyKeyboardView
         keyboardView!!.setKeyboard(keyboard!!)
-        keyboardView!!.onKeyboardActionListener = this
+        keyboardView!!.mOnKeyboardActionListener = this
         return keyboardView!!
     }
 
@@ -73,7 +73,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     private fun updateShiftKeyState() {
         if (keyboardMode == KEYBOARD_LETTERS) {
             val editorInfo = currentInputEditorInfo
-            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.shiftState != SHIFT_ON_PERMANENT) {
+            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != SHIFT_ON_PERMANENT) {
                 if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
                     keyboard?.setShifted(SHIFT_ON_ONE_CHAR)
                     keyboardView?.invalidateAllKeys()
@@ -90,8 +90,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
         when (primaryCode) {
             MyKeyboard.KEYCODE_DELETE -> {
-                if (keyboard!!.shiftState == SHIFT_ON_ONE_CHAR) {
-                    keyboard!!.shiftState = SHIFT_OFF
+                if (keyboard!!.mShiftState == SHIFT_ON_ONE_CHAR) {
+                    keyboard!!.mShiftState = SHIFT_OFF
                 }
 
                 val selectedText = inputConnection.getSelectedText(0)
@@ -105,10 +105,10 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             MyKeyboard.KEYCODE_SHIFT -> {
                 if (keyboardMode == KEYBOARD_LETTERS) {
                     when {
-                        keyboard!!.shiftState == SHIFT_ON_PERMANENT -> keyboard!!.shiftState = SHIFT_OFF
-                        System.currentTimeMillis() - lastShiftPressTS < SHIFT_PERM_TOGGLE_SPEED -> keyboard!!.shiftState = SHIFT_ON_PERMANENT
-                        keyboard!!.shiftState == SHIFT_ON_ONE_CHAR -> keyboard!!.shiftState = SHIFT_OFF
-                        keyboard!!.shiftState == SHIFT_OFF -> keyboard!!.shiftState = SHIFT_ON_ONE_CHAR
+                        keyboard!!.mShiftState == SHIFT_ON_PERMANENT -> keyboard!!.mShiftState = SHIFT_OFF
+                        System.currentTimeMillis() - lastShiftPressTS < SHIFT_PERM_TOGGLE_SPEED -> keyboard!!.mShiftState = SHIFT_ON_PERMANENT
+                        keyboard!!.mShiftState == SHIFT_ON_ONE_CHAR -> keyboard!!.mShiftState = SHIFT_OFF
+                        keyboard!!.mShiftState == SHIFT_OFF -> keyboard!!.mShiftState = SHIFT_ON_ONE_CHAR
                     }
 
                     lastShiftPressTS = System.currentTimeMillis()
@@ -142,7 +142,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             }
             else -> {
                 var code = primaryCode.toChar()
-                if (Character.isLetter(code) && keyboard!!.shiftState > SHIFT_OFF) {
+                if (Character.isLetter(code) && keyboard!!.mShiftState > SHIFT_OFF) {
                     code = Character.toUpperCase(code)
                 }
 
@@ -158,8 +158,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     inputConnection.commitText(code.toString(), 1)
                 }
 
-                if (keyboard!!.shiftState == SHIFT_ON_ONE_CHAR && keyboardMode == KEYBOARD_LETTERS) {
-                    keyboard!!.shiftState = SHIFT_OFF
+                if (keyboard!!.mShiftState == SHIFT_ON_ONE_CHAR && keyboardMode == KEYBOARD_LETTERS) {
+                    keyboard!!.mShiftState = SHIFT_OFF
                     keyboardView!!.invalidateAllKeys()
                 }
             }
@@ -176,7 +176,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             keyboard = MyKeyboard(this, R.xml.keys_letters, enterKeyType)
 
             val editorInfo = currentInputEditorInfo
-            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.shiftState != SHIFT_ON_PERMANENT) {
+            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != SHIFT_ON_PERMANENT) {
                 if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
                     keyboard?.setShifted(SHIFT_ON_ONE_CHAR)
                 }

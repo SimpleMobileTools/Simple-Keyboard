@@ -46,25 +46,22 @@ class MyKeyboard {
     private var mDefaultHeight = 0
 
     /** Is the keyboard in the shifted state  */
-    var shiftState = SHIFT_OFF
+    var mShiftState = SHIFT_OFF
 
     /** Key instance for the shift key, if present  */
     private val mShiftKeys = arrayOf<Key?>(null, null)
 
     /** Total height of the keyboard, including the padding and keys  */
-    var height = 0
+    var mHeight = 0
 
     /** Total width of the keyboard, including left side gaps and keys, but not any gaps on the right side. */
-    var minWidth = 0
+    var mMinWidth = 0
 
     /** List of keys in this keyboard  */
     var mKeys: MutableList<Key?>? = null
 
     /** Width of the screen available to fit the keyboard  */
     private var mDisplayWidth = 0
-
-    /** Height of the screen  */
-    private var mDisplayHeight = 0
 
     /** What icon should we show at Enter key */
     private var mEnterKeyType = IME_ACTION_NONE
@@ -75,7 +72,7 @@ class MyKeyboard {
     private var mCellHeight = 0
     private var mGridNeighbors: SparseArray<IntArray?>? = null
     private var mProximityThreshold = 0
-    private val rows = ArrayList<Row?>()
+    private val mRows = ArrayList<Row?>()
 
     companion object {
         private const val TAG_KEYBOARD = "Keyboard"
@@ -348,7 +345,6 @@ class MyKeyboard {
     constructor(context: Context, @XmlRes xmlLayoutResId: Int, enterKeyType: Int, modeId: Int = 0) {
         val dm = context.resources.displayMetrics
         mDisplayWidth = dm.widthPixels
-        mDisplayHeight = dm.heightPixels
         mDefaultHorizontalGap = 0
         mDefaultWidth = mDisplayWidth / 10
         mDefaultHeight = mDefaultWidth
@@ -376,7 +372,7 @@ class MyKeyboard {
         var x = 0
         var y = 0
         var column = 0
-        minWidth = 0
+        mMinWidth = 0
         val row = Row(this)
         row.defaultHeight = mDefaultHeight
         row.defaultWidth = mDefaultWidth
@@ -388,7 +384,7 @@ class MyKeyboard {
                 column = 0
                 x = 0
                 y += mDefaultHeight
-                rows.add(row)
+                mRows.add(row)
                 row.mKeys.clear()
             }
 
@@ -400,18 +396,18 @@ class MyKeyboard {
             x += key.width + key.gap
             mKeys!!.add(key)
             row.mKeys.add(key)
-            if (x > minWidth) {
-                minWidth = x
+            if (x > mMinWidth) {
+                mMinWidth = x
             }
         }
-        height = y + mDefaultHeight
-        rows.add(row)
+        mHeight = y + mDefaultHeight
+        mRows.add(row)
     }
 
     fun resize(newWidth: Int, newHeight: Int) {
-        val numRows = rows.size
+        val numRows = mRows.size
         for (rowIndex in 0 until numRows) {
-            val row = rows[rowIndex] ?: continue
+            val row = mRows[rowIndex] ?: continue
             val numKeys: Int = row.mKeys.size
             var totalGap = 0
             var totalWidth = 0
@@ -435,15 +431,15 @@ class MyKeyboard {
             }
         }
 
-        minWidth = newWidth
+        mMinWidth = newWidth
         // TODO: This does not adjust the vertical placement according to the new size.
         // The main problem in the previous code was horizontal placement/size, but we should
         // also recalculate the vertical sizes/positions when we get this resize call.
     }
 
     fun setShifted(shiftState: Int): Boolean {
-        if (this.shiftState != shiftState) {
-            this.shiftState = shiftState
+        if (this.mShiftState != shiftState) {
+            this.mShiftState = shiftState
             return true
         }
 
@@ -452,8 +448,8 @@ class MyKeyboard {
 
     private fun computeNearestNeighbors() {
         // Round-up so we don't have any pixels outside the grid
-        mCellWidth = (minWidth + GRID_WIDTH - 1) / GRID_WIDTH
-        mCellHeight = (height + GRID_HEIGHT - 1) / GRID_HEIGHT
+        mCellWidth = (mMinWidth + GRID_WIDTH - 1) / GRID_WIDTH
+        mCellHeight = (mHeight + GRID_HEIGHT - 1) / GRID_HEIGHT
         mGridNeighbors = SparseArray<IntArray?>(GRID_SIZE)
         val indices = IntArray(mKeys!!.size)
         val gridWidth: Int = GRID_WIDTH * mCellWidth
@@ -495,7 +491,7 @@ class MyKeyboard {
             computeNearestNeighbors()
         }
 
-        if (x in 0 until minWidth && y >= 0 && y < height) {
+        if (x in 0 until mMinWidth && y >= 0 && y < mHeight) {
             val index = y / mCellHeight * GRID_WIDTH + x / mCellWidth
             if (index < GRID_SIZE) {
                 return mGridNeighbors!![index]!!
@@ -531,7 +527,7 @@ class MyKeyboard {
                         inRow = true
                         x = 0
                         currentRow = createRowFromXml(res, parser)
-                        rows.add(currentRow)
+                        mRows.add(currentRow)
                     } else if (TAG_KEY == tag) {
                         inKey = true
                         key = createKeyFromXml(res, currentRow!!, x, y, parser)
@@ -561,8 +557,8 @@ class MyKeyboard {
                     if (inKey) {
                         inKey = false
                         x += key!!.gap + key.width
-                        if (x > minWidth) {
-                            minWidth = x
+                        if (x > mMinWidth) {
+                            mMinWidth = x
                         }
                     } else if (inRow) {
                         inRow = false
@@ -573,7 +569,7 @@ class MyKeyboard {
             }
         } catch (e: Exception) {
         }
-        height = y
+        mHeight = y
     }
 
     private fun parseKeyboardAttributes(res: Resources, parser: XmlResourceParser) {
