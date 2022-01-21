@@ -1078,7 +1078,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     val msg = mHandler!!.obtainMessage(MSG_LONGPRESS, me)
                     mHandler!!.sendMessageDelayed(msg, LONGPRESS_TIMEOUT.toLong())
                 }
-                showPreview(keyIndex)
+
+                if (mPopupParent.id != R.id.mini_keyboard_view) {
+                    showPreview(keyIndex)
+                }
             }
             MotionEvent.ACTION_MOVE -> {
                 var continueLongPress = false
