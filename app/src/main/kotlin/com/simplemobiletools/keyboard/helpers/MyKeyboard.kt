@@ -115,10 +115,7 @@ class MyKeyboard {
      * Some of the key size defaults can be overridden per row from what the [MyKeyboard]
      * defines.
      * @attr ref android.R.styleable#Keyboard_keyWidth
-     * @attr ref android.R.styleable#Keyboard_keyHeight
      * @attr ref android.R.styleable#Keyboard_horizontalGap
-     * @attr ref android.R.styleable#Keyboard_Row_rowEdgeFlags
-     * @attr ref android.R.styleable#Keyboard_Row_keyboardMode
      */
     class Row {
         /** Default width of a key in this row.  */
@@ -132,12 +129,6 @@ class MyKeyboard {
 
         var mKeys = ArrayList<Key>()
 
-        /**
-         * Edge flags for this row of keys. Possible values that can be assigned are
-         * [EDGE_TOP][MyKeyboard.EDGE_TOP] and [EDGE_BOTTOM][MyKeyboard.EDGE_BOTTOM]
-         */
-        var rowEdgeFlags = 0
-
         /** The keyboard mode for this row  */
         var mode = 0
         var parent: MyKeyboard
@@ -148,15 +139,11 @@ class MyKeyboard {
 
         constructor(res: Resources, parent: MyKeyboard, parser: XmlResourceParser?) {
             this.parent = parent
-            var a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard)
+            val a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard)
             defaultWidth = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, parent.mDisplayWidth, parent.mDefaultWidth)
             defaultHeight = res.getDimension(R.dimen.key_height).toInt()
             defaultHorizontalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, parent.mDisplayWidth, parent.mDefaultHorizontalGap)
-
             a.recycle()
-            a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard_Row)
-            rowEdgeFlags = a.getInt(R.styleable.MyKeyboard_Row_rowEdgeFlags, 0)
-            mode = a.getResourceId(R.styleable.MyKeyboard_Row_keyboardMode, 0)
         }
     }
 
@@ -229,7 +216,7 @@ class MyKeyboard {
          * that are just out of the boundary of the key. This is a bit mask of
          * [MyKeyboard.EDGE_LEFT], [MyKeyboard.EDGE_RIGHT], [MyKeyboard.EDGE_TOP] and [MyKeyboard.EDGE_BOTTOM].
          */
-        var edgeFlags: Int
+        var edgeFlags = 0
 
         /** Whether this is a modifier key, such as Shift or Alt  */
         var modifier = false
@@ -280,7 +267,6 @@ class MyKeyboard {
             modifier = a.getBoolean(R.styleable.MyKeyboard_Key_isModifier, false)
             sticky = a.getBoolean(R.styleable.MyKeyboard_Key_isSticky, false)
             edgeFlags = a.getInt(R.styleable.MyKeyboard_Key_keyEdgeFlags, 0)
-            edgeFlags = edgeFlags or parent.rowEdgeFlags
             icon = a.getDrawable(R.styleable.MyKeyboard_Key_keyIcon)
             icon?.setBounds(0, 0, icon!!.intrinsicWidth, icon!!.intrinsicHeight)
 
@@ -299,7 +285,6 @@ class MyKeyboard {
             height = parent.defaultHeight
             width = parent.defaultWidth
             gap = parent.defaultHorizontalGap
-            edgeFlags = parent.rowEdgeFlags
         }
 
         fun onPressed() {
@@ -413,7 +398,6 @@ class MyKeyboard {
         row.defaultHeight = mDefaultHeight
         row.defaultWidth = mDefaultWidth
         row.defaultHorizontalGap = mDefaultHorizontalGap
-        row.rowEdgeFlags = EDGE_TOP or EDGE_BOTTOM
 
         characters.forEachIndexed { index, character ->
             val key = Key(row)
@@ -534,6 +518,7 @@ class MyKeyboard {
                 return mGridNeighbors!![index]!!
             }
         }
+
         return IntArray(0)
     }
 
@@ -564,11 +549,6 @@ class MyKeyboard {
                         x = 0
                         currentRow = createRowFromXml(res, parser)
                         rows.add(currentRow)
-                        val skipRow = currentRow.mode != 0 && currentRow.mode != mKeyboardMode
-                        if (skipRow) {
-                            skipToEndOfRow(parser)
-                            inRow = false
-                        }
                     } else if (TAG_KEY == tag) {
                         inKey = true
                         key = createKeyFromXml(res, currentRow!!, x, y, parser)
@@ -611,15 +591,6 @@ class MyKeyboard {
         } catch (e: Exception) {
         }
         height = y
-    }
-
-    private fun skipToEndOfRow(parser: XmlResourceParser) {
-        var event: Int
-        while (parser.next().also { event = it } != XmlResourceParser.END_DOCUMENT) {
-            if (event == XmlResourceParser.END_TAG && parser.name == TAG_ROW) {
-                break
-            }
-        }
     }
 
     private fun parseKeyboardAttributes(res: Resources, parser: XmlResourceParser) {

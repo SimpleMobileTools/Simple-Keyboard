@@ -5,27 +5,12 @@
     </declare-styleable>
 
     <declare-styleable name="MyKeyboardView">
-        <!-- Size of the text for character keys. -->
         <attr name="keyTextSize" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="MyKeyboard">
-        <!-- Default width of a key in percentage of display width. -->
         <attr name="keyWidth" format="fraction" />
-        <!-- Default horizontal gap between keys. -->
         <attr name="horizontalGap" format="fraction" />
-    </declare-styleable>
-
-    <declare-styleable name="MyKeyboard_Row">
-        <!-- Row edge flags. -->
-        <attr name="rowEdgeFlags">
-            <!-- Row is anchored to the top of the keyboard. -->
-            <flag name="top" value="4" />
-            <!-- Row is anchored to the bottom of the keyboard. -->
-            <flag name="bottom" value="8" />
-        </attr>
-        <!-- Mode of the keyboard. If the mode doesn't match the requested keyboard mode, the row will be skipped. -->
-        <attr name="keyboardMode" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="MyKeyboard_Key">

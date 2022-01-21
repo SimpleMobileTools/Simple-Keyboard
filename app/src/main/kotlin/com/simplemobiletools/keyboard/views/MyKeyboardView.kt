@@ -195,10 +195,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.MyKeyboardView, 0, defStyleRes)
         val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val keyTextSize = 0
-        val n = attributes.indexCount
+        val indexCnt = attributes.indexCount
 
         try {
-            for (i in 0 until n) {
+            for (i in 0 until indexCnt) {
                 val attr = attributes.getIndex(i)
                 when (attr) {
                     R.styleable.MyKeyboardView_keyTextSize -> mKeyTextSize = attributes.getDimensionPixelSize(attr, 18)

@@ -102,7 +102,7 @@
             app:keyIcon="@drawable/ic_clear_vector"
             app:keyWidth="15%p" />
     </Row>
-    <Row app:rowEdgeFlags="bottom">
+    <Row>
         <Key
             app:codes="-2"
             app:keyEdgeFlags="left"
