@@ -73,7 +73,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mPreviewTextSizeLarge = 0
     private var mPreviewHeight = 0
 
-    // Working variable
     private val mCoordinates = IntArray(2)
     private val mPopupKeyboard: PopupWindow
     private var mMiniKeyboardContainer: View? = null
@@ -85,6 +84,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private val mMiniKeyboardCache: MutableMap<MyKeyboard.Key, View?>
     private var mKeys = ArrayList<MyKeyboard.Key>()
     private var mMiniKeyboardSelectedKeyIndex = -1
+
     /**
      * Returns the [OnKeyboardActionListener] object.
      * @return the listener attached to this keyboard
@@ -93,27 +93,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     var onKeyboardActionListener: OnKeyboardActionListener? = null
     private var mVerticalCorrection = 0
     private var mProximityThreshold = 0
-
-    /**
-     * Returns the enabled state of the key feedback popup.
-     * @return whether or not the key feedback popup is enabled
-     * @see .setPreviewEnabled
-     */
     private var mPopupPreviewX = 0
     private var mPopupPreviewY = 0
     private var mLastX = 0
     private var mLastY = 0
-    /**
-     * Returns true if proximity correction is enabled.
-     */
-    /**
-     * When enabled, calls to [OnKeyboardActionListener.onKey] will include key
-     * codes for adjacent keys.  When disabled, only the primary key code will be
-     * reported.
-     * @param enabled whether or not the proximity correction is enabled
-     */
+
     private val mPaint: Paint
-    private val mPadding: Rect
     private var mDownTime: Long = 0
     private var mLastMoveTime: Long = 0
     private var mLastKey = 0
@@ -233,7 +218,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mPaint.textSize = keyTextSize.toFloat()
         mPaint.textAlign = Align.CENTER
         mPaint.alpha = 255
-        mPadding = Rect(0, 0, 0, 0)
         mMiniKeyboardCache = HashMap()
         mAccessibilityManager = (context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager)
         mPopupMaxMoveDistance = resources.getDimension(R.dimen.popup_max_move_distance)
@@ -350,13 +334,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     public override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         // Round up a little
         if (mKeyboard == null) {
-            setMeasuredDimension(paddingLeft + paddingRight, paddingTop + paddingBottom)
+            setMeasuredDimension(0, 0)
         } else {
-            var width: Int = mKeyboard!!.minWidth + paddingLeft + paddingRight
+            var width: Int = mKeyboard!!.minWidth
             if (MeasureSpec.getSize(widthMeasureSpec) < width + 10) {
                 width = MeasureSpec.getSize(widthMeasureSpec)
             }
-            setMeasuredDimension(width, mKeyboard!!.height + paddingTop + paddingBottom)
+            setMeasuredDimension(width, mKeyboard!!.height)
         }
     }
 
@@ -425,9 +409,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         canvas!!.clipRect(mDirtyRect)
         val paint = mPaint
         val clipRegion = mClipRegion
-        val padding = mPadding
-        val kbdPaddingLeft: Int = paddingLeft
-        val kbdPaddingTop: Int = paddingTop
         val keys = mKeys
         val invalidKey = mInvalidatedKey
         paint.color = mTextColor
@@ -442,10 +423,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         var drawSingleKey = false
         if (invalidKey != null && canvas.getClipBounds(clipRegion)) {
             // Is clipRegion completely contained within the invalidated key?
-            if (invalidKey.x + kbdPaddingLeft - 1 <= clipRegion.left &&
-                invalidKey.y + kbdPaddingTop - 1 <= clipRegion.top &&
-                invalidKey.x + invalidKey.width + kbdPaddingLeft + 1 >= clipRegion.right &&
-                invalidKey.y + invalidKey.height + kbdPaddingTop + 1 >= clipRegion.bottom
+            if (invalidKey.x - 1 <= clipRegion.left &&
+                invalidKey.y - 1 <= clipRegion.top &&
+                invalidKey.x + invalidKey.width + 1 >= clipRegion.right &&
+                invalidKey.y + invalidKey.height + 1 >= clipRegion.bottom
             ) {
                 drawSingleKey = true
             }
@@ -484,7 +465,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 keyBackground.applyColorFilter(mPrimaryColor)
             }
 
-            canvas.translate((key.x + kbdPaddingLeft).toFloat(), (key.y + kbdPaddingTop).toFloat())
+            canvas.translate(key.x.toFloat(), key.y.toFloat())
             keyBackground.draw(canvas)
             if (label?.isNotEmpty() == true) {
                 // For characters, use large font. For labels like "Done", use small font.
@@ -502,10 +483,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     mTextColor
                 }
 
-                // Draw the text
                 canvas.drawText(
-                    label, ((key.width - padding.left - padding.right) / 2 + padding.left).toFloat(),
-                    (key.height - padding.top - padding.bottom) / 2 + (paint.textSize - paint.descent()) / 2 + padding.top, paint
+                    label, (key.width / 2).toFloat(), key.height / 2 + (paint.textSize - paint.descent()) / 2, paint
                 )
 
                 if (key.topSmallNumber.isNotEmpty()) {
@@ -537,7 +516,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 key.icon!!.draw(canvas)
                 canvas.translate(-drawableX.toFloat(), -drawableY.toFloat())
             }
-            canvas.translate((-key.x - kbdPaddingLeft).toFloat(), (-key.y - kbdPaddingTop).toFloat())
+            canvas.translate(-key.x.toFloat(), -key.y.toFloat())
         }
 
         mInvalidatedKey = null
@@ -747,13 +726,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mPreviewText!!.background.applyColorFilter(mBackgroundColor.darkenColor(4))
         mPreviewText!!.setTextColor(mTextColor)
         mPreviewText!!.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED))
-        val popupWidth = Math.max(mPreviewText!!.measuredWidth, key.width + mPreviewText!!.paddingLeft + mPreviewText!!.paddingRight)
+        val popupWidth = Math.max(mPreviewText!!.measuredWidth, key.width)
         val popupHeight = mPreviewHeight
         val lp = mPreviewText!!.layoutParams
         lp?.width = popupWidth
         lp?.height = popupHeight
 
-        mPopupPreviewX = key.x - mPreviewText!!.paddingLeft + paddingLeft
+        mPopupPreviewX = key.x
         mPopupPreviewY = key.y - popupHeight
 
         mHandler!!.removeMessages(MSG_REMOVE_PREVIEW)
@@ -841,13 +820,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val key = mKeys[keyIndex]
         mInvalidatedKey = key
         mDirtyRect.union(
-            key.x + paddingLeft, key.y + paddingTop,
-            key.x + key.width + paddingLeft, key.y + key.height + paddingTop
+            key.x, key.y,
+            key.x + key.width, key.y + key.height
         )
         onBufferDraw()
         invalidate(
-            key.x + paddingLeft, key.y + paddingTop,
-            key.x + key.width + paddingLeft, key.y + key.height + paddingTop
+            key.x, key.y,
+            key.x + key.width, key.y + key.height
         )
     }
 
@@ -928,14 +907,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             getLocationInWindow(mCoordinates)
-            mPopupX = popupKey.x + paddingLeft
-            mPopupY = popupKey.y + paddingTop
+            mPopupX = popupKey.x
+            mPopupY = popupKey.y
 
             val widthToUse = mMiniKeyboardContainer!!.measuredWidth - (popupKey.popupCharacters!!.length / 2) * popupKey.width
             mPopupX = mPopupX + popupKey.width - widthToUse
             mPopupY -= mMiniKeyboardContainer!!.measuredHeight
-            val x = mPopupX + mMiniKeyboardContainer!!.paddingRight + mCoordinates[0]
-            val y = mPopupY + mMiniKeyboardContainer!!.paddingBottom + mCoordinates[1]
+            val x = mPopupX + mCoordinates[0]
+            val y = mPopupY + mCoordinates[1]
             val xOffset = Math.max(0, x)
             mMiniKeyboard!!.setPopupOffset(xOffset, y)
 
@@ -1078,8 +1057,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun onModifiedTouchEvent(me: MotionEvent): Boolean {
-        var touchX = me.x.toInt() - paddingLeft
-        var touchY = me.y.toInt() - paddingTop
+        var touchX = me.x.toInt()
+        var touchY = me.y.toInt()
         if (touchY >= -mVerticalCorrection) {
             touchY += mVerticalCorrection
         }
