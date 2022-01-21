@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
     app:keyBackground="@color/color_primary_dark"
-    app:keyHeight="60dp"
     app:keyTextColor="@color/color_accent">
     <Row>
         <Key

@@ -39,25 +39,22 @@ import java.util.*
  */
 class MyKeyboard {
     /** Horizontal gap default for all rows  */
-    protected var mDefaultHorizontalGap = 0
+    private var mDefaultHorizontalGap = 0
 
     /** Default key width  */
-    protected var mDefaultWidth = 0
+    private var mDefaultWidth = 0
 
     /** Default key height  */
-    protected var mDefaultHeight = 0
+    private var mDefaultHeight = 0
 
     /** Default gap between rows  */
-    protected var mDefaultVerticalGap = 0
+    private var mDefaultVerticalGap = 0
 
     /** Is the keyboard in the shifted state  */
     var shiftState = SHIFT_OFF
 
     /** Key instance for the shift key, if present  */
     private val mShiftKeys = arrayOf<Key?>(null, null)
-
-    /** Key index for the shift key, if present  */
-    private val shiftKeyIndices = intArrayOf(-1, -1)
 
     /** Total height of the keyboard, including the padding and keys  */
     var height = 0
@@ -67,9 +64,6 @@ class MyKeyboard {
 
     /** List of keys in this keyboard  */
     var mKeys: MutableList<Key?>? = null
-
-    /** List of modifier keys such as Shift & Alt, if any  */
-    private var mModifierKeys = ArrayList<Key?>()
 
     /** Width of the screen available to fit the keyboard  */
     private var mDisplayWidth = 0
@@ -165,7 +159,7 @@ class MyKeyboard {
             this.parent = parent
             var a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard)
             defaultWidth = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, parent.mDisplayWidth, parent.mDefaultWidth)
-            defaultHeight = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyHeight, parent.mDisplayHeight, parent.mDefaultHeight)
+            defaultHeight = res.getDimension(R.dimen.key_height).toInt()
             defaultHorizontalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, parent.mDisplayWidth, parent.mDefaultHorizontalGap)
             verticalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_verticalGap, parent.mDisplayHeight, parent.mDefaultVerticalGap)
 
@@ -272,7 +266,7 @@ class MyKeyboard {
             this.y = y
             var a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard)
             width = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, keyboard.mDisplayWidth, parent.defaultWidth)
-            height = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyHeight, keyboard.mDisplayHeight, parent.defaultHeight)
+            height = parent.defaultHeight
             gap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, keyboard.mDisplayWidth, parent.defaultHorizontalGap)
 
             a.recycle()
@@ -555,11 +549,11 @@ class MyKeyboard {
         return IntArray(0)
     }
 
-    protected fun createRowFromXml(res: Resources, parser: XmlResourceParser?): Row {
+    private fun createRowFromXml(res: Resources, parser: XmlResourceParser?): Row {
         return Row(res, this, parser)
     }
 
-    protected fun createKeyFromXml(res: Resources, parent: Row, x: Int, y: Int, parser: XmlResourceParser?): Key {
+    private fun createKeyFromXml(res: Resources, parent: Row, x: Int, y: Int, parser: XmlResourceParser?): Key {
         return Key(res, parent, x, y, parser)
     }
 
@@ -596,11 +590,9 @@ class MyKeyboard {
                             for (i in mShiftKeys.indices) {
                                 if (mShiftKeys[i] == null) {
                                     mShiftKeys[i] = key
-                                    shiftKeyIndices[i] = mKeys!!.size - 1
                                     break
                                 }
                             }
-                            mModifierKeys.add(key)
                         } else if (key.codes[0] == KEYCODE_ENTER) {
                             val enterResourceId = when (mEnterKeyType) {
                                 EditorInfo.IME_ACTION_SEARCH -> R.drawable.ic_search_vector
@@ -646,7 +638,7 @@ class MyKeyboard {
     private fun parseKeyboardAttributes(res: Resources, parser: XmlResourceParser) {
         val a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard)
         mDefaultWidth = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, mDisplayWidth, mDisplayWidth / 10)
-        mDefaultHeight = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyHeight, mDisplayHeight, 50)
+        mDefaultHeight = res.getDimension(R.dimen.key_height).toInt()
         mDefaultHorizontalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, mDisplayWidth, 0)
         mDefaultVerticalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_verticalGap, mDisplayHeight, 0)
         mProximityThreshold = (mDefaultWidth * SEARCH_DISTANCE).toInt()

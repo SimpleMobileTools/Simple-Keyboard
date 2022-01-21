@@ -37,8 +37,6 @@
     <declare-styleable name="MyKeyboard">
         <!-- Default width of a key, in pixels or percentage of display width. -->
         <attr name="keyWidth" format="dimension|fraction" />
-        <!-- Default height of a key, in pixels or percentage of display width. -->
-        <attr name="keyHeight" format="dimension|fraction" />
         <!-- Default horizontal gap between keys. -->
         <attr name="horizontalGap" format="dimension|fraction" />
         <!-- Default vertical gap between rows of keys. -->
