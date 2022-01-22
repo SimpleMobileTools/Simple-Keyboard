@@ -16,8 +16,7 @@ import com.simplemobiletools.keyboard.R
 import java.util.*
 
 /**
- * Loads an XML description of a keyboard and stores the attributes of the keys. A keyboard
- * consists of rows of keys.
+ * Loads an XML description of a keyboard and stores the attributes of the keys. A keyboard consists of rows of keys.
  * @attr ref android.R.styleable#Keyboard_keyWidth
  * @attr ref android.R.styleable#Keyboard_horizontalGap
  */
@@ -91,9 +90,8 @@ class MyKeyboard {
     }
 
     /**
-     * Container for keys in the keyboard. All keys in a row are at the same Y-coordinate.
-     * Some of the key size defaults can be overridden per row from what the [MyKeyboard]
-     * defines.
+     * Container for keys in the keyboard. All keys in a row are at the same Y-coordinate. Some of the key size defaults can be overridden per row from
+     * what the [MyKeyboard] defines.
      * @attr ref android.R.styleable#Keyboard_keyWidth
      * @attr ref android.R.styleable#Keyboard_horizontalGap
      */
@@ -146,7 +144,7 @@ class MyKeyboard {
         /** Label to display  */
         var label: CharSequence = ""
 
-        /** First row of letters can also be used for inserting numbers by long pressing them, show those numbers */
+        /** First row of letters can also be used for inserting numbers by long pressing them, show those numbers  */
         var topSmallNumber: String = ""
 
         /** Icon to display instead of a label. Icon takes precedence over a label  */
@@ -170,21 +168,20 @@ class MyKeyboard {
         /** The current pressed state of this key  */
         var pressed = false
 
-        /** Focused state, used after long pressing a key and swiping to alternative keys */
+        /** Focused state, used after long pressing a key and swiping to alternative keys  */
         var focused = false
 
-        /** Popup characters  */
+        /** Popup characters showing after long pressing the key  */
         var popupCharacters: CharSequence? = null
 
         /**
-         * Flags that specify the anchoring to edges of the keyboard for detecting touch events
-         * that are just out of the boundary of the key. This is a bit mask of
-         * [MyKeyboard.EDGE_LEFT], [MyKeyboard.EDGE_RIGHT], [MyKeyboard.EDGE_TOP] and [MyKeyboard.EDGE_BOTTOM].
+         * Flags that specify the anchoring to edges of the keyboard for detecting touch events that are just out of the boundary of the key.
+         * This is a bit mask of [MyKeyboard.EDGE_LEFT], [MyKeyboard.EDGE_RIGHT], [MyKeyboard.EDGE_TOP] and [MyKeyboard.EDGE_BOTTOM].
          */
         private var edgeFlags = 0
 
         /** The keyboard that this key belongs to  */
-        private val keyboard: MyKeyboard = parent.parent
+        private val keyboard = parent.parent
 
         /** If this key pops up a mini keyboard, this is the resource id for the XML layout for that keyboard.  */
         var popupResId = 0
@@ -192,8 +189,7 @@ class MyKeyboard {
         /** Whether this key repeats itself when held down  */
         var repeatable = false
 
-        /** Create a key with the given top-left coordinate and extract its attributes from
-         * the XML parser.
+        /** Create a key with the given top-left coordinate and extract its attributes from the XML parser.
          * @param res resources associated with the caller's context
          * @param parent the row that this key belongs to. The row must already be attached to a [MyKeyboard].
          * @param x the x coordinate of the top-left
@@ -240,9 +236,8 @@ class MyKeyboard {
          * Detects if a point falls inside this key.
          * @param x the x-coordinate of the point
          * @param y the y-coordinate of the point
-         * @return whether or not the point falls inside the key. If the key is attached to an edge,
-         * it will assume that all points between the key and the edge are considered to be inside
-         * the key.
+         * @return whether or not the point falls inside the key. If the key is attached to an edge, it will assume that all points between the key and
+         * the edge are considered to be inside the key.
          */
         fun isInside(x: Int, y: Int): Boolean {
             val leftEdge = edgeFlags and EDGE_LEFT > 0
@@ -269,21 +264,14 @@ class MyKeyboard {
     }
 
     /**
-     * Creates a keyboard from the given xml key layout file. Weeds out rows
-     * that have a keyboard mode defined but don't match the specified mode.
+     * Creates a keyboard from the given xml key layout file. Weeds out rows that have a keyboard mode defined but don't match the specified mode.
      * @param context the application or service context
      * @param xmlLayoutResId the resource file that contains the keyboard layout and keys.
-     * @param modeId keyboard mode identifier
-     */
-    /**
-     * Creates a keyboard from the given xml key layout file.
-     * @param context the application or service context
-     * @param xmlLayoutResId the resource file that contains the keyboard layout and keys.
+     * @param enterKeyType determines what icon should we show on Enter key
      */
     @JvmOverloads
-    constructor(context: Context, @XmlRes xmlLayoutResId: Int, enterKeyType: Int, modeId: Int = 0) {
-        val dm = context.resources.displayMetrics
-        mDisplayWidth = dm.widthPixels
+    constructor(context: Context, @XmlRes xmlLayoutResId: Int, enterKeyType: Int) {
+        mDisplayWidth = context.resources.displayMetrics.widthPixels
         mDefaultHorizontalGap = 0
         mDefaultWidth = mDisplayWidth / 10
         mDefaultHeight = mDefaultWidth
@@ -294,16 +282,11 @@ class MyKeyboard {
 
     /**
      *
-     * Creates a blank keyboard from the given resource file and populates it with the specified
-     * characters in left-to-right, top-to-bottom fashion, using the specified number of columns.
-     *
-     *
-     * If the specified number of columns is -1, then the keyboard will fit as many keys as
-     * possible in each row.
+     * Creates a blank keyboard from the given resource file and populates it with the specified characters in left-to-right, top-to-bottom fashion,
+     * using the specified number of columns. If the specified number of columns is -1, then the keyboard will fit as many keys as possible in each row.
      * @param context the application or service context
      * @param layoutTemplateResId the layout template file, containing no keys.
-     * @param characters the list of characters to display on the keyboard. One key will be created
-     * for each character.
+     * @param characters the list of characters to display on the keyboard. One key will be created for each character.
      */
     constructor(context: Context, layoutTemplateResId: Int, characters: CharSequence) :
         this(context, layoutTemplateResId, 0) {
@@ -388,8 +371,7 @@ class MyKeyboard {
      * Returns the indices of the keys that are closest to the given point.
      * @param x the x-coordinate of the point
      * @param y the y-coordinate of the point
-     * @return the array of integer indices for the nearest keys to the given point. If the given
-     * point is out of range, then an array of size zero is returned.
+     * @return the array of integer indices for the nearest keys to the given point. If the given point is out of range, then an array of size zero is returned.
      */
     fun getNearestKeys(x: Int, y: Int): IntArray {
         if (mGridNeighbors == null) {

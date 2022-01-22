@@ -252,11 +252,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     /**
-     * Attaches a keyboard to this view. The keyboard can be switched at any time and the
-     * view will re-layout itself to accommodate the keyboard.
-     * @see MyKeyboard
-     *
-     * @see .getKeyboard
+     * Attaches a keyboard to this view. The keyboard can be switched at any time and the view will re-layout itself to accommodate the keyboard.
      * @param keyboard the keyboard to display in this view
      */
     fun setKeyboard(keyboard: MyKeyboard) {
@@ -283,7 +279,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * Sets the state of the shift key of the keyboard, if any.
      * @param shifted whether or not to enable the state of the shift key
      * @return true if the shift key state changed, false if there was no change
-     * @see KeyboardView.isShifted
      */
     private fun setShifted(shiftState: Int) {
         if (mKeyboard?.setShifted(shiftState) == true) {
@@ -293,9 +288,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     /**
      * Returns the state of the shift key of the keyboard, if any.
-     * @return true if the shift is in a pressed state, false otherwise. If there is
-     * no shift key on the keyboard or there is no keyboard attached, it returns false.
-     * @see KeyboardView.setShifted
+     * @return true if the shift is in a pressed state, false otherwise
      */
     private fun isShifted(): Boolean {
         return mKeyboard?.mShiftState ?: SHIFT_OFF > SHIFT_OFF
@@ -330,9 +323,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     /**
-     * Compute the average distance between adjacent keys (horizontally and vertically)
-     * and square it to get the proximity threshold. We use a square here and in computing
-     * the touch distance from a key's center to avoid taking a square root.
+     * Compute the average distance between adjacent keys (horizontally and vertically) and square it to get the proximity threshold. We use a square here and
+     * in computing the touch distance from a key's center to avoid taking a square root.
      * @param keyboard
      */
     private fun computeProximityThreshold(keyboard: MyKeyboard?) {
@@ -710,10 +702,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     /**
-     * Requests a redraw of the entire keyboard. Calling [.invalidate] is not sufficient
-     * because the keyboard renders the keys to an off-screen buffer and an invalidate() only
-     * draws the cached buffer.
-     * @see .invalidateKey
+     * Requests a redraw of the entire keyboard. Calling [.invalidate] is not sufficient because the keyboard renders the keys to an off-screen buffer and
+     * an invalidate() only draws the cached buffer.
      */
     fun invalidateAllKeys() {
         mDirtyRect.union(0, 0, width, height)
@@ -722,11 +712,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     /**
-     * Invalidates a key so that it will be redrawn on the next repaint. Use this method if only
-     * one key is changing it's content. Any changes that affect the position or size of the key
-     * may not be honored.
+     * Invalidates a key so that it will be redrawn on the next repaint. Use this method if only one key is changing it's content. Any changes that
+     * affect the position or size of the key may not be honored.
      * @param keyIndex the index of the key in the attached [MyKeyboard].
-     * @see .invalidateAllKeys
      */
     private fun invalidateKey(keyIndex: Int) {
         if (keyIndex < 0 || keyIndex >= mKeys.size) {
@@ -766,11 +754,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     /**
-     * Called when a key is long pressed. By default this will open any popup keyboard associated
-     * with this key through the attributes popupLayout and popupCharacters.
+     * Called when a key is long pressed. By default this will open any popup keyboard associated with this key through the attributes
+     * popupLayout and popupCharacters.
      * @param popupKey the key that was long pressed
-     * @return true if the long press is handled, false otherwise. Subclasses should call the
-     * method on the base class if the subclass doesn't wish to handle the call.
+     * @return true if the long press is handled, false otherwise. Subclasses should call the method on the base class if the subclass doesn't wish to
+     * handle the call.
      */
     private fun onLongPress(popupKey: MyKeyboard.Key, me: MotionEvent): Boolean {
         val popupKeyboardId = popupKey.popupResId
@@ -782,8 +770,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.mini_keyboard_view) as MyKeyboardView
 
                 mMiniKeyboard!!.mOnKeyboardActionListener = object : OnKeyboardActionListener {
-                    override fun onKey(primaryCode: Int) {
-                        mOnKeyboardActionListener!!.onKey(primaryCode)
+                    override fun onKey(code: Int) {
+                        mOnKeyboardActionListener!!.onKey(code)
                         dismissPopupKeyboard()
                     }
 
