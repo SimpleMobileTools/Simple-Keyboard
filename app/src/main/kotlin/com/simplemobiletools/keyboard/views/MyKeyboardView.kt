@@ -163,6 +163,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         private const val DEBOUNCE_TIME = 70
         private const val REPEAT_INTERVAL = 50 // ~20 keys per second
         private const val REPEAT_START_DELAY = 400
+        private const val GENERIC_KEY = -100
         private val LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout()
         private const val MAX_NEARBY_KEYS = 12
     }
@@ -390,9 +391,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val paint = mPaint
         val keys = mKeys
         paint.color = mTextColor
-        val smallLetterPaint = Paint()
-        smallLetterPaint.set(paint)
-        smallLetterPaint.apply {
+        val smallLetterPaint = Paint().apply {
+            set(paint)
             color = paint.color.adjustAlpha(0.8f)
             textSize = mTopSmallNumberSize
             typeface = Typeface.DEFAULT
@@ -402,7 +402,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val keyCount = keys.size
         for (i in 0 until keyCount) {
             val key = keys[i]
-            val code = key.codes.firstOrNull() ?: -100
+            val code = key.codes.firstOrNull() ?: GENERIC_KEY
             var keyBackground = mKeyBackground
             if (code == KEYCODE_SPACE) {
                 keyBackground = resources.getDrawable(R.drawable.keyboard_space_background, context.theme)
@@ -581,7 +581,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             if (mCurrentKeyIndex != NOT_A_KEY && keys.size > mCurrentKeyIndex) {
                 val newKey = keys[mCurrentKeyIndex]
 
-                val code = newKey.codes.firstOrNull() ?: -100
+                val code = newKey.codes.firstOrNull() ?: GENERIC_KEY
                 if (code == KEYCODE_SHIFT || code == KEYCODE_MODE_CHANGE || code == KEYCODE_DELETE || code == KEYCODE_ENTER || code == KEYCODE_SPACE) {
                     newKey.pressed = true
                 }
