@@ -2,62 +2,62 @@
 <Keyboard xmlns:app="http://schemas.android.com/apk/res-auto">
     <Row>
         <Key
-            app:codes="113"
+            app:code="113"
             app:keyEdgeFlags="left"
             app:keyLabel="q"
             app:popupCharacters="1"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="1" />
         <Key
-            app:codes="119"
+            app:code="119"
             app:keyLabel="w"
             app:popupCharacters="2"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="2" />
         <Key
-            app:codes="101"
+            app:code="101"
             app:keyLabel="e"
             app:popupCharacters="3é"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="3" />
         <Key
-            app:codes="114"
+            app:code="114"
             app:keyLabel="r"
             app:popupCharacters="ř4ŕ"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="4" />
         <Key
-            app:codes="116"
+            app:code="116"
             app:keyLabel="t"
             app:popupCharacters="5ť"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="5" />
         <Key
-            app:codes="121"
+            app:code="121"
             app:keyLabel="y"
             app:popupCharacters="6ý"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="6" />
         <Key
-            app:codes="117"
+            app:code="117"
             app:keyLabel="u"
             app:popupCharacters="ű7üú"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="7" />
         <Key
-            app:codes="105"
+            app:code="105"
             app:keyLabel="i"
             app:popupCharacters="8í"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="8" />
         <Key
-            app:codes="111"
+            app:code="111"
             app:keyLabel="o"
             app:popupCharacters="őöó9ô"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="9" />
         <Key
-            app:codes="112"
+            app:code="112"
             app:keyEdgeFlags="right"
             app:keyLabel="p"
             app:popupCharacters="0"
@@ -66,39 +66,39 @@
     </Row>
     <Row>
         <Key
-            app:codes="97"
+            app:code="97"
             app:horizontalGap="5%"
             app:keyEdgeFlags="left"
             app:keyLabel="a"
             app:popupCharacters="á"
             app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
-            app:codes="115"
+            app:code="115"
             app:keyLabel="s"
             app:popupCharacters="š"
             app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
-            app:codes="100"
+            app:code="100"
             app:keyLabel="d"
             app:popupCharacters="ď"
             app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
-            app:codes="102"
+            app:code="102"
             app:keyLabel="f" />
         <Key
-            app:codes="103"
+            app:code="103"
             app:keyLabel="g" />
         <Key
-            app:codes="104"
+            app:code="104"
             app:keyLabel="h" />
         <Key
-            app:codes="106"
+            app:code="106"
             app:keyLabel="j" />
         <Key
-            app:codes="107"
+            app:code="107"
             app:keyLabel="k" />
         <Key
-            app:codes="108"
+            app:code="108"
             app:keyEdgeFlags="right"
             app:keyLabel="l"
             app:popupCharacters="ĺľ"
@@ -106,39 +106,39 @@
     </Row>
     <Row>
         <Key
-            app:codes="-1"
+            app:code="-1"
             app:keyEdgeFlags="left"
             app:keyIcon="@drawable/ic_caps_outline_vector"
             app:keyWidth="15%p" />
         <Key
-            app:codes="122"
+            app:code="122"
             app:keyLabel="z"
             app:popupCharacters="ž"
             app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
-            app:codes="120"
+            app:code="120"
             app:keyLabel="x" />
         <Key
-            app:codes="99"
+            app:code="99"
             app:keyLabel="c"
             app:popupCharacters="č"
             app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
-            app:codes="118"
+            app:code="118"
             app:keyLabel="v" />
         <Key
-            app:codes="98"
+            app:code="98"
             app:keyLabel="b" />
         <Key
-            app:codes="110"
+            app:code="110"
             app:keyLabel="n"
             app:popupCharacters="ňń"
             app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
-            app:codes="109"
+            app:code="109"
             app:keyLabel="m" />
         <Key
-            app:codes="-5"
+            app:code="-5"
             app:isRepeatable="true"
             app:keyEdgeFlags="right"
             app:keyIcon="@drawable/ic_clear_vector"
@@ -146,23 +146,23 @@
     </Row>
     <Row>
         <Key
-            app:codes="-2"
+            app:code="-2"
             app:keyEdgeFlags="left"
             app:keyLabel="123"
             app:keyWidth="15%p" />
         <Key
-            app:codes="44"
+            app:code="44"
             app:keyLabel=","
             app:keyWidth="10%p" />
         <Key
-            app:codes="32"
+            app:code="32"
             app:isRepeatable="true"
             app:keyWidth="45%p" />
         <Key
-            app:codes="46"
+            app:code="46"
             app:keyLabel="." />
         <Key
-            app:codes="-4"
+            app:code="-4"
             app:keyEdgeFlags="right"
             app:keyIcon="@drawable/ic_enter_vector"
             app:keyWidth="20%p" />

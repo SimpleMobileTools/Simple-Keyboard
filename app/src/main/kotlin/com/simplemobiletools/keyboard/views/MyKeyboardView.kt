@@ -39,12 +39,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         /**
          * Send a key press to the listener.
-         * @param primaryCode this is the key that was pressed
-         * @param keyCodes the codes for all the possible alternative keys with the primary code being the first. If the primary key code is a single character
-         * such as an alphabet or number or symbol, the alternatives will include other characters that may be on the same key or adjacent keys. These codes
-         * are useful to correct for accidental presses of a key adjacent to the intended key.
+         * @param code this is the key that was pressed
          */
-        fun onKey(primaryCode: Int, keyCodes: IntArray?)
+        fun onKey(code: Int)
 
         /**
          * Called when the finger has been lifted after pressing a key
@@ -555,7 +552,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val codes = IntArray(MAX_NEARBY_KEYS)
             Arrays.fill(codes, NOT_A_KEY)
             getKeyIndices(x, y, codes)
-            mOnKeyboardActionListener!!.onKey(key.code, codes)
+            mOnKeyboardActionListener!!.onKey(key.code)
             mLastTapTime = eventTime
         }
     }
@@ -785,8 +782,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.mini_keyboard_view) as MyKeyboardView
 
                 mMiniKeyboard!!.mOnKeyboardActionListener = object : OnKeyboardActionListener {
-                    override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
-                        mOnKeyboardActionListener!!.onKey(primaryCode, keyCodes)
+                    override fun onKey(primaryCode: Int) {
+                        mOnKeyboardActionListener!!.onKey(primaryCode)
                         dismissPopupKeyboard()
                     }
 
@@ -962,7 +959,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     mMiniKeyboard?.mKeys?.firstOrNull { it.focused }?.apply {
-                        mOnKeyboardActionListener!!.onKey(code, intArrayOf(code))
+                        mOnKeyboardActionListener!!.onKey(code)
                     }
                     mMiniKeyboardSelectedKeyIndex = -1
                     dismissPopupKeyboard()

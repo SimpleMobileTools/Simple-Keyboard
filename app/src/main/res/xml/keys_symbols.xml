@@ -2,101 +2,101 @@
 <Keyboard xmlns:app="http://schemas.android.com/apk/res-auto">
     <Row>
         <Key
-            app:codes="49"
+            app:code="49"
             app:keyEdgeFlags="left"
             app:keyLabel="1" />
         <Key
-            app:codes="50"
+            app:code="50"
             app:keyLabel="2" />
         <Key
-            app:codes="51"
+            app:code="51"
             app:keyLabel="3" />
         <Key
-            app:codes="52"
+            app:code="52"
             app:keyLabel="4" />
         <Key
-            app:codes="53"
+            app:code="53"
             app:keyLabel="5" />
         <Key
-            app:codes="54"
+            app:code="54"
             app:keyLabel="6" />
         <Key
-            app:codes="55"
+            app:code="55"
             app:keyLabel="7" />
         <Key
-            app:codes="56"
+            app:code="56"
             app:keyLabel="8" />
         <Key
-            app:codes="57"
+            app:code="57"
             app:keyLabel="9" />
         <Key
-            app:codes="48"
+            app:code="48"
             app:keyEdgeFlags="right"
             app:keyLabel="0" />
     </Row>
     <Row>
         <Key
-            app:codes="64"
+            app:code="64"
             app:keyEdgeFlags="left"
             app:keyLabel="\@" />
         <Key
-            app:codes="35"
+            app:code="35"
             app:keyLabel="\#" />
         <Key
-            app:codes="36"
+            app:code="36"
             app:keyLabel="$" />
         <Key
-            app:codes="37"
+            app:code="37"
             app:keyLabel="%" />
         <Key
-            app:codes="38"
+            app:code="38"
             app:keyLabel="&amp;" />
         <Key
-            app:codes="42"
+            app:code="42"
             app:keyLabel="*" />
         <Key
-            app:codes="45"
+            app:code="45"
             app:keyLabel="-" />
         <Key
-            app:codes="61"
+            app:code="61"
             app:keyLabel="=" />
         <Key
-            app:codes="40"
+            app:code="40"
             app:keyLabel="(" />
         <Key
-            app:codes="41"
+            app:code="41"
             app:keyEdgeFlags="right"
             app:keyLabel=")" />
     </Row>
     <Row>
         <Key
-            app:codes="-1"
+            app:code="-1"
             app:keyEdgeFlags="left"
             app:keyLabel="=\\&lt;"
             app:keyWidth="15%p" />
         <Key
-            app:codes="33"
+            app:code="33"
             app:keyLabel="!" />
         <Key
-            app:codes="34"
+            app:code="34"
             app:keyLabel="&quot;" />
         <Key
-            app:codes="39"
+            app:code="39"
             app:keyLabel="\'" />
         <Key
-            app:codes="58"
+            app:code="58"
             app:keyLabel=":" />
         <Key
-            app:codes="59"
+            app:code="59"
             app:keyLabel=";" />
         <Key
-            app:codes="47"
+            app:code="47"
             app:keyLabel="/" />
         <Key
-            app:codes="63"
+            app:code="63"
             app:keyLabel="\?" />
         <Key
-            app:codes="-5"
+            app:code="-5"
             app:isRepeatable="true"
             app:keyEdgeFlags="right"
             app:keyIcon="@drawable/ic_clear_vector"
@@ -104,23 +104,23 @@
     </Row>
     <Row>
         <Key
-            app:codes="-2"
+            app:code="-2"
             app:keyEdgeFlags="left"
             app:keyLabel="abc"
             app:keyWidth="15%p" />
         <Key
-            app:codes="44"
+            app:code="44"
             app:keyLabel=","
             app:keyWidth="10%p" />
         <Key
-            app:codes="32"
+            app:code="32"
             app:isRepeatable="true"
             app:keyWidth="45%p" />
         <Key
-            app:codes="46"
+            app:code="46"
             app:keyLabel="." />
         <Key
-            app:codes="-4"
+            app:code="-4"
             app:keyEdgeFlags="right"
             app:keyIcon="@drawable/ic_enter_vector"
             app:keyWidth="20%p" />

@@ -82,13 +82,13 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         }
     }
 
-    override fun onKey(primaryCode: Int, keyCodes: IntArray?) {
+    override fun onKey(code: Int) {
         val inputConnection = currentInputConnection
         if (keyboard == null || inputConnection == null) {
             return
         }
 
-        when (primaryCode) {
+        when (code) {
             MyKeyboard.KEYCODE_DELETE -> {
                 if (keyboard!!.mShiftState == SHIFT_ON_ONE_CHAR) {
                     keyboard!!.mShiftState = SHIFT_OFF
@@ -141,21 +141,21 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 keyboardView!!.setKeyboard(keyboard!!)
             }
             else -> {
-                var code = primaryCode.toChar()
-                if (Character.isLetter(code) && keyboard!!.mShiftState > SHIFT_OFF) {
-                    code = Character.toUpperCase(code)
+                var codeChar = code.toChar()
+                if (Character.isLetter(codeChar) && keyboard!!.mShiftState > SHIFT_OFF) {
+                    codeChar = Character.toUpperCase(codeChar)
                 }
 
                 // If the keyboard is set to symbols and the user presses space, we usually should switch back to the letters keyboard.
                 // However, avoid doing that in cases when the EditText for example requires numbers as the input.
                 // We can detect that by the text not changing on pressing Space.
-                if (keyboardMode != KEYBOARD_LETTERS && primaryCode == MyKeyboard.KEYCODE_SPACE) {
+                if (keyboardMode != KEYBOARD_LETTERS && code == MyKeyboard.KEYCODE_SPACE) {
                     val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0).text
-                    inputConnection.commitText(code.toString(), 1)
+                    inputConnection.commitText(codeChar.toString(), 1)
                     val newText = inputConnection.getExtractedText(ExtractedTextRequest(), 0).text
                     switchToLetters = originalText != newText
                 } else {
-                    inputConnection.commitText(code.toString(), 1)
+                    inputConnection.commitText(codeChar.toString(), 1)
                 }
 
                 if (keyboard!!.mShiftState == SHIFT_ON_ONE_CHAR && keyboardMode == KEYBOARD_LETTERS) {
@@ -165,7 +165,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             }
         }
 
-        if (primaryCode != MyKeyboard.KEYCODE_SHIFT) {
+        if (code != MyKeyboard.KEYCODE_SHIFT) {
             updateShiftKeyState()
         }
     }

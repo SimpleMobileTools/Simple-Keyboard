@@ -211,7 +211,7 @@ class MyKeyboard {
 
             a.recycle()
             a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard_Key)
-            code = a.getInt(R.styleable.MyKeyboard_Key_codes, 0)
+            code = a.getInt(R.styleable.MyKeyboard_Key_code, 0)
 
             popupCharacters = a.getText(R.styleable.MyKeyboard_Key_popupCharacters)
             popupResId = a.getResourceId(R.styleable.MyKeyboard_Key_popupKeyboard, 0)
