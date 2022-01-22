@@ -18,6 +18,11 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
+import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_DELETE
+import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_ENTER
+import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_MODE_CHANGE
+import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SHIFT
+import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SPACE
 import kotlinx.android.synthetic.main.keyboard_popup_keyboard.view.*
 import java.util.*
 
@@ -399,9 +404,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val key = keys[i]
             val code = key.codes.firstOrNull() ?: -100
             var keyBackground = mKeyBackground
-            if (code == MyKeyboard.KEYCODE_SPACE) {
+            if (code == KEYCODE_SPACE) {
                 keyBackground = resources.getDrawable(R.drawable.keyboard_space_background, context.theme)
-            } else if (code == MyKeyboard.KEYCODE_ENTER) {
+            } else if (code == KEYCODE_ENTER) {
                 keyBackground = resources.getDrawable(R.drawable.keyboard_enter_background, context.theme)
             }
 
@@ -418,7 +423,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 else -> intArrayOf()
             }
 
-            if (key.focused || code == MyKeyboard.KEYCODE_ENTER) {
+            if (key.focused || code == KEYCODE_ENTER) {
                 keyBackground.applyColorFilter(mPrimaryColor)
             }
 
@@ -451,7 +456,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 // Turn off drop shadow
                 paint.setShadowLayer(0f, 0f, 0f, 0)
             } else if (key.icon != null && mKeyboard != null) {
-                if (key.codes.contains(-1)) {
+                if (key.codes.contains(KEYCODE_SHIFT)) {
                     val drawableId = when (mKeyboard!!.mShiftState) {
                         SHIFT_OFF -> R.drawable.ic_caps_outline_vector
                         SHIFT_ON_ONE_CHAR -> R.drawable.ic_caps_vector
@@ -460,9 +465,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     key.icon = resources.getDrawable(drawableId)
                 }
 
-                if (code == MyKeyboard.KEYCODE_ENTER) {
+                if (code == KEYCODE_ENTER) {
                     key.icon!!.applyColorFilter(mPrimaryColor.getContrastColor())
-                } else if (code == MyKeyboard.KEYCODE_DELETE || code == MyKeyboard.KEYCODE_SHIFT) {
+                } else if (code == KEYCODE_DELETE || code == KEYCODE_SHIFT) {
                     key.icon!!.applyColorFilter(mTextColor)
                 }
 
@@ -504,7 +509,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 primaryIndex = nearestKeyIndices[i]
             }
 
-            if (isInside && key.codes[0] > MyKeyboard.KEYCODE_SPACE) {
+            if (isInside && key.codes[0] > KEYCODE_SPACE) {
                 // Find insertion point
                 val nCodes = 1
                 if (dist < closestKeyDist) {
@@ -577,9 +582,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 val newKey = keys[mCurrentKeyIndex]
 
                 val code = newKey.codes.firstOrNull() ?: -100
-                if (code == MyKeyboard.KEYCODE_SHIFT || code == MyKeyboard.KEYCODE_MODE_CHANGE || code == MyKeyboard.KEYCODE_DELETE ||
-                    code == MyKeyboard.KEYCODE_ENTER || code == MyKeyboard.KEYCODE_SPACE
-                ) {
+                if (code == KEYCODE_SHIFT || code == KEYCODE_MODE_CHANGE || code == KEYCODE_DELETE || code == KEYCODE_ENTER || code == KEYCODE_SPACE) {
                     newKey.pressed = true
                 }
 
@@ -682,7 +685,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mPopupPreviewY += popupHeight
         }
 
-        if (key.label.isNotEmpty() && key.codes.firstOrNull() != MyKeyboard.KEYCODE_MODE_CHANGE && key.codes.firstOrNull() != MyKeyboard.KEYCODE_SHIFT) {
+        if (key.label.isNotEmpty() && key.codes.firstOrNull() != KEYCODE_MODE_CHANGE && key.codes.firstOrNull() != KEYCODE_SHIFT) {
             if (previewPopup.isShowing) {
                 previewPopup.update(mPopupPreviewX, mPopupPreviewY, popupWidth, popupHeight)
             } else {
@@ -701,10 +704,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val event = AccessibilityEvent.obtain(eventType)
             onInitializeAccessibilityEvent(event)
             val text: String = when (code) {
-                MyKeyboard.KEYCODE_DELETE -> context.getString(R.string.keycode_delete)
-                MyKeyboard.KEYCODE_ENTER -> context.getString(R.string.keycode_enter)
-                MyKeyboard.KEYCODE_MODE_CHANGE -> context.getString(R.string.keycode_mode_change)
-                MyKeyboard.KEYCODE_SHIFT -> context.getString(R.string.keycode_shift)
+                KEYCODE_DELETE -> context.getString(R.string.keycode_delete)
+                KEYCODE_ENTER -> context.getString(R.string.keycode_enter)
+                KEYCODE_MODE_CHANGE -> context.getString(R.string.keycode_mode_change)
+                KEYCODE_SHIFT -> context.getString(R.string.keycode_shift)
                 else -> code.toChar().toString()
             }
             event.text.add(text)
@@ -1022,7 +1025,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     val msg = mHandler!!.obtainMessage(MSG_REPEAT)
                     mHandler!!.sendMessageDelayed(msg, REPEAT_START_DELAY.toLong())
                     // if the user long presses Space, move the cursor after swipine left/right
-                    if (mKeys[mCurrentKey].codes.firstOrNull() == MyKeyboard.KEYCODE_SPACE) {
+                    if (mKeys[mCurrentKey].codes.firstOrNull() == KEYCODE_SPACE) {
                         mLastSpaceMoveX = -1
                     } else {
                         repeatKey(true)
@@ -1122,7 +1125,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
                 }
 
-                if (mKeys.getOrNull(mCurrentKey)?.codes?.firstOrNull() == MyKeyboard.KEYCODE_SPACE && !mIsLongPressingSpace) {
+                if (mKeys.getOrNull(mCurrentKey)?.codes?.firstOrNull() == KEYCODE_SPACE && !mIsLongPressingSpace) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
                 }
 
@@ -1149,7 +1152,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun repeatKey(initialCall: Boolean): Boolean {
         val key = mKeys[mRepeatKeyIndex]
-        if (!initialCall && key.codes.firstOrNull() == MyKeyboard.KEYCODE_SPACE) {
+        if (!initialCall && key.codes.firstOrNull() == KEYCODE_SPACE) {
             mIsLongPressingSpace = true
         } else {
             detectAndSendKey(mCurrentKey, key.x, key.y, mLastTapTime)

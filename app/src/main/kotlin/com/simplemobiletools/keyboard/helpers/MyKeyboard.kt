@@ -428,15 +428,14 @@ class MyKeyboard {
             var event: Int
             while (parser.next().also { event = it } != XmlResourceParser.END_DOCUMENT) {
                 if (event == XmlResourceParser.START_TAG) {
-                    val tag = parser.name
-                    when {
-                        TAG_ROW == tag -> {
+                    when (parser.name) {
+                        TAG_ROW -> {
                             inRow = true
                             x = 0
                             currentRow = createRowFromXml(res, parser)
                             mRows.add(currentRow)
                         }
-                        TAG_KEY == tag -> {
+                        TAG_KEY -> {
                             inKey = true
                             key = createKeyFromXml(res, currentRow!!, x, y, parser)
                             mKeys!!.add(key)
@@ -451,7 +450,7 @@ class MyKeyboard {
                             }
                             currentRow.mKeys.add(key)
                         }
-                        TAG_KEYBOARD == tag -> {
+                        TAG_KEYBOARD -> {
                             parseKeyboardAttributes(res, parser)
                         }
                     }
