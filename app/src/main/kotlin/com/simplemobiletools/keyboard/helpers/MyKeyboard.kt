@@ -140,8 +140,8 @@ class MyKeyboard {
      * @attr ref android.R.styleable#Keyboard_Key_keyEdgeFlags
      */
     class Key(parent: Row) {
-        /** All the key codes (unicode or custom code) that this key could generate, zero'th being the most important.  */
-        var codes = ArrayList<Int>()
+        /** Key code that this key generates.  */
+        var code = 0
 
         /** Label to display  */
         var label: CharSequence = ""
@@ -211,7 +211,7 @@ class MyKeyboard {
 
             a.recycle()
             a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard_Key)
-            codes = arrayListOf(a.getInt(R.styleable.MyKeyboard_Key_codes, 0))
+            code = a.getInt(R.styleable.MyKeyboard_Key_codes, 0)
 
             popupCharacters = a.getText(R.styleable.MyKeyboard_Key_popupCharacters)
             popupResId = a.getResourceId(R.styleable.MyKeyboard_Key_popupKeyboard, 0)
@@ -223,8 +223,8 @@ class MyKeyboard {
             label = a.getText(R.styleable.MyKeyboard_Key_keyLabel) ?: ""
             topSmallNumber = a.getString(R.styleable.MyKeyboard_Key_topSmallNumber) ?: ""
 
-            if (label.isNotEmpty() && codes.firstOrNull() != KEYCODE_MODE_CHANGE && codes.firstOrNull() != KEYCODE_SHIFT) {
-                codes = arrayListOf(label[0].toInt())
+            if (label.isNotEmpty() && code != KEYCODE_MODE_CHANGE && code != KEYCODE_SHIFT) {
+                code = label[0].toInt()
             }
             a.recycle()
         }
@@ -329,7 +329,7 @@ class MyKeyboard {
             key.x = x
             key.y = y
             key.label = character.toString()
-            key.codes = arrayListOf(character.toInt())
+            key.code = character.toInt()
             column++
             x += key.width + key.gap
             mKeys!!.add(key)
@@ -439,7 +439,7 @@ class MyKeyboard {
                             inKey = true
                             key = createKeyFromXml(res, currentRow!!, x, y, parser)
                             mKeys!!.add(key)
-                            if (key.codes[0] == KEYCODE_ENTER) {
+                            if (key.code == KEYCODE_ENTER) {
                                 val enterResourceId = when (mEnterKeyType) {
                                     EditorInfo.IME_ACTION_SEARCH -> R.drawable.ic_search_vector
                                     EditorInfo.IME_ACTION_NEXT, EditorInfo.IME_ACTION_GO -> R.drawable.ic_arrow_right_vector
