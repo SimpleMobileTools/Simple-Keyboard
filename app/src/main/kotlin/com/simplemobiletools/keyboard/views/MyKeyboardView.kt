@@ -408,8 +408,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
-
         handleClipboard()
+
         val keyCount = keys.size
         for (i in 0 until keyCount) {
             val key = keys[i]
@@ -516,9 +516,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     beVisible()
                     clipboard_value.apply {
                         text = clipboardContent
-                        setLinkTextColor(mTextColor)
                         background = rippleBg
                         setTextColor(mTextColor)
+                        setLinkTextColor(mTextColor)
                         setOnClickListener {
                             mOnKeyboardActionListener!!.onText(clipboardContent.toString())
                         }
