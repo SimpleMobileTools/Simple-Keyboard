@@ -2,6 +2,7 @@
     <dimen name="popup_max_move_distance">60dp</dimen>
     <dimen name="top_small_number_margin_width">12dp</dimen>
     <dimen name="top_small_number_margin_height">18dp</dimen>
+    <dimen name="clipboard_height">50dp</dimen>
     <dimen name="key_height">60dp</dimen>
     <dimen name="vertical_correction">-10dp</dimen>
 

@@ -1,10 +1,14 @@
 package com.simplemobiletools.keyboard.views
 
 import android.annotation.SuppressLint
+import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.*
 import android.graphics.Paint.Align
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.LayerDrawable
+import android.graphics.drawable.RippleDrawable
 import android.os.Handler
 import android.os.Message
 import android.util.AttributeSet
@@ -24,6 +28,7 @@ import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_MODE_
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SHIFT
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SPACE
 import kotlinx.android.synthetic.main.keyboard_popup_keyboard.view.*
+import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 import java.util.*
 
 @SuppressLint("UseCompatLoadingForDrawables")
@@ -125,6 +130,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mKeyBackground: Drawable? = null
     private val mDistances = IntArray(MAX_NEARBY_KEYS)
 
+    private var mClipboardHolder: View? = null
+
     // For multi-tap
     private var mLastTapTime = 0L
 
@@ -160,14 +167,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         private const val DEBOUNCE_TIME = 70
         private const val REPEAT_INTERVAL = 50 // ~20 keys per second
         private const val REPEAT_START_DELAY = 400
-        private const val GENERIC_KEY = -100
         private val LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout()
         private const val MAX_NEARBY_KEYS = 12
     }
 
     init {
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.MyKeyboardView, 0, defStyleRes)
-        val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val keyTextSize = 0
         val indexCnt = attributes.indexCount
 
@@ -193,7 +199,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mPrimaryColor = context.getAdjustedPrimaryColor()
 
         mPreviewPopup = PopupWindow(context)
-        mPreviewText = inflate.inflate(resources.getLayout(R.layout.keyboard_key_preview), null) as TextView
+        mPreviewText = inflater.inflate(resources.getLayout(R.layout.keyboard_key_preview), null) as TextView
         mPreviewTextSizeLarge = context.resources.getDimension(R.dimen.preview_text_size).toInt()
         mPreviewPopup.contentView = mPreviewText
         mPreviewPopup.setBackgroundDrawable(null)
@@ -273,6 +279,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         // Switching to a different keyboard should abort any pending keys so that the key up
         // doesn't get delivered to the old or new keyboard
         mAbortKey = true // Until the next ACTION_DOWN
+    }
+
+    /** Sets the top row above the keyboard containing the clipboard value **/
+    fun setClipboardHolder(clipboardHolder: View) {
+        mClipboardHolder = clipboardHolder
     }
 
     /**
@@ -388,6 +399,33 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         canvas.drawColor(0x00000000, PorterDuff.Mode.CLEAR)
+
+        if (context.config.showClipboard && mClipboardHolder != null && mPopupParent.id != R.id.mini_keyboard_view) {
+            val clipboardContent = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip?.getItemAt(0)?.text
+            if (clipboardContent?.trim()?.isNotEmpty() == true) {
+                val rippleBg = resources.getDrawable(R.drawable.clipboard_background, context.theme) as RippleDrawable
+                val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
+                layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(mBackgroundColor)
+
+                mClipboardHolder?.apply {
+                    background = ColorDrawable(mBackgroundColor.darkenColor())
+                    beVisible()
+                    clipboard_value.apply {
+                        text = clipboardContent
+                        background = rippleBg
+                        setTextColor(mTextColor)
+                        setOnClickListener {
+
+                        }
+                    }
+                }
+            } else {
+                mClipboardHolder?.beGone()
+            }
+        } else {
+            mClipboardHolder?.beGone()
+        }
+
         val keyCount = keys.size
         for (i in 0 until keyCount) {
             val key = keys[i]
@@ -974,8 +1012,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             return true
         }
 
-        // Needs to be called after the gesture detector gets a turn, as it may have
-        // displayed the mini keyboard
+        // Needs to be called after the gesture detector gets a turn, as it may have displayed the mini keyboard
         if (mMiniKeyboardOnScreen && action != MotionEvent.ACTION_CANCEL) {
             return true
         }
@@ -1056,7 +1093,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     }
 
                     val diff = mLastX - mLastSpaceMoveX
-
                     if (diff < -mSpaceMoveThreshold) {
                         for (i in diff / mSpaceMoveThreshold until 0) {
                             mOnKeyboardActionListener?.moveCursorLeft()

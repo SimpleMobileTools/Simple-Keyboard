@@ -1,7 +1,40 @@
-<com.simplemobiletools.keyboard.views.MyKeyboardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/keyboard_view"
-    style="@style/MyKeyboardView"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/keyboard_holder"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_alignParentBottom="true"
-    android:background="@color/theme_dark_background_color" />
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/clipboard_holder"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/clipboard_height"
+        android:layout_above="@+id/keyboard_view"
+        android:gravity="center"
+        android:paddingStart="@dimen/big_margin"
+        android:paddingEnd="@dimen/big_margin">
+
+        <TextView
+            android:id="@+id/clipboard_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/clipboard_background"
+            android:ellipsize="end"
+            android:lines="1"
+            android:paddingStart="@dimen/activity_margin"
+            android:paddingTop="@dimen/smaller_margin"
+            android:paddingEnd="@dimen/activity_margin"
+            android:paddingBottom="@dimen/smaller_margin"
+            android:textSize="@dimen/label_text_size"
+            tools:text="Clipboard content" />
+
+    </RelativeLayout>
+
+    <com.simplemobiletools.keyboard.views.MyKeyboardView
+        android:id="@+id/keyboard_view"
+        style="@style/MyKeyboardView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="@color/theme_dark_background_color" />
+
+</RelativeLayout>

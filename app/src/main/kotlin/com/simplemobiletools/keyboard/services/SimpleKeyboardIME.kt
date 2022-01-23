@@ -15,6 +15,7 @@ import com.simplemobiletools.keyboard.helpers.SHIFT_OFF
 import com.simplemobiletools.keyboard.helpers.SHIFT_ON_ONE_CHAR
 import com.simplemobiletools.keyboard.helpers.SHIFT_ON_PERMANENT
 import com.simplemobiletools.keyboard.views.MyKeyboardView
+import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 
 // based on https://www.androidauthority.com/lets-build-custom-keyboard-android-832362/
 class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionListener {
@@ -37,10 +38,12 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     }
 
     override fun onCreateInputView(): View {
-        keyboardView = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null) as MyKeyboardView
+        val keyboardHolder = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null)
+        keyboardView = keyboardHolder.keyboard_view as MyKeyboardView
         keyboardView!!.setKeyboard(keyboard!!)
+        keyboardView!!.setClipboardHolder(keyboardHolder.clipboard_holder)
         keyboardView!!.mOnKeyboardActionListener = this
-        return keyboardView!!
+        return keyboardHolder!!
     }
 
     override fun onPress(primaryCode: Int) {
