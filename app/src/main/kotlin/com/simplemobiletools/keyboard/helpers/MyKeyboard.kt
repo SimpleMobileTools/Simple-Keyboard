@@ -79,13 +79,11 @@ class MyKeyboard {
 
         fun getDimensionOrFraction(a: TypedArray, index: Int, base: Int, defValue: Int): Int {
             val value = a.peekValue(index) ?: return defValue
-            if (value.type == TypedValue.TYPE_DIMENSION) {
-                return a.getDimensionPixelOffset(index, defValue)
-            } else if (value.type == TypedValue.TYPE_FRACTION) {
-                // Round it to avoid values like 47.9999 from getting truncated
-                return Math.round(a.getFraction(index, base, base, defValue.toFloat()))
+            return when (value.type) {
+                TypedValue.TYPE_DIMENSION -> a.getDimensionPixelOffset(index, defValue)
+                TypedValue.TYPE_FRACTION -> Math.round(a.getFraction(index, base, base, defValue.toFloat()))
+                else -> defValue
             }
-            return defValue
         }
     }
 
