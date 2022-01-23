@@ -6,3 +6,6 @@ const val SHIFT_ON_PERMANENT = 2
 
 // limit the count of alternative characters that show up at long pressing a key
 const val MAX_KEYS_PER_MINI_ROW = 5
+
+// shared prefs
+const val SHOW_CLIPBOARD = "show_clipboard"

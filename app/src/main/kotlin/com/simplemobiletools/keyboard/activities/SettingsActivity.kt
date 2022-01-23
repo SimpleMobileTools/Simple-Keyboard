@@ -22,6 +22,7 @@ class SettingsActivity : SimpleActivity() {
         setupPurchaseThankYou()
         setupCustomizeColors()
         setupUseEnglish()
+        setupClipboard()
 
         updateTextColors(settings_scrollview)
 
@@ -44,7 +45,7 @@ class SettingsActivity : SimpleActivity() {
 
         // make sure the corners at ripple fit the stroke rounded corners
         if (settings_purchase_thank_you_holder.isGone()) {
-            settings_use_english_holder.background = resources.getDrawable(R.drawable.ripple_all_corners, theme)
+            settings_use_english_holder.background = resources.getDrawable(R.drawable.ripple_top_corners, theme)
         }
 
         settings_purchase_thank_you_holder.setOnClickListener {
@@ -64,16 +65,21 @@ class SettingsActivity : SimpleActivity() {
         settings_use_english.isChecked = config.useEnglish
 
         if (settings_use_english_holder.isGone() && settings_purchase_thank_you_holder.isGone()) {
-            settings_general_settings_label.beGone()
-            settings_general_settings_holder.beGone()
-        } else if (settings_use_english_holder.isGone()) {
-            settings_purchase_thank_you_holder.background = resources.getDrawable(R.drawable.ripple_all_corners, theme)
+            settings_show_clipboard_holder.background = resources.getDrawable(R.drawable.ripple_all_corners, theme)
         }
 
         settings_use_english_holder.setOnClickListener {
             settings_use_english.toggle()
             config.useEnglish = settings_use_english.isChecked
             exitProcess(0)
+        }
+    }
+
+    private fun setupClipboard() {
+        settings_show_clipboard.isChecked = config.showClipboard
+        settings_show_clipboard_holder.setOnClickListener {
+            settings_show_clipboard.toggle()
+            config.showClipboard = settings_show_clipboard.isChecked
         }
     }
 }

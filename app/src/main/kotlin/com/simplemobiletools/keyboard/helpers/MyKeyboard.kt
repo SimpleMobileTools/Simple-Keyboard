@@ -281,7 +281,6 @@ class MyKeyboard {
     }
 
     /**
-     *
      * Creates a blank keyboard from the given resource file and populates it with the specified characters in left-to-right, top-to-bottom fashion,
      * using the specified number of columns. If the specified number of columns is -1, then the keyboard will fit as many keys as possible in each row.
      * @param context the application or service context
