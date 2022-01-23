@@ -516,6 +516,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     beVisible()
                     clipboard_value.apply {
                         text = clipboardContent
+                        setLinkTextColor(mTextColor)
                         background = rippleBg
                         setTextColor(mTextColor)
                         setOnClickListener {

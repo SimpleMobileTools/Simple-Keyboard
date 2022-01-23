@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_margin"
             android:layout_marginEnd="@dimen/medium_margin"
+            android:autoLink="none"
             android:background="@drawable/clipboard_background"
             android:ellipsize="end"
             android:lines="1"
