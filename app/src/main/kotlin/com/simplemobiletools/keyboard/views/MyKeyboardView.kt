@@ -331,7 +331,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         if (mKeyboard == null) {
             setMeasuredDimension(0, 0)
         } else {
-            var width: Int = mKeyboard!!.mMinWidth
+            var width = mKeyboard!!.mMinWidth
             if (MeasureSpec.getSize(widthMeasureSpec) < width + 10) {
                 width = MeasureSpec.getSize(widthMeasureSpec)
             }
@@ -605,7 +605,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 oldKey.pressed = false
                 invalidateKey(oldKeyIndex)
                 val keyCode = oldKey.code
-                sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT, keyCode)
                 sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED, keyCode)
             }
 
@@ -618,7 +617,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
 
                 invalidateKey(mCurrentKeyIndex)
-                sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER, code)
                 sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, code)
             }
         }
@@ -901,18 +899,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             return true
         }
         return false
-    }
-
-    override fun onHoverEvent(event: MotionEvent): Boolean {
-        if (mAccessibilityManager.isTouchExplorationEnabled && event.pointerCount == 1) {
-            when (event.action) {
-                MotionEvent.ACTION_HOVER_ENTER -> event.action = MotionEvent.ACTION_DOWN
-                MotionEvent.ACTION_HOVER_MOVE -> event.action = MotionEvent.ACTION_MOVE
-                MotionEvent.ACTION_HOVER_EXIT -> event.action = MotionEvent.ACTION_UP
-            }
-            return onTouchEvent(event)
-        }
-        return true
     }
 
     override fun onTouchEvent(me: MotionEvent): Boolean {
