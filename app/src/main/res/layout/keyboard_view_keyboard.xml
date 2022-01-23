@@ -1,14 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/keyboard_holder"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/clipboard_holder"
         android:layout_width="match_parent"
         android:layout_height="@dimen/clipboard_height"
-        android:layout_above="@+id/keyboard_view"
         android:gravity="center"
         android:paddingStart="@dimen/big_margin"
         android:paddingEnd="@dimen/big_margin">
@@ -33,8 +34,7 @@
         android:id="@+id/keyboard_view"
         style="@style/MyKeyboardView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         android:background="@color/theme_dark_background_color" />
 
-</RelativeLayout>
+</LinearLayout>
