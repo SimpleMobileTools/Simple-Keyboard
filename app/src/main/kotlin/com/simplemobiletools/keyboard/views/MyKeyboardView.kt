@@ -404,7 +404,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             typeface = Typeface.DEFAULT
         }
 
-        canvas.drawColor(0x00000000, PorterDuff.Mode.CLEAR)
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
 
         if (context.config.showClipboard && mClipboardHolder != null && mPopupParent.id != R.id.mini_keyboard_view) {
             val clipboardContent = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip?.getItemAt(0)?.text
