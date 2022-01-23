@@ -1,6 +1,7 @@
 package com.simplemobiletools.keyboard.views
 
 import android.annotation.SuppressLint
+import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.*
@@ -16,9 +17,11 @@ import android.util.TypedValue
 import android.view.*
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
+import android.view.animation.AccelerateInterpolator
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.isPiePlus
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
@@ -406,32 +409,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
 
-        if (context.config.showClipboard && mClipboardHolder != null && mPopupParent.id != R.id.mini_keyboard_view) {
-            val clipboardContent = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip?.getItemAt(0)?.text
-            if (clipboardContent?.trim()?.isNotEmpty() == true) {
-                val rippleBg = resources.getDrawable(R.drawable.clipboard_background, context.theme) as RippleDrawable
-                val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
-                layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(mBackgroundColor)
-
-                mClipboardHolder?.apply {
-                    background = ColorDrawable(mBackgroundColor.darkenColor())
-                    beVisible()
-                    clipboard_value.apply {
-                        text = clipboardContent
-                        background = rippleBg
-                        setTextColor(mTextColor)
-                        setOnClickListener {
-                            mOnKeyboardActionListener!!.onText(clipboardContent.toString())
-                        }
-                    }
-                }
-            } else {
-                mClipboardHolder?.beGone()
-            }
-        } else {
-            mClipboardHolder?.beGone()
-        }
-
+        handleClipboard()
         val keyCount = keys.size
         for (i in 0 until keyCount) {
             val key = keys[i]
@@ -523,6 +501,59 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mCanvas!!.restore()
         mDrawPending = false
         mDirtyRect.setEmpty()
+    }
+
+    private fun handleClipboard() {
+        if (context.config.showClipboard && mClipboardHolder != null && mPopupParent.id != R.id.mini_keyboard_view) {
+            val clipboardContent = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip?.getItemAt(0)?.text
+            if (clipboardContent?.trim()?.isNotEmpty() == true) {
+                val rippleBg = resources.getDrawable(R.drawable.clipboard_background, context.theme) as RippleDrawable
+                val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
+                layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(mBackgroundColor)
+
+                mClipboardHolder?.apply {
+                    background = ColorDrawable(mBackgroundColor.darkenColor())
+                    beVisible()
+                    clipboard_value.apply {
+                        text = clipboardContent
+                        background = rippleBg
+                        setTextColor(mTextColor)
+                        setOnClickListener {
+                            mOnKeyboardActionListener!!.onText(clipboardContent.toString())
+                        }
+                    }
+
+                    clipboard_delete.applyColorFilter(mTextColor)
+                    clipboard_delete.setOnLongClickListener { context.toast(R.string.clear_clipboard_data); true; }
+                    clipboard_delete.setOnClickListener {
+                        clearClipboardContent()
+                    }
+                }
+            } else {
+                mClipboardHolder?.beGone()
+            }
+        } else {
+            mClipboardHolder?.beGone()
+        }
+    }
+
+    private fun clearClipboardContent() {
+        val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+        if (isPiePlus()) {
+            clipboardManager.clearPrimaryClip()
+        } else {
+            val clip = ClipData.newPlainText("", "")
+            clipboardManager.setPrimaryClip(clip)
+        }
+
+        mClipboardHolder?.animate()!!
+            .yBy(mClipboardHolder!!.height.toFloat())
+            .setInterpolator(AccelerateInterpolator())
+            .setDuration(200)
+            .withEndAction {
+                mClipboardHolder?.beGone()
+                mClipboardHolder?.y = mClipboardHolder!!.y - mClipboardHolder!!.height
+            }.start()
     }
 
     private fun getKeyIndices(x: Int, y: Int, allKeys: IntArray?): Int {

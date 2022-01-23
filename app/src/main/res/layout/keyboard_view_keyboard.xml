@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/keyboard_holder"
     android:layout_width="match_parent"
@@ -6,18 +7,18 @@
     android:layout_alignParentBottom="true"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clipboard_holder"
         android:layout_width="match_parent"
         android:layout_height="@dimen/clipboard_height"
-        android:gravity="center"
-        android:paddingStart="@dimen/big_margin"
-        android:paddingEnd="@dimen/big_margin">
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/clipboard_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
             android:background="@drawable/clipboard_background"
             android:ellipsize="end"
             android:lines="1"
@@ -26,9 +27,26 @@
             android:paddingEnd="@dimen/activity_margin"
             android:paddingBottom="@dimen/smaller_margin"
             android:textSize="@dimen/label_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/clipboard_delete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Clipboard content" />
 
-    </RelativeLayout>
+        <ImageView
+            android:id="@+id/clipboard_delete"
+            android:layout_width="@dimen/list_avatar_size"
+            android:layout_height="@dimen/list_avatar_size"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/clear_clipboard_data"
+            android:padding="@dimen/medium_margin"
+            android:src="@drawable/ic_delete_vector"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.simplemobiletools.keyboard.views.MyKeyboardView
         android:id="@+id/keyboard_view"
