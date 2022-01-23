@@ -62,6 +62,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
          * Called when the user long presses Space and moves to the right
          */
         fun moveCursorRight()
+
+        /**
+         * Sends a sequence of characters to the listener.
+         * @param text the string to be displayed.
+         */
+        fun onText(text: String)
     }
 
     private var mKeyboard: MyKeyboard? = null
@@ -415,7 +421,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         background = rippleBg
                         setTextColor(mTextColor)
                         setOnClickListener {
-
+                            mOnKeyboardActionListener!!.onText(clipboardContent.toString())
                         }
                     }
                 }
@@ -827,6 +833,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                     override fun moveCursorRight() {
                         mOnKeyboardActionListener!!.moveCursorRight()
+                    }
+
+                    override fun onText(text: String) {
+                        mOnKeyboardActionListener!!.onText(text)
                     }
                 }
 

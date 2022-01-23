@@ -198,6 +198,10 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         moveCursor(true)
     }
 
+    override fun onText(text: String) {
+        currentInputConnection?.commitText(text, 0)
+    }
+
     private fun moveCursor(moveRight: Boolean) {
         val extractedText = currentInputConnection?.getExtractedText(ExtractedTextRequest(), 0) ?: return
         var newCursorPosition = extractedText.selectionStart
