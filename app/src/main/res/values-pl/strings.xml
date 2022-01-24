@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="clear_clipboard_data_confirmation">Czy wyczyścić dane schowka\?</string>
     <string name="app_name">Prosta klawiatura</string>
-    <string name="clear_clipboard_data">Wyczyść dane schowka</string>
+    <string name="app_launcher_name">Klawiatura</string>
+    <string name="redirection_note">Włącz Prostą klawiaturę na następnym ekranie, aby stała się dostępną klawiaturą. Naciśnij przycisk Wstecz po włączeniu.</string>
     <string name="change_keyboard">Zmień klawiaturę</string>
+    <string name="clear_clipboard_data">Wyczyść dane schowka</string>
+    <string name="clear_clipboard_data_confirmation">Czy wyczyścić dane schowka\?</string>
+    <!-- Accessibility -->
     <string name="keycode_delete">Usuń</string>
     <string name="keycode_mode_change">Zmień typ klawiatury</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
-    <string name="app_short_description">Prosta klawiatura do wstawiania dowolnych tekstów, znaków specjalnych i liczb</string>
-    <string name="app_launcher_name">Klawiatura</string>
-    <string name="redirection_note">Włącz Prostą klawiaturę na następnym ekranie, aby stała się dostępną klawiaturą. Naciśnij przycisk Wstecz po włączeniu.</string>
-    <string name="app_title">Prosta klawiatura</string>
+    <!-- Settings -->
     <string name="show_clipboard_content">Pokazuj zawartość schowka, jeśli jest dostępna</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Prosta klawiatura</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Prosta klawiatura do wstawiania dowolnych tekstów, znaków specjalnych i liczb</string>
     <string name="app_long_description"> Szybka, lekka aplikacja klawiatury, która pomaga rozmawiać ze znajomymi lub wstawiać inne teksty, liczby lub symbole. Domyślnie jest wyposażona w Material Design i ciemny motyw, zapewniając doskonałe doświadczenie użytkownika dla łatwego użytkowania. Brak dostępu do Internetu zapewnia większą prywatność, bezpieczeństwo i stabilność niż inne aplikacje. Nie zawiera reklam ani niepotrzebnych uprawnień. Jest w pełni otwartoźródłowa, zapewnia konfigurowalną kolorystykę. <b>Sprawdź pełen zestaw od Simple Tools tutaj:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
 </resources>
