@@ -6,6 +6,9 @@
     <string name="change_keyboard">Cambia la tastiera</string>
     <string name="clear_clipboard_data">Elimina i dati degli appunti</string>
     <string name="clear_clipboard_data_confirmation">Vuoi davvero eliminare i dati degli appunti\?</string>
+    <string name="clipboard">Clipboard</string>
+    <string name="clipboard_recent">Recent</string>
+    <string name="clipboard_pinned">Pinned</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Elimina</string>
     <string name="keycode_mode_change">Cambia il tipo di tastiera</string>
@@ -13,6 +16,8 @@
     <string name="keycode_enter">Invio</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Mostra il contenuto degli appunti se disponibile</string>
+    <string name="show_popup">Show a popup on keypress</string>
+    <string name="vibrate_on_keypress">Vibrate on keypress</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Tastiera semplice</string>

@@ -5,6 +5,9 @@
     <string name="change_keyboard">Zmeniť klávesnicu</string>
     <string name="clear_clipboard_data">Vyčistič schránku</string>
     <string name="clear_clipboard_data_confirmation">Ste si istý, že chcete vyčistiť schránku?</string>
+    <string name="clipboard">Schránka</string>
+    <string name="clipboard_recent">Nedávne</string>
+    <string name="clipboard_pinned">Pripnuté</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Odstrániť</string>
     <string name="keycode_mode_change">Zmeniť typ klávesnice</string>
@@ -12,6 +15,8 @@
     <string name="keycode_enter">Enter</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Zobraziť obsah schránky, ak je dostupná</string>
+    <string name="show_popup">Zobraziť detail znaku pri stlačení</string>
+    <string name="vibrate_on_keypress">Vibrovať pri stlačení</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Jednoduchá klávesnica</string>
