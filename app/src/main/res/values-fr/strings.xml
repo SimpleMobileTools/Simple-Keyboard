@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Clavier simple</string>
+    <string name="app_launcher_name">Clavier</string>
+    <string name="redirection_note">Veuillez activer Clavier simple sur l\'écran suivant, pour en faire un clavier disponible. Appuyez sur «Retour» une fois activé.</string>
+    <string name="change_keyboard">Changer de clavier</string>
+    <string name="clear_clipboard_data">Effacer les données du presse-papiers</string>
+    <string name="clear_clipboard_data_confirmation">Voulez-vous vraiment effacer les données du presse-papiers\?</string>
+    <!-- Accessibility -->
+    <string name="keycode_delete">Supprimer</string>
+    <string name="keycode_mode_change">Changer de type de clavier</string>
+    <string name="keycode_shift">Majuscule</string>
+    <string name="keycode_enter">Entrée</string>
+    <!-- Settings -->
+    <string name="show_clipboard_content">Afficher le contenu du presse-papiers si disponible</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Clavier simple</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Clavier facile à utiliser pour insérer toutes sortes de textes, de caractères spéciaux et de chiffres</string>
+    <string name="app_long_description"> Une application de clavier rapide et légère qui permet de chatter avec vos amis, ou d\'insérer d\'autres textes, chiffres ou symboles. Il est livré avec un design matériel et un thème sombre par défaut, offrant une grande expérience utilisateur pour une utilisation facile. L\'absence d\'accès à Internet vous offre plus de confidentialité, de sécurité et de stabilité que les autres applications. Ne contient pas de publicités ni de permissions inutiles. Le code source est entièrement ouvert, fournit des couleurs personnalisables. <b>Voyez la suite complète de Simple Tools ici:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tastiera semplice</string>
+    <string name="app_launcher_name">Tastiera</string>
+    <string name="redirection_note">Abilita Simple Keyboard nella prossima schermata, per renderla una tastiera disponibile. Premi «Indietro» una volta abilitata.</string>
+    <string name="change_keyboard">Cambia la tastiera</string>
+    <string name="clear_clipboard_data">Elimina i dati degli appunti</string>
+    <string name="clear_clipboard_data_confirmation">Vuoi davvero eliminare i dati degli appunti\?</string>
+    <!-- Accessibility -->
+    <string name="keycode_delete">Elimina</string>
+    <string name="keycode_mode_change">Cambia il tipo di tastiera</string>
+    <string name="keycode_shift">Maiusc</string>
+    <string name="keycode_enter">Invio</string>
+    <!-- Settings -->
+    <string name="show_clipboard_content">Mostra il contenuto degli appunti se disponibile</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Tastiera semplice</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Tastiera facile per inserire tutti i tipi di testo, caratteri speciali e numeri</string>
+    <string name="app_long_description"> Un\'app rapida e leggera per la tastiera che aiuta a chattare con i tuoi amici, o a inserire qualsiasi altro testo, numero o simbolo. Viene fornito con Material Design e tema scuro per impostazione predefinita, fornisce una grande esperienza utente per un facile utilizzo. La mancanza di accesso a internet ti dà più privacy, sicurezza e stabilità rispetto ad altre app. Non contiene annunci o permessi inutili. Il codice sorgente è completamente aperto, fornisce colori personalizzabili. <b> Guarda la suite completa di Simple Tools qui:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b> Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
