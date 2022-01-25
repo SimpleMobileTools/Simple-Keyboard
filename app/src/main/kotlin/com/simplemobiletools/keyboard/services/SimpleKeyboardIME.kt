@@ -41,7 +41,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         val keyboardHolder = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null)
         keyboardView = keyboardHolder.keyboard_view as MyKeyboardView
         keyboardView!!.setKeyboard(keyboard!!)
-        keyboardView!!.setClipboardHolder(keyboardHolder.clipboard_holder)
+        keyboardView!!.setToolbarHolder(keyboardHolder.toolbar_holder)
         keyboardView!!.mOnKeyboardActionListener = this
         return keyboardHolder!!
     }

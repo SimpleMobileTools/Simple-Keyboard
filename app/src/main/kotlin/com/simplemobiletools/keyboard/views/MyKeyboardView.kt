@@ -139,7 +139,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mKeyBackground: Drawable? = null
     private val mDistances = IntArray(MAX_NEARBY_KEYS)
 
-    private var mClipboardHolder: View? = null
+    private var mToolbarHolder: View? = null
 
     // For multi-tap
     private var mLastTapTime = 0L
@@ -263,6 +263,21 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             background.applyColorFilter(newBgColor.darkenColor(2))
+
+            val rippleBg = resources.getDrawable(R.drawable.clipboard_background, context.theme) as RippleDrawable
+            val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
+            layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(mBackgroundColor)
+
+            mToolbarHolder?.apply {
+                background = ColorDrawable(mBackgroundColor.darkenColor())
+                clipboard_value.apply {
+                    background = rippleBg
+                    setTextColor(mTextColor)
+                    setLinkTextColor(mTextColor)
+                }
+
+                clipboard_delete.applyColorFilter(mTextColor)
+            }
         }
     }
 
@@ -290,9 +305,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mAbortKey = true // Until the next ACTION_DOWN
     }
 
-    /** Sets the top row above the keyboard containing the clipboard value **/
-    fun setClipboardHolder(clipboardHolder: View) {
-        mClipboardHolder = clipboardHolder
+    /** Sets the top row above the keyboard containing a couple buttons and the clipboard **/
+    fun setToolbarHolder(toolbarHolder: View) {
+        mToolbarHolder = toolbarHolder
     }
 
     /**
@@ -504,37 +519,29 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun handleClipboard() {
-        if (context.config.showClipboard && mClipboardHolder != null && mPopupParent.id != R.id.mini_keyboard_view) {
+        if (context.config.showClipboard && mToolbarHolder != null && mPopupParent.id != R.id.mini_keyboard_view) {
             val clipboardContent = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip?.getItemAt(0)?.text
             if (clipboardContent?.trim()?.isNotEmpty() == true) {
-                val rippleBg = resources.getDrawable(R.drawable.clipboard_background, context.theme) as RippleDrawable
-                val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
-                layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(mBackgroundColor)
-
-                mClipboardHolder?.apply {
-                    background = ColorDrawable(mBackgroundColor.darkenColor())
-                    beVisible()
+                mToolbarHolder?.apply {
                     clipboard_value.apply {
                         text = clipboardContent
-                        background = rippleBg
-                        setTextColor(mTextColor)
-                        setLinkTextColor(mTextColor)
                         setOnClickListener {
                             mOnKeyboardActionListener!!.onText(clipboardContent.toString())
                         }
                     }
 
-                    clipboard_delete.applyColorFilter(mTextColor)
                     clipboard_delete.setOnLongClickListener { context.toast(R.string.clear_clipboard_data); true; }
                     clipboard_delete.setOnClickListener {
                         clearClipboardContent()
+                        toggleClipboardVisibility(false)
                     }
+                    toggleClipboardVisibility(true)
                 }
             } else {
-                mClipboardHolder?.beGone()
+                mToolbarHolder?.clipboard_holder?.beGone()
             }
         } else {
-            mClipboardHolder?.beGone()
+            mToolbarHolder?.clipboard_holder?.beGone()
         }
     }
 
@@ -546,14 +553,28 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val clip = ClipData.newPlainText("", "")
             clipboardManager.setPrimaryClip(clip)
         }
+    }
 
-        mClipboardHolder?.animate()!!
-            .yBy(mClipboardHolder!!.height.toFloat())
+    private fun toggleClipboardVisibility(show: Boolean) {
+        val newAlpha = if (show) {
+            1f
+        } else {
+            0f
+        }
+
+        mToolbarHolder?.clipboard_holder!!.animate()!!
+            .alpha(newAlpha)
             .setInterpolator(AccelerateInterpolator())
-            .setDuration(200)
+            .setDuration(150)
+            .withStartAction {
+                if (show) {
+                    mToolbarHolder?.clipboard_holder?.beVisible()
+                }
+            }
             .withEndAction {
-                mClipboardHolder?.beGone()
-                mClipboardHolder?.y = mClipboardHolder!!.y - mClipboardHolder!!.height
+                if (!show) {
+                    mToolbarHolder?.clipboard_holder?.beGone()
+                }
             }.start()
     }
 
