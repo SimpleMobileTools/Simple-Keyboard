@@ -1,9 +1,12 @@
 package com.simplemobiletools.keyboard.views
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.*
 import android.graphics.Paint.Align
 import android.graphics.drawable.ColorDrawable
@@ -20,9 +23,12 @@ import android.view.accessibility.AccessibilityManager
 import android.view.animation.AccelerateInterpolator
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.isPiePlus
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.activities.SettingsActivity
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_DELETE
@@ -276,7 +282,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     setLinkTextColor(mTextColor)
                 }
 
-                clipboard_delete.applyColorFilter(mTextColor)
+                settings_cog.applyColorFilter(mTextColor)
+                clipboard_clear.applyColorFilter(mTextColor)
             }
         }
     }
@@ -308,6 +315,16 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     /** Sets the top row above the keyboard containing a couple buttons and the clipboard **/
     fun setToolbarHolder(toolbarHolder: View) {
         mToolbarHolder = toolbarHolder
+
+        mToolbarHolder!!.apply {
+            settings_cog.setOnLongClickListener { context.toast(R.string.settings); true; }
+            settings_cog.setOnClickListener {
+                Intent(context, SettingsActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(this)
+                }
+            }
+        }
     }
 
     /**
@@ -530,18 +547,27 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         }
                     }
 
-                    clipboard_delete.setOnLongClickListener { context.toast(R.string.clear_clipboard_data); true; }
-                    clipboard_delete.setOnClickListener {
+                    clipboard_clear.setOnLongClickListener { context.toast(R.string.clear_clipboard_data); true; }
+                    clipboard_clear.setOnClickListener {
                         clearClipboardContent()
                         toggleClipboardVisibility(false)
                     }
                     toggleClipboardVisibility(true)
                 }
             } else {
-                mToolbarHolder?.clipboard_holder?.beGone()
+                hideClipboardViews()
             }
         } else {
-            mToolbarHolder?.clipboard_holder?.beGone()
+            hideClipboardViews()
+        }
+    }
+
+    private fun hideClipboardViews() {
+        mToolbarHolder?.apply {
+            clipboard_value_holder?.beGone()
+            clipboard_value_holder?.alpha = 0f
+            clipboard_clear?.beGone()
+            clipboard_clear?.alpha = 0f
         }
     }
 
@@ -556,26 +582,33 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun toggleClipboardVisibility(show: Boolean) {
-        val newAlpha = if (show) {
-            1f
-        } else {
-            0f
-        }
+        if ((show && mToolbarHolder?.clipboard_value_holder!!.alpha == 0f) || (!show && mToolbarHolder?.clipboard_value_holder!!.alpha == 1f)) {
+            val newAlpha = if (show) 1f else 0f
+            val animations = ArrayList<ObjectAnimator>()
+            val clipboardValueAnimation = ObjectAnimator.ofFloat(mToolbarHolder!!.clipboard_value_holder!!, "alpha", newAlpha)
+            animations.add(clipboardValueAnimation)
 
-        mToolbarHolder?.clipboard_holder!!.animate()!!
-            .alpha(newAlpha)
-            .setInterpolator(AccelerateInterpolator())
-            .setDuration(150)
-            .withStartAction {
+            val clipboardClearAnimation = ObjectAnimator.ofFloat(mToolbarHolder!!.clipboard_clear!!, "alpha", newAlpha)
+            animations.add(clipboardClearAnimation)
+
+            val animSet = AnimatorSet()
+            animSet.playTogether(*animations.toTypedArray())
+            animSet.duration = 150
+            animSet.interpolator = AccelerateInterpolator()
+            animSet.doOnStart {
                 if (show) {
-                    mToolbarHolder?.clipboard_holder?.beVisible()
+                    mToolbarHolder?.clipboard_value_holder?.beVisible()
+                    mToolbarHolder?.clipboard_clear?.beVisible()
                 }
             }
-            .withEndAction {
+            animSet.doOnEnd {
                 if (!show) {
-                    mToolbarHolder?.clipboard_holder?.beGone()
+                    mToolbarHolder?.clipboard_value_holder?.beGone()
+                    mToolbarHolder?.clipboard_clear?.beGone()
                 }
-            }.start()
+            }
+            animSet.start()
+        }
     }
 
     private fun getKeyIndices(x: Int, y: Int, allKeys: IntArray?): Int {
