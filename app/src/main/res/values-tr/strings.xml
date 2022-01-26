@@ -12,7 +12,7 @@
     <string name="clear_clipboard_data_confirmation">Pano verilerini silmek istediğinizden emin misiniz\?</string>
     <string name="clipboard">Clipboard</string>
     <string name="clipboard_recent">Recent</string>
-    <string name="clipboard_pinned">Pinned</string>
+    <string name="clipboard_pinned">Sabitlendi</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Sil</string>
     <string name="keycode_mode_change">Klavye türünü değiştir</string>
@@ -20,8 +20,8 @@
     <string name="keycode_enter">Enter</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Varsa pano içeriğini göster</string>
-    <string name="show_popup">Show a popup on keypress</string>
-    <string name="vibrate_on_keypress">Vibrate on keypress</string>
+    <string name="show_popup">Tuşa basıldığında bir açılır menü göster</string>
+    <string name="vibrate_on_keypress">Tuşa basıldığında titret</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Basit Klavye</string>
