@@ -545,8 +545,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 mToolbarHolder?.apply {
                     clipboard_value.apply {
                         text = clipboardContent
+                        removeUnderlines()
                         setOnClickListener {
                             mOnKeyboardActionListener!!.onText(clipboardContent.toString())
+                            performHapticFeedback()
                         }
                     }
 
