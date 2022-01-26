@@ -259,12 +259,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mBackgroundColor = context.config.backgroundColor
             mPrimaryColor = context.getAdjustedPrimaryColor()
 
-            var newBgColor = mBackgroundColor
             if (changedView == mini_keyboard_view) {
-                newBgColor = newBgColor.darkenColor(4)
+                val previewBackground = background as LayerDrawable
+                previewBackground.findDrawableByLayerId(R.id.button_background_shape).applyColorFilter(mBackgroundColor.darkenColor(4))
+                previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(mBackgroundColor.lightenColor())
+                background = previewBackground
+            } else {
+                background.applyColorFilter(mBackgroundColor.darkenColor(2))
             }
-
-            background.applyColorFilter(newBgColor.darkenColor(2))
 
             val rippleBg = resources.getDrawable(R.drawable.clipboard_background, context.theme) as RippleDrawable
             val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
@@ -755,7 +757,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
         }
 
-        mPreviewText!!.background.applyColorFilter(mBackgroundColor.darkenColor(4))
+        val previewBackground = mPreviewText!!.background as LayerDrawable
+        previewBackground.findDrawableByLayerId(R.id.button_background_shape).applyColorFilter(mBackgroundColor.darkenColor(4))
+        previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(mBackgroundColor.lightenColor())
+
+        mPreviewText!!.background = previewBackground
         mPreviewText!!.setTextColor(mTextColor)
         mPreviewText!!.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED))
         val popupWidth = Math.max(mPreviewText!!.measuredWidth, key.width)
