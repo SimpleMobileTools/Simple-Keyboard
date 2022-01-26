@@ -8,4 +8,5 @@ const val SHIFT_ON_PERMANENT = 2
 const val MAX_KEYS_PER_MINI_ROW = 5
 
 // shared prefs
-const val SHOW_CLIPBOARD = "show_clipboard"
+const val VIBRATE_ON_KEYPRESS = "vibrate_on_keypress"
+const val SHOW_POPUP_ON_KEYPRESS = "show_popup_on_keypress"

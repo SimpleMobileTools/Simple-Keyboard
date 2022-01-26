@@ -22,7 +22,8 @@ class SettingsActivity : SimpleActivity() {
         setupPurchaseThankYou()
         setupCustomizeColors()
         setupUseEnglish()
-        setupClipboard()
+        setupVibrateOnKeypress()
+        setupShowPopupOnKeypress()
 
         updateTextColors(settings_scrollview)
 
@@ -65,7 +66,7 @@ class SettingsActivity : SimpleActivity() {
         settings_use_english.isChecked = config.useEnglish
 
         if (settings_use_english_holder.isGone() && settings_purchase_thank_you_holder.isGone()) {
-            settings_show_clipboard_holder.background = resources.getDrawable(R.drawable.ripple_all_corners, theme)
+            settings_vibrate_on_keypress_holder.background = resources.getDrawable(R.drawable.ripple_top_corners, theme)
         }
 
         settings_use_english_holder.setOnClickListener {
@@ -75,11 +76,19 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    private fun setupClipboard() {
-        settings_show_clipboard.isChecked = config.showClipboard
-        settings_show_clipboard_holder.setOnClickListener {
-            settings_show_clipboard.toggle()
-            config.showClipboard = settings_show_clipboard.isChecked
+    private fun setupVibrateOnKeypress() {
+        settings_vibrate_on_keypress.isChecked = config.vibrateOnKeypress
+        settings_vibrate_on_keypress_holder.setOnClickListener {
+            settings_vibrate_on_keypress.toggle()
+            config.vibrateOnKeypress = settings_vibrate_on_keypress.isChecked
+        }
+    }
+
+    private fun setupShowPopupOnKeypress() {
+        settings_show_popup_on_keypress.isChecked = config.showPopupOnKeypress
+        settings_show_popup_on_keypress_holder.setOnClickListener {
+            settings_show_popup_on_keypress.toggle()
+            config.showPopupOnKeypress = settings_show_popup_on_keypress.isChecked
         }
     }
 }

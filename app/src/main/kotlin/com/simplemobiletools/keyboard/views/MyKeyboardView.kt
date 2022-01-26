@@ -551,8 +551,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun handleClipboard() {
-        if (context.config.showClipboard && mToolbarHolder != null && mPopupParent.id != R.id.mini_keyboard_view) {
-            val clipboardContent = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip?.getItemAt(0)?.text?.trim()
+        if (mToolbarHolder != null && mPopupParent.id != R.id.mini_keyboard_view) {
+            val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+            val clipboardContent = clipboardManager.primaryClip?.getItemAt(0)?.text?.trim()
             if (clipboardContent?.isNotEmpty() == true) {
                 mToolbarHolder?.apply {
                     clipboard_value.apply {
@@ -560,7 +561,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         removeUnderlines()
                         setOnClickListener {
                             mOnKeyboardActionListener!!.onText(clipboardContent.toString())
-                            performHapticFeedback()
+
+                            if (context.config.vibrateOnKeypress) {
+                                performHapticFeedback()
+                            }
                         }
                     }
 
@@ -692,6 +696,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun showPreview(keyIndex: Int) {
+        if (!context.config.showPopupOnKeypress) {
+            return
+        }
+
         val oldKeyIndex = mCurrentKeyIndex
         val previewPopup = mPreviewPopup
         mCurrentKeyIndex = keyIndex
@@ -1255,6 +1263,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private fun repeatKey(initialCall: Boolean): Boolean {
         val key = mKeys[mRepeatKeyIndex]
         if (!initialCall && key.code == KEYCODE_SPACE) {
+            if (!mIsLongPressingSpace && context.config.vibrateOnKeypress) {
+                performHapticFeedback()
+            }
+
             mIsLongPressingSpace = true
         } else {
             detectAndSendKey(mCurrentKey, key.x, key.y, mLastTapTime)

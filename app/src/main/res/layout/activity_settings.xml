@@ -90,18 +90,34 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/settings_show_clipboard_holder"
+                android:id="@+id/settings_vibrate_on_keypress_holder"
+                style="@style/SettingsHolderCheckboxStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_background">
+
+                <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+                    android:id="@+id/settings_vibrate_on_keypress"
+                    style="@style/SettingsCheckboxStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vibrate_on_keypress" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_show_popup_on_keypress_holder"
                 style="@style/SettingsHolderCheckboxStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple_bottom_corners">
 
                 <com.simplemobiletools.commons.views.MyAppCompatCheckbox
-                    android:id="@+id/settings_show_clipboard"
+                    android:id="@+id/settings_show_popup_on_keypress"
                     style="@style/SettingsCheckboxStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/show_clipboard_content" />
+                    android:text="@string/show_popup" />
 
             </RelativeLayout>
         </LinearLayout>
