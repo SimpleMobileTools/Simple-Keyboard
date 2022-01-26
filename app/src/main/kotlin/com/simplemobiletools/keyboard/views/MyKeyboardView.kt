@@ -136,11 +136,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mTopSmallNumberMarginWidth = 0f
     private var mTopSmallNumberMarginHeight = 0f
     private val mSpaceMoveThreshold: Int
-
-    // Variables for dealing with multiple pointers
-    private var mOldPointerCount = 1
-    private var mOldPointerX = 0f
-    private var mOldPointerY = 0f
+    private var ignoreTouches = false
 
     private var mKeyBackground: Drawable? = null
     private val mDistances = IntArray(MAX_NEARBY_KEYS)
@@ -988,40 +984,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     override fun onTouchEvent(me: MotionEvent): Boolean {
-        // Convert multi-pointer up/down events to single up/down events to
-        // deal with the typical multi-pointer behavior of two-thumb typing
-        val pointerCount = me.pointerCount
         val action = me.action
-        var result: Boolean
-        val now = me.eventTime
-        if (pointerCount != mOldPointerCount) {
-            if (pointerCount == 1) {
-                // Send a down event for the latest pointer
-                val down = MotionEvent.obtain(now, now, MotionEvent.ACTION_DOWN, me.x, me.y, me.metaState)
-                result = onModifiedTouchEvent(down)
-                down.recycle()
-                // If it's an up action, then deliver the up as well.
-                if (action == MotionEvent.ACTION_UP) {
-                    result = onModifiedTouchEvent(me)
-                }
-            } else {
-                // Send an up event for the last pointer
-                val up = MotionEvent.obtain(now, now, MotionEvent.ACTION_UP, mOldPointerX, mOldPointerY, me.metaState)
-                result = onModifiedTouchEvent(up)
-                up.recycle()
-            }
-        } else {
-            if (pointerCount == 1) {
-                result = onModifiedTouchEvent(me)
-                mOldPointerX = me.x
-                mOldPointerY = me.y
-            } else {
-                // Don't do anything when 2 pointers are down and moving.
-                result = true
-            }
-        }
 
-        mOldPointerCount = pointerCount
+        if (ignoreTouches) {
+            if (action == MotionEvent.ACTION_UP) {
+                ignoreTouches = false
+            }
+            return true
+        }
 
         // handle moving between alternative popup characters by swiping
         if (mPopupKeyboard.isShowing) {
@@ -1075,7 +1045,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
         }
 
-        return result
+        return onModifiedTouchEvent(me)
     }
 
     private fun onModifiedTouchEvent(me: MotionEvent): Boolean {
@@ -1085,7 +1055,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             touchY += mVerticalCorrection
         }
 
-        val action = me.action
+        val action = me.actionMasked
         val eventTime = me.eventTime
         val keyIndex = getKeyIndices(touchX, touchY, null)
 
@@ -1100,6 +1070,27 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         when (action) {
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                // if the user presses a key while still holding down the previous, type in both chars and ignore the later gestures
+                // can happen at fast typing, easier to reproduce by increasing LONGPRESS_TIMEOUT
+                ignoreTouches = true
+                mHandler!!.removeMessages(MSG_LONGPRESS)
+                dismissPopupKeyboard()
+                detectAndSendKey(keyIndex, me.x.toInt(), me.y.toInt(), eventTime)
+
+                val newPointerX = me.getX(1).toInt()
+                val newPointerY = me.getY(1).toInt()
+                val secondKeyIndex = getKeyIndices(newPointerX, newPointerY, null)
+                showPreview(secondKeyIndex)
+                detectAndSendKey(secondKeyIndex, newPointerX, newPointerY, eventTime)
+
+                val secondKeyCode = mKeys[secondKeyIndex].code
+                mOnKeyboardActionListener!!.onPress(secondKeyCode)
+
+                showPreview(NOT_A_KEY)
+                invalidateKey(mCurrentKey)
+                return true
+            }
             MotionEvent.ACTION_DOWN -> {
                 mAbortKey = false
                 mLastCodeX = touchX
