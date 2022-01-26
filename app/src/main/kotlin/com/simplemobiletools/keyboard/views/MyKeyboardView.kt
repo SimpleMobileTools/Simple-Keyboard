@@ -323,6 +323,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
             }
         }
+
+        val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+        clipboardManager.addPrimaryClipChangedListener {
+            val clipboardContent = clipboardManager.primaryClip?.getItemAt(0)?.text?.trim()
+            if (clipboardContent?.trim()?.isNotEmpty() == true) {
+                handleClipboard()
+            }
+        }
     }
 
     /**
@@ -535,8 +543,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun handleClipboard() {
         if (context.config.showClipboard && mToolbarHolder != null && mPopupParent.id != R.id.mini_keyboard_view) {
-            val clipboardContent = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip?.getItemAt(0)?.text
-            if (clipboardContent?.trim()?.isNotEmpty() == true) {
+            val clipboardContent = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip?.getItemAt(0)?.text?.trim()
+            if (clipboardContent?.isNotEmpty() == true) {
                 mToolbarHolder?.apply {
                     clipboard_value.apply {
                         text = clipboardContent
