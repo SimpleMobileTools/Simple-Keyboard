@@ -285,6 +285,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             mClipboardManagerHolder?.apply {
                 clipboard_manager_holder.background = ColorDrawable(mBackgroundColor.darkenColor())
+                clipboard_manager_close.applyColorFilter(mTextColor)
+                clipboard_manager_label.setTextColor(mTextColor)
             }
         }
     }
@@ -344,6 +346,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val clipboardContent = clipboardManager.primaryClip?.getItemAt(0)?.text?.trim()
             if (clipboardContent?.trim()?.isNotEmpty() == true) {
                 handleClipboard()
+            }
+        }
+
+        mClipboardManagerHolder!!.apply {
+            clipboard_manager_close.setOnClickListener {
+                mClipboardManagerHolder!!.clipboard_manager_holder.beGone()
             }
         }
     }
