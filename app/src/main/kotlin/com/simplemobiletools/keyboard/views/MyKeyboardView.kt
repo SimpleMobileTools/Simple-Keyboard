@@ -142,6 +142,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private val mDistances = IntArray(MAX_NEARBY_KEYS)
 
     private var mToolbarHolder: View? = null
+    private var mClipboardManagerHolder: View? = null
 
     // For multi-tap
     private var mLastTapTime = 0L
@@ -281,6 +282,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 pinned_clipboard_items.applyColorFilter(mTextColor)
                 clipboard_clear.applyColorFilter(mTextColor)
             }
+
+            mClipboardManagerHolder?.apply {
+                clipboard_manager_holder.background = ColorDrawable(mBackgroundColor.darkenColor())
+            }
         }
     }
 
@@ -309,8 +314,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     /** Sets the top row above the keyboard containing a couple buttons and the clipboard **/
-    fun setToolbarHolder(toolbarHolder: View) {
-        mToolbarHolder = toolbarHolder
+    fun setKeyboardHolder(keyboardHolder: View) {
+        mToolbarHolder = keyboardHolder.toolbar_holder
+        mClipboardManagerHolder = keyboardHolder.clipboard_manager_holder
 
         mToolbarHolder!!.apply {
             settings_cog.setOnLongClickListener { context.toast(R.string.settings); true; }
@@ -323,7 +329,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             pinned_clipboard_items.setOnLongClickListener { context.toast(R.string.clipboard); true; }
             pinned_clipboard_items.setOnClickListener {
-
+                mClipboardManagerHolder!!.clipboard_manager_holder.beVisible()
             }
 
             clipboard_clear.setOnLongClickListener { context.toast(R.string.clear_clipboard_data); true; }
