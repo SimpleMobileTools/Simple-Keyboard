@@ -15,12 +15,12 @@
 
         <ImageView
             android:id="@+id/settings_cog"
-            android:layout_width="@dimen/list_avatar_size"
-            android:layout_height="@dimen/list_avatar_size"
+            android:layout_width="@dimen/toolbar_icon_height"
+            android:layout_height="@dimen/toolbar_icon_height"
             android:layout_marginStart="@dimen/medium_margin"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/settings"
-            android:padding="@dimen/medium_margin"
+            android:padding="@dimen/small_margin"
             android:src="@drawable/ic_settings_cog_vector"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,21 +46,21 @@
                 android:gravity="center"
                 android:lines="1"
                 android:paddingStart="@dimen/activity_margin"
-                android:paddingTop="@dimen/smaller_margin"
+                android:paddingTop="@dimen/small_margin"
                 android:paddingEnd="@dimen/activity_margin"
-                android:paddingBottom="@dimen/smaller_margin"
+                android:paddingBottom="@dimen/small_margin"
                 android:textSize="@dimen/label_text_size"
                 tools:text="Clipboard content" />
         </RelativeLayout>
 
         <ImageView
             android:id="@+id/clipboard_clear"
-            android:layout_width="@dimen/list_avatar_size"
-            android:layout_height="@dimen/list_avatar_size"
+            android:layout_width="@dimen/toolbar_icon_height"
+            android:layout_height="@dimen/toolbar_icon_height"
             android:layout_marginEnd="@dimen/medium_margin"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/clear_clipboard_data"
-            android:padding="@dimen/medium_margin"
+            android:padding="@dimen/small_margin"
             android:src="@drawable/ic_delete_vector"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
