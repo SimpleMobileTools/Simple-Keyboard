@@ -169,11 +169,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     companion object {
         private const val NOT_A_KEY = -1
         private val LONG_PRESSABLE_STATE_SET = intArrayOf(R.attr.state_long_pressable)
-        private const val MSG_SHOW_PREVIEW = 1
-        private const val MSG_REMOVE_PREVIEW = 2
-        private const val MSG_REPEAT = 3
-        private const val MSG_LONGPRESS = 4
-        private const val DELAY_BEFORE_PREVIEW = 0
+        private const val MSG_REMOVE_PREVIEW = 1
+        private const val MSG_REPEAT = 2
+        private const val MSG_LONGPRESS = 3
         private const val DELAY_AFTER_PREVIEW = 70
         private const val DEBOUNCE_TIME = 70
         private const val REPEAT_INTERVAL = 50 // ~20 keys per second
@@ -239,7 +237,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mHandler = object : Handler() {
                 override fun handleMessage(msg: Message) {
                     when (msg.what) {
-                        MSG_SHOW_PREVIEW -> showKey(msg.arg1)
                         MSG_REMOVE_PREVIEW -> mPreviewText!!.visibility = INVISIBLE
                         MSG_REPEAT -> if (repeatKey(false)) {
                             val repeat = Message.obtain(this, MSG_REPEAT)
@@ -715,7 +712,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         // If key changed and preview is on ...
         if (oldKeyIndex != mCurrentKeyIndex) {
-            mHandler!!.removeMessages(MSG_SHOW_PREVIEW)
             if (previewPopup.isShowing) {
                 if (keyIndex == NOT_A_KEY) {
                     mHandler!!.sendMessageDelayed(
@@ -726,15 +722,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             if (keyIndex != NOT_A_KEY) {
-                if (previewPopup.isShowing && mPreviewText!!.visibility == VISIBLE) {
-                    // Show right away, if it's already visible and finger is moving around
-                    showKey(keyIndex)
-                } else {
-                    mHandler!!.sendMessageDelayed(
-                        mHandler!!.obtainMessage(MSG_SHOW_PREVIEW, keyIndex, 0),
-                        DELAY_BEFORE_PREVIEW.toLong()
-                    )
-                }
+                showKey(keyIndex)
             }
         }
     }
@@ -1280,7 +1268,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mHandler?.apply {
             removeMessages(MSG_REPEAT)
             removeMessages(MSG_LONGPRESS)
-            removeMessages(MSG_SHOW_PREVIEW)
         }
     }
 
