@@ -9,10 +9,10 @@
     <string name="manage_clipboard_empty">Your clipboard is empty</string>
     <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
     <string name="clear_clipboard_data">Effacer les données du presse-papiers</string>
-    <string name="clear_clipboard_data_confirmation">Voulez-vous vraiment effacer les données du presse-papiers\?</string>
+    <string name="clear_clipboard_data_confirmation">Voulez-vous vraiment effacer les données du presse-papiers \?</string>
     <string name="clipboard">Clipboard</string>
     <string name="clipboard_recent">Recent</string>
-    <string name="clipboard_pinned">Pinned</string>
+    <string name="clipboard_pinned">Épinglé</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Supprimer</string>
     <string name="keycode_mode_change">Changer de type de clavier</string>
@@ -20,8 +20,8 @@
     <string name="keycode_enter">Entrée</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Afficher le contenu du presse-papiers si disponible</string>
-    <string name="show_popup">Show a popup on keypress</string>
-    <string name="vibrate_on_keypress">Vibrate on keypress</string>
+    <string name="show_popup">Afficher une fenêtre contextuelle en cas de pression sur une touche</string>
+    <string name="vibrate_on_keypress">Vibrer quand on presse une touche</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Clavier simple</string>
