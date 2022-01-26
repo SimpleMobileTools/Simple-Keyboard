@@ -278,6 +278,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
 
                 settings_cog.applyColorFilter(mTextColor)
+                pinned_clipboard_items.applyColorFilter(mTextColor)
                 clipboard_clear.applyColorFilter(mTextColor)
             }
         }
@@ -318,6 +319,17 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(this)
                 }
+            }
+
+            pinned_clipboard_items.setOnLongClickListener { context.toast(R.string.clipboard); true; }
+            pinned_clipboard_items.setOnClickListener {
+
+            }
+
+            clipboard_clear.setOnLongClickListener { context.toast(R.string.clear_clipboard_data); true; }
+            clipboard_clear.setOnClickListener {
+                clearClipboardContent()
+                toggleClipboardVisibility(false)
             }
         }
 
@@ -552,11 +564,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         }
                     }
 
-                    clipboard_clear.setOnLongClickListener { context.toast(R.string.clear_clipboard_data); true; }
-                    clipboard_clear.setOnClickListener {
-                        clearClipboardContent()
-                        toggleClipboardVisibility(false)
-                    }
                     toggleClipboardVisibility(true)
                 }
             } else {
