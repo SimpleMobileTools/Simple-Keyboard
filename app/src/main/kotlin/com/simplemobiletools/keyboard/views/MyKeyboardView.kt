@@ -355,7 +355,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mClipboardManagerHolder!!.apply {
             clipboard_manager_close.setOnClickListener {
                 vibrateIfNeeded()
-                mClipboardManagerHolder!!.clipboard_manager_holder.beGone()
+                openClipboardManager()
             }
         }
     }
@@ -1293,6 +1293,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             detectAndSendKey(mCurrentKey, key.x, key.y, mLastTapTime)
         }
         return true
+    }
+
+    private fun openClipboardManager() {
+        mClipboardManagerHolder!!.clipboard_manager_holder.beGone()
     }
 
     private fun closing() {
