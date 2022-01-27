@@ -28,6 +28,7 @@ import androidx.core.animation.doOnStart
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.isPiePlus
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.activities.ManageClipboardItemsActivity
 import com.simplemobiletools.keyboard.activities.SettingsActivity
 import com.simplemobiletools.keyboard.adapters.ClipsAdapter
 import com.simplemobiletools.keyboard.extensions.config
@@ -365,7 +366,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             clipboard_manager_manage.setOnLongClickListener { context.toast(R.string.manage_clipboard_items); true; }
-            clipboard_manager_manage.setOnClickListener { }
+            clipboard_manager_manage.setOnClickListener {
+                Intent(context, ManageClipboardItemsActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(this)
+                }
+            }
         }
     }
 

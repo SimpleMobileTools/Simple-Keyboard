@@ -13,6 +13,8 @@
     <string name="clipboard">Clipboard</string>
     <string name="clipboard_recent">Recent</string>
     <string name="clipboard_pinned">Pinned</string>
+    <string name="add_new_item">Add a new item</string>
+    <string name="manage_clips">You can manage or add clips here for quick access.</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Delete</string>
     <string name="keycode_mode_change">Keisti klaviatūros tipą</string>

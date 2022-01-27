@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Jednoduchá klávesnica</string>
     <string name="app_launcher_name">Klávesnica</string>
@@ -12,6 +13,8 @@
     <string name="clipboard">Schránka</string>
     <string name="clipboard_recent">Nedávne</string>
     <string name="clipboard_pinned">Pripnuté</string>
+    <string name="add_new_item">Pridať novú položku</string>
+    <string name="manage_clips">Na tomto mieste viete spravovať a pridávať nové pripnutia do schránky pre rýchly prístup.</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Odstrániť</string>
     <string name="keycode_mode_change">Zmeniť typ klávesnice</string>

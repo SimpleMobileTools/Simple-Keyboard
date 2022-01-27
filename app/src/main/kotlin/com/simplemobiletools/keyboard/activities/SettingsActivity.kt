@@ -1,5 +1,6 @@
 package com.simplemobiletools.keyboard.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import com.simplemobiletools.commons.extensions.*
@@ -22,6 +23,7 @@ class SettingsActivity : SimpleActivity() {
         setupPurchaseThankYou()
         setupCustomizeColors()
         setupUseEnglish()
+        setupManageClipboardItems()
         setupVibrateOnKeypress()
         setupShowPopupOnKeypress()
 
@@ -66,13 +68,21 @@ class SettingsActivity : SimpleActivity() {
         settings_use_english.isChecked = config.useEnglish
 
         if (settings_use_english_holder.isGone() && settings_purchase_thank_you_holder.isGone()) {
-            settings_vibrate_on_keypress_holder.background = resources.getDrawable(R.drawable.ripple_top_corners, theme)
+            settings_manage_clipboard_items_holder.background = resources.getDrawable(R.drawable.ripple_top_corners, theme)
         }
 
         settings_use_english_holder.setOnClickListener {
             settings_use_english.toggle()
             config.useEnglish = settings_use_english.isChecked
             exitProcess(0)
+        }
+    }
+
+    private fun setupManageClipboardItems() {
+        settings_manage_clipboard_items_holder.setOnClickListener {
+            Intent(this, ManageClipboardItemsActivity::class.java).apply {
+                startActivity(this)
+            }
         }
     }
 

@@ -90,6 +90,22 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/settings_manage_clipboard_items_holder"
+                style="@style/SettingsHolderTextViewOneLinerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_bottom_corners">
+
+                <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/settings_manage_clipboard_items_label"
+                    style="@style/SettingsTextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/manage_clipboard_items" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/settings_vibrate_on_keypress_holder"
                 style="@style/SettingsHolderCheckboxStyle"
                 android:layout_width="match_parent"

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/clipboard_items_wrapper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.simplemobiletools.commons.views.MyRecyclerView
+        android:id="@+id/clipboard_items_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/clipboard_items_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.8"
+        android:gravity="center_horizontal"
+        android:paddingStart="@dimen/activity_margin"
+        android:paddingTop="@dimen/big_margin"
+        android:paddingEnd="@dimen/activity_margin"
+        android:text="@string/manage_clips"
+        android:textSize="@dimen/bigger_text_size"
+        android:textStyle="italic"
+        android:visibility="gone" />
+
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/clipboard_items_placeholder_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/clipboard_items_placeholder"
+        android:layout_centerHorizontal="true"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:padding="@dimen/activity_margin"
+        android:text="@string/add_new_item"
+        android:textSize="@dimen/bigger_text_size"
+        android:visibility="gone" />
+
+</RelativeLayout>
