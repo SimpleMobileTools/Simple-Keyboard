@@ -4,6 +4,7 @@
     android:id="@+id/clip_holder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/small_margin"
     android:background="@drawable/clipboard_background">
 
     <com.simplemobiletools.commons.views.MyTextView
