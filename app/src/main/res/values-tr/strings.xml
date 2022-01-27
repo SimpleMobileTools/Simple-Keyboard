@@ -4,6 +4,10 @@
     <string name="app_launcher_name">Klavye</string>
     <string name="redirection_note">Kullanılabilir bir klavye yapmak için lütfen bir sonraki ekranda Basit Klavye\'yi etkinleştirin. Etkinleştirildikten sonra \'Geri\' düğmesine basın.</string>
     <string name="change_keyboard">Klavye Değiştir</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">Manage clipboard items</string>
+    <string name="manage_clipboard_empty">Your clipboard is empty</string>
+    <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
     <string name="clear_clipboard_data">Pano verilerini temizle</string>
     <string name="clear_clipboard_data_confirmation">Pano verilerini silmek istediğinizden emin misiniz\?</string>
     <string name="clipboard">Clipboard</string>

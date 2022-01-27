@@ -286,7 +286,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mClipboardManagerHolder?.apply {
                 clipboard_manager_holder.background = ColorDrawable(mBackgroundColor.darkenColor())
                 clipboard_manager_close.applyColorFilter(mTextColor)
+                clipboard_manager_manage.applyColorFilter(mTextColor)
+
                 clipboard_manager_label.setTextColor(mTextColor)
+                clipboard_content_placeholder_1.setTextColor(mTextColor)
+                clipboard_content_placeholder_2.setTextColor(mTextColor)
             }
         }
     }
@@ -356,6 +360,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             clipboard_manager_close.setOnClickListener {
                 vibrateIfNeeded()
                 openClipboardManager()
+            }
+
+            clipboard_manager_manage.setOnLongClickListener { context.toast(R.string.manage_clipboard_items); true; }
+            clipboard_manager_manage.setOnClickListener {
+
             }
         }
     }

@@ -4,6 +4,10 @@
     <string name="app_launcher_name">Πληκτρολόγιο</string>
     <string name="redirection_note">Ενεργοποιήστε το Απλό πληκτρολόγιο στην επόμενη οθόνη, για να γίνει διαθέσιμο. Πατήστε \'Πίσω\' μόλις ενεργοποιηθεί.</string>
     <string name="change_keyboard">Αλλαγή πληκτρολογίου</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">Manage clipboard items</string>
+    <string name="manage_clipboard_empty">Your clipboard is empty</string>
+    <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
     <string name="clear_clipboard_data">Καθαρισμός δεδομένων πρόχειρου</string>
     <string name="clear_clipboard_data_confirmation">Είστε σίγουροι ότι θέλετε να διαγράψετε τα δεδομένα του πρόχειρου;</string>
     <string name="clipboard">Πρόχειρο</string>

@@ -4,6 +4,10 @@
     <string name="app_launcher_name">Keyboard</string>
     <string name="redirection_note">Please enable Simple Keyboard on the next screen, to make it an available keyboard. Press \'Back\' once enabled.</string>
     <string name="change_keyboard">Change Keyboard</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">Manage clipboard items</string>
+    <string name="manage_clipboard_empty">Your clipboard is empty</string>
+    <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
     <string name="clear_clipboard_data">Clear clipboard data</string>
     <string name="clear_clipboard_data_confirmation">Are you sure you want to clear the clipboard data?</string>
     <string name="clipboard">Clipboard</string>

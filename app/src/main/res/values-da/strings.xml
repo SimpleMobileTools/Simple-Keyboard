@@ -4,6 +4,10 @@
     <string name="app_launcher_name">Tastatur</string>
     <string name="redirection_note">Aktivér Simpelt tastatur på det næste skærmbillede for at gøre det til et tilgængeligt tastatur. Tryk på \'Tilbage\' når det er aktiveret.</string>
     <string name="change_keyboard">Skift tastatur</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">Manage clipboard items</string>
+    <string name="manage_clipboard_empty">Your clipboard is empty</string>
+    <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
     <string name="clear_clipboard_data">Ryd data i udklipsholder</string>
     <string name="clear_clipboard_data_confirmation">Er du sikker på, at du vil slette data i udklipsholderen\?</string>
     <string name="clipboard">Clipboard</string>

@@ -4,6 +4,10 @@
     <string name="app_launcher_name">Klawiatura</string>
     <string name="redirection_note">Włącz Prostą klawiaturę na następnym ekranie, aby stała się dostępną klawiaturą. Naciśnij przycisk Wstecz po włączeniu.</string>
     <string name="change_keyboard">Zmień klawiaturę</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">Manage clipboard items</string>
+    <string name="manage_clipboard_empty">Your clipboard is empty</string>
+    <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
     <string name="clear_clipboard_data">Wyczyść dane schowka</string>
     <string name="clear_clipboard_data_confirmation">Czy wyczyścić dane schowka\?</string>
     <string name="clipboard">Schowek</string>

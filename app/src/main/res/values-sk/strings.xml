@@ -3,6 +3,10 @@
     <string name="app_launcher_name">Klávesnica</string>
     <string name="redirection_note">Prosím povoľte Jednoduchú klávesnicu na nasledujúcej obrazovke, aby sa stala zvoliteľnou. Po povolení stlačte \'Späť\'.</string>
     <string name="change_keyboard">Zmeniť klávesnicu</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">Spravovať položky v schránke</string>
+    <string name="manage_clipboard_empty">Schránka je prázdna</string>
+    <string name="manage_clipboard_label">Akonáhle skopírujete nejaký text, objaví sa tu. Budete ho aj môcť pripnúť, aby sa časom nestratil.</string>
     <string name="clear_clipboard_data">Vyčistič schránku</string>
     <string name="clear_clipboard_data_confirmation">Ste si istý, že chcete vyčistiť schránku?</string>
     <string name="clipboard">Schránka</string>
