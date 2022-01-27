@@ -323,6 +323,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mToolbarHolder!!.apply {
             settings_cog.setOnLongClickListener { context.toast(R.string.settings); true; }
             settings_cog.setOnClickListener {
+                vibrateIfNeeded()
                 Intent(context, SettingsActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(this)
@@ -331,11 +332,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             pinned_clipboard_items.setOnLongClickListener { context.toast(R.string.clipboard); true; }
             pinned_clipboard_items.setOnClickListener {
+                vibrateIfNeeded()
                 mClipboardManagerHolder!!.clipboard_manager_holder.beVisible()
             }
 
             clipboard_clear.setOnLongClickListener { context.toast(R.string.clear_clipboard_data); true; }
             clipboard_clear.setOnClickListener {
+                vibrateIfNeeded()
                 clearClipboardContent()
                 toggleClipboardVisibility(false)
             }
@@ -351,8 +354,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         mClipboardManagerHolder!!.apply {
             clipboard_manager_close.setOnClickListener {
+                vibrateIfNeeded()
                 mClipboardManagerHolder!!.clipboard_manager_holder.beGone()
             }
+        }
+    }
+
+    fun vibrateIfNeeded() {
+        if (context.config.vibrateOnKeypress) {
+            performHapticFeedback()
         }
     }
 
@@ -575,10 +585,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         removeUnderlines()
                         setOnClickListener {
                             mOnKeyboardActionListener!!.onText(clipboardContent.toString())
-
-                            if (context.config.vibrateOnKeypress) {
-                                performHapticFeedback()
-                            }
+                            vibrateIfNeeded()
                         }
                     }
 
@@ -1277,8 +1284,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private fun repeatKey(initialCall: Boolean): Boolean {
         val key = mKeys[mRepeatKeyIndex]
         if (!initialCall && key.code == KEYCODE_SPACE) {
-            if (!mIsLongPressingSpace && context.config.vibrateOnKeypress) {
-                performHapticFeedback()
+            if (!mIsLongPressingSpace) {
+                vibrateIfNeeded()
             }
 
             mIsLongPressingSpace = true

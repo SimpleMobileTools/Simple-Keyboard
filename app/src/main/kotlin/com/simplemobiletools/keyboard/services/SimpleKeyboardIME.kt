@@ -8,9 +8,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.EditorInfo.IME_ACTION_NONE
 import android.view.inputmethod.ExtractedTextRequest
-import com.simplemobiletools.commons.extensions.performHapticFeedback
 import com.simplemobiletools.keyboard.R
-import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.MyKeyboard
 import com.simplemobiletools.keyboard.helpers.SHIFT_OFF
 import com.simplemobiletools.keyboard.helpers.SHIFT_ON_ONE_CHAR
@@ -48,8 +46,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     }
 
     override fun onPress(primaryCode: Int) {
-        if (primaryCode != 0 && baseContext.config.vibrateOnKeypress) {
-            keyboardView?.performHapticFeedback()
+        if (primaryCode != 0) {
+            keyboardView?.vibrateIfNeeded()
         }
     }
 
