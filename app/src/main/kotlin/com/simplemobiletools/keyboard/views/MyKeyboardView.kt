@@ -29,6 +29,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.isPiePlus
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.activities.SettingsActivity
+import com.simplemobiletools.keyboard.adapters.ClipsAdapter
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_DELETE
@@ -36,6 +37,7 @@ import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_ENTER
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_MODE_CHANGE
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SHIFT
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SPACE
+import com.simplemobiletools.keyboard.models.Clip
 import kotlinx.android.synthetic.main.keyboard_popup_keyboard.view.*
 import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 import java.util.*
@@ -337,7 +339,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             pinned_clipboard_items.setOnLongClickListener { context.toast(R.string.clipboard); true; }
             pinned_clipboard_items.setOnClickListener {
                 vibrateIfNeeded()
-                mClipboardManagerHolder!!.clipboard_manager_holder.beVisible()
+                openClipboardManager()
             }
 
             clipboard_clear.setOnLongClickListener { context.toast(R.string.clear_clipboard_data); true; }
@@ -351,7 +353,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
         clipboardManager.addPrimaryClipChangedListener {
             val clipboardContent = clipboardManager.primaryClip?.getItemAt(0)?.text?.trim()
-            if (clipboardContent?.trim()?.isNotEmpty() == true) {
+            if (clipboardContent?.isNotEmpty() == true) {
                 handleClipboard()
             }
         }
@@ -359,13 +361,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mClipboardManagerHolder!!.apply {
             clipboard_manager_close.setOnClickListener {
                 vibrateIfNeeded()
-                openClipboardManager()
+                closeClipboardManager()
             }
 
             clipboard_manager_manage.setOnLongClickListener { context.toast(R.string.manage_clipboard_items); true; }
-            clipboard_manager_manage.setOnClickListener {
-
-            }
+            clipboard_manager_manage.setOnClickListener { }
         }
     }
 
@@ -1304,8 +1304,36 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         return true
     }
 
-    private fun openClipboardManager() {
+    private fun closeClipboardManager() {
         mClipboardManagerHolder!!.clipboard_manager_holder.beGone()
+    }
+
+    private fun openClipboardManager() {
+        mClipboardManagerHolder!!.clipboard_manager_holder.beVisible()
+        val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+        val clipboardContent = clipboardManager.primaryClip?.getItemAt(0)?.text?.trim()?.toString()
+        if (clipboardContent?.isNotEmpty() == true) {
+            val clip = Clip(0, clipboardContent)
+            val clips = arrayListOf(clip)
+            setupClipsAdapter(clips)
+        } else {
+            setupClipsAdapter(arrayListOf())
+        }
+    }
+
+    private fun setupClipsAdapter(clips: ArrayList<Clip>) {
+        mClipboardManagerHolder?.apply {
+            clipboard_content_placeholder_1.beVisibleIf(clips.isEmpty())
+            clipboard_content_placeholder_2.beVisibleIf(clips.isEmpty())
+            clips_list.beVisibleIf(clips.isNotEmpty())
+        }
+
+        val adapter = ClipsAdapter(context, clips) { clip ->
+            mOnKeyboardActionListener!!.onText(clip.value)
+            vibrateIfNeeded()
+        }
+
+        mClipboardManagerHolder!!.clips_list.adapter = adapter
     }
 
     private fun closing() {

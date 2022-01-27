@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clip_holder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/clipboard_background">
+
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/clip_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/medium_margin"
+        android:textSize="@dimen/normal_text_size"
+        tools:text="Hello, how are you?" />
+
+</RelativeLayout>
