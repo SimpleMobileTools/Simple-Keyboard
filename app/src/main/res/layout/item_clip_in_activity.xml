@@ -4,14 +4,16 @@
     android:id="@+id/clip_holder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/small_margin"
-    android:background="@drawable/clipboard_background">
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/selector">
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/clip_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/medium_margin"
+        android:padding="@dimen/activity_margin"
         android:textSize="@dimen/normal_text_size"
         tools:text="Hello, how are you?" />
 

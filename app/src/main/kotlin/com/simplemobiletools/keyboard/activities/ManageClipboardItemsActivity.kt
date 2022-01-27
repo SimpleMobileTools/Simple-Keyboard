@@ -9,8 +9,10 @@ import com.simplemobiletools.commons.extensions.underlineText
 import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.adapters.ClipsActivityAdapter
 import com.simplemobiletools.keyboard.dialogs.AddClipDialog
 import com.simplemobiletools.keyboard.extensions.clipsDB
+import com.simplemobiletools.keyboard.models.Clip
 import kotlinx.android.synthetic.main.activity_manage_clipboard_items.*
 
 class ManageClipboardItemsActivity : SimpleActivity() {
@@ -48,8 +50,13 @@ class ManageClipboardItemsActivity : SimpleActivity() {
 
     private fun updateClips() {
         ensureBackgroundThread {
-            val clips = clipsDB.getClips()
+            val clips = clipsDB.getClips().toMutableList() as ArrayList<Clip>
             runOnUiThread {
+                ClipsActivityAdapter(this, clips, clipboard_items_list) {
+                }.apply {
+                    clipboard_items_list.adapter = this
+                }
+
                 clipboard_items_list.beVisibleIf(clips.isNotEmpty())
                 clipboard_items_placeholder.beVisibleIf(clips.isEmpty())
                 clipboard_items_placeholder_2.beVisibleIf(clips.isEmpty())
