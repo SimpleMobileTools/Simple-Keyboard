@@ -30,7 +30,7 @@ import com.simplemobiletools.commons.helpers.isPiePlus
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.activities.ManageClipboardItemsActivity
 import com.simplemobiletools.keyboard.activities.SettingsActivity
-import com.simplemobiletools.keyboard.adapters.ClipsAdapter
+import com.simplemobiletools.keyboard.adapters.ClipsKeyboardAdapter
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_DELETE
@@ -1334,7 +1334,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             clips_list.beVisibleIf(clips.isNotEmpty())
         }
 
-        val adapter = ClipsAdapter(context, clips) { clip ->
+        val adapter = ClipsKeyboardAdapter(context, clips) { clip ->
             mOnKeyboardActionListener!!.onText(clip.value)
             vibrateIfNeeded()
         }
