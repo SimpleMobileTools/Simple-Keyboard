@@ -3,10 +3,14 @@ package com.simplemobiletools.keyboard.activities
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.underlineText
 import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.dialogs.AddClipDialog
+import com.simplemobiletools.keyboard.extensions.clipsDB
 import kotlinx.android.synthetic.main.activity_manage_clipboard_items.*
 
 class ManageClipboardItemsActivity : SimpleActivity() {
@@ -15,7 +19,9 @@ class ManageClipboardItemsActivity : SimpleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_clipboard_items)
         updateTextColors(clipboard_items_wrapper)
+        updateClips()
 
+        clipboard_items_placeholder.text = "${getText(R.string.manage_clipboard_empty)}\n\n${getText(R.string.manage_clips)}"
         clipboard_items_placeholder_2.apply {
             underlineText()
             setTextColor(getAdjustedPrimaryColor())
@@ -40,7 +46,20 @@ class ManageClipboardItemsActivity : SimpleActivity() {
         return true
     }
 
-    private fun addNewClip() {
+    private fun updateClips() {
+        ensureBackgroundThread {
+            val clips = clipsDB.getClips()
+            runOnUiThread {
+                clipboard_items_list.beVisibleIf(clips.isNotEmpty())
+                clipboard_items_placeholder.beVisibleIf(clips.isEmpty())
+                clipboard_items_placeholder_2.beVisibleIf(clips.isEmpty())
+            }
+        }
+    }
 
+    private fun addNewClip() {
+        AddClipDialog(this) {
+            updateClips()
+        }
     }
 }

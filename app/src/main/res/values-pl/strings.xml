@@ -6,7 +6,7 @@
     <string name="change_keyboard">Zmień klawiaturę</string>
     <!-- Clipboard -->
     <string name="manage_clipboard_items">Zarządzaj elementami schowka</string>
-    <string name="manage_clipboard_empty">Twój schowek jest pusty</string>
+    <string name="manage_clipboard_empty">Twój schowek jest pusty.</string>
     <string name="manage_clipboard_label">Gdy skopiujesz jakiś tekst, pojawi się on tutaj. Możesz także przypinać wpisy, aby później nie zniknęły.</string>
     <string name="clear_clipboard_data">Wyczyść dane schowka</string>
     <string name="clear_clipboard_data_confirmation">Czy wyczyścić dane schowka\?</string>
@@ -15,6 +15,7 @@
     <string name="clipboard_pinned">Przypięte</string>
     <string name="add_new_item">Add a new item</string>
     <string name="manage_clips">You can manage or add clips here for quick access.</string>
+    <string name="clip_text">Clip text</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Usuń</string>
     <string name="keycode_mode_change">Zmień typ klawiatury</string>

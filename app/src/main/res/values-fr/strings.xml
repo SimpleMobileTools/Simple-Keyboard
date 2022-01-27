@@ -6,7 +6,7 @@
     <string name="change_keyboard">Changer de clavier</string>
     <!-- Clipboard -->
     <string name="manage_clipboard_items">Manage clipboard items</string>
-    <string name="manage_clipboard_empty">Your clipboard is empty</string>
+    <string name="manage_clipboard_empty">Your clipboard is empty.</string>
     <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
     <string name="clear_clipboard_data">Effacer les données du presse-papiers</string>
     <string name="clear_clipboard_data_confirmation">Voulez-vous vraiment effacer les données du presse-papiers \?</string>
@@ -15,6 +15,7 @@
     <string name="clipboard_pinned">Épinglé</string>
     <string name="add_new_item">Add a new item</string>
     <string name="manage_clips">You can manage or add clips here for quick access.</string>
+    <string name="clip_text">Clip text</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Supprimer</string>
     <string name="keycode_mode_change">Changer de type de clavier</string>
