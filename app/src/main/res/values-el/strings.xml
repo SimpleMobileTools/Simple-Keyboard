@@ -16,7 +16,7 @@
     <string name="clipboard_pinned">Καρφιτσωμένα</string>
     <string name="add_new_item">Προσθήκη νέου στοιχείου</string>
     <string name="manage_clips">Μπορείτε να διαχειριστείτε ή να προσθέσετε κλιπ εδώ για γρήγορη πρόσβαση.</string>
-    <string name="clip_text"Κλιπ κειμένου</string>
+    <string name="clip_text">Κλιπ κειμένου</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Διαγραφή</string>
     <string name="keycode_mode_change">Αλλαγή τύπου πληκτρολογίου</string>
