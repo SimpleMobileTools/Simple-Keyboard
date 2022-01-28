@@ -5,17 +5,17 @@
     <string name="redirection_note">Ενεργοποιήστε το Απλό πληκτρολόγιο στην επόμενη οθόνη, για να γίνει διαθέσιμο. Πατήστε \'Πίσω\' μόλις ενεργοποιηθεί.</string>
     <string name="change_keyboard">Αλλαγή πληκτρολογίου</string>
     <!-- Clipboard -->
-    <string name="manage_clipboard_items">Manage clipboard items</string>
-    <string name="manage_clipboard_empty">Your clipboard is empty.</string>
-    <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
+    <string name="manage_clipboard_items">Διαχείριση στοιχείων πρόχειρου</string>
+    <string name="manage_clipboard_empty">Το πρόχειρό σας είναι άδειο.</string>
+    <string name="manage_clipboard_label">Μόλις αντιγράψετε κάποιο κείμενο, θα εμφανιστεί εδώ. Μπορείτε επίσης να καρφιτσώσετε κλιπ ώστε να μην εξαφανιστούν αργότερα.</string>
     <string name="clear_clipboard_data">Καθαρισμός δεδομένων πρόχειρου</string>
     <string name="clear_clipboard_data_confirmation">Είστε σίγουροι ότι θέλετε να διαγράψετε τα δεδομένα του πρόχειρου;</string>
     <string name="clipboard">Πρόχειρο</string>
     <string name="clipboard_recent">Πρόσφατα</string>
     <string name="clipboard_pinned">Καρφιτσωμένα</string>
-    <string name="add_new_item">Add a new item</string>
-    <string name="manage_clips">You can manage or add clips here for quick access.</string>
-    <string name="clip_text">Clip text</string>
+    <string name="add_new_item">Προσθήκη νέου στοιχείου</string>
+    <string name="manage_clips">Μπορείτε να διαχειριστείτε ή να προσθέσετε κλιπ εδώ για γρήγορη πρόσβαση.</string>
+    <string name="clip_text"Κλιπ κειμένου</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Διαγραφή</string>
     <string name="keycode_mode_change">Αλλαγή τύπου πληκτρολογίου</string>
@@ -31,7 +31,7 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Εύκολο πληκτρολόγιο για εισαγωγή όλων των κειμένων, ειδικών χαρακτήρων, αριθμών</string>
     <string name="app_long_description">
-        Μια γρήγορη και ελαφριά εφαρμογή πληκτρολογίου που βοηθάει στην κουβέντα με τους φίλους σας ή στην εισαγωγή άλλων κειμένων, αριθμών ή συμβόλων.
+        Μια γρήγορη και ελαφριά εφαρμογή πληκτρολογίου που βοηθάει στην συζήτηση με τους φίλους σας ή στην εισαγωγή άλλων κειμένων, αριθμών ή συμβόλων.
 
         Έρχεται με σχεδιασμό υλικού και σκοτεινό θέμα από προεπιλογή, παρέχει εξαιρετική εμπειρία χρήσης για εύκολη χρήση. Η έλλειψη πρόσβασης στο διαδίκτυο σας προσφέρει περισσότερη ιδιωτικότητα, ασφάλεια και σταθερότητα σε σχέση με άλλες εφαρμογές.
 
