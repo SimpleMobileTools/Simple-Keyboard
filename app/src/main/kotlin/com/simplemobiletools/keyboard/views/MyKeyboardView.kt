@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.RippleDrawable
 import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -26,11 +27,13 @@ import android.widget.TextView
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isPiePlus
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.activities.ManageClipboardItemsActivity
 import com.simplemobiletools.keyboard.activities.SettingsActivity
 import com.simplemobiletools.keyboard.adapters.ClipsKeyboardAdapter
+import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_DELETE
@@ -295,6 +298,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 clipboard_content_placeholder_1.setTextColor(mTextColor)
                 clipboard_content_placeholder_2.setTextColor(mTextColor)
             }
+
+            setupStoredClips()
         }
     }
 
@@ -1316,14 +1321,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun openClipboardManager() {
         mClipboardManagerHolder!!.clipboard_manager_holder.beVisible()
-        val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
-        val clipboardContent = clipboardManager.primaryClip?.getItemAt(0)?.text?.trim()?.toString()
-        if (clipboardContent?.isNotEmpty() == true) {
-            val clip = Clip(0, clipboardContent)
-            val clips = arrayListOf(clip)
-            setupClipsAdapter(clips)
-        } else {
-            setupClipsAdapter(arrayListOf())
+        setupStoredClips()
+    }
+
+    private fun setupStoredClips() {
+        ensureBackgroundThread {
+            val clips = context.clipsDB.getClips().toMutableList() as ArrayList<Clip>
+            Handler(Looper.getMainLooper()).post {
+                setupClipsAdapter(clips)
+            }
         }
     }
 
