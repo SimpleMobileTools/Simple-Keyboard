@@ -12,6 +12,7 @@
     <string name="clear_clipboard_data_confirmation">Ste si istý, že chcete vyčistiť schránku?</string>
     <string name="clipboard">Schránka</string>
     <string name="clipboard_recent">Nedávne</string>
+    <string name="clipboard_current">Súčasné</string>
     <string name="clipboard_pinned">Pripnuté</string>
     <string name="add_new_item">Pridať novú položku</string>
     <string name="manage_clips">Na tomto mieste viete spravovať a pridávať nové pripnutia do schránky pre rýchly prístup.</string>
