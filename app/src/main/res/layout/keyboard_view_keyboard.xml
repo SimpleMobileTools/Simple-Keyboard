@@ -192,7 +192,7 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:padding="@dimen/small_margin"
-                app:layoutManager="com.simplemobiletools.commons.views.MyGridLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                 app:spanCount="2" />
 
         </RelativeLayout>
