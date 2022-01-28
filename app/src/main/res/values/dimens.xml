@@ -4,6 +4,7 @@
     <dimen name="top_small_number_margin_height">18dp</dimen>
     <dimen name="toolbar_height">46dp</dimen>
     <dimen name="toolbar_icon_height">32dp</dimen>
+    <dimen name="clip_drag_icon_height">40dp</dimen>
     <dimen name="key_height">60dp</dimen>
     <dimen name="vertical_correction">-10dp</dimen>
 

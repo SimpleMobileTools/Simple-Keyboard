@@ -16,4 +16,7 @@ interface ClipsDao {
 
     @Query("DELETE FROM clips WHERE id = :id")
     fun delete(id: Long)
+
+    @Query("DELETE FROM clips")
+    fun deleteAll()
 }

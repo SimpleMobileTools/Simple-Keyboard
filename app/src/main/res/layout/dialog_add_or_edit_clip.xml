@@ -12,7 +12,7 @@
         android:layout_marginStart="@dimen/activity_margin"
         android:layout_marginEnd="@dimen/activity_margin"
         android:hint="@string/clip_text"
-        android:inputType="textCapSentences"
+        android:inputType="textCapSentences|textMultiLine"
         android:textCursorDrawable="@null"
         android:textSize="@dimen/bigger_text_size" />
 

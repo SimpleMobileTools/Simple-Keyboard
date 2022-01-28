@@ -1,5 +1,6 @@
 package com.simplemobiletools.keyboard.adapters
 
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -7,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
+import com.simplemobiletools.commons.extensions.applyColorFilter
+import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.interfaces.ItemMoveCallback
 import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
@@ -27,6 +30,7 @@ class ClipsActivityAdapter(
 
     private var touchHelper: ItemTouchHelper? = null
     private var startReorderDragListener: StartReorderDragListener
+    private var wasClipMoved = false
 
     init {
         setupDragListener(true)
@@ -66,7 +70,26 @@ class ClipsActivityAdapter(
 
     override fun getItemKeyPosition(key: Int) = items.indexOfFirst { it.id?.toInt() == key }
 
-    override fun onActionModeDestroyed() {}
+    override fun onActionModeCreated() {
+        notifyDataSetChanged()
+    }
+
+    override fun onActionModeDestroyed() {
+        if (wasClipMoved) {
+            ensureBackgroundThread {
+                activity.clipsDB.deleteAll()
+                items.forEach { clip ->
+                    clip.id = null
+                    clip.id = activity.clipsDB.insertOrUpdate(clip)
+                }
+            }
+
+            activity.runOnUiThread {
+                notifyDataSetChanged()
+            }
+        }
+        wasClipMoved = false
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_clip_in_activity, parent)
 
@@ -123,8 +146,16 @@ class ClipsActivityAdapter(
         view.apply {
             clip_value.text = clip.value
             clip_value.setTextColor(textColor)
+            clip_drag_handle.applyColorFilter(textColor)
 
+            clip_drag_handle.beVisibleIf(selectedKeys.isNotEmpty())
             clip_holder.isSelected = isSelected
+            clip_drag_handle.setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    startReorderDragListener.requestDrag(holder)
+                }
+                false
+            }
         }
     }
 
@@ -139,6 +170,7 @@ class ClipsActivityAdapter(
             }
         }
         notifyItemMoved(fromPosition, toPosition)
+        wasClipMoved = true
     }
 
     override fun onRowSelected(myViewHolder: ViewHolder?) {}

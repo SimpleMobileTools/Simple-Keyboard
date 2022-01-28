@@ -7,14 +7,30 @@
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="@drawable/selector">
+    android:foreground="@drawable/selector"
+    android:paddingEnd="@dimen/normal_margin">
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/clip_value"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/clip_drag_handle"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:maxLines="10"
         android:padding="@dimen/activity_margin"
         android:textSize="@dimen/normal_text_size"
         tools:text="Hello, how are you?" />
+
+    <ImageView
+        android:id="@+id/clip_drag_handle"
+        android:layout_width="@dimen/clip_drag_icon_height"
+        android:layout_height="@dimen/clip_drag_icon_height"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/small_margin"
+        android:src="@drawable/ic_drag_handle_vector"
+        android:visibility="gone" />
 
 </RelativeLayout>
