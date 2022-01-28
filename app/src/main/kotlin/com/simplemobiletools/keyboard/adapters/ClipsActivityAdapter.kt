@@ -15,6 +15,7 @@ import com.simplemobiletools.commons.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.views.bottomactionmenu.BottomActionMenuView
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.dialogs.AddOrEditClipDialog
 import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.models.Clip
 import kotlinx.android.synthetic.main.item_clip_in_activity.view.*
@@ -42,7 +43,9 @@ class ClipsActivityAdapter(
 
     override fun getActionMenuId() = R.menu.cab_clips
 
-    override fun onBottomActionMenuCreated(view: BottomActionMenuView) {}
+    override fun onBottomActionMenuCreated(view: BottomActionMenuView) {
+        view.toggleItemVisibility(R.id.cab_edit, isOneItemSelected())
+    }
 
     override fun actionItemPressed(id: Int) {
         if (selectedKeys.isEmpty()) {
@@ -50,6 +53,7 @@ class ClipsActivityAdapter(
         }
 
         when (id) {
+            R.id.cab_edit -> editClip()
             R.id.cab_delete -> askConfirmDelete()
         }
     }
@@ -75,6 +79,14 @@ class ClipsActivityAdapter(
     }
 
     override fun getItemCount() = items.size
+
+    private fun editClip() {
+        val selectedClip = getSelectedItems().firstOrNull() ?: return
+        AddOrEditClipDialog(activity, selectedClip) {
+            listener.refreshItems()
+            finishActMode()
+        }
+    }
 
     private fun askConfirmDelete() {
         ConfirmationDialog(activity, "", R.string.proceed_with_deletion, R.string.yes, R.string.cancel) {

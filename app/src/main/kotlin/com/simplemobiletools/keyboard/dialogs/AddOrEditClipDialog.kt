@@ -10,11 +10,15 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.models.Clip
-import kotlinx.android.synthetic.main.dialog_add_clip.view.*
+import kotlinx.android.synthetic.main.dialog_add_or_edit_clip.view.*
 
-class AddClipDialog(val activity: BaseSimpleActivity, val callback: () -> Unit) {
+class AddOrEditClipDialog(val activity: BaseSimpleActivity, val originalClip: Clip?, val callback: () -> Unit) {
     init {
-        val view = activity.layoutInflater.inflate(R.layout.dialog_add_clip, null)
+        val view = activity.layoutInflater.inflate(R.layout.dialog_add_or_edit_clip, null).apply {
+            if (originalClip != null) {
+                add_clip_value.setText(originalClip.value)
+            }
+        }
 
         AlertDialog.Builder(activity)
             .setPositiveButton(R.string.ok, null)
@@ -30,6 +34,10 @@ class AddClipDialog(val activity: BaseSimpleActivity, val callback: () -> Unit) 
                         }
 
                         val clip = Clip(null, clipValue)
+                        if (originalClip != null) {
+                            clip.id = originalClip.id
+                        }
+
                         ensureBackgroundThread {
                             activity.clipsDB.insertOrUpdate(clip)
                             activity.runOnUiThread {

@@ -11,7 +11,7 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.adapters.ClipsActivityAdapter
-import com.simplemobiletools.keyboard.dialogs.AddClipDialog
+import com.simplemobiletools.keyboard.dialogs.AddOrEditClipDialog
 import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.models.Clip
 import kotlinx.android.synthetic.main.activity_manage_clipboard_items.*
@@ -29,7 +29,7 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
             underlineText()
             setTextColor(getAdjustedPrimaryColor())
             setOnClickListener {
-                addNewClip()
+                addOrEditClip()
             }
         }
     }
@@ -42,7 +42,7 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.add_clipboard_item -> addNewClip()
+            R.id.add_clipboard_item -> addOrEditClip()
             else -> return super.onOptionsItemSelected(item)
         }
 
@@ -54,6 +54,7 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
             val clips = clipsDB.getClips().toMutableList() as ArrayList<Clip>
             runOnUiThread {
                 ClipsActivityAdapter(this, clips, clipboard_items_list, this) {
+                    addOrEditClip(it as Clip)
                 }.apply {
                     clipboard_items_list.adapter = this
                 }
@@ -65,8 +66,8 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
         }
     }
 
-    private fun addNewClip() {
-        AddClipDialog(this) {
+    private fun addOrEditClip(clip: Clip? = null) {
+        AddOrEditClipDialog(this, clip) {
             updateClips()
         }
     }
