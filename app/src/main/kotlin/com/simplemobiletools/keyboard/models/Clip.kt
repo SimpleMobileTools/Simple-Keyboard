@@ -9,4 +9,4 @@ import androidx.room.PrimaryKey
 data class Clip(
     @PrimaryKey(autoGenerate = true) var id: Long?,
     @ColumnInfo(name = "value") var value: String
-)
+) : ListItem()

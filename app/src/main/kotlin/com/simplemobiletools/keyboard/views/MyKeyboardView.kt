@@ -42,6 +42,8 @@ import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_MODE_
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SHIFT
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SPACE
 import com.simplemobiletools.keyboard.models.Clip
+import com.simplemobiletools.keyboard.models.ClipsSectionLabel
+import com.simplemobiletools.keyboard.models.ListItem
 import kotlinx.android.synthetic.main.keyboard_popup_keyboard.view.*
 import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 import java.util.*
@@ -1326,14 +1328,30 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun setupStoredClips() {
         ensureBackgroundThread {
-            val clips = context.clipsDB.getClips().toMutableList() as ArrayList<Clip>
+            val clips = ArrayList<ListItem>()
+            val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+            val clipboardContent = clipboardManager.primaryClip?.getItemAt(0)?.text?.trim()?.toString()
+            if (clipboardContent?.isNotEmpty() == true) {
+                val section = ClipsSectionLabel(context.getString(R.string.clipboard_current))
+                clips.add(section)
+
+                val clip = Clip(-1, clipboardContent)
+                clips.add(clip)
+            }
+
+            if (clipboardContent?.isNotEmpty() == true) {
+                val section = ClipsSectionLabel(context.getString(R.string.clipboard_pinned))
+                clips.add(section)
+            }
+
+            clips.addAll(context.clipsDB.getClips())
             Handler(Looper.getMainLooper()).post {
                 setupClipsAdapter(clips)
             }
         }
     }
 
-    private fun setupClipsAdapter(clips: ArrayList<Clip>) {
+    private fun setupClipsAdapter(clips: ArrayList<ListItem>) {
         mClipboardManagerHolder?.apply {
             clipboard_content_placeholder_1.beVisibleIf(clips.isEmpty())
             clipboard_content_placeholder_2.beVisibleIf(clips.isEmpty())

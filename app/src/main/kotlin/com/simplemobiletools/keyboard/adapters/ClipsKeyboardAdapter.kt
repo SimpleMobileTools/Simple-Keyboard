@@ -9,10 +9,11 @@ import com.simplemobiletools.commons.extensions.removeUnderlines
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.models.Clip
+import com.simplemobiletools.keyboard.models.ListItem
 import kotlinx.android.synthetic.main.item_clip_on_keyboard.view.*
 import java.util.*
 
-class ClipsKeyboardAdapter(val context: Context, var clips: ArrayList<Clip>, val itemClick: (clip: Clip) -> Unit) :
+class ClipsKeyboardAdapter(val context: Context, var clips: ArrayList<ListItem>, val itemClick: (clip: Clip) -> Unit) :
     RecyclerView.Adapter<ClipsKeyboardAdapter.ViewHolderr>() {
 
     private val layoutInflater = LayoutInflater.from(context)
@@ -27,13 +28,15 @@ class ClipsKeyboardAdapter(val context: Context, var clips: ArrayList<Clip>, val
     override fun onBindViewHolder(holder: ViewHolderr, position: Int) {
         val item = clips[position]
         holder.bindView(item) { itemView ->
-            setupView(itemView, item)
+            when (item) {
+                is Clip -> setupClip(itemView, item)
+            }
         }
     }
 
     override fun getItemCount() = clips.size
 
-    private fun setupView(view: View, clip: Clip) {
+    private fun setupClip(view: View, clip: Clip) {
         view.clip_value.apply {
             text = clip.value
             removeUnderlines()
@@ -42,11 +45,14 @@ class ClipsKeyboardAdapter(val context: Context, var clips: ArrayList<Clip>, val
     }
 
     open inner class ViewHolderr(view: View) : RecyclerView.ViewHolder(view) {
-        fun bindView(clip: Clip, callback: (itemView: View) -> Unit): View {
+        fun bindView(any: Any, callback: (itemView: View) -> Unit): View {
             return itemView.apply {
                 callback(this)
-                setOnClickListener {
-                    itemClick.invoke(clip)
+
+                if (any is Clip) {
+                    setOnClickListener {
+                        itemClick.invoke(any)
+                    }
                 }
             }
         }
