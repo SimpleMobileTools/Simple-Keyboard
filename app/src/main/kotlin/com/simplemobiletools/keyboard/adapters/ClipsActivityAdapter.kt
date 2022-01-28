@@ -142,6 +142,10 @@ class ClipsActivityAdapter(
     private fun getSelectedItems() = items.filter { selectedKeys.contains(it.id!!.toInt()) } as ArrayList<Clip>
 
     private fun setupView(view: View, clip: Clip, holder: ViewHolder) {
+        if (clip.id == null) {
+            return
+        }
+
         val isSelected = selectedKeys.contains(clip.id!!.toInt())
         view.apply {
             clip_value.text = clip.value
