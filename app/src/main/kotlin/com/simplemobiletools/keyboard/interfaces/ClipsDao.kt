@@ -13,4 +13,7 @@ interface ClipsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertOrUpdate(clip: Clip): Long
+
+    @Query("DELETE FROM clips WHERE id = :id")
+    fun delete(id: Long)
 }

@@ -6,18 +6,22 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.dialogs.ConfirmationDialog
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.interfaces.ItemMoveCallback
 import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
+import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.commons.views.bottomactionmenu.BottomActionMenuView
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.models.Clip
 import kotlinx.android.synthetic.main.item_clip_in_activity.view.*
 import java.util.*
 
 class ClipsActivityAdapter(
-    activity: BaseSimpleActivity, var items: ArrayList<Clip>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
+    activity: BaseSimpleActivity, var items: ArrayList<Clip>, recyclerView: MyRecyclerView, val listener: RefreshRecyclerViewListener, itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), ItemTouchHelperContract {
 
     private var touchHelper: ItemTouchHelper? = null
@@ -46,7 +50,7 @@ class ClipsActivityAdapter(
         }
 
         when (id) {
-            R.id.cab_delete -> deleteSelection()
+            R.id.cab_delete -> askConfirmDelete()
         }
     }
 
@@ -56,11 +60,9 @@ class ClipsActivityAdapter(
 
     override fun getItemSelectionKey(position: Int) = items.getOrNull(position)?.id?.toInt()
 
-    override fun getItemKeyPosition(key: Int) = items.indexOfFirst { it.id == key.toLong() }
+    override fun getItemKeyPosition(key: Int) = items.indexOfFirst { it.id?.toInt() == key }
 
-    override fun onActionModeDestroyed() {
-        notifyDataSetChanged()
-    }
+    override fun onActionModeDestroyed() {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_clip_in_activity, parent)
 
@@ -74,9 +76,33 @@ class ClipsActivityAdapter(
 
     override fun getItemCount() = items.size
 
-    private fun deleteSelection() {}
+    private fun askConfirmDelete() {
+        ConfirmationDialog(activity, "", R.string.proceed_with_deletion, R.string.yes, R.string.cancel) {
+            deleteSelection()
+        }
+    }
 
-    private fun getItemWithKey(key: Int): Clip? = items.firstOrNull { it.id == key.toLong() }
+    private fun deleteSelection() {
+        val deleteClips = ArrayList<Clip>(selectedKeys.size)
+        val positions = getSelectedItemPositions()
+
+        getSelectedItems().forEach {
+            deleteClips.add(it)
+        }
+
+        items.removeAll(deleteClips)
+        removeSelectedItems(positions)
+
+        ensureBackgroundThread {
+            deleteClips.forEach { clip ->
+                activity.clipsDB.delete(clip.id!!.toLong())
+            }
+
+            if (items.isEmpty()) {
+                listener.refreshItems()
+            }
+        }
+    }
 
     private fun getSelectedItems() = items.filter { selectedKeys.contains(it.id!!.toInt()) } as ArrayList<Clip>
 

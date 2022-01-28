@@ -8,6 +8,7 @@ import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.underlineText
 import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.adapters.ClipsActivityAdapter
 import com.simplemobiletools.keyboard.dialogs.AddClipDialog
@@ -15,7 +16,7 @@ import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.models.Clip
 import kotlinx.android.synthetic.main.activity_manage_clipboard_items.*
 
-class ManageClipboardItemsActivity : SimpleActivity() {
+class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +53,7 @@ class ManageClipboardItemsActivity : SimpleActivity() {
         ensureBackgroundThread {
             val clips = clipsDB.getClips().toMutableList() as ArrayList<Clip>
             runOnUiThread {
-                ClipsActivityAdapter(this, clips, clipboard_items_list) {
+                ClipsActivityAdapter(this, clips, clipboard_items_list, this) {
                 }.apply {
                     clipboard_items_list.adapter = this
                 }
@@ -68,5 +69,9 @@ class ManageClipboardItemsActivity : SimpleActivity() {
         AddClipDialog(this) {
             updateClips()
         }
+    }
+
+    override fun refreshItems() {
+        updateClips()
     }
 }
