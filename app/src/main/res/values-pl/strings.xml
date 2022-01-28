@@ -14,9 +14,9 @@
     <string name="clipboard_recent">Ostatnie</string>
     <string name="clipboard_current">Current</string>
     <string name="clipboard_pinned">Przypięte</string>
-    <string name="add_new_item">Add a new item</string>
-    <string name="manage_clips">You can manage or add clips here for quick access.</string>
-    <string name="clip_text">Clip text</string>
+    <string name="add_new_item">Dodaj nowy element</string>
+    <string name="manage_clips">Tutaj możesz zarządzać wpisami lub dodawać je, aby mieć do nich szybki dostęp.</string>
+    <string name="clip_text">Tekst wpisu</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Usuń</string>
     <string name="keycode_mode_change">Zmień typ klawiatury</string>
