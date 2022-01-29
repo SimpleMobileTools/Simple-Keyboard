@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.simplemobiletools.commons.extensions.applyColorFilter
+import com.simplemobiletools.commons.extensions.performHapticFeedback
 import com.simplemobiletools.commons.extensions.removeUnderlines
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -101,6 +102,9 @@ class ClipsKeyboardAdapter(
                             context.clipsDB.insertOrUpdate(clip)
                             refreshClipsListener.refreshClips()
                             context.toast(R.string.text_pinned)
+                            if (context.config.vibrateOnKeypress) {
+                                performHapticFeedback()
+                            }
                         }
                     }
                 } else {
