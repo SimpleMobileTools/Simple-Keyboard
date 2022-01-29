@@ -2,6 +2,8 @@ package com.simplemobiletools.keyboard.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.LayerDrawable
+import android.graphics.drawable.RippleDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +35,7 @@ class ClipsKeyboardAdapter(
     private val layoutInflater = LayoutInflater.from(context)
     private val baseConfig = context.config
     private var textColor = baseConfig.textColor
+    private var backgroundColor = baseConfig.backgroundColor
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutId = when (viewType) {
@@ -64,10 +67,16 @@ class ClipsKeyboardAdapter(
     }
 
     private fun setupClip(view: View, clip: Clip) {
-        view.clip_value.apply {
-            text = clip.value
-            removeUnderlines()
-            setTextColor(textColor)
+        view.apply {
+            val rippleBg = clip_holder.background as RippleDrawable
+            val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
+            layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(backgroundColor)
+
+            clip_value.apply {
+                text = clip.value
+                removeUnderlines()
+                setTextColor(textColor)
+            }
         }
     }
 
