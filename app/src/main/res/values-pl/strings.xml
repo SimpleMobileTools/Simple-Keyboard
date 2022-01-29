@@ -19,6 +19,8 @@
     <string name="clip_text">Tekst wpisu</string>
     <string name="pin_text">Pin text</string>
     <string name="text_pinned">Text has been pinned</string>
+    <string name="export_clipboard_items">Export clipboard items</string>
+    <string name="import_clipboard_items">Import clipboard items</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Usuń</string>
     <string name="keycode_mode_change">Zmień typ klawiatury</string>
