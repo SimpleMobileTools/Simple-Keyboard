@@ -1322,7 +1322,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun closeClipboardManager() {
-        mClipboardManagerHolder!!.clipboard_manager_holder.beGone()
+        mClipboardManagerHolder?.clipboard_manager_holder?.beGone()
     }
 
     private fun openClipboardManager() {
@@ -1376,7 +1376,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             vibrateIfNeeded()
         }
 
-        mClipboardManagerHolder!!.clips_list.adapter = adapter
+        mClipboardManagerHolder?.clips_list?.adapter = adapter
     }
 
     private fun closing() {
