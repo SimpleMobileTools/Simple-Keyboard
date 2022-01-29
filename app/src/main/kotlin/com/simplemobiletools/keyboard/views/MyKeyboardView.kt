@@ -1331,7 +1331,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val clips = ArrayList<ListItem>()
             val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
             val clipboardContent = clipboardManager.primaryClip?.getItemAt(0)?.text?.trim()?.toString()
-            if (clipboardContent?.isNotEmpty() == true) {
+
+            val pinnedClips = context.clipsDB.getClips()
+            val isCurrentClipPinnedToo = pinnedClips.any { clipboardContent?.isNotEmpty() == true && it.value.trim() == clipboardContent }
+            if (!isCurrentClipPinnedToo && clipboardContent?.isNotEmpty() == true) {
                 val section = ClipsSectionLabel(context.getString(R.string.clipboard_current))
                 clips.add(section)
 
@@ -1339,12 +1342,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 clips.add(clip)
             }
 
-            if (clipboardContent?.isNotEmpty() == true) {
+            if (!isCurrentClipPinnedToo && clipboardContent?.isNotEmpty() == true) {
                 val section = ClipsSectionLabel(context.getString(R.string.clipboard_pinned))
                 clips.add(section)
             }
 
-            clips.addAll(context.clipsDB.getClips())
+            clips.addAll(pinnedClips)
             Handler(Looper.getMainLooper()).post {
                 setupClipsAdapter(clips)
             }
