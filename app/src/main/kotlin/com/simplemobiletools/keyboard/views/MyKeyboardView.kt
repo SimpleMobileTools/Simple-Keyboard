@@ -272,7 +272,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             if (changedView == mini_keyboard_view) {
                 val previewBackground = background as LayerDrawable
                 previewBackground.findDrawableByLayerId(R.id.button_background_shape).applyColorFilter(mBackgroundColor.darkenColor(4))
-                previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(mBackgroundColor.lightenColor())
+                previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(getPreviewStrokeColor())
                 background = previewBackground
             } else {
                 background.applyColorFilter(mBackgroundColor.darkenColor(2))
@@ -819,7 +819,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         val previewBackground = mPreviewText!!.background as LayerDrawable
         previewBackground.findDrawableByLayerId(R.id.button_background_shape).applyColorFilter(mBackgroundColor.darkenColor(4))
-        previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(mBackgroundColor.lightenColor())
+        previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(getPreviewStrokeColor())
 
         mPreviewText!!.background = previewBackground
         mPreviewText!!.setTextColor(mTextColor)
@@ -1377,6 +1377,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         mClipboardManagerHolder?.clips_list?.adapter = adapter
+    }
+
+    // stroke is usually the lighter version of the background color, but if it becomes white or black, it might be invisible. So use light grey there.
+    private fun getPreviewStrokeColor(): Int {
+        var strokeColor = mBackgroundColor.lightenColor()
+        if (strokeColor == Color.WHITE || strokeColor == Color.BLACK) {
+            strokeColor = resources.getColor(R.color.divider_grey)
+        }
+        return strokeColor
     }
 
     private fun closing() {
