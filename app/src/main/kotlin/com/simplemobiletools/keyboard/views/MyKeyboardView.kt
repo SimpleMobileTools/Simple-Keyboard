@@ -260,6 +260,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
         super.onVisibilityChanged(changedView, visibility)
+        closeClipboardManager()
+
         if (visibility == VISIBLE) {
             mTextColor = context.config.textColor
             mBackgroundColor = context.config.backgroundColor
