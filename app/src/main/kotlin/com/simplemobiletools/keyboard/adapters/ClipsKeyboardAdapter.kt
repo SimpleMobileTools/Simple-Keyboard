@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.removeUnderlines
+import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.clipsDB
@@ -82,6 +83,7 @@ class ClipsKeyboardAdapter(
                 applyColorFilter(textColor)
 
                 if (sectionLabel.isCurrent) {
+                    setOnLongClickListener { context.toast(R.string.pin_text); true; }
                     setImageDrawable(resources.getDrawable(R.drawable.ic_pin))
                     setOnClickListener {
                         ensureBackgroundThread {
@@ -89,6 +91,7 @@ class ClipsKeyboardAdapter(
                             val clip = Clip(null, currentClip)
                             context.clipsDB.insertOrUpdate(clip)
                             refreshClipsListener.refreshClips()
+                            context.toast(R.string.text_pinned)
                         }
                     }
                 } else {
