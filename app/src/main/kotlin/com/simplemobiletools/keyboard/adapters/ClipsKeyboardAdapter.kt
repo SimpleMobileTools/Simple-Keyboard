@@ -19,23 +19,23 @@ import kotlinx.android.synthetic.main.item_section_label.view.*
 import java.util.*
 
 class ClipsKeyboardAdapter(val context: Context, var items: ArrayList<ListItem>, val itemClick: (clip: Clip) -> Unit) :
-    RecyclerView.Adapter<ClipsKeyboardAdapter.ViewHolderr>() {
+    RecyclerView.Adapter<ClipsKeyboardAdapter.ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
     private val baseConfig = context.config
     private var textColor = baseConfig.textColor
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderr {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutId = when (viewType) {
             ITEM_SECTION_LABEL -> R.layout.item_section_label
             else -> R.layout.item_clip_on_keyboard
         }
 
         val view = layoutInflater.inflate(layoutId, parent, false)
-        return ViewHolderr(view)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolderr, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.bindView(item) { itemView ->
             when (item) {
@@ -69,7 +69,7 @@ class ClipsKeyboardAdapter(val context: Context, var items: ArrayList<ListItem>,
         }
     }
 
-    open inner class ViewHolderr(view: View) : RecyclerView.ViewHolder(view) {
+    open inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindView(any: Any, callback: (itemView: View) -> Unit): View {
             return itemView.apply {
                 callback(this)
