@@ -4,6 +4,7 @@
     <string name="app_launcher_name">Teclado</string>
     <string name="redirection_note">Por favor habilite o Simple Keyboard no próximo ecrã para o tornar disponível. Depois prima \'Voltar\'.</string>
     <string name="change_keyboard">Trocar de teclado</string>
+    <!-- Clipboard -->
     <string name="manage_clipboard_items">Gerir itens da Área de transferência</string>
     <string name="manage_clipboard_empty">Área de transferência vazia.</string>
     <string name="manage_clipboard_label">Assim que algum texto for copiado será apresentado aqui. Pode fixar entradas para que não desapareçam.</string>
@@ -16,14 +17,23 @@
     <string name="add_new_item">Adicionar um novo item</string>
     <string name="manage_clips">Aqui, pode gerir ou adicionar entradas rapidamente.</string>
     <string name="clip_text">Entrada de texto</string>
+    <!-- Accessibility -->
     <string name="keycode_delete">Apagar</string>
     <string name="keycode_mode_change">Alterar o tipo de teclado</string>
+    <string name="keycode_shift">shift</string>
+    <string name="keycode_enter">enter</string>
+    <!-- Settings -->
     <string name="show_clipboard_content">Mostrar o conteúdo da Área de transferência se disponível</string>
     <string name="show_popup">Mostrar notificação pop-up ao premir tecla</string>
     <string name="vibrate_on_keypress">Vibrar ao premir tecla</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Simple Keyboard – Teclado</string>
+    <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Teclado para todo o tipo de texto, caractéres especiais e números</string>
-    <string name="keycode_shift">shift</string>
-    <string name="keycode_enter">enter</string>
     <string name="app_long_description"> ⋅ Um teclado ágil e veloz para introdução de todo o tipo de texto, números e simbolos. Em Material Design num tema escuro por definição. Não requer acesso à Internet o que lhe confere mais privacidade, segurança e estabilidade. Não contém anúncios nem permissões desnecessárias. É totalmente open source e permite personalização de cores a gosto. <b>Consulte o conjunto completo das aplicações Simple Tools:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
 </resources>
