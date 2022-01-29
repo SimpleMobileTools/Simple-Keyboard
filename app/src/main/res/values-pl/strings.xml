@@ -12,7 +12,7 @@
     <string name="clear_clipboard_data_confirmation">Czy wyczyścić dane schowka\?</string>
     <string name="clipboard">Schowek</string>
     <string name="clipboard_recent">Ostatnie</string>
-    <string name="clipboard_current">Current</string>
+    <string name="clipboard_current">Bieżący</string>
     <string name="clipboard_pinned">Przypięte</string>
     <string name="add_new_item">Dodaj nowy element</string>
     <string name="manage_clips">Tutaj możesz zarządzać wpisami lub dodawać je, aby mieć do nich szybki dostęp.</string>

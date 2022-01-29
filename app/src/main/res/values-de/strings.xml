@@ -5,18 +5,18 @@
     <string name="redirection_note">Bitte aktivieren Sie Schlichte Tastatur auf dem nächsten Bildschirm, damit sie als Tastatur verfügbar ist. Drücken Sie nach der Aktivierung „Zurück“.</string>
     <string name="change_keyboard">Tastatur wechseln</string>
     <!-- Clipboard -->
-    <string name="manage_clipboard_items">Manage clipboard items</string>
-    <string name="manage_clipboard_empty">Your clipboard is empty.</string>
-    <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
+    <string name="manage_clipboard_items">Elementen der Zwischenablage verwalten</string>
+    <string name="manage_clipboard_empty">Ihre Zwischenablage ist leer.</string>
+    <string name="manage_clipboard_label">Sobald Sie einen Text kopieren, wird er hier angezeigt. Sie können auch Clips anheften, damit sie später nicht verschwinden.</string>
     <string name="clear_clipboard_data">Daten in der Zwischenablage löschen</string>
     <string name="clear_clipboard_data_confirmation">Sind Sie sicher, dass Sie die Daten in der Zwischenablage löschen wollen\?</string>
     <string name="clipboard">Clipboard</string>
     <string name="clipboard_recent">Recent</string>
-    <string name="clipboard_current">Current</string>
-    <string name="clipboard_pinned">Pinned</string>
-    <string name="add_new_item">Add a new item</string>
-    <string name="manage_clips">You can manage or add clips here for quick access.</string>
-    <string name="clip_text">Clip text</string>
+    <string name="clipboard_current">Aktuell</string>
+    <string name="clipboard_pinned">Angeheftet</string>
+    <string name="add_new_item">Eine neue Element hinzufügen</string>
+    <string name="manage_clips">Hier können Sie Clips verwalten oder hinzufügen, um schnell darauf zugreifen zu können.</string>
+    <string name="clip_text">Text ausschneiden</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Löschen</string>
     <string name="keycode_mode_change">Tastaturtyp ändern</string>
@@ -24,14 +24,14 @@
     <string name="keycode_enter">Eingabe</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Inhalt der Zwischenablage anzeigen, falls vorhanden</string>
-    <string name="show_popup">Show a popup on keypress</string>
-    <string name="vibrate_on_keypress">Vibrate on keypress</string>
+    <string name="show_popup">Ein Popup bei Tastendruck anzeigen</string>
+    <string name="vibrate_on_keypress">Bei Tastendruck vibrieren</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Schlichte Tastatur</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Schlichte Tastatur zum Einfügen aller Arten von Texten, Sonderzeichen und Zahlen</string>
-    <string name="app_long_description">Eine schnelle, leichtgewichtige Tastatur-Anwendung, die Ihnen hilft, mit Ihren Freunden zu chatten oder beliebige andere Texte, Zahlen oder Symbole einzufügen. Sie kommt standardmäßig mit Material Design und dunklem Thema und bietet eine großartige Benutzererfahrung für eine einfache Nutzung. Der fehlende Internetzugang bietet Ihnen mehr Privatsphäre, Sicherheit und Stabilität als andere Anwendungen. Enthält keine Werbung oder unnötige Berechtigungen. Es ist vollständig quelloffen, bietet anpassbare Farben. <b>Hier finden Sie die gesamte Palette der Simple Tools:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
+    <string name="app_long_description"> Eine schnelle, leichtgewichtige Tastatur-Anwendung, die Ihnen hilft, mit Ihren Freunden zu chatten oder beliebige andere Texte, Zahlen oder Symbole einzufügen. Sie kommt standardmäßig mit Material Design und dunklem Thema und bietet eine großartige Benutzererfahrung für eine einfache Nutzung. Der fehlende Internetzugang bietet Ihnen mehr Privatsphäre, Sicherheit und Stabilität als andere Anwendungen. Enthält keine Werbung oder unnötige Berechtigungen. Es ist vollständig quelloffen, bietet anpassbare Farben. <b>Hier finden Sie die gesamte Palette der Simple Tools:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
