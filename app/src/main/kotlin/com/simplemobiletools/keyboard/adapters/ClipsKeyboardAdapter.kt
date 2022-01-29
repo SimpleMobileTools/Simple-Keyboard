@@ -109,6 +109,7 @@ class ClipsKeyboardAdapter(
                     }
                 } else {
                     setImageDrawable(resources.getDrawable(R.drawable.ic_pin_filled))
+                    background = null   // avoid doing any animations on clicking clipboard_manager_holder
                 }
             }
         }
