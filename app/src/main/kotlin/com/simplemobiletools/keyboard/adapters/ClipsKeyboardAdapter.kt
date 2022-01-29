@@ -1,16 +1,22 @@
 package com.simplemobiletools.keyboard.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.removeUnderlines
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.extensions.config
+import com.simplemobiletools.keyboard.extensions.getCurrentClip
 import com.simplemobiletools.keyboard.helpers.ITEM_CLIP
 import com.simplemobiletools.keyboard.helpers.ITEM_SECTION_LABEL
+import com.simplemobiletools.keyboard.interfaces.RefreshClipsListener
 import com.simplemobiletools.keyboard.models.Clip
 import com.simplemobiletools.keyboard.models.ClipsSectionLabel
 import com.simplemobiletools.keyboard.models.ListItem
@@ -18,8 +24,10 @@ import kotlinx.android.synthetic.main.item_clip_on_keyboard.view.*
 import kotlinx.android.synthetic.main.item_section_label.view.*
 import java.util.*
 
-class ClipsKeyboardAdapter(val context: Context, var items: ArrayList<ListItem>, val itemClick: (clip: Clip) -> Unit) :
-    RecyclerView.Adapter<ClipsKeyboardAdapter.ViewHolder>() {
+class ClipsKeyboardAdapter(
+    val context: Context, var items: ArrayList<ListItem>, val refreshClipsListener: RefreshClipsListener,
+    val itemClick: (clip: Clip) -> Unit
+) : RecyclerView.Adapter<ClipsKeyboardAdapter.ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
     private val baseConfig = context.config
@@ -62,10 +70,31 @@ class ClipsKeyboardAdapter(val context: Context, var items: ArrayList<ListItem>,
         }
     }
 
-    private fun setupSection(view: View, label: ClipsSectionLabel) {
-        view.clips_section_label.apply {
-            text = label.value
-            setTextColor(textColor)
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun setupSection(view: View, sectionLabel: ClipsSectionLabel) {
+        view.apply {
+            clips_section_label.apply {
+                text = sectionLabel.value
+                setTextColor(textColor)
+            }
+
+            clips_section_icon.apply {
+                applyColorFilter(textColor)
+
+                if (sectionLabel.isCurrent) {
+                    setImageDrawable(resources.getDrawable(R.drawable.ic_pin))
+                    setOnClickListener {
+                        ensureBackgroundThread {
+                            val currentClip = context.getCurrentClip() ?: return@ensureBackgroundThread
+                            val clip = Clip(null, currentClip)
+                            context.clipsDB.insertOrUpdate(clip)
+                            refreshClipsListener.refreshClips()
+                        }
+                    }
+                } else {
+                    setImageDrawable(resources.getDrawable(R.drawable.ic_pin_filled))
+                }
+            }
         }
     }
 

@@ -35,12 +35,14 @@ import com.simplemobiletools.keyboard.activities.SettingsActivity
 import com.simplemobiletools.keyboard.adapters.ClipsKeyboardAdapter
 import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.extensions.config
+import com.simplemobiletools.keyboard.extensions.getCurrentClip
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_DELETE
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_ENTER
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_MODE_CHANGE
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SHIFT
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SPACE
+import com.simplemobiletools.keyboard.interfaces.RefreshClipsListener
 import com.simplemobiletools.keyboard.models.Clip
 import com.simplemobiletools.keyboard.models.ClipsSectionLabel
 import com.simplemobiletools.keyboard.models.ListItem
@@ -366,6 +368,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             if (clipboardContent?.isNotEmpty() == true) {
                 handleClipboard()
             }
+            setupStoredClips()
         }
 
         mClipboardManagerHolder!!.apply {
@@ -600,8 +603,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun handleClipboard() {
         if (mToolbarHolder != null && mPopupParent.id != R.id.mini_keyboard_view) {
-            val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
-            val clipboardContent = clipboardManager.primaryClip?.getItemAt(0)?.text?.trim()
+            val clipboardContent = context.getCurrentClip()
             if (clipboardContent?.isNotEmpty() == true) {
                 mToolbarHolder?.apply {
                     clipboard_value.apply {
@@ -1331,13 +1333,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private fun setupStoredClips() {
         ensureBackgroundThread {
             val clips = ArrayList<ListItem>()
-            val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
-            val clipboardContent = clipboardManager.primaryClip?.getItemAt(0)?.text?.trim()?.toString()
+            val clipboardContent = context.getCurrentClip()
 
             val pinnedClips = context.clipsDB.getClips()
             val isCurrentClipPinnedToo = pinnedClips.any { clipboardContent?.isNotEmpty() == true && it.value.trim() == clipboardContent }
+
             if (!isCurrentClipPinnedToo && clipboardContent?.isNotEmpty() == true) {
-                val section = ClipsSectionLabel(context.getString(R.string.clipboard_current))
+                val section = ClipsSectionLabel(context.getString(R.string.clipboard_current), true)
                 clips.add(section)
 
                 val clip = Clip(-1, clipboardContent)
@@ -1345,7 +1347,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             if (!isCurrentClipPinnedToo && clipboardContent?.isNotEmpty() == true) {
-                val section = ClipsSectionLabel(context.getString(R.string.clipboard_pinned))
+                val section = ClipsSectionLabel(context.getString(R.string.clipboard_pinned), false)
                 clips.add(section)
             }
 
@@ -1363,7 +1365,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             clips_list.beVisibleIf(clips.isNotEmpty())
         }
 
-        val adapter = ClipsKeyboardAdapter(context, clips) { clip ->
+        val refreshClipsListener = object : RefreshClipsListener {
+            override fun refreshClips() {
+                setupStoredClips()
+            }
+        }
+
+        val adapter = ClipsKeyboardAdapter(context, clips, refreshClipsListener) { clip ->
             mOnKeyboardActionListener!!.onText(clip.value)
             vibrateIfNeeded()
         }
