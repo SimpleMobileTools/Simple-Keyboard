@@ -282,7 +282,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
             layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(mBackgroundColor)
 
+            val wasDarkened = mBackgroundColor != mBackgroundColor.darkenColor()
             mToolbarHolder?.apply {
+                top_keyboard_divider.beGoneIf(wasDarkened)
+
                 background = ColorDrawable(mBackgroundColor.darkenColor())
                 clipboard_value.apply {
                     background = rippleBg
@@ -296,6 +299,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             mClipboardManagerHolder?.apply {
+                top_clipboard_divider.beGoneIf(wasDarkened)
                 clipboard_manager_holder.background = ColorDrawable(mBackgroundColor.darkenColor())
                 clipboard_manager_close.applyColorFilter(mTextColor)
                 clipboard_manager_manage.applyColorFilter(mTextColor)
