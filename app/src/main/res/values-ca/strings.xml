@@ -12,7 +12,7 @@
     <string name="clear_clipboard_data_confirmation">Esteu segur que voleu netejar les dades del porta-retalls\?</string>
     <string name="clipboard">Clipboard</string>
     <string name="clipboard_recent">Recent</string>
-    <string name="clipboard_current">Current</string>
+    <string name="clipboard_current">Actual</string>
     <string name="clipboard_pinned">Fixat</string>
     <string name="add_new_item">Afegeix un element nou</string>
     <string name="manage_clips">Podeu gestionar o afegir clips aquí per accedir-hi ràpidament.</string>
