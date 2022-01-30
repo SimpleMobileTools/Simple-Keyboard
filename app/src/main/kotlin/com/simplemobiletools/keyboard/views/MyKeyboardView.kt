@@ -149,7 +149,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var ignoreTouches = false
 
     private var mKeyBackground: Drawable? = null
-    private val mDistances = IntArray(MAX_NEARBY_KEYS)
 
     private var mToolbarHolder: View? = null
     private var mClipboardManagerHolder: View? = null
@@ -679,12 +678,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
     }
 
-    private fun getKeyIndices(x: Int, y: Int, allKeys: IntArray?): Int {
+    private fun getKeyIndices(x: Int, y: Int): Int {
         val keys = mKeys
         var primaryIndex = NOT_A_KEY
         var closestKey = NOT_A_KEY
         var closestKeyDist = mProximityThreshold + 1
-        Arrays.fill(mDistances, Int.MAX_VALUE)
         val nearestKeyIndices = mKeyboard!!.getNearestKeys(x, y)
         val keyCount = nearestKeyIndices.size
 
@@ -697,34 +695,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             if (isInside && key.code > KEYCODE_SPACE) {
-                // Find insertion point
-                val nCodes = 1
                 if (dist < closestKeyDist) {
                     closestKeyDist = dist
                     closestKey = nearestKeyIndices[i]
-                }
-
-                if (allKeys == null) {
-                    continue
-                }
-
-                for (j in mDistances.indices) {
-                    if (mDistances[j] > dist) {
-                        // Make space for nCodes codes
-                        System.arraycopy(
-                            mDistances, j, mDistances, j + nCodes,
-                            mDistances.size - j - nCodes
-                        )
-
-                        System.arraycopy(
-                            allKeys, j, allKeys, j + nCodes,
-                            allKeys.size - j - nCodes
-                        )
-
-                        allKeys[j] = key.code
-                        mDistances[j] = dist
-                        break
-                    }
                 }
             }
         }
@@ -739,9 +712,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private fun detectAndSendKey(index: Int, x: Int, y: Int, eventTime: Long) {
         if (index != NOT_A_KEY && index < mKeys.size) {
             val key = mKeys[index]
-            val codes = IntArray(MAX_NEARBY_KEYS)
-            Arrays.fill(codes, NOT_A_KEY)
-            getKeyIndices(x, y, codes)
+            getKeyIndices(x, y)
             mOnKeyboardActionListener!!.onKey(key.code)
             mLastTapTime = eventTime
         }
@@ -1128,7 +1099,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         val action = me.actionMasked
         val eventTime = me.eventTime
-        val keyIndex = getKeyIndices(touchX, touchY, null)
+        val keyIndex = getKeyIndices(touchX, touchY)
 
         // Ignore all motion events until a DOWN.
         if (mAbortKey && action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_CANCEL) {
@@ -1151,7 +1122,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                 val newPointerX = me.getX(1).toInt()
                 val newPointerY = me.getY(1).toInt()
-                val secondKeyIndex = getKeyIndices(newPointerX, newPointerY, null)
+                val secondKeyIndex = getKeyIndices(newPointerX, newPointerY)
                 showPreview(secondKeyIndex)
                 detectAndSendKey(secondKeyIndex, newPointerX, newPointerY, eventTime)
 
