@@ -187,7 +187,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         private const val REPEAT_INTERVAL = 50 // ~20 keys per second
         private const val REPEAT_START_DELAY = 400
         private val LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout()
-        private const val MAX_NEARBY_KEYS = 12
     }
 
     init {
