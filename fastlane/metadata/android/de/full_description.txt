@@ -1,0 +1,14 @@
+Eine schnelle, leichtgewichtige Tastatur-Anwendung, die Ihnen hilft, mit Ihren Freunden zu chatten oder beliebige andere Texte, Zahlen oder Symbole einzufügen. 
+
+Sie kommt standardmäßig mit Material Design und dunklem Thema und bietet eine großartige Benutzererfahrung für eine einfache Nutzung. 
+
+Der fehlende Internetzugang bietet Ihnen mehr Privatsphäre, Sicherheit und Stabilität als andere Anwendungen. Enthält keine Werbung oder unnötige Berechtigungen. Es ist vollständig quelloffen, bietet anpassbare Farben. 
+
+<b>Hier finden Sie die gesamte Palette der Simple Tools:</b> 
+https://www.simplemobiletools.com 
+
+<b>Facebook:</b> 
+https://www.facebook.com/simplemobiletools 
+
+<b>Reddit:</b> 
+https://www.reddit.com/r/SimpleMobileTools

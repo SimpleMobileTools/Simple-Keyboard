@@ -35,7 +35,9 @@
     <string name="app_title">Simple Keyboard – Teclado</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Teclado para todo o tipo de texto, caractéres especiais e números</string>
-    <string name="app_long_description"> ⋅ Um teclado ágil e veloz para introdução de todo o tipo de texto, números e simbolos. Em Material Design num tema escuro por definição. Não requer acesso à Internet o que lhe confere mais privacidade, segurança e estabilidade. Não contém anúncios nem permissões desnecessárias. É totalmente open source e permite personalização de cores a gosto. <b>Consulte o conjunto completo das aplicações Simple Tools:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
+    <string name="app_long_description">
+
+    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

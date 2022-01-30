@@ -1,0 +1,14 @@
+En hurtig og let tastatur-app, der hjælper dig med at chatte med dine venner eller indsætte andre tekster, tal eller symboler. 
+
+Den leveres med material design og mørkt tema som standard, hvilket giver en fantastisk brugeroplevelse til nemt brug. 
+
+Den manglende internetadgang giver dig mere privatliv, sikkerhed og stabilitet end andre apps. Indeholder ingen annoncer eller unødvendige tilladelser. Den er med helt åben kildekode (open source), byder på tilpassede farver. 
+
+<b>Se hele pakken af Simple Tools her:</b> 
+https://www.simplemobiletools.com 
+
+<b>Facebook:</b> 
+https://www.facebook.com/simplemobiletools 
+
+<b>Reddit:</b> 
+https://www.reddit.com/r/SimpleMobileTools

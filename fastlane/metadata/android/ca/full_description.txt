@@ -1,0 +1,14 @@
+Una aplicació de teclat ràpida i lleugera que ajuda a xatejar amb els vostres amics o a inserir qualsevol altre text, nombre o símbol. 
+
+De manera predeterminada, inclou el «material design» i un tema fosc, proporciona una gran experiència d'usuari per facilitar-ne l'ús. La manca d'accés a Internet us ofereix més privadesa, seguretat i estabilitat que altres aplicacions. 
+
+No conté anuncis ni permisos innecessaris. És totalment de codi obert, proporciona colors personalitzables. 
+
+<b>Consulteu el conjunt complet d'eines simples aquí:</b>
+https://www.simplemobiletools.com 
+
+<b>Facebook:</b> 
+https://www.facebook.com/simplemobiletools
+
+<b>Reddit:</b>
+https://www.reddit.com/r/SimpleMobileTools

@@ -35,7 +35,9 @@
     <string name="app_title">Schlichte Tastatur</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Schlichte Tastatur zum Einfügen aller Arten von Texten, Sonderzeichen und Zahlen</string>
-    <string name="app_long_description"> Eine schnelle, leichtgewichtige Tastatur-Anwendung, die Ihnen hilft, mit Ihren Freunden zu chatten oder beliebige andere Texte, Zahlen oder Symbole einzufügen. Sie kommt standardmäßig mit Material Design und dunklem Thema und bietet eine großartige Benutzererfahrung für eine einfache Nutzung. Der fehlende Internetzugang bietet Ihnen mehr Privatsphäre, Sicherheit und Stabilität als andere Anwendungen. Enthält keine Werbung oder unnötige Berechtigungen. Es ist vollständig quelloffen, bietet anpassbare Farben. <b>Hier finden Sie die gesamte Palette der Simple Tools:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
+    <string name="app_long_description">
+
+    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

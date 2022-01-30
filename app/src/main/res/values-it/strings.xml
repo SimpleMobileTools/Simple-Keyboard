@@ -35,7 +35,22 @@
     <string name="app_title">Tastiera semplice</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Tastiera facile per inserire tutti i tipi di testo, caratteri speciali e numeri</string>
-    <string name="app_long_description"> Un\'app rapida e leggera per la tastiera che aiuta a chattare con i tuoi amici, o a inserire qualsiasi altro testo, numero o simbolo. Viene fornito con Material Design e tema scuro per impostazione predefinita, fornisce una grande esperienza utente per un facile utilizzo. La mancanza di accesso a internet ti dà più privacy, sicurezza e stabilità rispetto ad altre app. Non contiene annunci o permessi inutili. Il codice sorgente è completamente aperto, fornisce colori personalizzabili. <b> Guarda la suite completa di Simple Tools qui:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b> Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
+    <string name="app_long_description">
+        Un\'app rapida e leggera per la tastiera che aiuta a chattare con i tuoi amici, o a inserire qualsiasi altro testo, numero o simbolo.
+
+        Viene fornito con Material Design e tema scuro per impostazione predefinita, fornisce una grande esperienza utente per un facile utilizzo.
+
+        La mancanza di accesso a internet ti dà più privacy, sicurezza e stabilità rispetto ad altre app. Non contiene annunci o permessi inutili. Il codice sorgente è completamente aperto, fornisce colori personalizzabili.
+
+        <b> Guarda la suite completa di Simple Tools qui:</b>
+        https://www.simplemobiletools.com
+
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
+    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
