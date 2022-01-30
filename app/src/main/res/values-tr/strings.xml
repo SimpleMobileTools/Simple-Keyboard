@@ -5,22 +5,22 @@
     <string name="redirection_note">Kullanılabilir bir klavye yapmak için lütfen bir sonraki ekranda Basit Klavye\'yi etkinleştirin. Etkinleştirildikten sonra \'Geri\' düğmesine basın.</string>
     <string name="change_keyboard">Klavye Değiştir</string>
     <!-- Clipboard -->
-    <string name="manage_clipboard_items">Manage clipboard items</string>
-    <string name="manage_clipboard_empty">Your clipboard is empty.</string>
-    <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
+    <string name="manage_clipboard_items">Pano ögelerini yönet</string>
+    <string name="manage_clipboard_empty">Panonuz boş.</string>
+    <string name="manage_clipboard_label">Bir metni kopyaladığınızda, burada görünecektir. Daha sonra kaybolmamaları için panoları da sabitleyebilirsiniz.</string>
     <string name="clear_clipboard_data">Pano verilerini temizle</string>
     <string name="clear_clipboard_data_confirmation">Pano verilerini silmek istediğinizden emin misiniz\?</string>
-    <string name="clipboard">Clipboard</string>
-    <string name="clipboard_recent">Recent</string>
-    <string name="clipboard_current">Current</string>
+    <string name="clipboard">Pano</string>
+    <string name="clipboard_recent">Son kopyalananlar</string>
+    <string name="clipboard_current">Geçerli</string>
     <string name="clipboard_pinned">Sabitlendi</string>
-    <string name="add_new_item">Add a new item</string>
-    <string name="manage_clips">You can manage or add clips here for quick access.</string>
-    <string name="clip_text">Clip text</string>
-    <string name="pin_text">Pin text</string>
-    <string name="text_pinned">Text has been pinned</string>
-    <string name="export_clipboard_items">Export clipboard items</string>
-    <string name="import_clipboard_items">Import clipboard items</string>
+    <string name="add_new_item">Yeni öge ekle</string>
+    <string name="manage_clips">Hızlı erişim için burada panoları yönetebilir veya ekleyebilirsiniz.</string>
+    <string name="clip_text">Metni panoya kopyala</string>
+    <string name="pin_text">Metni sabitle</string>
+    <string name="text_pinned">Metin sabitlendi</string>
+    <string name="export_clipboard_items">Pano ögelerini dışa aktar</string>
+    <string name="import_clipboard_items">Pano ögelerini içe aktar</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Sil</string>
     <string name="keycode_mode_change">Klavye türünü değiştir</string>
