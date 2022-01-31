@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.adapters.ClipsActivityAdapter
@@ -17,13 +17,17 @@ import com.simplemobiletools.keyboard.dialogs.AddOrEditClipDialog
 import com.simplemobiletools.keyboard.dialogs.ExportClipsDialog
 import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.extensions.config
+import com.simplemobiletools.keyboard.helpers.ClipsHelper
 import com.simplemobiletools.keyboard.models.Clip
 import kotlinx.android.synthetic.main.activity_manage_clipboard_items.*
 import java.io.File
+import java.io.InputStream
 import java.io.OutputStream
+import java.util.*
 
 class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListener {
     private val PICK_EXPORT_CLIPS_INTENT = 21
+    private val PICK_IMPORT_CLIPS_SOURCE_INTENT = 22
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +67,9 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
         if (requestCode == PICK_EXPORT_CLIPS_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
             val outputStream = contentResolver.openOutputStream(resultData.data!!)
             exportClipsTo(outputStream)
+        } else if (requestCode == PICK_IMPORT_CLIPS_SOURCE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+            val inputStream = contentResolver.openInputStream(resultData.data!!)
+            parseFile(inputStream)
         }
     }
 
@@ -140,5 +147,48 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
         }
     }
 
-    private fun importClips() {}
+    private fun importClips() {
+        if (isQPlus()) {
+            Intent(Intent.ACTION_GET_CONTENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "text/plain"
+                startActivityForResult(this, PICK_IMPORT_CLIPS_SOURCE_INTENT)
+            }
+        } else {
+            handlePermission(PERMISSION_READ_STORAGE) {
+                if (it) {
+                    FilePickerDialog(this) {
+                        ensureBackgroundThread {
+                            parseFile(File(it).inputStream())
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun parseFile(inputStream: InputStream?) {
+        if (inputStream == null) {
+            toast(R.string.unknown_error_occurred)
+            return
+        }
+
+        var clipsImported = 0
+        ensureBackgroundThread {
+            val token = object : TypeToken<List<String>>() {}.type
+            val clipValues = Gson().fromJson<ArrayList<String>>(inputStream.bufferedReader(), token) ?: ArrayList()
+            clipValues.forEach { value ->
+                val clip = Clip(null, value)
+                if (ClipsHelper(this).insertClip(clip) > 0) {
+                    clipsImported++
+                }
+            }
+
+            runOnUiThread {
+                val msg = if (clipsImported > 0) R.string.importing_successful else R.string.no_new_entries_for_importing
+                toast(msg)
+                updateClips()
+            }
+        }
+    }
 }
