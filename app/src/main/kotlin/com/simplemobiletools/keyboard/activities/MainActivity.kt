@@ -55,11 +55,16 @@ class MainActivity : SimpleActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.settings -> startActivity(Intent(applicationContext, SettingsActivity::class.java))
+            R.id.settings -> launchSettings()
             R.id.about -> launchAbout()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    private fun launchSettings() {
+        hideKeyboard()
+        startActivity(Intent(applicationContext, SettingsActivity::class.java))
     }
 
     private fun launchAbout() {
