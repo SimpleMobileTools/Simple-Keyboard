@@ -36,7 +36,7 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Her türlü metin, özel karakter ve sayı girmek için kolay klavye</string>
     <string name="app_long_description">
-        
+
     </string>
     <!--
         Haven't found some strings? There's more at

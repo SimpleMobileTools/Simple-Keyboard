@@ -20,6 +20,7 @@ import com.simplemobiletools.commons.views.bottomactionmenu.BottomActionMenuView
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.dialogs.AddOrEditClipDialog
 import com.simplemobiletools.keyboard.extensions.clipsDB
+import com.simplemobiletools.keyboard.helpers.ClipsHelper
 import com.simplemobiletools.keyboard.models.Clip
 import kotlinx.android.synthetic.main.item_clip_in_activity.view.*
 import java.util.*
@@ -80,7 +81,7 @@ class ClipsActivityAdapter(
                 activity.clipsDB.deleteAll()
                 items.forEach { clip ->
                     clip.id = null
-                    clip.id = activity.clipsDB.insertOrUpdate(clip)
+                    clip.id = ClipsHelper(activity).insertClip(clip)
                 }
             }
 

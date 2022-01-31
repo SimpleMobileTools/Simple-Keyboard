@@ -9,6 +9,7 @@ import com.simplemobiletools.commons.extensions.value
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.clipsDB
+import com.simplemobiletools.keyboard.helpers.ClipsHelper
 import com.simplemobiletools.keyboard.models.Clip
 import kotlinx.android.synthetic.main.dialog_add_or_edit_clip.view.*
 
@@ -39,7 +40,7 @@ class AddOrEditClipDialog(val activity: BaseSimpleActivity, val originalClip: Cl
                         }
 
                         ensureBackgroundThread {
-                            activity.clipsDB.insertOrUpdate(clip)
+                            ClipsHelper(activity).insertClip(clip)
                             activity.runOnUiThread {
                                 callback()
                                 dismiss()

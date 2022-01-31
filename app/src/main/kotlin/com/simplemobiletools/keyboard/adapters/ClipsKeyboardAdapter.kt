@@ -18,6 +18,7 @@ import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.extensions.getCurrentClip
+import com.simplemobiletools.keyboard.helpers.ClipsHelper
 import com.simplemobiletools.keyboard.helpers.ITEM_CLIP
 import com.simplemobiletools.keyboard.helpers.ITEM_SECTION_LABEL
 import com.simplemobiletools.keyboard.interfaces.RefreshClipsListener
@@ -99,7 +100,7 @@ class ClipsKeyboardAdapter(
                         ensureBackgroundThread {
                             val currentClip = context.getCurrentClip() ?: return@ensureBackgroundThread
                             val clip = Clip(null, currentClip)
-                            context.clipsDB.insertOrUpdate(clip)
+                            ClipsHelper(context).insertClip(clip)
                             refreshClipsListener.refreshClips()
                             context.toast(R.string.text_pinned)
                             if (context.config.vibrateOnKeypress) {
