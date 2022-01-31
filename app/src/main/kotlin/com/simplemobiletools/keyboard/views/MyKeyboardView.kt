@@ -321,6 +321,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             showPreview(NOT_A_KEY)
         }
 
+        closeClipboardManager()
         removeMessages()
         mKeyboard = keyboard
         val keys = mKeyboard!!.mKeys
