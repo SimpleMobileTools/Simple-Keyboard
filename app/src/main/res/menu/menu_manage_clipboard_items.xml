@@ -6,4 +6,12 @@
         android:icon="@drawable/ic_plus_vector"
         android:title="@string/add_new_item"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/import_clips"
+        android:title="@string/import_clipboard_items"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/export_clips"
+        android:title="@string/export_clipboard_items"
+        app:showAsAction="never" />
 </menu>
