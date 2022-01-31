@@ -18,7 +18,7 @@
     <string name="manage_clips">Podeu gestionar o afegir clips aquí per accedir-hi ràpidament.</string>
     <string name="clip_text">Text del clip</string>
     <string name="pin_text">Pin text</string>
-    <string name="text_pinned">Text has been pinned</string>
+    <string name="text_pinned">S\'ha fixat el text</string>
     <string name="export_clipboard_items">Export clipboard items</string>
     <string name="import_clipboard_items">Import clipboard items</string>
     <!-- Accessibility -->
