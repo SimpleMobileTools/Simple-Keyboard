@@ -18,7 +18,7 @@
     <string name="manage_clips">Hier können Sie Clips verwalten oder hinzufügen, um schnell darauf zugreifen zu können.</string>
     <string name="clip_text">Text ausschneiden</string>
     <string name="pin_text">Pin text</string>
-    <string name="text_pinned">Text has been pinned</string>
+    <string name="text_pinned">Der Text wurde angeheftet</string>
     <string name="export_clipboard_items">Export clipboard items</string>
     <string name="import_clipboard_items">Import clipboard items</string>
     <!-- Accessibility -->
@@ -36,9 +36,7 @@
     <string name="app_title">Schlichte Tastatur</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Schlichte Tastatur zum Einfügen aller Arten von Texten, Sonderzeichen und Zahlen</string>
-    <string name="app_long_description">
-
-    </string>
+    <string name="app_long_description"> Eine schnelle, leichtgewichtige Tastatur-App, die Ihnen hilft, mit Ihren Freunden zu chatten oder beliebige andere Texte, Zahlen oder Symbole einzufügen. Sie kommt standardmäßig mit Material Design und dunklem Thema und bietet eine großartige Benutzererfahrung für eine einfache Nutzung. Der fehlende Internetzugang bietet Ihnen mehr Privatsphäre, Sicherheit und Stabilität als andere Apps. Enthält keine Werbung oder unnötige Berechtigungen. Es ist vollständig quelloffen, bietet anpassbare Farben. <b>Hier finden Sie die gesamte Palette der Simple Tools:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
