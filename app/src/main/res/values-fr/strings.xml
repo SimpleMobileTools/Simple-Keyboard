@@ -18,7 +18,7 @@
     <string name="manage_clips">Vous pouvez gérer ou ajouter des clips ici pour un accès rapide.</string>
     <string name="clip_text">Extraire le texte</string>
     <string name="pin_text">Pin text</string>
-    <string name="text_pinned">Text has been pinned</string>
+    <string name="text_pinned">Le texte a été épinglé</string>
     <string name="export_clipboard_items">Export clipboard items</string>
     <string name="import_clipboard_items">Import clipboard items</string>
     <!-- Accessibility -->
