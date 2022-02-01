@@ -64,7 +64,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:3d8d8f29bb'
+    implementation 'com.github.SimpleMobileTools:Simple-Commons:fe2610738c'
 
     kapt 'androidx.room:room-compiler:2.3.0'
     implementation 'androidx.room:room-runtime:2.3.0'
