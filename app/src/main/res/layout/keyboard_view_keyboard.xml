@@ -15,40 +15,27 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/settings_cog"
+            android:id="@+id/clipboard_clear"
             android:layout_width="@dimen/toolbar_icon_height"
             android:layout_height="@dimen/toolbar_icon_height"
             android:layout_marginStart="@dimen/medium_margin"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/settings"
+            android:contentDescription="@string/clear_clipboard_data"
             android:padding="@dimen/small_margin"
-            android:src="@drawable/ic_settings_cog_vector"
+            android:src="@drawable/ic_delete_vector"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/pinned_clipboard_items"
-            android:layout_width="@dimen/toolbar_icon_height"
-            android:layout_height="@dimen/toolbar_icon_height"
-            android:layout_marginStart="@dimen/medium_margin"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/settings"
-            android:padding="@dimen/small_margin"
-            android:src="@drawable/ic_clipboard_vector"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/settings_cog"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RelativeLayout
             android:id="@+id/clipboard_value_holder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/normal_margin"
-            android:layout_marginEnd="@dimen/normal_margin"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/clipboard_clear"
-            app:layout_constraintStart_toEndOf="@+id/pinned_clipboard_items"
+            app:layout_constraintEnd_toStartOf="@+id/pinned_clipboard_items"
+            app:layout_constraintStart_toEndOf="@+id/clipboard_clear"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -71,14 +58,27 @@
         </RelativeLayout>
 
         <ImageView
-            android:id="@+id/clipboard_clear"
+            android:id="@+id/pinned_clipboard_items"
             android:layout_width="@dimen/toolbar_icon_height"
             android:layout_height="@dimen/toolbar_icon_height"
             android:layout_marginEnd="@dimen/medium_margin"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/clear_clipboard_data"
+            android:contentDescription="@string/settings"
             android:padding="@dimen/small_margin"
-            android:src="@drawable/ic_delete_vector"
+            android:src="@drawable/ic_clipboard_vector"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/settings_cog"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/settings_cog"
+            android:layout_width="@dimen/toolbar_icon_height"
+            android:layout_height="@dimen/toolbar_icon_height"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/settings"
+            android:padding="@dimen/small_margin"
+            android:src="@drawable/ic_settings_cog_vector"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
