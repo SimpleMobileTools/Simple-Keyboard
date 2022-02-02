@@ -33,7 +33,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
     override fun onInitializeInterface() {
         super.onInitializeInterface()
-        keyboard = MyKeyboard(this, R.xml.keys_letters, enterKeyType)
+        keyboard = MyKeyboard(this, R.xml.keys_letters_english, enterKeyType)
     }
 
     override fun onCreateInputView(): View {
@@ -63,7 +63,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             }
             else -> {
                 keyboardMode = KEYBOARD_LETTERS
-                R.xml.keys_letters
+                R.xml.keys_letters_english
             }
         }
 
@@ -137,7 +137,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     R.xml.keys_symbols
                 } else {
                     keyboardMode = KEYBOARD_LETTERS
-                    R.xml.keys_letters
+                    R.xml.keys_letters_english
                 }
                 keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
                 keyboardView!!.setKeyboard(keyboard!!)
@@ -175,7 +175,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     override fun onActionUp() {
         if (switchToLetters) {
             keyboardMode = KEYBOARD_LETTERS
-            keyboard = MyKeyboard(this, R.xml.keys_letters, enterKeyType)
+            keyboard = MyKeyboard(this, R.xml.keys_letters_english, enterKeyType)
 
             val editorInfo = currentInputEditorInfo
             if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != SHIFT_ON_PERMANENT) {
