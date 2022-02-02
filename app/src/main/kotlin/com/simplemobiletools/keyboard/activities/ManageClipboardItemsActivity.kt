@@ -175,19 +175,23 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
 
         var clipsImported = 0
         ensureBackgroundThread {
-            val token = object : TypeToken<List<String>>() {}.type
-            val clipValues = Gson().fromJson<ArrayList<String>>(inputStream.bufferedReader(), token) ?: ArrayList()
-            clipValues.forEach { value ->
-                val clip = Clip(null, value)
-                if (ClipsHelper(this).insertClip(clip) > 0) {
-                    clipsImported++
+            try {
+                val token = object : TypeToken<List<String>>() {}.type
+                val clipValues = Gson().fromJson<ArrayList<String>>(inputStream.bufferedReader(), token) ?: ArrayList()
+                clipValues.forEach { value ->
+                    val clip = Clip(null, value)
+                    if (ClipsHelper(this).insertClip(clip) > 0) {
+                        clipsImported++
+                    }
                 }
-            }
 
-            runOnUiThread {
-                val msg = if (clipsImported > 0) R.string.importing_successful else R.string.no_new_entries_for_importing
-                toast(msg)
-                updateClips()
+                runOnUiThread {
+                    val msg = if (clipsImported > 0) R.string.importing_successful else R.string.no_new_entries_for_importing
+                    toast(msg)
+                    updateClips()
+                }
+            } catch (e: Exception) {
+                showErrorToast(e)
             }
         }
     }
