@@ -63,7 +63,7 @@
             app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:keyLabel="s"
-            app:popupCharacters="šßš"
+            app:popupCharacters="śßš"
             app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:keyLabel="d"
