@@ -10,10 +10,7 @@ import android.view.inputmethod.EditorInfo.IME_ACTION_NONE
 import android.view.inputmethod.ExtractedTextRequest
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
-import com.simplemobiletools.keyboard.helpers.MyKeyboard
-import com.simplemobiletools.keyboard.helpers.SHIFT_OFF
-import com.simplemobiletools.keyboard.helpers.SHIFT_ON_ONE_CHAR
-import com.simplemobiletools.keyboard.helpers.SHIFT_ON_PERMANENT
+import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.views.MyKeyboardView
 import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 
@@ -216,7 +213,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
     private fun getKeyboardLayoutXML(): Int {
         return when (baseContext.config.keyboardLanguage) {
-            "ru" -> R.xml.keys_letters_russian
+            LANGUAGE_RUSSIAN -> R.xml.keys_letters_russian
             else -> R.xml.keys_letters_english
         }
     }

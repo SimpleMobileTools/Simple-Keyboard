@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settings_scrollview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -126,7 +127,7 @@
                 style="@style/SettingsHolderCheckboxStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ripple_bottom_corners">
+                android:background="@drawable/ripple_background">
 
                 <com.simplemobiletools.commons.views.MyAppCompatCheckbox
                     android:id="@+id/settings_show_popup_on_keypress"
@@ -134,6 +135,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/show_popup" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_keyboard_language_holder"
+                style="@style/SettingsHolderTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_bottom_corners">
+
+                <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/settings_keyboard_language_label"
+                    style="@style/SettingsTextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/keyboard_language" />
+
+                <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/settings_keyboard_language"
+                    style="@style/SettingsTextValueStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/settings_keyboard_language_label"
+                    tools:text="@string/translation_english" />
 
             </RelativeLayout>
         </LinearLayout>

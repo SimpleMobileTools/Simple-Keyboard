@@ -2,6 +2,7 @@ package com.simplemobiletools.keyboard.helpers
 
 import android.content.Context
 import com.simplemobiletools.commons.helpers.BaseConfig
+import java.util.*
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {
@@ -20,7 +21,16 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getString(LAST_EXPORTED_CLIPS_FOLDER, "")!!
         set(lastExportedClipsFolder) = prefs.edit().putString(LAST_EXPORTED_CLIPS_FOLDER, lastExportedClipsFolder).apply()
 
-    var keyboardLanguage: String
-        get() = prefs.getString(KEYBOARD_LANGUAGE, "en")!!
-        set(keyboardLanguage) = prefs.edit().putString(KEYBOARD_LANGUAGE, keyboardLanguage).apply()
+    var keyboardLanguage: Int
+        get() = prefs.getInt(KEYBOARD_LANGUAGE, getDefaultLanguage())
+        set(keyboardLanguage) = prefs.edit().putInt(KEYBOARD_LANGUAGE, keyboardLanguage).apply()
+
+    private fun getDefaultLanguage(): Int {
+        val conf = context.resources.configuration
+        return if (conf.locale.toString().toLowerCase(Locale.getDefault()).startsWith("ru_")) {
+            LANGUAGE_RUSSIAN
+        } else {
+            LANGUAGE_ENGLISH
+        }
+    }
 }

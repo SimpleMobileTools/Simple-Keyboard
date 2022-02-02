@@ -3,9 +3,13 @@ package com.simplemobiletools.keyboard.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
+import com.simplemobiletools.keyboard.helpers.LANGUAGE_ENGLISH
+import com.simplemobiletools.keyboard.helpers.LANGUAGE_RUSSIAN
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 import kotlin.system.exitProcess
@@ -26,6 +30,7 @@ class SettingsActivity : SimpleActivity() {
         setupManageClipboardItems()
         setupVibrateOnKeypress()
         setupShowPopupOnKeypress()
+        setupKeyboardLanguage()
 
         updateTextColors(settings_scrollview)
 
@@ -101,4 +106,26 @@ class SettingsActivity : SimpleActivity() {
             config.showPopupOnKeypress = settings_show_popup_on_keypress.isChecked
         }
     }
+
+    private fun setupKeyboardLanguage() {
+        settings_keyboard_language.text = getKeyboardLanguageText()
+        settings_keyboard_language_holder.setOnClickListener {
+            val items = arrayListOf(
+                RadioItem(LANGUAGE_ENGLISH, getString(R.string.translation_english)),
+                RadioItem(LANGUAGE_RUSSIAN, getString(R.string.translation_russian))
+            )
+
+            RadioGroupDialog(this@SettingsActivity, items, config.keyboardLanguage) {
+                config.keyboardLanguage = it as Int
+                settings_keyboard_language.text = getKeyboardLanguageText()
+            }
+        }
+    }
+
+    fun getKeyboardLanguageText() = getString(
+        when (config.keyboardLanguage) {
+            LANGUAGE_RUSSIAN -> R.string.translation_russian
+            else -> R.string.translation_english
+        }
+    )
 }

@@ -16,3 +16,6 @@ const val KEYBOARD_LANGUAGE = "keyboard_language"
 // differentiate current and pinned clips at the keyboards' Clipboard section
 const val ITEM_SECTION_LABEL = 0
 const val ITEM_CLIP = 1
+
+const val LANGUAGE_ENGLISH = 0
+const val LANGUAGE_RUSSIAN = 1
