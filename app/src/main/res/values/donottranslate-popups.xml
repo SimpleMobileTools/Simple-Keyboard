@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="popup_chars_a">á</string>
+    <string name="popup_chars_b"></string>
+    <string name="popup_chars_c">č</string>
+    <string name="popup_chars_d">ď</string>
+    <string name="popup_chars_e">3é</string>
+    <string name="popup_chars_f"></string>
+    <string name="popup_chars_g"></string>
+    <string name="popup_chars_h"></string>
+    <string name="popup_chars_i">8í</string>
+    <string name="popup_chars_j"></string>
+    <string name="popup_chars_k"></string>
+    <string name="popup_chars_l">ĺľ</string>
+    <string name="popup_chars_m"></string>
+    <string name="popup_chars_n">ňń</string>
+    <string name="popup_chars_o">őöó9ô</string>
+    <string name="popup_chars_p">0</string>
+    <string name="popup_chars_q">1</string>
+    <string name="popup_chars_r">ř4ŕ</string>
+    <string name="popup_chars_s">š</string>
+    <string name="popup_chars_t">5ť</string>
+    <string name="popup_chars_u">ű7üú</string>
+    <string name="popup_chars_v"></string>
+    <string name="popup_chars_w">2</string>
+    <string name="popup_chars_x"></string>
+    <string name="popup_chars_y">6ý</string>
+    <string name="popup_chars_z">ž</string>
+</resources>
