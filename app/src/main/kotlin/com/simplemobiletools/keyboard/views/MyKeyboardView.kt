@@ -182,7 +182,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         private const val MSG_REMOVE_PREVIEW = 1
         private const val MSG_REPEAT = 2
         private const val MSG_LONGPRESS = 3
-        private const val DELAY_AFTER_PREVIEW = 70
+        private const val DELAY_AFTER_PREVIEW = 100
         private const val DEBOUNCE_TIME = 70
         private const val REPEAT_INTERVAL = 50 // ~20 keys per second
         private const val REPEAT_START_DELAY = 400
@@ -778,12 +778,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         if (key.icon != null) {
             mPreviewText!!.setCompoundDrawables(null, null, null, key.icon)
         } else {
-            mPreviewText!!.setCompoundDrawables(null, null, null, null)
-            try {
-                mPreviewText!!.text = adjustCase(key.label)
-            } catch (ignored: Exception) {
-            }
-
             if (key.label.length > 1) {
                 mPreviewText!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, mKeyTextSize.toFloat())
                 mPreviewText!!.typeface = Typeface.DEFAULT_BOLD
@@ -791,13 +785,19 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 mPreviewText!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPreviewTextSizeLarge.toFloat())
                 mPreviewText!!.typeface = Typeface.DEFAULT
             }
+
+            mPreviewText!!.setCompoundDrawables(null, null, null, null)
+            try {
+                mPreviewText!!.text = adjustCase(key.label)
+            } catch (ignored: Exception) {
+            }
         }
 
         val previewBackground = mPreviewText!!.background as LayerDrawable
         previewBackground.findDrawableByLayerId(R.id.button_background_shape).applyColorFilter(mBackgroundColor.darkenColor(4))
         previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(getPreviewStrokeColor())
-
         mPreviewText!!.background = previewBackground
+
         mPreviewText!!.setTextColor(mTextColor)
         mPreviewText!!.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED))
         val popupWidth = Math.max(mPreviewText!!.measuredWidth, key.width)
@@ -837,17 +837,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mPopupPreviewY += popupHeight
         }
 
+        previewPopup.dismiss()
+
         if (key.label.isNotEmpty() && key.code != KEYCODE_MODE_CHANGE && key.code != KEYCODE_SHIFT) {
-            if (previewPopup.isShowing) {
-                previewPopup.update(mPopupPreviewX, mPopupPreviewY, popupWidth, popupHeight)
-            } else {
-                previewPopup.width = popupWidth
-                previewPopup.height = popupHeight
-                previewPopup.showAtLocation(mPopupParent, Gravity.NO_GRAVITY, mPopupPreviewX, mPopupPreviewY)
-            }
+            previewPopup.width = popupWidth
+            previewPopup.height = popupHeight
+            previewPopup.showAtLocation(mPopupParent, Gravity.NO_GRAVITY, mPopupPreviewX, mPopupPreviewY)
             mPreviewText!!.visibility = VISIBLE
-        } else {
-            previewPopup.dismiss()
         }
     }
 
