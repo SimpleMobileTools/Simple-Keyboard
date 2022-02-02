@@ -963,7 +963,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
 
                 val keyboard = if (popupKey.popupCharacters != null) {
-                    MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!)
+                    MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!, popupKey.width)
                 } else {
                     MyKeyboard(context, popupKeyboardId, 0)
                 }

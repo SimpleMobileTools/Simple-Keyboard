@@ -284,8 +284,9 @@ class MyKeyboard {
      * @param context the application or service context
      * @param layoutTemplateResId the layout template file, containing no keys.
      * @param characters the list of characters to display on the keyboard. One key will be created for each character.
+     * @param keyWidth the width of the popup key, make sure it is the same as the key itself
      */
-    constructor(context: Context, layoutTemplateResId: Int, characters: CharSequence) :
+    constructor(context: Context, layoutTemplateResId: Int, characters: CharSequence, keyWidth: Int) :
         this(context, layoutTemplateResId, 0) {
         var x = 0
         var y = 0
@@ -293,7 +294,7 @@ class MyKeyboard {
         mMinWidth = 0
         val row = Row(this)
         row.defaultHeight = mDefaultHeight
-        row.defaultWidth = mDefaultWidth
+        row.defaultWidth = keyWidth
         row.defaultHorizontalGap = mDefaultHorizontalGap
 
         characters.forEachIndexed { index, character ->
