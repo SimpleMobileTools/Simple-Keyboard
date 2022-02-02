@@ -2,69 +2,33 @@
 <Keyboard xmlns:app="http://schemas.android.com/apk/res-auto">
     <Row>
         <Key
-            app:code="126"
             app:keyEdgeFlags="left"
             app:keyLabel="~" />
+        <Key app:keyLabel="±" />
+        <Key app:keyLabel="×" />
+        <Key app:keyLabel="÷" />
+        <Key app:keyLabel="•" />
+        <Key app:keyLabel="°" />
+        <Key app:keyLabel="`" />
+        <Key app:keyLabel="´" />
+        <Key app:keyLabel="{" />
         <Key
-            app:code="177"
-            app:keyLabel="±" />
-        <Key
-            app:code="215"
-            app:keyLabel="×" />
-        <Key
-            app:code="247"
-            app:keyLabel="÷" />
-        <Key
-            app:code="8226"
-            app:keyLabel="•" />
-        <Key
-            app:code="176"
-            app:keyLabel="°" />
-        <Key
-            app:code="96"
-            app:keyLabel="`" />
-        <Key
-            app:code="180"
-            app:keyLabel="´" />
-        <Key
-            app:code="123"
-            app:keyLabel="{" />
-        <Key
-            app:code="125"
             app:keyEdgeFlags="right"
             app:keyLabel="}" />
     </Row>
     <Row>
         <Key
-            app:code="169"
             app:keyEdgeFlags="left"
             app:keyLabel="©" />
+        <Key app:keyLabel="£" />
+        <Key app:keyLabel="€" />
+        <Key app:keyLabel="^" />
+        <Key app:keyLabel="®" />
+        <Key app:keyLabel="¥" />
+        <Key app:keyLabel="_" />
+        <Key app:keyLabel="+" />
+        <Key app:keyLabel="[" />
         <Key
-            app:code="163"
-            app:keyLabel="£" />
-        <Key
-            app:code="8364"
-            app:keyLabel="€" />
-        <Key
-            app:code="94"
-            app:keyLabel="^" />
-        <Key
-            app:code="174"
-            app:keyLabel="®" />
-        <Key
-            app:code="165"
-            app:keyLabel="¥" />
-        <Key
-            app:code="95"
-            app:keyLabel="_" />
-        <Key
-            app:code="43"
-            app:keyLabel="+" />
-        <Key
-            app:code="91"
-            app:keyLabel="[" />
-        <Key
-            app:code="93"
             app:keyEdgeFlags="right"
             app:keyLabel="]" />
     </Row>
@@ -74,27 +38,13 @@
             app:keyEdgeFlags="left"
             app:keyLabel="\?123"
             app:keyWidth="15%p" />
-        <Key
-            app:code="161"
-            app:keyLabel="¡" />
-        <Key
-            app:code="60"
-            app:keyLabel="&lt;" />
-        <Key
-            app:code="62"
-            app:keyLabel="&gt;" />
-        <Key
-            app:code="162"
-            app:keyLabel="¢" />
-        <Key
-            app:code="124"
-            app:keyLabel="|" />
-        <Key
-            app:code="92"
-            app:keyLabel="\\" />
-        <Key
-            app:code="191"
-            app:keyLabel="¿" />
+        <Key app:keyLabel="¡" />
+        <Key app:keyLabel="&lt;" />
+        <Key app:keyLabel="&gt;" />
+        <Key app:keyLabel="¢" />
+        <Key app:keyLabel="|" />
+        <Key app:keyLabel="\\" />
+        <Key app:keyLabel="¿" />
         <Key
             app:code="-5"
             app:isRepeatable="true"
@@ -109,16 +59,13 @@
             app:keyLabel="abc"
             app:keyWidth="15%p" />
         <Key
-            app:code="44"
             app:keyLabel=","
             app:keyWidth="10%p" />
         <Key
             app:code="32"
             app:isRepeatable="true"
             app:keyWidth="45%p" />
-        <Key
-            app:code="46"
-            app:keyLabel="." />
+        <Key app:keyLabel="." />
         <Key
             app:code="-4"
             app:keyEdgeFlags="right"

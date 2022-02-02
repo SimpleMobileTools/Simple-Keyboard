@@ -2,69 +2,33 @@
 <Keyboard xmlns:app="http://schemas.android.com/apk/res-auto">
     <Row>
         <Key
-            app:code="49"
             app:keyEdgeFlags="left"
             app:keyLabel="1" />
+        <Key app:keyLabel="2" />
+        <Key app:keyLabel="3" />
+        <Key app:keyLabel="4" />
+        <Key app:keyLabel="5" />
+        <Key app:keyLabel="6" />
+        <Key app:keyLabel="7" />
+        <Key app:keyLabel="8" />
+        <Key app:keyLabel="9" />
         <Key
-            app:code="50"
-            app:keyLabel="2" />
-        <Key
-            app:code="51"
-            app:keyLabel="3" />
-        <Key
-            app:code="52"
-            app:keyLabel="4" />
-        <Key
-            app:code="53"
-            app:keyLabel="5" />
-        <Key
-            app:code="54"
-            app:keyLabel="6" />
-        <Key
-            app:code="55"
-            app:keyLabel="7" />
-        <Key
-            app:code="56"
-            app:keyLabel="8" />
-        <Key
-            app:code="57"
-            app:keyLabel="9" />
-        <Key
-            app:code="48"
             app:keyEdgeFlags="right"
             app:keyLabel="0" />
     </Row>
     <Row>
         <Key
-            app:code="64"
             app:keyEdgeFlags="left"
             app:keyLabel="\@" />
+        <Key app:keyLabel="\#" />
+        <Key app:keyLabel="$" />
+        <Key app:keyLabel="%" />
+        <Key app:keyLabel="&amp;" />
+        <Key app:keyLabel="*" />
+        <Key app:keyLabel="-" />
+        <Key app:keyLabel="=" />
+        <Key app:keyLabel="(" />
         <Key
-            app:code="35"
-            app:keyLabel="\#" />
-        <Key
-            app:code="36"
-            app:keyLabel="$" />
-        <Key
-            app:code="37"
-            app:keyLabel="%" />
-        <Key
-            app:code="38"
-            app:keyLabel="&amp;" />
-        <Key
-            app:code="42"
-            app:keyLabel="*" />
-        <Key
-            app:code="45"
-            app:keyLabel="-" />
-        <Key
-            app:code="61"
-            app:keyLabel="=" />
-        <Key
-            app:code="40"
-            app:keyLabel="(" />
-        <Key
-            app:code="41"
             app:keyEdgeFlags="right"
             app:keyLabel=")" />
     </Row>
@@ -74,27 +38,13 @@
             app:keyEdgeFlags="left"
             app:keyLabel="=\\&lt;"
             app:keyWidth="15%p" />
-        <Key
-            app:code="33"
-            app:keyLabel="!" />
-        <Key
-            app:code="34"
-            app:keyLabel="&quot;" />
-        <Key
-            app:code="39"
-            app:keyLabel="\'" />
-        <Key
-            app:code="58"
-            app:keyLabel=":" />
-        <Key
-            app:code="59"
-            app:keyLabel=";" />
-        <Key
-            app:code="47"
-            app:keyLabel="/" />
-        <Key
-            app:code="63"
-            app:keyLabel="\?" />
+        <Key app:keyLabel="!" />
+        <Key app:keyLabel="&quot;" />
+        <Key app:keyLabel="\'" />
+        <Key app:keyLabel=":" />
+        <Key app:keyLabel=";" />
+        <Key app:keyLabel="/" />
+        <Key app:keyLabel="\?" />
         <Key
             app:code="-5"
             app:isRepeatable="true"
@@ -109,16 +59,13 @@
             app:keyLabel="abc"
             app:keyWidth="15%p" />
         <Key
-            app:code="44"
             app:keyLabel=","
             app:keyWidth="10%p" />
         <Key
             app:code="32"
             app:isRepeatable="true"
             app:keyWidth="45%p" />
-        <Key
-            app:code="46"
-            app:keyLabel="." />
+        <Key app:keyLabel="." />
         <Key
             app:code="-4"
             app:keyEdgeFlags="right"
