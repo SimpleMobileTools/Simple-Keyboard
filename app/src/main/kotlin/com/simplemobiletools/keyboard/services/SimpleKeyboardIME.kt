@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.EditorInfo.IME_ACTION_NONE
 import android.view.inputmethod.ExtractedTextRequest
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.MyKeyboard
 import com.simplemobiletools.keyboard.helpers.SHIFT_OFF
 import com.simplemobiletools.keyboard.helpers.SHIFT_ON_ONE_CHAR
@@ -33,7 +34,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
     override fun onInitializeInterface() {
         super.onInitializeInterface()
-        keyboard = MyKeyboard(this, R.xml.keys_letters_english, enterKeyType)
+        keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType)
     }
 
     override fun onCreateInputView(): View {
@@ -63,7 +64,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             }
             else -> {
                 keyboardMode = KEYBOARD_LETTERS
-                R.xml.keys_letters_english
+                getKeyboardLayoutXML()
             }
         }
 
@@ -137,7 +138,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     R.xml.keys_symbols
                 } else {
                     keyboardMode = KEYBOARD_LETTERS
-                    R.xml.keys_letters_english
+                    getKeyboardLayoutXML()
                 }
                 keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
                 keyboardView!!.setKeyboard(keyboard!!)
@@ -175,7 +176,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     override fun onActionUp() {
         if (switchToLetters) {
             keyboardMode = KEYBOARD_LETTERS
-            keyboard = MyKeyboard(this, R.xml.keys_letters_english, enterKeyType)
+            keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType)
 
             val editorInfo = currentInputEditorInfo
             if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != SHIFT_ON_PERMANENT) {
@@ -211,5 +212,12 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         }
 
         currentInputConnection?.setSelection(newCursorPosition, newCursorPosition)
+    }
+
+    private fun getKeyboardLayoutXML(): Int {
+        return when (baseContext.config.keyboardLanguage) {
+            "ru" -> R.xml.keys_letters_russian
+            else -> R.xml.keys_letters_english
+        }
     }
 }

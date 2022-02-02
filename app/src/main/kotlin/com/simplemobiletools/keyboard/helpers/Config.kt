@@ -19,4 +19,8 @@ class Config(context: Context) : BaseConfig(context) {
     var lastExportedClipsFolder: String
         get() = prefs.getString(LAST_EXPORTED_CLIPS_FOLDER, "")!!
         set(lastExportedClipsFolder) = prefs.edit().putString(LAST_EXPORTED_CLIPS_FOLDER, lastExportedClipsFolder).apply()
+
+    var keyboardLanguage: String
+        get() = prefs.getString(KEYBOARD_LANGUAGE, "en")!!
+        set(keyboardLanguage) = prefs.edit().putString(KEYBOARD_LANGUAGE, keyboardLanguage).apply()
 }
