@@ -30,6 +30,7 @@
     <string name="show_clipboard_content">Mostrar o conteúdo da Área de transferência se disponível</string>
     <string name="show_popup">Mostrar notificação pop-up ao premir tecla</string>
     <string name="vibrate_on_keypress">Vibrar ao premir tecla</string>
+    <string name="keyboard_language">Keyboard language</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Simple Keyboard – Teclado</string>

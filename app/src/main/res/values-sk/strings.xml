@@ -30,6 +30,7 @@
     <string name="show_clipboard_content">Zobraziť obsah schránky, ak je dostupná</string>
     <string name="show_popup">Zobraziť detail znaku pri stlačení</string>
     <string name="vibrate_on_keypress">Vibrovať pri stlačení</string>
+    <string name="keyboard_language">Jazyk klávesnice</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Jednoduchá klávesnica</string>

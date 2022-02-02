@@ -30,6 +30,7 @@
     <string name="show_clipboard_content">Varsa pano içeriğini göster</string>
     <string name="show_popup">Tuşa basıldığında bir açılır menü göster</string>
     <string name="vibrate_on_keypress">Tuşa basıldığında titret</string>
+    <string name="keyboard_language">Keyboard language</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Basit Klavye</string>

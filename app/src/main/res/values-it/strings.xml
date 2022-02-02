@@ -30,6 +30,7 @@
     <string name="show_clipboard_content">Mostra il contenuto degli appunti se disponibile</string>
     <string name="show_popup">Mostra un popup alla pressione di un tasto</string>
     <string name="vibrate_on_keypress">Vibra premendo un tasto</string>
+    <string name="keyboard_language">Keyboard language</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Tastiera semplice</string>
