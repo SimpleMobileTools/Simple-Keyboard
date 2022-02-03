@@ -102,7 +102,7 @@
         <Key app:keyLabel="b" />
         <Key
             app:keyLabel="n"
-            app:popupCharacters="ňń"
+            app:popupCharacters="ňńñ"
             app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key app:keyLabel="m" />
         <Key
