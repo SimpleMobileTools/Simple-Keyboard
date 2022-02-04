@@ -1293,7 +1293,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         return true
     }
 
-    private fun closeClipboardManager() {
+    fun closeClipboardManager() {
         mClipboardManagerHolder?.clipboard_manager_holder?.beGone()
     }
 
