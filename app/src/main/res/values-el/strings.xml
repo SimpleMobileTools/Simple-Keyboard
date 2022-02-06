@@ -12,15 +12,15 @@
     <string name="clear_clipboard_data_confirmation">Είστε σίγουροι ότι θέλετε να διαγράψετε τα δεδομένα του πρόχειρου;</string>
     <string name="clipboard">Πρόχειρο</string>
     <string name="clipboard_recent">Πρόσφατα</string>
-    <string name="clipboard_current">Current</string>
+    <string name="clipboard_current">Τρέχον</string>
     <string name="clipboard_pinned">Καρφιτσωμένα</string>
     <string name="add_new_item">Προσθήκη νέου στοιχείου</string>
     <string name="manage_clips">Μπορείτε να διαχειριστείτε ή να προσθέσετε κλιπ εδώ για γρήγορη πρόσβαση.</string>
     <string name="clip_text">Κλιπ κειμένου</string>
-    <string name="pin_text">Pin text</string>
-    <string name="text_pinned">Text has been pinned</string>
-    <string name="export_clipboard_items">Export clipboard items</string>
-    <string name="import_clipboard_items">Import clipboard items</string>
+    <string name="pin_text">Καρφίστωμα κειμένου</string>
+    <string name="text_pinned">Το κείμενο έχει καρφιτσωθεί</string>
+    <string name="export_clipboard_items">Εξαγωγή στοιχείων πρόχειρου</string>
+    <string name="import_clipboard_items">Εισαγωγή στοιχείων πρόχειρου</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Διαγραφή</string>
     <string name="keycode_mode_change">Αλλαγή τύπου πληκτρολογίου</string>
@@ -30,10 +30,10 @@
     <string name="show_clipboard_content">Εμφάνιση περιεχομένου πρόχειρου εάν είναι διαθέσιμο</string>
     <string name="show_popup">Εμφάνιση ανάδυσης στο πάτημα πλήκτρων</string>
     <string name="vibrate_on_keypress">Δόνηση στο πάτημα πλήκτρου</string>
-    <string name="keyboard_language">Keyboard language</string>
+    <string name="keyboard_language">Γλώσσα πληκτρολογίου</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Keyboard</string>
+    <string name="app_title">Απλό πληκτρολόγιο</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Εύκολο πληκτρολόγιο για εισαγωγή όλων των κειμένων, ειδικών χαρακτήρων, αριθμών</string>
     <string name="app_long_description">
