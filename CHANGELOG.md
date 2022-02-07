@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.0.2 *(2022-02-07)*
+----------------------------
+
+ * Added a couple new alternative characters at long pressing
+ * Added some translation improvements
+
 Version 5.0.1 *(2022-02-02)*
 ----------------------------
 
