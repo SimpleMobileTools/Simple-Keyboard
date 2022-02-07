@@ -1,5 +1,6 @@
 package com.simplemobiletools.keyboard.adapters
 
+import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,6 @@ import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.MyRecyclerView
-import com.simplemobiletools.commons.views.bottomactionmenu.BottomActionMenuView
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.dialogs.AddOrEditClipDialog
 import com.simplemobiletools.keyboard.extensions.clipsDB
@@ -48,8 +48,10 @@ class ClipsActivityAdapter(
 
     override fun getActionMenuId() = R.menu.cab_clips
 
-    override fun onBottomActionMenuCreated(view: BottomActionMenuView) {
-        view.toggleItemVisibility(R.id.cab_edit, isOneItemSelected())
+    override fun prepareActionMode(menu: Menu) {
+        menu.apply {
+            findItem(R.id.cab_edit).isVisible = isOneItemSelected()
+        }
     }
 
     override fun actionItemPressed(id: Int) {
