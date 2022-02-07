@@ -21,7 +21,7 @@ https://www.reddit.com/r/SimpleMobileTools
 <div style="display:flex;">
 <img alt="App image" src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.jpg" width="30%">
 <img alt="App image" src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.jpg" width="30%">
-<img alt="App image" src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.jpg" width="30%">
+<img alt="App image" src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.jpg" width="30%">
 </div>
 
 
