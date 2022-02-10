@@ -88,6 +88,10 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             return
         }
 
+        if (code != MyKeyboard.KEYCODE_SHIFT) {
+            lastShiftPressTS = 0
+        }
+
         when (code) {
             MyKeyboard.KEYCODE_DELETE -> {
                 if (keyboard!!.mShiftState == SHIFT_ON_ONE_CHAR) {
