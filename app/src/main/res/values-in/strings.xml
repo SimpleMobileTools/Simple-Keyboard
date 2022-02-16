@@ -1,2 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="pin_text">Sematkan teks</string>
+    <string name="show_popup">Tampilkan sebuah popup pada penekanan tombol</string>
+    <string name="app_name">Simple Keyboard</string>
+    <string name="app_launcher_name">Keyboard</string>
+    <string name="redirection_note">Mohon aktifkan Simple Keyboard di layar berikutnya, untuk membuatnya sebagai keyboard yang tersedia. Tekan \'Kembali\' jika diaktifkan.</string>
+    <string name="change_keyboard">Ubah Keyboard</string>
+    <string name="manage_clipboard_items">Kelola item papan klip</string>
+    <string name="manage_clipboard_empty">Papan klip Anda kosong.</string>
+    <string name="clear_clipboard_data">Hapus data papan klip</string>
+    <string name="export_clipboard_items">Ekspor item papan klip</string>
+    <string name="import_clipboard_items">Impor item papan klip</string>
+    <string name="keycode_shift">Shift</string>
+    <string name="vibrate_on_keypress">Getar pada penekanan tombol</string>
+    <string name="manage_clipboard_label">Setelah Anda menyalin teks, itu akan muncul di sini. Anda juga bisa sematkan klip supaya mereka tidak hilang.</string>
+    <string name="clear_clipboard_data_confirmation">Yakin untuk menghapus data papan klip\?</string>
+    <string name="clipboard">Papan klip</string>
+    <string name="clipboard_recent">Terkini</string>
+    <string name="clipboard_current">Saat ini</string>
+    <string name="add_new_item">Tambahkan item baru</string>
+    <string name="manage_clips">Anda dapat mengelola atau menambahkan klip di sini untuk akses cepat.</string>
+    <string name="text_pinned">Teks telah disematkan</string>
+    <string name="keycode_delete">Hapus</string>
+    <string name="keycode_mode_change">Ubah tipe keyboard</string>
+    <string name="keycode_enter">Enter</string>
+    <string name="show_clipboard_content">Tampilkan konten papan klip jika tersedia</string>
+    <string name="keyboard_language">Bahasa keyboard</string>
+    <string name="app_title">Simple Keyboard</string>
+    <string name="clipboard_pinned">Disematkan</string>
+    <string name="clip_text">Teks klip</string>
+    <string name="app_short_description">Keyboard mudah untuk mengisi teks, karakter special dan nomor apa saja</string>
+    <string name="app_long_description"> Aplikasi papan ketik cepat ringan yang membantu mengobrol dengan teman Anda, atau menyisipkan teks, angka, atau simbol lainnya. Muncul dengan desain material dan tema gelap secara default, memberikan pengalaman pengguna yang luar biasa untuk penggunaan yang mudah.
+\n
+\nKurangnya akses internet memberi Anda lebih banyak privasi, keamanan, dan stabilitas daripada aplikasi lain. Tidak mengandung iklan atau izin yang tidak perlu. Ini sepenuhnya sumber-terbuka, menyediakan warna yang dapat disesuaikan.
+\n
+\n<b>Lihat rangkaian lengkap Simple Tools di sini:</b> https://www.simplemobiletools.com
+\n<b>Facebook:</b> https://www.facebook.com/simplemobiletools
+\n<b>Reddit :</b> https://www.reddit.com/r/SimpleMobileTools </string>
+</resources>
