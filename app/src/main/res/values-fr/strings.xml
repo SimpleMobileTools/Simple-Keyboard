@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Clavier simple</string>
     <string name="app_launcher_name">Clavier</string>
-    <string name="redirection_note">Veuillez activer Clavier simple sur l\'écran suivant, pour qu'il soit disponible. Appuyez sur «Retour» une fois activé.</string>
+    <string name="redirection_note">Veuillez activer Clavier simple sur l\'écran suivant, pour qu\'il soit disponible. Appuyez sur «Retour» une fois activé.</string>
     <string name="change_keyboard">Changer de clavier</string>
     <!-- Clipboard -->
     <string name="manage_clipboard_items">Gérer les éléments du presse-papiers</string>
@@ -41,7 +41,7 @@
 
         Il est livré avec un style \"matériel\", un thème sombre par défaut, et une ergonomie permettant une utilisation facile.
 
-        L'inaccessibilité à votre connexion Internet la rend plus confidentielle, sécurisée et stable que les autres applications. Ne contient pas de publicités et ne requiert pas de permissions inutiles.
+        L\'inaccessibilité à votre connexion Internet la rend plus confidentielle, sécurisée et stable que les autres applications. Ne contient pas de publicités et ne requiert pas de permissions inutiles.
 
         Le code source est entièrement libre, et et les couleurs sont personnalisables.
 
