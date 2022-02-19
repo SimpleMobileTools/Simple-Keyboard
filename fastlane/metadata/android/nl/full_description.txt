@@ -1,0 +1,16 @@
+Een snelle en lichtgewicht toetsenbord-app die ideaal is voor het chatten met vrienden, of het invoegen van ieder type tekst, nummers of symbolen. 
+
+De app is ontworpen volgens material design en heeft standaard een donker thema. 
+
+De app heeft geen toegang tot het internet nodig en voorziet van meer privacy, veiligheid en stabiliteit dan andere apps. 
+
+Bevat geen advertenties of onnodige machtigingen. Volledig open-source. Kleuren van de app kunnen worden aangepast.
+
+<b>Probeer ook eens de andere apps van Simple Tools:</b>
+https://www.simplemobiletools.com
+
+<b>Facebook:</b>
+https://www.facebook.com/simplemobiletools
+
+<b>Reddit:</b>
+https://www.reddit.com/r/SimpleMobileTools

@@ -37,13 +37,20 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Keyboard mudah untuk mengisi teks, karakter special dan nomor apa saja</string>
     <string name="app_long_description">
-        Aplikasi papan ketik cepat ringan yang membantu mengobrol dengan teman Anda, atau menyisipkan teks, angka, atau simbol lainnya. Muncul dengan desain material dan tema gelap secara default, memberikan pengalaman pengguna yang luar biasa untuk penggunaan yang mudah.
-\n
-\nKurangnya akses internet memberi Anda lebih banyak privasi, keamanan, dan stabilitas daripada aplikasi lain. Tidak mengandung iklan atau izin yang tidak perlu. Ini sepenuhnya sumber-terbuka, menyediakan warna yang dapat disesuaikan.
-\n
-\n<b>Lihat rangkaian lengkap Simple Tools di sini:</b> https://www.simplemobiletools.com
-\n<b>Facebook:</b> https://www.facebook.com/simplemobiletools
-\n<b>Reddit :</b> https://www.reddit.com/r/SimpleMobileTools 
+        Aplikasi papan ketik cepat ringan yang membantu mengobrol dengan teman Anda, atau menyisipkan teks, angka, atau simbol lainnya.
+
+        Muncul dengan desain material dan tema gelap secara default, memberikan pengalaman pengguna yang luar biasa untuk penggunaan yang mudah.
+
+        Kurangnya akses internet memberi Anda lebih banyak privasi, keamanan, dan stabilitas daripada aplikasi lain. Tidak mengandung iklan atau izin yang tidak perlu. Ini sepenuhnya sumber-terbuka, menyediakan warna yang dapat disesuaikan.
+
+        <b>Lihat rangkaian lengkap Simple Tools di sini:</b>
+        https://www.simplemobiletools.com
+
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
     </string>
     <!--
         Haven't found some strings? There's more at
