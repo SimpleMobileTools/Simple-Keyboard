@@ -64,12 +64,14 @@
         <Key
             app:code="32"
             app:isRepeatable="true"
-            app:keyWidth="45%p" />
-        <Key app:keyLabel="." />
+            app:keyWidth="50%p" />
+        <Key
+            app:keyLabel="."
+            app:keyWidth="10%p" />
         <Key
             app:code="-4"
             app:keyEdgeFlags="right"
             app:keyIcon="@drawable/ic_enter_vector"
-            app:keyWidth="20%p" />
+            app:keyWidth="15%p" />
     </Row>
 </Keyboard>
