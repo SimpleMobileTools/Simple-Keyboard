@@ -678,41 +678,16 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
     }
 
-    private fun getKeyIndices(x: Int, y: Int): Int {
-        val keys = mKeys
-        var primaryIndex = NOT_A_KEY
-        var closestKey = NOT_A_KEY
-        var closestKeyDist = mProximityThreshold + 1
-        val nearestKeyIndices = mKeyboard!!.getNearestKeys(x, y)
-        val keyCount = nearestKeyIndices.size
-
-        for (i in 0 until keyCount) {
-            val key = keys[nearestKeyIndices[i]]
-            val dist = 0
-            val isInside = key.isInside(x, y)
-            if (isInside) {
-                primaryIndex = nearestKeyIndices[i]
-            }
-
-            if (isInside && key.code > KEYCODE_SPACE) {
-                if (dist < closestKeyDist) {
-                    closestKeyDist = dist
-                    closestKey = nearestKeyIndices[i]
-                }
-            }
+    private fun getPressedKeyIndex(x: Int, y: Int): Int {
+        return mKeys.indexOfFirst {
+            it.isInside(x, y)
         }
-
-        if (primaryIndex == NOT_A_KEY) {
-            primaryIndex = closestKey
-        }
-
-        return primaryIndex
     }
 
     private fun detectAndSendKey(index: Int, x: Int, y: Int, eventTime: Long) {
         if (index != NOT_A_KEY && index < mKeys.size) {
             val key = mKeys[index]
-            getKeyIndices(x, y)
+            getPressedKeyIndex(x, y)
             mOnKeyboardActionListener!!.onKey(key.code)
             mLastTapTime = eventTime
         }
@@ -1095,7 +1070,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         val action = me.actionMasked
         val eventTime = me.eventTime
-        val keyIndex = getKeyIndices(touchX, touchY)
+        val keyIndex = getPressedKeyIndex(touchX, touchY)
 
         // Ignore all motion events until a DOWN.
         if (mAbortKey && action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_CANCEL) {
@@ -1118,7 +1093,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                 val newPointerX = me.getX(1).toInt()
                 val newPointerY = me.getY(1).toInt()
-                val secondKeyIndex = getKeyIndices(newPointerX, newPointerY)
+                val secondKeyIndex = getPressedKeyIndex(newPointerX, newPointerY)
                 showPreview(secondKeyIndex)
                 detectAndSendKey(secondKeyIndex, newPointerX, newPointerY, eventTime)
 

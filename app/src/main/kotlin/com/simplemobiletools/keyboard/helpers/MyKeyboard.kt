@@ -6,7 +6,6 @@ import android.content.res.Resources
 import android.content.res.TypedArray
 import android.content.res.XmlResourceParser
 import android.graphics.drawable.Drawable
-import android.util.SparseArray
 import android.util.TypedValue
 import android.util.Xml
 import android.view.inputmethod.EditorInfo
@@ -45,14 +44,10 @@ class MyKeyboard {
     /** Width of the screen available to fit the keyboard  */
     private var mDisplayWidth = 0
 
-    /** What icon should we show at Enter key */
+    /** What icon should we show at Enter key  */
     private var mEnterKeyType = IME_ACTION_NONE
 
-    /** Keyboard mode, or zero, if none.   */
-    private var mCellWidth = 0
-    private var mCellHeight = 0
-    private var mGridNeighbors: SparseArray<IntArray?>? = null
-    private var mProximityThreshold = 0
+    /** Keyboard rows  */
     private val mRows = ArrayList<Row?>()
 
     companion object {
@@ -61,21 +56,11 @@ class MyKeyboard {
         private const val TAG_KEY = "Key"
         private const val EDGE_LEFT = 0x01
         private const val EDGE_RIGHT = 0x02
-        private const val EDGE_TOP = 0x04
-        private const val EDGE_BOTTOM = 0x08
         const val KEYCODE_SHIFT = -1
         const val KEYCODE_MODE_CHANGE = -2
         const val KEYCODE_ENTER = -4
         const val KEYCODE_DELETE = -5
         const val KEYCODE_SPACE = 32
-
-        // Variables for pre-computing nearest keys.
-        private const val GRID_WIDTH = 10
-        private const val GRID_HEIGHT = 5
-        private const val GRID_SIZE = GRID_WIDTH * GRID_HEIGHT
-
-        /** Number of key widths from current touch point to search for nearest keys.  */
-        private const val SEARCH_DISTANCE = 1.8f
 
         fun getDimensionOrFraction(a: TypedArray, index: Int, base: Int, defValue: Int): Int {
             val value = a.peekValue(index) ?: return defValue
@@ -174,7 +159,7 @@ class MyKeyboard {
 
         /**
          * Flags that specify the anchoring to edges of the keyboard for detecting touch events that are just out of the boundary of the key.
-         * This is a bit mask of [MyKeyboard.EDGE_LEFT], [MyKeyboard.EDGE_RIGHT], [MyKeyboard.EDGE_TOP] and [MyKeyboard.EDGE_BOTTOM].
+         * This is a bit mask of [MyKeyboard.EDGE_LEFT], [MyKeyboard.EDGE_RIGHT].
          */
         private var edgeFlags = 0
 
@@ -240,24 +225,10 @@ class MyKeyboard {
         fun isInside(x: Int, y: Int): Boolean {
             val leftEdge = edgeFlags and EDGE_LEFT > 0
             val rightEdge = edgeFlags and EDGE_RIGHT > 0
-            val topEdge = edgeFlags and EDGE_TOP > 0
-            val bottomEdge = edgeFlags and EDGE_BOTTOM > 0
             return ((x >= this.x || leftEdge && x <= this.x + width)
                 && (x < this.x + width || rightEdge && x >= this.x)
-                && (y >= this.y || topEdge && y <= this.y + height)
-                && (y < this.y + height || bottomEdge && y >= this.y))
-        }
-
-        /**
-         * Returns the square of the distance between the center of the key and the given point.
-         * @param x the x-coordinate of the point
-         * @param y the y-coordinate of the point
-         * @return the square of the distance of the point from the center of the key
-         */
-        fun squaredDistanceFrom(x: Int, y: Int): Int {
-            val xDist = this.x + width / 2 - x
-            val yDist = this.y + height / 2 - y
-            return xDist * xDist + yDist * yDist
+                && (y >= this.y && y <= this.y + height)
+                && (y < this.y + height && y >= this.y))
         }
     }
 
@@ -332,60 +303,6 @@ class MyKeyboard {
         return false
     }
 
-    private fun computeNearestNeighbors() {
-        // Round-up so we don't have any pixels outside the grid
-        mCellWidth = (mMinWidth + GRID_WIDTH - 1) / GRID_WIDTH
-        mCellHeight = (mHeight + GRID_HEIGHT - 1) / GRID_HEIGHT
-        mGridNeighbors = SparseArray<IntArray?>(GRID_SIZE)
-        val indices = IntArray(mKeys!!.size)
-        val gridWidth: Int = GRID_WIDTH * mCellWidth
-        val gridHeight: Int = GRID_HEIGHT * mCellHeight
-        var x = 0
-        while (x < gridWidth) {
-            var y = 0
-            while (y < gridHeight) {
-                var count = 0
-                for (i in mKeys!!.indices) {
-                    val key = mKeys!![i]
-                    if (key!!.squaredDistanceFrom(x, y) < mProximityThreshold || key.squaredDistanceFrom(
-                            x + mCellWidth - 1, y
-                        ) < mProximityThreshold || (key.squaredDistanceFrom(x + mCellWidth - 1, y + mCellHeight - 1)
-                            < mProximityThreshold) || key.squaredDistanceFrom(x, y + mCellHeight - 1) < mProximityThreshold
-                    ) {
-                        indices[count++] = i
-                    }
-                }
-
-                val cell = IntArray(count)
-                System.arraycopy(indices, 0, cell, 0, count)
-                mGridNeighbors!!.put(y / mCellHeight * GRID_WIDTH + x / mCellWidth, cell)
-                y += mCellHeight
-            }
-            x += mCellWidth
-        }
-    }
-
-    /**
-     * Returns the indices of the keys that are closest to the given point.
-     * @param x the x-coordinate of the point
-     * @param y the y-coordinate of the point
-     * @return the array of integer indices for the nearest keys to the given point. If the given point is out of range, then an array of size zero is returned.
-     */
-    fun getNearestKeys(x: Int, y: Int): IntArray {
-        if (mGridNeighbors == null) {
-            computeNearestNeighbors()
-        }
-
-        if (x in 0 until mMinWidth && y >= 0 && y < mHeight) {
-            val index = y / mCellHeight * GRID_WIDTH + x / mCellWidth
-            if (index < GRID_SIZE) {
-                return mGridNeighbors!![index]!!
-            }
-        }
-
-        return IntArray(0)
-    }
-
     private fun createRowFromXml(res: Resources, parser: XmlResourceParser?): Row {
         return Row(res, this, parser)
     }
@@ -458,8 +375,6 @@ class MyKeyboard {
         mDefaultWidth = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, mDisplayWidth, mDisplayWidth / 10)
         mDefaultHeight = res.getDimension(R.dimen.key_height).toInt()
         mDefaultHorizontalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, mDisplayWidth, 0)
-        mProximityThreshold = (mDefaultWidth * SEARCH_DISTANCE).toInt()
-        mProximityThreshold *= mProximityThreshold // Square it for comparison
         a.recycle()
     }
 }
