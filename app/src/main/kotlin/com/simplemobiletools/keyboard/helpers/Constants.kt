@@ -19,3 +19,4 @@ const val ITEM_CLIP = 1
 
 const val LANGUAGE_ENGLISH = 0
 const val LANGUAGE_RUSSIAN = 1
+const val LANGUAGE_FRENCH = 2

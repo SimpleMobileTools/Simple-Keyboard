@@ -9,6 +9,7 @@ import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.LANGUAGE_ENGLISH
+import com.simplemobiletools.keyboard.helpers.LANGUAGE_FRENCH
 import com.simplemobiletools.keyboard.helpers.LANGUAGE_RUSSIAN
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
@@ -112,6 +113,7 @@ class SettingsActivity : SimpleActivity() {
         settings_keyboard_language_holder.setOnClickListener {
             val items = arrayListOf(
                 RadioItem(LANGUAGE_ENGLISH, getString(R.string.translation_english)),
+                RadioItem(LANGUAGE_FRENCH, getString(R.string.translation_french)),
                 RadioItem(LANGUAGE_RUSSIAN, getString(R.string.translation_russian))
             )
 
@@ -122,8 +124,9 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    fun getKeyboardLanguageText() = getString(
+    private fun getKeyboardLanguageText() = getString(
         when (config.keyboardLanguage) {
+            LANGUAGE_FRENCH -> R.string.translation_french
             LANGUAGE_RUSSIAN -> R.string.translation_russian
             else -> R.string.translation_english
         }
