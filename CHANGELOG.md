@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.0.3 *(2022-02-19)*
+----------------------------
+
+ * Added a French keyboard
+ * Made spacebar a bit wider
+ * Added some translation, stability and UX improvements
+
 Version 5.0.2 *(2022-02-07)*
 ----------------------------
 
