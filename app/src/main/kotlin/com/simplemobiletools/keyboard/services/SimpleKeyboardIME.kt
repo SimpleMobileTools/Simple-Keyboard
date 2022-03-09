@@ -2,11 +2,17 @@ package com.simplemobiletools.keyboard.services
 
 import android.inputmethodservice.InputMethodService
 import android.text.InputType
+import android.text.InputType.TYPE_CLASS_DATETIME
+import android.text.InputType.TYPE_CLASS_NUMBER
+import android.text.InputType.TYPE_CLASS_PHONE
+import android.text.InputType.TYPE_MASK_CLASS
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.EditorInfo.IME_ACTION_NONE
+import android.view.inputmethod.EditorInfo.IME_FLAG_NO_ENTER_ACTION
+import android.view.inputmethod.EditorInfo.IME_MASK_ACTION
 import android.view.inputmethod.ExtractedTextRequest
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
@@ -51,11 +57,11 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         super.onStartInput(attribute, restarting)
-        inputTypeClass = attribute!!.inputType and InputType.TYPE_MASK_CLASS
-        enterKeyType = attribute.imeOptions and (EditorInfo.IME_MASK_ACTION or EditorInfo.IME_FLAG_NO_ENTER_ACTION)
+        inputTypeClass = attribute!!.inputType and TYPE_MASK_CLASS
+        enterKeyType = attribute.imeOptions and (IME_MASK_ACTION or IME_FLAG_NO_ENTER_ACTION)
 
         val keyboardXml = when (inputTypeClass) {
-            InputType.TYPE_CLASS_NUMBER, InputType.TYPE_CLASS_DATETIME, InputType.TYPE_CLASS_PHONE -> {
+            TYPE_CLASS_NUMBER, TYPE_CLASS_DATETIME, TYPE_CLASS_PHONE -> {
                 keyboardMode = KEYBOARD_SYMBOLS
                 R.xml.keys_symbols
             }
@@ -130,8 +136,13 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 keyboardView!!.invalidateAllKeys()
             }
             MyKeyboard.KEYCODE_ENTER -> {
-                inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
-                inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
+                val imeOptionsActionId = getImeOptionsActionId()
+                if (imeOptionsActionId != IME_ACTION_NONE) {
+                    inputConnection.performEditorAction(imeOptionsActionId)
+                } else {
+                    inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
+                    inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
+                }
             }
             MyKeyboard.KEYCODE_MODE_CHANGE -> {
                 val keyboardXml = if (keyboardMode == KEYBOARD_LETTERS) {
@@ -220,6 +231,14 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         }
 
         currentInputConnection?.setSelection(newCursorPosition, newCursorPosition)
+    }
+
+    private fun getImeOptionsActionId(): Int {
+        return if (currentInputEditorInfo.imeOptions and IME_FLAG_NO_ENTER_ACTION != 0) {
+            IME_ACTION_NONE
+        } else {
+            currentInputEditorInfo.imeOptions and IME_MASK_ACTION
+        }
     }
 
     private fun getKeyboardLayoutXML(): Int {
