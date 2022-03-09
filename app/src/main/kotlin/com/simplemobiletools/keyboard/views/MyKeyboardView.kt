@@ -1002,6 +1002,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         if (ignoreTouches) {
             if (action == MotionEvent.ACTION_UP) {
                 ignoreTouches = false
+
+                // fix a glitch with long pressing backspace, then clicking some letter
+                if (mRepeatKeyIndex != NOT_A_KEY) {
+                    val key = mKeys[mRepeatKeyIndex]
+                    if (key.code == KEYCODE_DELETE) {
+                        mHandler?.removeMessages(MSG_REPEAT)
+                        mRepeatKeyIndex = NOT_A_KEY
+                    }
+                }
             }
             return true
         }
