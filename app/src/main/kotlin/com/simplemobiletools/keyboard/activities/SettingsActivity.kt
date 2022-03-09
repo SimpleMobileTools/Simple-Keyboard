@@ -8,7 +8,8 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
-import com.simplemobiletools.keyboard.helpers.LANGUAGE_ENGLISH
+import com.simplemobiletools.keyboard.helpers.LANGUAGE_ENGLISH_QWERTY
+import com.simplemobiletools.keyboard.helpers.LANGUAGE_ENGLISH_QWERTZ
 import com.simplemobiletools.keyboard.helpers.LANGUAGE_FRENCH
 import com.simplemobiletools.keyboard.helpers.LANGUAGE_RUSSIAN
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -109,26 +110,28 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupKeyboardLanguage() {
-        settings_keyboard_language.text = getKeyboardLanguageText()
+        settings_keyboard_language.text = getKeyboardLanguageText(config.keyboardLanguage)
         settings_keyboard_language_holder.setOnClickListener {
             val items = arrayListOf(
-                RadioItem(LANGUAGE_ENGLISH, getString(R.string.translation_english)),
-                RadioItem(LANGUAGE_FRENCH, getString(R.string.translation_french)),
-                RadioItem(LANGUAGE_RUSSIAN, getString(R.string.translation_russian))
+                RadioItem(LANGUAGE_ENGLISH_QWERTY, getKeyboardLanguageText(LANGUAGE_ENGLISH_QWERTY)),
+                RadioItem(LANGUAGE_ENGLISH_QWERTZ, getKeyboardLanguageText(LANGUAGE_ENGLISH_QWERTZ)),
+                RadioItem(LANGUAGE_FRENCH, getKeyboardLanguageText(LANGUAGE_FRENCH)),
+                RadioItem(LANGUAGE_RUSSIAN, getKeyboardLanguageText(LANGUAGE_RUSSIAN))
             )
 
             RadioGroupDialog(this@SettingsActivity, items, config.keyboardLanguage) {
                 config.keyboardLanguage = it as Int
-                settings_keyboard_language.text = getKeyboardLanguageText()
+                settings_keyboard_language.text = getKeyboardLanguageText(config.keyboardLanguage)
             }
         }
     }
 
-    private fun getKeyboardLanguageText() = getString(
-        when (config.keyboardLanguage) {
-            LANGUAGE_FRENCH -> R.string.translation_french
-            LANGUAGE_RUSSIAN -> R.string.translation_russian
-            else -> R.string.translation_english
+    private fun getKeyboardLanguageText(language: Int): String {
+        return when (language) {
+            LANGUAGE_FRENCH -> getString(R.string.translation_french)
+            LANGUAGE_RUSSIAN -> getString(R.string.translation_russian)
+            LANGUAGE_ENGLISH_QWERTZ -> "${getString(R.string.translation_english)} (QWERTZ)"
+            else -> "${getString(R.string.translation_english)} (QWERTY)"
         }
-    )
+    }
 }

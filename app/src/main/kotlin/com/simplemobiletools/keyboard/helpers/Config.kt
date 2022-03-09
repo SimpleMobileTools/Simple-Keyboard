@@ -30,7 +30,7 @@ class Config(context: Context) : BaseConfig(context) {
         return if (conf.locale.toString().toLowerCase(Locale.getDefault()).startsWith("ru_")) {
             LANGUAGE_RUSSIAN
         } else {
-            LANGUAGE_ENGLISH
+            LANGUAGE_ENGLISH_QWERTY
         }
     }
 }

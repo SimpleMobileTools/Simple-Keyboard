@@ -245,7 +245,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         return when (baseContext.config.keyboardLanguage) {
             LANGUAGE_FRENCH -> R.xml.keys_letters_french
             LANGUAGE_RUSSIAN -> R.xml.keys_letters_russian
-            else -> R.xml.keys_letters_english
+            LANGUAGE_ENGLISH_QWERTZ -> R.xml.keys_letters_english_qwertz
+            else -> R.xml.keys_letters_english_qwerty
         }
     }
 }
