@@ -1050,10 +1050,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                             mMiniKeyboard!!.invalidateAllKeys()
                         }
 
-                        if (coords[0] - me.x > mPopupMaxMoveDistance ||                                 // left
-                            me.x - (coords[0] + mMiniKeyboard!!.width) > mPopupMaxMoveDistance          // right
-                        ) {
-                            dismissPopupKeyboard()
+                        if (coords[0] > 0 || coords[1] > 0) {
+                            if (coords[0] - me.x > mPopupMaxMoveDistance ||                                         // left
+                                me.x - (coords[0] + mMiniKeyboard!!.measuredWidth) > mPopupMaxMoveDistance          // right
+                            ) {
+                                dismissPopupKeyboard()
+                            }
                         }
                     }
                 }
