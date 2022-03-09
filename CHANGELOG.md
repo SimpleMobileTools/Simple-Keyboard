@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.0.4 *(2022-03-09)*
+----------------------------
+
+ * Added a QWERTY keyboard layout
+ * Added a Privacy policy
+ * Added some stability, UX and translation improvements
+
 Version 5.0.3 *(2022-02-19)*
 ----------------------------
 
