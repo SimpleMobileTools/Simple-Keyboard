@@ -14,7 +14,7 @@
             app:topSmallNumber="2" />
         <Key
             app:keyLabel="e"
-            app:popupCharacters="éèeêëēę"
+            app:popupCharacters="éè3êëēę"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="3" />
         <Key
@@ -29,12 +29,12 @@
             app:topSmallNumber="5" />
         <Key
             app:keyLabel="z"
-            app:popupCharacters="źžż"
+            app:popupCharacters="ź6žż"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="6" />
         <Key
             app:keyLabel="u"
-            app:popupCharacters="űúùü7ûū"
+            app:popupCharacters="űúù7üûū"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="7" />
         <Key
@@ -44,7 +44,7 @@
             app:topSmallNumber="8" />
         <Key
             app:keyLabel="o"
-            app:popupCharacters="őóôòõōö9"
+            app:popupCharacters="őóôòõō9ö"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="9" />
         <Key
@@ -91,7 +91,7 @@
             app:keyWidth="15%p" />
         <Key
             app:keyLabel="y"
-            app:popupCharacters="ý6ÿ¥"
+            app:popupCharacters="ýÿ¥"
             app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key app:keyLabel="x" />
         <Key
