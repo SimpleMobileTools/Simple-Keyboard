@@ -34,7 +34,7 @@
             app:topSmallNumber="6"/>
         <Key
             app:keyLabel="u"
-            app:popupCharacters="űü7úùûū"
+            app:popupCharacters="7úüùûűū"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="7"/>
         <Key
@@ -44,7 +44,7 @@
             app:topSmallNumber="8"/>
         <Key
             app:keyLabel="o"
-            app:popupCharacters="ő9óôòõōö"
+            app:popupCharacters="9óôòőõōö"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="9"/>
         <Key
