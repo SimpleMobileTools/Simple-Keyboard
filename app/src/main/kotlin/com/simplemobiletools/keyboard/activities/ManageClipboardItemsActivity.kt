@@ -1,10 +1,12 @@
 package com.simplemobiletools.keyboard.activities
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
@@ -109,7 +111,14 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
                     type = "text/plain"
                     putExtra(Intent.EXTRA_TITLE, filename)
                     addCategory(Intent.CATEGORY_OPENABLE)
-                    startActivityForResult(this, PICK_EXPORT_CLIPS_INTENT)
+
+                    try {
+                        startActivityForResult(this, PICK_EXPORT_CLIPS_INTENT)
+                    } catch (e: ActivityNotFoundException) {
+                        toast(R.string.system_service_disabled, Toast.LENGTH_LONG)
+                    } catch (e: Exception) {
+                        showErrorToast(e)
+                    }
                 }
             }
         } else {
@@ -154,7 +163,14 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
             Intent(Intent.ACTION_GET_CONTENT).apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
                 type = "text/plain"
-                startActivityForResult(this, PICK_IMPORT_CLIPS_SOURCE_INTENT)
+
+                try {
+                    startActivityForResult(this, PICK_IMPORT_CLIPS_SOURCE_INTENT)
+                } catch (e: ActivityNotFoundException) {
+                    toast(R.string.system_service_disabled, Toast.LENGTH_LONG)
+                } catch (e: Exception) {
+                    showErrorToast(e)
+                }
             }
         } else {
             handlePermission(PERMISSION_READ_STORAGE) {
