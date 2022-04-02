@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.1.0 *(2022-04-02)*
+----------------------------
+
+ * Added support for Material You theme on Android 12+
+ * Added Spanish and German keyboard layouts
+ * Added some translation and UX improvements
+
 Version 5.0.4 *(2022-03-09)*
 ----------------------------
 

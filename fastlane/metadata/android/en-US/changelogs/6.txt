@@ -1,0 +1,3 @@
+ * Added support for Material You theme on Android 12+
+ * Added Spanish and German keyboard layouts
+ * Added some translation and UX improvements
