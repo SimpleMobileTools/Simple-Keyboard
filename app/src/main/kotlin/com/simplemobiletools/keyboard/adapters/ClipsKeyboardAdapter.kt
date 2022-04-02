@@ -14,6 +14,7 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.extensions.getCurrentClip
+import com.simplemobiletools.keyboard.extensions.getStrokeColor
 import com.simplemobiletools.keyboard.helpers.ClipsHelper
 import com.simplemobiletools.keyboard.helpers.ITEM_CLIP
 import com.simplemobiletools.keyboard.helpers.ITEM_SECTION_LABEL
@@ -30,7 +31,6 @@ class ClipsKeyboardAdapter(
 ) : RecyclerView.Adapter<ClipsKeyboardAdapter.ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
-    private val baseConfig = context.config
     private var textColor = context.getProperTextColor()
     private var backgroundColor = context.getProperBackgroundColor()
 
@@ -67,6 +67,7 @@ class ClipsKeyboardAdapter(
         view.apply {
             val rippleBg = clip_holder.background as RippleDrawable
             val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
+            layerDrawable.findDrawableByLayerId(R.id.clipboard_background_stroke).applyColorFilter(context.getStrokeColor())
             layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(backgroundColor)
 
             clip_value.apply {

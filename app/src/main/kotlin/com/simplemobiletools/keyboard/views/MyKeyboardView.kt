@@ -36,6 +36,7 @@ import com.simplemobiletools.keyboard.adapters.ClipsKeyboardAdapter
 import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.extensions.getCurrentClip
+import com.simplemobiletools.keyboard.extensions.getStrokeColor
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_DELETE
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_ENTER
@@ -266,25 +267,46 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mTextColor = context.getProperTextColor()
             mBackgroundColor = context.getProperBackgroundColor()
             mPrimaryColor = context.getProperPrimaryColor()
+            val strokeColor = context.getStrokeColor()
+
+            val toolbarColor = if (context.config.isUsingSystemTheme) {
+                resources.getColor(R.color.you_keyboard_toolbar_color, context.theme)
+            } else {
+                mBackgroundColor.darkenColor()
+            }
+
+            val darkerColor = if (context.config.isUsingSystemTheme) {
+                resources.getColor(R.color.you_keyboard_background_color, context.theme)
+            } else {
+                mBackgroundColor.darkenColor(2)
+            }
+
+            val miniKeyboardBackgroundColor = if (context.config.isUsingSystemTheme) {
+                resources.getColor(R.color.you_keyboard_toolbar_color, context.theme)
+            } else {
+                mBackgroundColor.darkenColor(4)
+            }
 
             if (changedView == mini_keyboard_view) {
                 val previewBackground = background as LayerDrawable
-                previewBackground.findDrawableByLayerId(R.id.button_background_shape).applyColorFilter(mBackgroundColor.darkenColor(4))
-                previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(getPreviewStrokeColor())
+                previewBackground.findDrawableByLayerId(R.id.button_background_shape).applyColorFilter(miniKeyboardBackgroundColor)
+                previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(strokeColor)
                 background = previewBackground
             } else {
-                background.applyColorFilter(mBackgroundColor.darkenColor(2))
+                background.applyColorFilter(darkerColor)
             }
 
             val rippleBg = resources.getDrawable(R.drawable.clipboard_background, context.theme) as RippleDrawable
             val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
+            layerDrawable.findDrawableByLayerId(R.id.clipboard_background_stroke).applyColorFilter(strokeColor)
             layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(mBackgroundColor)
 
             val wasDarkened = mBackgroundColor != mBackgroundColor.darkenColor()
             mToolbarHolder?.apply {
                 top_keyboard_divider.beGoneIf(wasDarkened)
+                top_keyboard_divider.background = ColorDrawable(strokeColor)
 
-                background = ColorDrawable(mBackgroundColor.darkenColor())
+                background = ColorDrawable(toolbarColor)
                 clipboard_value.apply {
                     background = rippleBg
                     setTextColor(mTextColor)
@@ -298,7 +320,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
             mClipboardManagerHolder?.apply {
                 top_clipboard_divider.beGoneIf(wasDarkened)
-                clipboard_manager_holder.background = ColorDrawable(mBackgroundColor.darkenColor())
+                top_clipboard_divider.background = ColorDrawable(strokeColor)
+                clipboard_manager_holder.background = ColorDrawable(toolbarColor)
 
                 clipboard_manager_close.applyColorFilter(mTextColor)
                 clipboard_manager_manage.applyColorFilter(mTextColor)
@@ -518,7 +541,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val code = key.code
             var keyBackground = mKeyBackground
             if (code == KEYCODE_SPACE) {
-                keyBackground = resources.getDrawable(R.drawable.keyboard_space_background, context.theme)
+                keyBackground = if (context.config.isUsingSystemTheme) {
+                    resources.getDrawable(R.drawable.keyboard_space_background_material, context.theme)
+                } else {
+                    resources.getDrawable(R.drawable.keyboard_space_background, context.theme)
+                }
             } else if (code == KEYCODE_ENTER) {
                 keyBackground = resources.getDrawable(R.drawable.keyboard_enter_background, context.theme)
             }
@@ -768,9 +795,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
         }
 
+        val previewBackgroundColor = if (context.config.isUsingSystemTheme) {
+            resources.getColor(R.color.you_keyboard_toolbar_color, context.theme)
+        } else {
+            mBackgroundColor.darkenColor(4)
+        }
+
         val previewBackground = mPreviewText!!.background as LayerDrawable
-        previewBackground.findDrawableByLayerId(R.id.button_background_shape).applyColorFilter(mBackgroundColor.darkenColor(4))
-        previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(getPreviewStrokeColor())
+        previewBackground.findDrawableByLayerId(R.id.button_background_shape).applyColorFilter(previewBackgroundColor)
+        previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(context.getStrokeColor())
         mPreviewText!!.background = previewBackground
 
         mPreviewText!!.setTextColor(mTextColor)
@@ -1337,15 +1370,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         mClipboardManagerHolder?.clips_list?.adapter = adapter
-    }
-
-    // stroke is usually the lighter version of the background color, but if it becomes white or black, it might be invisible. So use light grey there.
-    private fun getPreviewStrokeColor(): Int {
-        var strokeColor = mBackgroundColor.lightenColor()
-        if (strokeColor == Color.WHITE || strokeColor == Color.BLACK) {
-            strokeColor = resources.getColor(R.color.divider_grey)
-        }
-        return strokeColor
     }
 
     private fun closing() {
