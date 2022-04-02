@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">簡易鍵盤</string>
+    <string name="app_launcher_name">鍵盤</string>
+    <string name="redirection_note">請在下個畫面啟用簡易鍵盤，這樣才能使用此鍵盤。啟用後請按返回鍵。</string>
+    <string name="change_keyboard">變更鍵盤</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">管理剪貼簿項目</string>
+    <string name="manage_clipboard_empty">您的剪貼簿空空的。</string>
+    <string name="manage_clipboard_label">當您複製了文字之後，它們就會出現在這裡。也可以釘選起來，讓它們之後不會消失。</string>
+    <string name="clear_clipboard_data">清除剪貼簿資料</string>
+    <string name="clear_clipboard_data_confirmation">您確定要清除剪貼簿資料嗎？</string>
+    <string name="clipboard">剪貼簿</string>
+    <string name="clipboard_recent">最近</string>
+    <string name="clipboard_current">目前</string>
+    <string name="clipboard_pinned">釘選</string>
+    <string name="add_new_item">新增項目</string>
+    <string name="manage_clips">You can manage or add clips here for quick access.</string>
+    <string name="clip_text">Clip text</string>
+    <string name="pin_text">釘選文字</string>
+    <string name="text_pinned">已釘選文字</string>
+    <!-- Accessibility -->
+    <string name="export_clipboard_items">匯出剪貼簿項目</string>
+    <string name="import_clipboard_items">匯入剪貼簿項目</string>
+    <!-- Accessibility -->
+    <string name="keycode_delete">刪除</string>
+    <string name="keycode_mode_change">變更鍵盤類型</string>
+    <string name="keycode_shift">Shift</string>
+    <string name="keycode_enter">Enter</string>
+    <!-- Settings -->
+    <string name="show_clipboard_content">可以的話顯示剪貼簿內容</string>
+    <string name="show_popup">按下按鍵時顯示彈出效果</string>
+    <string name="vibrate_on_keypress">按下按鍵時震動</string>
+    <string name="keyboard_language">鍵盤語言</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">簡易鍵盤</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">簡易的鍵盤，用於輸入各種文字、特殊符號、數字</string>
+    <string name="app_long_description"> 
+        用來與朋友聊天、或是輸入任何文字、數字、符號的輕量、便捷的鍵盤。
+
+        遵循材料設計（material design），預設為暗色主題，為簡易的用途提供良好的使用者感受。無網路連線的特點跟其他 app 比起來更有隱私、更安全、更穩定。
+        
+        不含廣告或不需要的權限。完全開源，提供客製配色。
+        
+        <b>在此看看全套「簡易工具」：</b>
+        https://www.simplemobiletools.com
+        
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+        
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
+    </string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
