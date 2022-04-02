@@ -14,7 +14,6 @@ import com.simplemobiletools.commons.helpers.LICENSE_GSON
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.keyboard.BuildConfig
 import com.simplemobiletools.keyboard.R
-import com.simplemobiletools.keyboard.extensions.config
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : SimpleActivity() {
@@ -44,7 +43,7 @@ class MainActivity : SimpleActivity() {
 
         updateTextColors(main_holder)
         updateChangeKeyboardColor()
-        main_holder.setBackgroundColor(config.backgroundColor)
+        main_holder.setBackgroundColor(getProperBackgroundColor())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -80,9 +79,9 @@ class MainActivity : SimpleActivity() {
 
     private fun updateChangeKeyboardColor() {
         val applyBackground = resources.getDrawable(R.drawable.button_background_rounded, theme) as RippleDrawable
-        (applyBackground as LayerDrawable).findDrawableByLayerId(R.id.button_background_holder).applyColorFilter(getAdjustedPrimaryColor())
+        (applyBackground as LayerDrawable).findDrawableByLayerId(R.id.button_background_holder).applyColorFilter(getProperPrimaryColor())
         change_keyboard.background = applyBackground
-        change_keyboard.setTextColor(getAdjustedPrimaryColor().getContrastColor())
+        change_keyboard.setTextColor(getProperPrimaryColor().getContrastColor())
     }
 
     private fun isKeyboardEnabled(): Boolean {

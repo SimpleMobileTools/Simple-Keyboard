@@ -9,7 +9,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.helpers.PERMISSION_READ_STORAGE
+import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.adapters.ClipsActivityAdapter
@@ -23,7 +26,6 @@ import kotlinx.android.synthetic.main.activity_manage_clipboard_items.*
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
-import java.util.*
 
 class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListener {
     private val PICK_EXPORT_CLIPS_INTENT = 21
@@ -38,7 +40,7 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
         clipboard_items_placeholder.text = "${getText(R.string.manage_clipboard_empty)}\n\n${getText(R.string.manage_clips)}"
         clipboard_items_placeholder_2.apply {
             underlineText()
-            setTextColor(getAdjustedPrimaryColor())
+            setTextColor(getProperPrimaryColor())
             setOnClickListener {
                 addOrEditClip()
             }

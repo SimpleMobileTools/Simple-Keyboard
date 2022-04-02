@@ -9,13 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.performHapticFeedback
-import com.simplemobiletools.commons.extensions.removeUnderlines
-import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.keyboard.R
-import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.extensions.getCurrentClip
 import com.simplemobiletools.keyboard.helpers.ClipsHelper
@@ -27,7 +23,6 @@ import com.simplemobiletools.keyboard.models.ClipsSectionLabel
 import com.simplemobiletools.keyboard.models.ListItem
 import kotlinx.android.synthetic.main.item_clip_on_keyboard.view.*
 import kotlinx.android.synthetic.main.item_section_label.view.*
-import java.util.*
 
 class ClipsKeyboardAdapter(
     val context: Context, var items: ArrayList<ListItem>, val refreshClipsListener: RefreshClipsListener,
@@ -36,8 +31,8 @@ class ClipsKeyboardAdapter(
 
     private val layoutInflater = LayoutInflater.from(context)
     private val baseConfig = context.config
-    private var textColor = baseConfig.textColor
-    private var backgroundColor = baseConfig.backgroundColor
+    private var textColor = context.getProperTextColor()
+    private var backgroundColor = context.getProperBackgroundColor()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutId = when (viewType) {

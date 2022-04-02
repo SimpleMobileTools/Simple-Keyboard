@@ -212,9 +212,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mLabelTextSize = resources.getDimension(R.dimen.label_text_size).toInt()
         mPreviewHeight = resources.getDimension(R.dimen.key_height).toInt()
         mSpaceMoveThreshold = resources.getDimension(R.dimen.medium_margin).toInt()
-        mTextColor = context.config.textColor
-        mBackgroundColor = context.config.backgroundColor
-        mPrimaryColor = context.getAdjustedPrimaryColor()
+        mTextColor = context.getProperTextColor()
+        mBackgroundColor = context.getProperBackgroundColor()
+        mPrimaryColor = context.getProperPrimaryColor()
 
         mPreviewPopup = PopupWindow(context)
         mPreviewText = inflater.inflate(resources.getLayout(R.layout.keyboard_key_preview), null) as TextView
@@ -263,9 +263,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         closeClipboardManager()
 
         if (visibility == VISIBLE) {
-            mTextColor = context.config.textColor
-            mBackgroundColor = context.config.backgroundColor
-            mPrimaryColor = context.getAdjustedPrimaryColor()
+            mTextColor = context.getProperTextColor()
+            mBackgroundColor = context.getProperBackgroundColor()
+            mPrimaryColor = context.getProperPrimaryColor()
 
             if (changedView == mini_keyboard_view) {
                 val previewBackground = background as LayerDrawable
