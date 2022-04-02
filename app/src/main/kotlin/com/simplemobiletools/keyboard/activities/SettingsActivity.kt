@@ -8,11 +8,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
-import com.simplemobiletools.keyboard.helpers.LANGUAGE_ENGLISH_QWERTY
-import com.simplemobiletools.keyboard.helpers.LANGUAGE_ENGLISH_QWERTZ
-import com.simplemobiletools.keyboard.helpers.LANGUAGE_FRENCH
-import com.simplemobiletools.keyboard.helpers.LANGUAGE_RUSSIAN
-import com.simplemobiletools.keyboard.helpers.LANGUAGE_SPANISH
+import com.simplemobiletools.keyboard.helpers.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 import kotlin.system.exitProcess
@@ -117,6 +113,7 @@ class SettingsActivity : SimpleActivity() {
                 RadioItem(LANGUAGE_ENGLISH_QWERTY, getKeyboardLanguageText(LANGUAGE_ENGLISH_QWERTY)),
                 RadioItem(LANGUAGE_ENGLISH_QWERTZ, getKeyboardLanguageText(LANGUAGE_ENGLISH_QWERTZ)),
                 RadioItem(LANGUAGE_FRENCH, getKeyboardLanguageText(LANGUAGE_FRENCH)),
+                RadioItem(LANGUAGE_GERMAN, getKeyboardLanguageText(LANGUAGE_GERMAN)),
                 RadioItem(LANGUAGE_SPANISH, getKeyboardLanguageText(LANGUAGE_SPANISH)),
                 RadioItem(LANGUAGE_RUSSIAN, getKeyboardLanguageText(LANGUAGE_RUSSIAN))
             )
@@ -131,6 +128,7 @@ class SettingsActivity : SimpleActivity() {
     private fun getKeyboardLanguageText(language: Int): String {
         return when (language) {
             LANGUAGE_FRENCH -> getString(R.string.translation_french)
+            LANGUAGE_GERMAN -> getString(R.string.translation_german)
             LANGUAGE_RUSSIAN -> getString(R.string.translation_russian)
             LANGUAGE_ENGLISH_QWERTZ -> "${getString(R.string.translation_english)} (QWERTZ)"
             LANGUAGE_SPANISH -> getString(R.string.translation_spanish)
