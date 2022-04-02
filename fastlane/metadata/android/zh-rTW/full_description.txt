@@ -1,0 +1,14 @@
+用來與朋友聊天、或是輸入任何文字、數字、符號的輕量、便捷的鍵盤。
+
+遵循材料設計（material design），預設為暗色主題，為簡易的用途提供良好的使用者感受。無網路連線的特點跟其他 app 比起來更有隱私、更安全、更穩定。
+
+不含廣告或不需要的權限。完全開源，提供客製配色。
+
+<b>在此看看全套「簡易工具」：</b>
+https://www.simplemobiletools.com
+
+<b>Facebook:</b>
+https://www.facebook.com/simplemobiletools
+
+<b>Reddit:</b>
+https://www.reddit.com/r/SimpleMobileTools 
