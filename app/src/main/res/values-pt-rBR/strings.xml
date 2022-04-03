@@ -16,4 +16,15 @@
     <string name="app_title">Teclado Simples</string>
     <string name="add_new_item">Adicionar novo item</string>
     <string name="app_short_description">Teclado fácil para inserir todo tipo de texto, caracteres especiais e números</string>
+    <string name="app_name">Teclado Simples</string>
+    <string name="app_launcher_name">Teclado</string>
+    <string name="redirection_note">Ative o Teclado Simples na próxima tela, para torná-lo um teclado disponível. Pressione \'Voltar\' uma vez ativado.</string>
+    <string name="manage_clipboard_items">Gerenciar itens da área de transferência</string>
+    <string name="manage_clipboard_label">Depois de copiar algum texto, ele aparecerá aqui. Você também pode fixar clipes para que eles não desapareçam mais tarde.</string>
+    <string name="clear_clipboard_data">Esvaziar área de transferência</string>
+    <string name="clear_clipboard_data_confirmation">Tem a certeza de que quer esvaziar a área de transferência\?</string>
+    <string name="clipboard">Área de transferência</string>
+    <string name="clipboard_recent">Recente</string>
+    <string name="change_keyboard">Trocar de teclado</string>
+    <string name="manage_clipboard_empty">Área de transferência vazia.</string>
 </resources>
