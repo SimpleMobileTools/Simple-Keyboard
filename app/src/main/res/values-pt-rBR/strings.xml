@@ -1,2 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_long_description"> Um aplicativo de teclado veloz e leve para te ajudar a falar com amigos ou inserir quaisquer outros textos, números e símbolos. Vêm de padrão com os temas escuro e material design, fornecendo boa experiência ao usuário e fácil usabilidade. A ausência de conexões à internet te dá mais privacidade, segurança e estabilidade que outros aplicativos. Não há propagandas ou permissões desnecessárias. O código fonte é totalmente aberto, fornece cores customizáveis. <b>Confira a coleção completa das Simple Tools aqui:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
+    <string name="keycode_mode_change">Mudar tipo de teclado</string>
+    <string name="show_popup">Mostrar pop-up ao digitar</string>
+    <string name="vibrate_on_keypress">Vibrar ao digitar</string>
+    <string name="clipboard_current">Atual</string>
+    <string name="export_clipboard_items">Exportar itens da área de transferência</string>
+    <string name="import_clipboard_items">Importar itens da área de transferência</string>
+    <string name="show_clipboard_content">Mostrar conteúdo da área de transferência se houver</string>
+    <string name="clipboard_pinned">Fixado</string>
+    <string name="pin_text">Fixar texto</string>
+    <string name="text_pinned">O texto foi fixado</string>
+    <string name="keycode_delete">Deletar</string>
+    <string name="keyboard_language">Idioma do teclado</string>
+    <string name="app_title">Teclado Simples</string>
+    <string name="add_new_item">Adicionar novo item</string>
+    <string name="app_short_description">Teclado fácil para inserir todo tipo de texto, caracteres especiais e números</string>
+</resources>
