@@ -56,7 +56,6 @@
     </Row>
     <Row>
         <Key
-            app:horizontalGap="5%"
             app:keyEdgeFlags="left"
             app:keyLabel="a"
             app:popupCharacters="áäàâãåāæą"
