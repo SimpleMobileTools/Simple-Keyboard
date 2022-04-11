@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Teclado Simples</string>
+    <string name="app_launcher_name">Teclado</string>
+    <string name="redirection_note">Ative o Teclado Simples na próxima tela, para torná-lo um teclado disponível. Pressione \'Voltar\' uma vez ativado.</string>
+    <string name="change_keyboard">Trocar de teclado</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">Gerenciar itens da área de transferência</string>
+    <string name="manage_clipboard_empty">Área de transferência vazia.</string>
+    <string name="manage_clipboard_label">Depois de copiar algum texto, ele aparecerá aqui. Você também pode fixar clipes para que eles não desapareçam mais tarde.</string>
+    <string name="clear_clipboard_data">Esvaziar área de transferência</string>
+    <string name="clear_clipboard_data_confirmation">Tem a certeza de que quer esvaziar a área de transferência\?</string>
+    <string name="clipboard">Área de transferência</string>
+    <string name="clipboard_recent">Recente</string>
+    <string name="clipboard_current">Atual</string>
+    <string name="clipboard_pinned">Fixado</string>
+    <string name="add_new_item">Adicionar novo item</string>
+    <string name="manage_clips">Você pode gerenciar ou adicionar clipes aqui para acesso rápido.</string>
+    <string name="clip_text">Cortar texto</string>
+    <string name="pin_text">Fixar texto</string>
+    <string name="text_pinned">O texto foi fixado</string>
+    <string name="export_clipboard_items">Exportar itens da área de transferência</string>
+    <string name="import_clipboard_items">Importar itens da área de transferência</string>
+    <!-- Accessibility -->
+    <string name="keycode_delete">Deletar</string>
+    <string name="keycode_mode_change">Mudar tipo de teclado</string>
+    <string name="keycode_shift">Shift</string>
+    <string name="keycode_enter">Enter</string>
+    <!-- Settings -->
+    <string name="show_clipboard_content">Mostrar conteúdo da área de transferência se houver</string>
+    <string name="show_popup">Mostrar pop-up ao digitar</string>
+    <string name="vibrate_on_keypress">Vibrar ao digitar</string>
+    <string name="keyboard_language">Idioma do teclado</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Teclado Simples</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Teclado fácil para inserir todo tipo de texto, caracteres especiais e números</string>
+    <string name="app_long_description">
+        Um aplicativo de teclado veloz e leve para te ajudar a falar com amigos ou inserir quaisquer outros textos, números e símbolos. Vêm de padrão com os temas escuro e material design, fornecendo boa experiência ao usuário e fácil usabilidade. A ausência de conexões à internet te dá mais privacidade, segurança e estabilidade que outros aplicativos. Não há propagandas ou permissões desnecessárias. O código fonte é totalmente aberto, fornece cores customizáveis. <b>Confira a coleção completa das Simple Tools aqui:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools 
+    </string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
