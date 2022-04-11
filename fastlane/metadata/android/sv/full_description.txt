@@ -1,0 +1,16 @@
+En snabb och lätt tangentbordsapp som hjälper dig att chatta med dina vänner eller infoga andra texter, siffror eller symboler.
+
+Den levereras med materialdesign och mörkt tema som standard, vilket ger en bra användarupplevelse för enkel användning.
+
+Eftersom du inte har tillgång till internet får du mer integritet, säkerhet och stabilitet än med andra appar.
+
+Innehåller inga annonser eller onödiga behörigheter. Den är helt öppen källkod, ger anpassningsbara färger.
+
+<b>Kika på hela paketet av Simple Tools här:</b>
+https://www.simplemobiletools.com
+
+<b>Facebook:</b>
+https://www.facebook.com/simplemobiletools
+
+<b>Reddit:</b>
+https://www.reddit.com/r/SimpleMobileTools
