@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.1.1 *(2022-04-11)*
+----------------------------
+
+ * Fixed a glitch at the Spanish keyboard
+ * Added some translation and UI improvements
+
 Version 5.1.0 *(2022-04-02)*
 ----------------------------
 
