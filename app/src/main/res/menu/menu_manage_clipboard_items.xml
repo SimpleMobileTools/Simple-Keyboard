@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AppCompatResource">
     <item
         android:id="@+id/add_clipboard_item"
         android:icon="@drawable/ic_plus_vector"
@@ -8,10 +10,12 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/import_clips"
+        android:showAsAction="never"
         android:title="@string/import_clipboard_items"
         app:showAsAction="never" />
     <item
         android:id="@+id/export_clips"
+        android:showAsAction="never"
         android:title="@string/export_clipboard_items"
         app:showAsAction="never" />
 </menu>
