@@ -18,4 +18,5 @@
     <string name="keycode_delete">Smazat</string>
     <string name="keyboard_language">Jazyk klávesnice</string>
     <string name="keycode_shift">Shift</string>
+    <string name="app_title">Jednoduchá klávesnice</string>
 </resources>
