@@ -1,2 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">jednoduchá klávesnice</string>
+    <string name="clear_clipboard_data">Vyčistit schránku</string>
+    <string name="clear_clipboard_data_confirmation">Opravdu chcete vymazat schránku\?</string>
+    <string name="clipboard">Schránka</string>
+    <string name="export_clipboard_items">Exportovat schránku</string>
+    <string name="app_launcher_name">Klávesnice</string>
+    <string name="manage_clipboard_items">Spravovat schránku</string>
+    <string name="clipboard_pinned">Připnuté</string>
+    <string name="add_new_item">Přidat nový předmět</string>
+    <string name="import_clipboard_items">Importovat schránku</string>
+    <string name="keycode_enter">Enter</string>
+    <string name="manage_clipboard_empty">Vaše schránka je prázdná.</string>
+    <string name="change_keyboard">Změnit klávesnici</string>
+    <string name="keycode_mode_change">Změnit typ klávesnice</string>
+    <string name="vibrate_on_keypress">Vibrovat při stisknutí klávesy</string>
+    <string name="keycode_delete">Smazat</string>
+    <string name="keyboard_language">Jazyk klávesnice</string>
+    <string name="keycode_shift">Shift</string>
+</resources>
