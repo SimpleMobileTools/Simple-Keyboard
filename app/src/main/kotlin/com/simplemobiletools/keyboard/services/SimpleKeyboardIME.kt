@@ -165,7 +165,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 // However, avoid doing that in cases when the EditText for example requires numbers as the input.
                 // We can detect that by the text not changing on pressing Space.
                 if (keyboardMode != KEYBOARD_LETTERS && code == MyKeyboard.KEYCODE_SPACE) {
-                    val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0).text
+                    val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text ?: return
                     inputConnection.commitText(codeChar.toString(), 1)
                     val newText = inputConnection.getExtractedText(ExtractedTextRequest(), 0).text
                     switchToLetters = originalText != newText

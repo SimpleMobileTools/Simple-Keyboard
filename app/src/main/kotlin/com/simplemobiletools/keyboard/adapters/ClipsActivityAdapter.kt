@@ -85,12 +85,15 @@ class ClipsActivityAdapter(
                     clip.id = null
                     clip.id = ClipsHelper(activity).insertClip(clip)
                 }
-            }
 
-            activity.runOnUiThread {
-                notifyDataSetChanged()
+                activity.runOnUiThread {
+                    notifyDataSetChanged()
+                }
             }
+        } else {
+            notifyDataSetChanged()
         }
+
         wasClipMoved = false
     }
 
