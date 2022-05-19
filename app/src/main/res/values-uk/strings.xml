@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Проста клавіатура</string>
+    <string name="app_launcher_name">Клавіатура</string>
+    <string name="redirection_note">Будь ласка, увімкніть Просту Клавіатуру на наступному екрані, щоб зробити її доступною. Після ввімкнення натисніть «Назад».</string>
+    <string name="change_keyboard">Змінити клавіатуру</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">Керувати елементами буфера обміну</string>
+    <string name="manage_clipboard_empty">Ваш буфер обміну порожній.</string>
+    <string name="manage_clipboard_label">Як тільки ви скопіюєте текст, він з\'явиться тут. Ви також можете закріпити буфер, щоб він пізніше не зник.</string>
+    <string name="clear_clipboard_data">Очистити дані буфера обміну</string>
+    <string name="clear_clipboard_data_confirmation">Ви впевнені, що хочете очистити дані буфера обміну\?</string>
+    <string name="clipboard">Буфер обміну</string>
+    <string name="clipboard_recent">Останнє</string>
+    <string name="clipboard_current">Поточне</string>
+    <string name="clipboard_pinned">Закріплене</string>
+    <string name="add_new_item">Додати новий елемент</string>
+    <string name="manage_clips">Ви можете керувати чи додавати буфери обміну для швидкого доступу.</string>
+    <string name="clip_text">Текст буферу</string>
+    <string name="pin_text">Закріпити текст</string>
+    <string name="text_pinned">Текст закріплено</string>
+    <string name="export_clipboard_items">Експорт елементів буфера обміну</string>
+    <string name="import_clipboard_items">Імпорт елементів буфера обміну</string>
+    <!-- Accessibility -->
+    <string name="keycode_delete">Видалити</string>
+    <string name="keycode_mode_change">Змінити тип клавіатури</string>
+    <string name="keycode_shift">Shift</string>
+    <string name="keycode_enter">Enter</string>
+    <!-- Settings -->
+    <string name="show_clipboard_content">Показувати вміст буфера обміну, якщо він є</string>
+    <string name="show_popup">Показувати popup при натисканні</string>
+    <string name="vibrate_on_keypress">Вібрувати при натисканні</string>
+    <string name="keyboard_language">Мова клавіатури</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Проста клавіатура</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Проста клавіатура для вставки будь-яких текстів, спеціальних символів і цифр</string>
+    <string name="app_long_description">
+        Швидка легка клавіатура, яка допомагає спілкуватися з друзями або вставляти будь-які інші тексти, цифри або символи. За промовчанням додаток поставляється з матеріальним дизайном і темною темою, забезпечує чудовий користувацький досвід для простого використання. Відсутність доступу до Інтернету надає більше приватності, безпеки та стабільності, порівняно з іншими додатками. Не буде показувати рекламу; потрібні лише найнеобхідніші дозволи. Програмний код повністю відкритий, забезпечує настроювальні кольори оформлення. <b>Ознайомтеся з повним набором додатків Simple Tools тут:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools
+    </string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">jednoduchá klávesnice</string>
+    <string name="app_launcher_name">Klávesnice</string>
+    <string name="redirection_note">Please enable Simple Keyboard on the next screen, to make it an available keyboard. Press \'Back\' once enabled.</string>
+    <string name="change_keyboard">Změnit klávesnici</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">Spravovat schránku</string>
+    <string name="manage_clipboard_empty">Vaše schránka je prázdná.</string>
+    <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
+    <string name="clear_clipboard_data">Vyčistit schránku</string>
+    <string name="clear_clipboard_data_confirmation">Opravdu chcete vymazat schránku\?</string>
+    <string name="clipboard">Schránka</string>
+    <string name="clipboard_recent">Recent</string>
+    <string name="clipboard_current">Current</string>
+    <string name="clipboard_pinned">Připnuté</string>
+    <string name="add_new_item">Přidat nový předmět</string>
+    <string name="manage_clips">You can manage or add clips here for quick access.</string>
+    <string name="clip_text">Clip text</string>
+    <string name="pin_text">Pin text</string>
+    <string name="text_pinned">Text has been pinned</string>
+    <string name="export_clipboard_items">Exportovat schránku</string>
+    <string name="import_clipboard_items">Importovat schránku</string>
+    <!-- Accessibility -->
+    <string name="keycode_delete">Smazat</string>
+    <string name="keycode_mode_change">Změnit typ klávesnice</string>
+    <string name="keycode_shift">Shift</string>
+    <string name="keycode_enter">Enter</string>
+    <!-- Settings -->
+    <string name="show_clipboard_content">Show clipboard content if available</string>
+    <string name="show_popup">Show a popup on keypress</string>
+    <string name="vibrate_on_keypress">Vibrovat při stisknutí klávesy</string>
+    <string name="keyboard_language">Jazyk klávesnice</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Jednoduchá klávesnice</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Easy keyboard for inserting all kinds of texts, special characters and numbers</string>
+    <string name="app_long_description">
+        A quick lightweight keyboard app that helps chatting with your friends, or inserting any other texts, numbers or symbols.
+
+        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+
+        Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
+
+        <b>Check out the full suite of Simple Tools here:</b>
+        https://www.simplemobiletools.com
+
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
+    </string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>

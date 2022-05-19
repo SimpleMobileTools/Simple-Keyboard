@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">シンプル キーボード</string>
+    <string name="app_launcher_name">キーボード</string>
+    <string name="redirection_note">次の画面でシンプルキーボードを有効にして、使用可能にしてください。有効になったら「戻る」を押してください。</string>
+    <string name="change_keyboard">キーボードを変更</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">クリップボードアイテムの管理</string>
+    <string name="manage_clipboard_empty">クリップボードが空です。</string>
+    <string name="manage_clipboard_label">テキストをコピーすると、ここに表示されます。また、後で消えないように、クリップをピン留めしておけます。</string>
+    <string name="clear_clipboard_data">クリップボードデータをクリア</string>
+    <string name="clear_clipboard_data_confirmation">クリップボードのデータをクリアしてもよろしいですか？</string>
+    <string name="clipboard">クリップボード</string>
+    <string name="clipboard_recent">最近</string>
+    <string name="clipboard_current">現在</string>
+    <string name="clipboard_pinned">ピン留め</string>
+    <string name="add_new_item">新しいアイテムを追加</string>
+    <string name="manage_clips">クリップを管理したり、ここに追加したりしておくことで、素早くアクセスできます。</string>
+    <string name="clip_text">テキストをクリップ</string>
+    <string name="pin_text">テキストをピン留めする</string>
+    <string name="text_pinned">テキストがピン留めされました</string>
+    <string name="export_clipboard_items">クリップボードアイテムをエクスポート</string>
+    <string name="import_clipboard_items">クリップボードアイテムをインポート</string>
+    <!-- Accessibility -->
+    <string name="keycode_delete">削除</string>
+    <string name="keycode_mode_change">キーボードの種類を変更する</string>
+    <string name="keycode_shift">シフト</string>
+    <string name="keycode_enter">エンター</string>
+    <!-- Settings -->
+    <string name="show_clipboard_content">クリップボードの内容がある場合、それを表示する</string>
+    <string name="show_popup">キー入力時にポップアップを表示する</string>
+    <string name="vibrate_on_keypress">キー入力時にバイブする</string>
+    <string name="keyboard_language">キーボードの言語</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">シンプル キーボード</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">あらゆるテキスト、特殊文字、数字を入力するための簡単なキーボード</string>
+    <string name="app_long_description">
+        友達とチャットしたり、他のテキスト、数字、記号を挿入したりするのに役立つ、すばやく軽量なキーボードアプリ。マテリアルデザインとダークテーマにデフォルトで対応。 使いやすい優れたユーザーエクスペリエンスを提供します。インターネットアクセスがないため、他のアプリよりもプライバシー、セキュリティ、安定性があります。広告や不要な権限は含まれていません。完全にオープンソースで、カラーもカスタマイズ可能。 <b>シンプルツールの一覧はこちらをご覧ください: </b> https://www.simplemobiletools.com <b> Facebook: </b> https://www.facebook.com/simplemobiletools <b> Reddit: </b> https://www.reddit.com/r/SimpleMobileTools
+    </string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
