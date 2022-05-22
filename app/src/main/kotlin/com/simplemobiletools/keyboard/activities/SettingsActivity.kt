@@ -132,7 +132,7 @@ class SettingsActivity : SimpleActivity() {
             LANGUAGE_GERMAN -> getString(R.string.translation_german)
             LANGUAGE_RUSSIAN -> getString(R.string.translation_russian)
             LANGUAGE_ENGLISH_QWERTZ -> "${getString(R.string.translation_english)} (QWERTZ)"
-            LANGUAGE_ENGLISH_DVORAK -> "${getString(R.string.translation_english)} (DVORAK)"
+	    LANGUAGE_ENGLISH_DVORAK -> "${getString(R.string.translation_english)} (DVORAK)"
 	    LANGUAGE_SPANISH -> getString(R.string.translation_spanish)
             else -> "${getString(R.string.translation_english)} (QWERTY)"
         }
