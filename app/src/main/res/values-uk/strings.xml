@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Проста клавіатура</string>
+    <string name="app_name">Проста Клавіатура</string>
     <string name="app_launcher_name">Клавіатура</string>
     <string name="redirection_note">Будь ласка, увімкніть Просту Клавіатуру на наступному екрані, щоб зробити її доступною. Після ввімкнення натисніть «Назад».</string>
     <string name="change_keyboard">Змінити клавіатуру</string>
