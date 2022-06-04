@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Simple Keyboard</string>
+    <string name="app_launcher_name">Клавиатура</string>
+    <string name="redirection_note">Пожалуйста, активируйте Simple Keyboard на следующем экране. Затем нажмите \"назад\".</string>
+    <string name="change_keyboard">Сменить клавиатуру</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">Управлять данными из буфера обмена</string>
+    <string name="manage_clipboard_empty">Ваш буфер обмена пуст.</string>
+    <string name="manage_clipboard_label">Здесь появится текст после того, как вы его скопируете. Вы также можете закрепить любой текст, чтобы он не был удалён автоматически.</string>
+    <string name="clear_clipboard_data">Очистить данные буфера обмена</string>
+    <string name="clear_clipboard_data_confirmation">Вы уверены, что хотите очистить данные буфера обмена\?</string>
+    <string name="clipboard">Буфер обмена</string>
+    <string name="clipboard_recent">Недавнее</string>
+    <string name="clipboard_current">Текущее</string>
+    <string name="clipboard_pinned">Закреплено</string>
+    <string name="add_new_item">Добавить</string>
+    <string name="manage_clips">Здесь вы можете изменять или добавлять данные для быстрого доступа.</string>
+    <string name="clip_text">Выбрать текст</string>
+    <string name="pin_text">Закрепить текст</string>
+    <string name="text_pinned">Текст закреплён</string>
+    <string name="export_clipboard_items">Экспортировать данные буфера обмена</string>
+    <string name="import_clipboard_items">Импортировать данные буфера обмена</string>
+    <!-- Accessibility -->
+    <string name="keycode_delete">Удалить</string>
+    <string name="keycode_mode_change">Изменить тип клавиатуры</string>
+    <string name="keycode_shift">Shift</string>
+    <string name="keycode_enter">Enter</string>
+    <!-- Settings -->
+    <string name="show_clipboard_content">Показывать содержимое буфера обмена при наличии</string>
+    <string name="show_popup">Показ ввода по нажатию</string>
+    <string name="vibrate_on_keypress">Вибрация по нажатию</string>
+    <string name="keyboard_language">Язык клавиатуры</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Simple Keyboard</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Лёгкая в использовании клавиатура для ввода текста, специальных символов и чисел</string>
+    <string name="app_long_description">
+        Быстрая и легковесная клавиатура, которая поможет вам общаться с друзьями, печатать тексты, числа и различные символы. Выполнена в стиле Material Design, поддерживает тёмную тему по умолчанию и позволяет настраивать цвета, что предоставляет необходимое удобство в использовании. Не требует доступа в Интернет - это делает работу более приватной, безопасной и стабильной в сравнении с альтернативами. Не содержит рекламы и дополнительных разрешений. Имеет полностью открытый исходный код. <b>Ознакомьтесь с полной коллекцией приложений от Simple Tools по адресу:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools
+    </string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
