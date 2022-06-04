@@ -43,5 +43,5 @@
 \n \u0020 \u0020 \u0020 \u0020https://www.reddit.com/r/SimpleMobileTools </string>
     <string name="clipboard_recent">Recientes</string>
     <string name="add_new_item">Añadir un nuevo elemento</string>
-    <string name="app_short_description">Teclado sencillo para insertar todo tipo de textos, caracteres especiales y números</string>
+    <string name="app_short_description">Teclado sencillo para insertar todo tipo de textos y caracteres especiales</string>
 </resources>
