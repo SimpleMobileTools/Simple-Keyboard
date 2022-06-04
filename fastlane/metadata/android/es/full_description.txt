@@ -1,0 +1,14 @@
+Una aplicación de teclado rápida y liviana que te ayuda a hablar con tus amigos, o insertar cualquier otro texto, número, o símbolo.
+
+Viene con diseño material y oscuro por defecto, provee gran experiencia de usuario para fácil uso. La falta de acceso a internet te da mayor privacidad, seguridad, y estabilidad que otras aplicaciones.
+
+No contiene anuncios o permisos innecesarios. Es completamente código abierto, y provee colores personalizables.
+
+<b>Mira la suite completa de Herramientas Simples aquí:</b>
+https://www.simplemobiletools.com
+
+<b>Facebook:</b>
+https://www.facebook.com/simplemobiletools
+
+<b>Reddit:</b>
+https://www.reddit.com/r/SimpleMobileTools
