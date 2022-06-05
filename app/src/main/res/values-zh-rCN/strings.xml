@@ -2,56 +2,41 @@
 <resources>
     <string name="app_name">Simple Keyboard</string>
     <string name="app_launcher_name">Keyboard</string>
-    <string name="redirection_note">Please enable Simple Keyboard on the next screen, to make it an available keyboard. Press \'Back\' once enabled.</string>
-    <string name="change_keyboard">Change Keyboard</string>
+    <string name="redirection_note">要让 Simple Keyboard 成为可用的键盘，请在下个屏幕启用它。一旦启用，按“返回”。</string>
+    <string name="change_keyboard">更改键盘</string>
     <!-- Clipboard -->
-    <string name="manage_clipboard_items">Manage clipboard items</string>
-    <string name="manage_clipboard_empty">Your clipboard is empty.</string>
-    <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
-    <string name="clear_clipboard_data">Clear clipboard data</string>
-    <string name="clear_clipboard_data_confirmation">Are you sure you want to clear the clipboard data?</string>
+    <string name="manage_clipboard_items">管理剪贴板项目</string>
+    <string name="manage_clipboard_empty">你的剪贴板是空的。</string>
+    <string name="manage_clipboard_label">你复制的文本将显示在此处。 你还可以固定文本片段，这样它们之后不会消失。</string>
+    <string name="clear_clipboard_data">清除剪贴板数据</string>
+    <string name="clear_clipboard_data_confirmation">你确定你想清除剪贴板数据吗？</string>
     <string name="clipboard">Clipboard</string>
     <string name="clipboard_recent">Recent</string>
-    <string name="clipboard_current">Current</string>
-    <string name="clipboard_pinned">Pinned</string>
-    <string name="add_new_item">Add a new item</string>
-    <string name="manage_clips">You can manage or add clips here for quick access.</string>
-    <string name="clip_text">Clip text</string>
+    <string name="clipboard_current">当前</string>
+    <string name="clipboard_pinned">已固定</string>
+    <string name="add_new_item">添加新项目</string>
+    <string name="manage_clips">你可在此处管理或添加文本片段以便快速访问。</string>
+    <string name="clip_text">片段文本</string>
     <string name="pin_text">Pin text</string>
-    <string name="text_pinned">Text has been pinned</string>
+    <string name="text_pinned">文本已固定</string>
     <string name="export_clipboard_items">Export clipboard items</string>
     <string name="import_clipboard_items">Import clipboard items</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Delete</string>
-    <string name="keycode_mode_change">Change keyboard type</string>
+    <string name="keycode_mode_change">更改键盘类型</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
     <!-- Settings -->
-    <string name="show_clipboard_content">Show clipboard content if available</string>
-    <string name="show_popup">Show a popup on keypress</string>
-    <string name="vibrate_on_keypress">Vibrate on keypress</string>
-    <string name="keyboard_language">Keyboard language</string>
+    <string name="show_clipboard_content">如可用显示剪贴板内容</string>
+    <string name="show_popup">按键时显示弹框</string>
+    <string name="vibrate_on_keypress">按键时振动</string>
+    <string name="keyboard_language">键盘语言</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Simple Keyboard</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Easy keyboard for inserting all kinds of texts, special characters and numbers</string>
-    <string name="app_long_description">
-        A quick lightweight keyboard app that helps chatting with your friends, or inserting any other texts, numbers or symbols.
-
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
-
-        Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
-
-        <b>Check out the full suite of Simple Tools here:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
+    <string name="app_short_description">方便的键盘，可插入各种文本、特殊字符和数字</string>
+    <string name="app_long_description"> 一款快速的轻量级键盘应用，帮助你与朋友聊天，或插入任何其他文本，数字或符号。它依照 Material Design 规范进行设计，默认为深色主题，使用方便，用户体验极佳。与其他同类应用相比，没有联网权限给你更多的隐私、安全和稳定性。不包含广告或不必要的权限。它完全开源，提供可定制的颜色。 <b>访问此处查看全套 Simple Tools：</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
