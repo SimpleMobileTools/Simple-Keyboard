@@ -1,0 +1,14 @@
+一款快速的轻量级键盘应用，帮助你与朋友聊天，或插入任何其他文本，数字或符号。它依照 
+
+Material Design 规范进行设计，默认为深色主题，使用方便，用户体验极佳。与其他同类应用相比，没有联网权限给你更多的隐私、安全和稳定性。不包含广告或不必要的权限。
+
+它完全开源，提供可定制的颜色。 
+
+<b>访问此处查看全套 Simple Tools：</b>
+https://www.simplemobiletools.com
+
+<b>Facebook:</b>
+https://www.facebook.com/simplemobiletools
+
+<b>Reddit:</b>
+https://www.reddit.com/r/SimpleMobileTools
