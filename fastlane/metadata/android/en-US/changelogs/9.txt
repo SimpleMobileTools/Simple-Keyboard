@@ -1,0 +1,2 @@
+ * Added DVORAK keyboard layout
+ * Added some translation and UX improvements

@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.1.3 *(2022-06-08)*
+----------------------------
+
+ * Added DVORAK keyboard layout
+ * Added some translation and UX improvements
+
 Version 5.1.2 *(2022-05-22)*
 ----------------------------
 
