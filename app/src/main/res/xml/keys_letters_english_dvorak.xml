@@ -59,36 +59,36 @@
             app:keyEdgeFlags="left"
             app:keyLabel="a"
             app:popupCharacters="áàâãäåāæą"
-            app:popupKeyboard="@xml/keyboard_popup_template"/>
-	<Key
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key
             app:keyLabel="o"
             app:popupCharacters="őöóôôòõō"
-            app:popupKeyboard="@xml/keyboard_popup_template"/>
-	<Key
-            app:keyLabel="e" 
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key
+            app:keyLabel="e"
             app:popupCharacters="éèêëēę"
-            app:popupKeyboard="@xml/keyboard_popup_template"/>
-	<Key
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key
             app:keyLabel="u"
             app:popupCharacters="űúùûüū"
-            app:popupKeyboard="@xml/keyboard_popup_template"/>
-	<Key
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key
             app:keyLabel="i"
             app:popupCharacters="íìîïī"
-            app:popupKeyboard="@xml/keyboard_popup_template"/>
-	<Key
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key
             app:keyLabel="d"
             app:popupCharacters="ďđ"
-            app:popupKeyboard="@xml/keyboard_popup_template"/>
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key app:keyLabel="h" />
-	<Key
+        <Key
             app:keyLabel="t"
             app:popupCharacters="ť"
-            app:popupKeyboard="@xml/keyboard_popup_template"/>
-	<Key
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key
             app:keyLabel="n"
             app:popupCharacters="ňńñ"
-            app:popupKeyboard="@xml/keyboard_popup_template"/>
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:keyEdgeFlags="right"
             app:keyLabel="s" />
@@ -128,9 +128,9 @@
             app:keyWidth="50%p" />
         <Key
             app:keyLabel="z"
+            app:keyWidth="10%p"
             app:popupCharacters="źžż"
-            app:popupKeyboard="@xml/keyboard_popup_template" 
-            app:keyWidth="10%p" />
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:code="-4"
             app:keyEdgeFlags="right"
