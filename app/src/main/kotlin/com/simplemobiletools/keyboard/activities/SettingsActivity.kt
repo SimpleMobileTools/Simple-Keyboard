@@ -116,7 +116,8 @@ class SettingsActivity : SimpleActivity() {
                 RadioItem(LANGUAGE_FRENCH, getKeyboardLanguageText(LANGUAGE_FRENCH)),
                 RadioItem(LANGUAGE_GERMAN, getKeyboardLanguageText(LANGUAGE_GERMAN)),
                 RadioItem(LANGUAGE_SPANISH, getKeyboardLanguageText(LANGUAGE_SPANISH)),
-                RadioItem(LANGUAGE_RUSSIAN, getKeyboardLanguageText(LANGUAGE_RUSSIAN))
+                RadioItem(LANGUAGE_RUSSIAN, getKeyboardLanguageText(LANGUAGE_RUSSIAN)),
+                RadioItem(LANGUAGE_SLOVENIAN, getKeyboardLanguageText(LANGUAGE_SLOVENIAN))
             )
 
             RadioGroupDialog(this@SettingsActivity, items, config.keyboardLanguage) {
@@ -134,6 +135,7 @@ class SettingsActivity : SimpleActivity() {
             LANGUAGE_ENGLISH_QWERTZ -> "${getString(R.string.translation_english)} (QWERTZ)"
             LANGUAGE_ENGLISH_DVORAK -> "${getString(R.string.translation_english)} (DVORAK)"
             LANGUAGE_SPANISH -> getString(R.string.translation_spanish)
+            LANGUAGE_SLOVENIAN -> getString(R.string.translation_slovenian)
             else -> "${getString(R.string.translation_english)} (QWERTY)"
         }
     }
