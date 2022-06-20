@@ -7,13 +7,13 @@ It comes with material design and dark theme by default, provides great user exp
 
 Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
 
-<b>Check out the full suite of Simple Tools here:</b>
+Check out the full suite of Simple Tools here:  
 https://www.simplemobiletools.com
 
-<b>Facebook:</b>
+Facebook:  
 https://www.facebook.com/simplemobiletools
 
-<b>Reddit:</b>
+Reddit:  
 https://www.reddit.com/r/SimpleMobileTools
 
 <a href='https://play.google.com/store/apps/details?id=com.simplemobiletools.keyboard'><img src='https://simplemobiletools.com/images/button-google-play.svg' alt='Get it on Google Play' height=45/></a>
