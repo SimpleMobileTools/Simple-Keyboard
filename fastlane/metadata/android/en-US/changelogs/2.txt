@@ -1,3 +1,0 @@
- * Allow toggling between english and russian keyboard for now, more to come
- * Added some extra alternative characters at long pressing some keys
- * Added some UX, translation and stability improvements
