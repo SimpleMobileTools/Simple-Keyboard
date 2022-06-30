@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">מקלדת פשוטה</string>
+    <string name="app_launcher_name">מקלדת</string>
+    <string name="redirection_note">אנא הפעל את מקלדת פשוטה במסך הבא, כדי להפוך אותה למקלדת זמינה. לחץ על \'הקודם\' לאחר הפעלתו.</string>
+    <string name="change_keyboard">שנה מקלדת</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">נהל פריטי לוח</string>
+    <string name="manage_clipboard_empty">הלוח שלך ריק.</string>
+    <string name="manage_clipboard_label">"לאחר שתעתיק טקסט כלשהו, הוא יופיע כאן.  ניתן גם להצמיד קליפים כדי שלא ייעלמו מאוחר יותר."</string>
+    <string name="clear_clipboard_data">נקה את נתוני הלוח</string>
+    <string name="clear_clipboard_data_confirmation">האם אתה בטוח שאתה רוצה לנקות את נתוני הלוח\?</string>
+    <string name="clipboard">לוח כתיבה</string>
+    <string name="clipboard_recent">לאחרונה</string>
+    <string name="clipboard_current">נוכחי</string>
+    <string name="clipboard_pinned">הצמד</string>
+    <string name="add_new_item">הוסף פריט חדש</string>
+    <string name="manage_clips">אתה יכול לנהל או להוסיף קליפים כאן לגישה מהירה.</string>
+    <string name="clip_text">טקסט קליפ</string>
+    <string name="pin_text">הצמד טקסט</string>
+    <string name="text_pinned">הטקסט הוצמד</string>
+    <string name="export_clipboard_items">ייצוא פריטי לוח</string>
+    <string name="import_clipboard_items">ייבוא פריטים ללוח</string>
+    <!-- Accessibility -->
+    <string name="keycode_delete">מחק</string>
+    <string name="keycode_mode_change">שנה את סוג המקלדת</string>
+    <string name="keycode_shift">Shift</string>
+    <string name="keycode_enter">Enter</string>
+    <!-- Settings -->
+    <string name="show_clipboard_content">הצג תוכן של לוח אם זמין</string>
+    <string name="show_popup">הצג חלון קופץ בלחיצת מקש</string>
+    <string name="vibrate_on_keypress">רטט בלחיצה על המקש</string>
+    <string name="keyboard_language">שפת מקלדת</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">מקלדת פשוטה</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">מקלדת קלה להכנסת כל מיני טקסטים, תווים מיוחדים ומספרים</string>
+    <string name="app_long_description"> אפליקציית מקלדת קלה ומהירה המסייעת לשוחח בצ\'אט עם החברים שלך, או בהכנסת כל טקסט, מספרים או סמלים אחרים. זה מגיע עם עיצוב חומר וערכת נושא כהה כברירת מחדל, מספק חווית משתמש נהדרת לשימוש קל. היעדר גישה לאינטרנט נותן לך יותר פרטיות, אבטחה ויציבות מאשר אפליקציות אחרות. אינו מכיל פרסומות או הרשאות מיותרות. זה קוד פתוח לחלוטין, מספק צבעים הניתנים להתאמה אישית. <b>בדוק את החבילה המלאה של כלים פשוטים כאן:</b> https://www.simplemobiletools.com <b>פייסבוק:</b> https://www.facebook.com/simplemobiletools <b>Reddit :</b> https://www.reddit.com/r/SimpleMobileTools </string>
+</resources>
