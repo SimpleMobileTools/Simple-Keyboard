@@ -1,2 +1,0 @@
- * Added a couple new alternative characters at long pressing
- * Added some translation improvements

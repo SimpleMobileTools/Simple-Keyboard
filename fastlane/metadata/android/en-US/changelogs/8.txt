@@ -1,2 +1,0 @@
- * Added some new languages
- * Added some translation and UX improvements

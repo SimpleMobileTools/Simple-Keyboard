@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple Keyboard</string>
-    <string name="app_launcher_name">Keyboard</string>
-    <string name="redirection_note">Please enable Simple Keyboard on the next screen, to make it an available keyboard. Press \'Back\' once enabled.</string>
-    <string name="change_keyboard">Change Keyboard</string>
+    <string name="app_name">Обикновена клавиатура</string>
+    <string name="app_launcher_name">Клавиатура</string>
+    <string name="redirection_note">Моля, активирайте Обикновена клавиатура на следващия екран, за да я направите налична. Натиснете \'Назад\' щом сте готови.</string>
+    <string name="change_keyboard">Промяна на клавиатура</string>
     <!-- Clipboard -->
-    <string name="manage_clipboard_items">Manage clipboard items</string>
-    <string name="manage_clipboard_empty">Your clipboard is empty.</string>
-    <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
-    <string name="clear_clipboard_data">Clear clipboard data</string>
-    <string name="clear_clipboard_data_confirmation">Are you sure you want to clear the clipboard data?</string>
+    <string name="manage_clipboard_items">Управление на клипборд елементи</string>
+    <string name="manage_clipboard_empty">Вашият клипборд е празен.</string>
+    <string name="manage_clipboard_label">След като копирате някакъв текст, той ще се появи тук. Можете също да закачите клипове, за да не изчезнат по-късно.</string>
+    <string name="clear_clipboard_data">Изчистване на клипборд данните</string>
+    <string name="clear_clipboard_data_confirmation">Сигурни ли сте, че искате да изтриете клипборд данните\?</string>
     <string name="clipboard">Clipboard</string>
     <string name="clipboard_recent">Recent</string>
-    <string name="clipboard_current">Current</string>
-    <string name="clipboard_pinned">Pinned</string>
-    <string name="add_new_item">Add a new item</string>
-    <string name="manage_clips">You can manage or add clips here for quick access.</string>
+    <string name="clipboard_current">Текущо</string>
+    <string name="clipboard_pinned">Закачено</string>
+    <string name="add_new_item">Добавяне на нов елемент</string>
+    <string name="manage_clips">Тук можете да управлявате или добавяте клипове за бърз достъп.</string>
     <string name="clip_text">Clip text</string>
     <string name="pin_text">Pin text</string>
-    <string name="text_pinned">Text has been pinned</string>
+    <string name="text_pinned">Текстът е закачен</string>
     <string name="export_clipboard_items">Export clipboard items</string>
     <string name="import_clipboard_items">Import clipboard items</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Delete</string>
-    <string name="keycode_mode_change">Change keyboard type</string>
+    <string name="keycode_mode_change">Промяна на типа клавиатура</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
     <!-- Settings -->
-    <string name="show_clipboard_content">Show clipboard content if available</string>
-    <string name="show_popup">Show a popup on keypress</string>
-    <string name="vibrate_on_keypress">Vibrate on keypress</string>
-    <string name="keyboard_language">Keyboard language</string>
+    <string name="show_clipboard_content">Показване на клипборд съдържанието, ако е налично</string>
+    <string name="show_popup">Показване на изскачащ прозорец при натискане на клавиш</string>
+    <string name="vibrate_on_keypress">Вибриране при натискане на клавиш</string>
+    <string name="keyboard_language">Език на клавиатурата</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Keyboard</string>
+    <string name="app_title">Обикновена клавиатура</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Easy keyboard for inserting all kinds of texts, special characters and numbers</string>
+    <string name="app_short_description">Лесна клавиатура за вмъкване на всякакви текстове, специални знаци и цифри</string>
     <string name="app_long_description">
         A quick lightweight keyboard app that helps chatting with your friends, or inserting any other texts, numbers or symbols.
 

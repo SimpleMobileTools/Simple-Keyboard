@@ -1,3 +1,0 @@
- * Added a French keyboard
- * Made spacebar a bit wider
- * Added some translation, stability and UX improvements
