@@ -24,7 +24,7 @@
             app:topSmallNumber="4" />
         <Key
             app:keyLabel="t"
-            app:popupCharacters="ț5"
+            app:popupCharacters="5ț"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="5" />
         <Key
@@ -39,7 +39,7 @@
             app:topSmallNumber="7" />
         <Key
             app:keyLabel="i"
-            app:popupCharacters="î8"
+            app:popupCharacters="8î"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="8" />
         <Key
@@ -84,6 +84,7 @@
             app:keyWidth="15%p" />
         <Key app:keyLabel="z" />
         <Key app:keyLabel="x" />
+        <Key app:keyLabel="c" />
         <Key app:keyLabel="v" />
         <Key app:keyLabel="b" />
         <Key app:keyLabel="n" />
