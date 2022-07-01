@@ -106,7 +106,7 @@
             app:keyLabel="123"
             app:keyWidth="15%p" />
         <Key
-            app:keyLabel="/"
+            app:keyLabel=","
             app:keyWidth="10%p" />
         <Key
             app:code="32"
