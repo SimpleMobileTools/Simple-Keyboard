@@ -116,6 +116,7 @@ class SettingsActivity : SimpleActivity() {
                 RadioItem(LANGUAGE_FRENCH, getKeyboardLanguageText(LANGUAGE_FRENCH)),
                 RadioItem(LANGUAGE_GERMAN, getKeyboardLanguageText(LANGUAGE_GERMAN)),
                 RadioItem(LANGUAGE_SPANISH, getKeyboardLanguageText(LANGUAGE_SPANISH)),
+                RadioItem(LANGUAGE_ROMANIAN, getKeyboardLanguageText(LANGUAGE_ROMANIAN)),
                 RadioItem(LANGUAGE_RUSSIAN, getKeyboardLanguageText(LANGUAGE_RUSSIAN))
             )
 
@@ -134,6 +135,7 @@ class SettingsActivity : SimpleActivity() {
             LANGUAGE_ENGLISH_QWERTZ -> "${getString(R.string.translation_english)} (QWERTZ)"
             LANGUAGE_ENGLISH_DVORAK -> "${getString(R.string.translation_english)} (DVORAK)"
             LANGUAGE_SPANISH -> getString(R.string.translation_spanish)
+            LANGUAGE_ROMANIAN -> getString(R.string.translation_romanian)
             else -> "${getString(R.string.translation_english)} (QWERTY)"
         }
     }
