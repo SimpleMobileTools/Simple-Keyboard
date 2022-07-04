@@ -31,29 +31,6 @@
     <string name="show_popup">Pop-up tonen bij toetsaanslagen</string>
     <string name="vibrate_on_keypress">Trillen bij toetsaanslagen</string>
     <string name="keyboard_language">Toetsenbordtaal</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Eenvoudig Toetsenbord</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Handig toetsenbord voor het invoeren van tekst, speciale karakters en nummers</string>
-    <string name="app_long_description">
-        Een snelle en lichtgewicht toetsenbord-app die ideaal is voor het chatten met vrienden, of het invoegen van ieder type tekst, nummers of symbolen.
-
-        De app is ontworpen volgens material design en heeft standaard een donker thema.
-
-        De app heeft geen toegang tot het internet nodig en voorziet van meer privacy, veiligheid en stabiliteit dan andere apps.
-
-        Bevat geen advertenties of onnodige machtigingen. Volledig open-source. Kleuren van de app kunnen worden aangepast.
-
-        <b>Probeer ook eens de andere apps van Simple Tools:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

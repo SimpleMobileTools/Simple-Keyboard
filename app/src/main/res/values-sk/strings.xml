@@ -31,27 +31,6 @@
     <string name="show_popup">Zobraziť detail znaku pri stlačení</string>
     <string name="vibrate_on_keypress">Vibrovať pri stlačení</string>
     <string name="keyboard_language">Jazyk klávesnice</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Jednoduchá klávesnica</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Ľahká klávesnica na vkladanie rôznych textov, špeciálnych znakov a čísel.</string>
-    <string name="app_long_description">
-        Rýchla a ľahká klávesnica, pomocou ktorej si môžete písať s kamošmi, alebo vkladať iný text, čísla a symboli.
-
-        Táto apka je založená na Material dizajne a má prednastavenú tmavú tému, poskytuje výbornú používateľskú skúsenosť pre ľahké používanie. Chýbajúci prístup k internetu garantuje lepšie súkromie, bezpečnosť a stabilitu ako ostatné apky.
-
-        Neobsahuje žiadne reklamy a nepotrebné oprávnenia. Je opensource, poskytuje možnosť zmeny farieb.
-
-        <b>Pozrite si celú sadu aplikácií na:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

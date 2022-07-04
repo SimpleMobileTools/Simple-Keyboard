@@ -31,14 +31,6 @@
     <string name="show_popup">Visa en popupp vid knapptryck</string>
     <string name="vibrate_on_keypress">Vibrera på knapptryck</string>
     <string name="keyboard_language">Tangentbordsspråk</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simpelt tangentbord</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Tangentbord för att infoga alla möjliga typer av texter och special bokstäver</string>
-    <string name="app_long_description">
-        En snabb och lätt tangentbordsapp som hjälper dig att chatta med dina vänner eller infoga andra texter, siffror eller symboler. Den levereras med materialdesign och mörkt tema som standard, vilket ger en bra användarupplevelse för enkel användning. Eftersom du inte har tillgång till internet får du mer integritet, säkerhet och stabilitet än med andra appar. Innehåller inga annonser eller onödiga behörigheter. Den är helt öppen källkod, ger anpassningsbara färger. <b>Kika på hela paketet av Simple Tools här:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools
-    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

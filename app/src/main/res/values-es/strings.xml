@@ -31,27 +31,6 @@
     <string name="show_popup">Agrandar la tecla al pulsarla</string>
     <string name="vibrate_on_keypress">Vibrar al pulsar una tecla</string>
     <string name="keyboard_language">Idioma del teclado</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Teclado simple</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Teclado sencillo para insertar todo tipo de textos y caracteres especiales</string>
-    <string name="app_long_description">
-        Una aplicación de teclado rápida y liviana que te ayuda a hablar con tus amigos, o insertar cualquier otro texto, número, o símbolo.
-
-        Viene con diseño material y oscuro por defecto, provee gran experiencia de usuario para fácil uso. La falta de acceso a internet te da mayor privacidad, seguridad, y estabilidad que otras aplicaciones.
-
-        No contiene anuncios o permisos innecesarios. Es completamente código abierto, y provee colores personalizables.
-
-        <b>Mira la suite completa de Herramientas Simples aquí:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

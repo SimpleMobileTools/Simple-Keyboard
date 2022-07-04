@@ -31,14 +31,6 @@
     <string name="show_popup">Mostrar pop-up ao digitar</string>
     <string name="vibrate_on_keypress">Vibrar ao digitar</string>
     <string name="keyboard_language">Idioma do teclado</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Teclado Simples</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Teclado fácil para inserir todo tipo de texto, caracteres especiais e números</string>
-    <string name="app_long_description">
-        Um aplicativo de teclado veloz e leve para te ajudar a falar com amigos ou inserir quaisquer outros textos, números e símbolos. Vêm de padrão com os temas escuro e material design, fornecendo boa experiência ao usuário e fácil usabilidade. A ausência de conexões à internet te dá mais privacidade, segurança e estabilidade que outros aplicativos. Não há propagandas ou permissões desnecessárias. O código fonte é totalmente aberto, fornece cores customizáveis. <b>Confira a coleção completa das Simple Tools aqui:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools 
-    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

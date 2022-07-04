@@ -31,27 +31,6 @@
     <string name="show_popup">Εμφάνιση ανάδυσης στο πάτημα πλήκτρων</string>
     <string name="vibrate_on_keypress">Δόνηση στο πάτημα πλήκτρου</string>
     <string name="keyboard_language">Γλώσσα πληκτρολογίου</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Απλό πληκτρολόγιο</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Εύκολο πληκτρολόγιο για εισαγωγή όλων των κειμένων, ειδικών χαρακτήρων, αριθμών</string>
-    <string name="app_long_description">
-        Μια γρήγορη και ελαφριά εφαρμογή πληκτρολογίου που βοηθάει στην συζήτηση με τους φίλους σας ή στην εισαγωγή άλλων κειμένων, αριθμών ή συμβόλων.
-
-        Έρχεται με σχεδιασμό υλικού και σκοτεινό θέμα από προεπιλογή, παρέχει εξαιρετική εμπειρία χρήσης για εύκολη χρήση. Η έλλειψη πρόσβασης στο διαδίκτυο σας προσφέρει περισσότερη ιδιωτικότητα, ασφάλεια και σταθερότητα σε σχέση με άλλες εφαρμογές.
-
-        Δεν περιέχει διαφημίσεις ή περιττές άδειες χρήσης. Είναι πλήρως ανοιχτού κώδικα, παρέχει προσαρμόσιμα χρώματα.
-
-        <b>Δείτε την πλήρη σουίτα των Απλών Εργαλείων εδώ:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

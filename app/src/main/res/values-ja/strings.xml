@@ -31,14 +31,6 @@
     <string name="show_popup">キー入力時にポップアップを表示する</string>
     <string name="vibrate_on_keypress">キー入力時にバイブする</string>
     <string name="keyboard_language">キーボードの言語</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">シンプル キーボード</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">あらゆるテキスト、特殊文字、数字を入力するための簡単なキーボード</string>
-    <string name="app_long_description">
-        友達とチャットしたり、他のテキスト、数字、記号を挿入したりするのに役立つ、すばやく軽量なキーボードアプリ。マテリアルデザインとダークテーマにデフォルトで対応。 使いやすい優れたユーザーエクスペリエンスを提供します。インターネットアクセスがないため、他のアプリよりもプライバシー、セキュリティ、安定性があります。広告や不要な権限は含まれていません。完全にオープンソースで、カラーもカスタマイズ可能。 <b>シンプルツールの一覧はこちらをご覧ください: </b> https://www.simplemobiletools.com <b> Facebook: </b> https://www.facebook.com/simplemobiletools <b> Reddit: </b> https://www.reddit.com/r/SimpleMobileTools
-    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

@@ -31,27 +31,6 @@
     <string name="show_popup">Tampilkan sebuah popup pada penekanan tombol</string>
     <string name="vibrate_on_keypress">Getar pada penekanan tombol</string>
     <string name="keyboard_language">Bahasa keyboard</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Keyboard</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Keyboard mudah untuk mengisi teks, karakter special dan nomor apa saja</string>
-    <string name="app_long_description">
-        Aplikasi papan ketik cepat ringan yang membantu mengobrol dengan teman Anda, atau menyisipkan teks, angka, atau simbol lainnya.
-
-        Muncul dengan desain material dan tema gelap secara default, memberikan pengalaman pengguna yang luar biasa untuk penggunaan yang mudah.
-
-        Kurangnya akses internet memberi Anda lebih banyak privasi, keamanan, dan stabilitas daripada aplikasi lain. Tidak mengandung iklan atau izin yang tidak perlu. Ini sepenuhnya sumber-terbuka, menyediakan warna yang dapat disesuaikan.
-
-        <b>Lihat rangkaian lengkap Simple Tools di sini:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

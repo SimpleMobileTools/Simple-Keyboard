@@ -31,12 +31,6 @@
     <string name="show_popup">Ein Popup bei Tastendruck anzeigen</string>
     <string name="vibrate_on_keypress">Bei Tastendruck vibrieren</string>
     <string name="keyboard_language">Tastatursprache</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Schlichte Tastatur</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Schlichte Tastatur zum Einfügen aller Arten von Texten, Sonderzeichen und Zahlen</string>
-    <string name="app_long_description"> Eine schnelle, leichtgewichtige Tastatur-App, die Ihnen hilft, mit Ihren Freunden zu chatten oder beliebige andere Texte, Zahlen oder Symbole einzufügen. Sie kommt standardmäßig mit Material Design und dunklem Thema und bietet eine großartige Benutzererfahrung für eine einfache Nutzung. Der fehlende Internetzugang bietet Ihnen mehr Privatsphäre, Sicherheit und Stabilität als andere Apps. Enthält keine Werbung oder unnötige Berechtigungen. Es ist vollständig quelloffen, bietet anpassbare Farben. <b>Hier finden Sie die gesamte Palette der Simple Tools:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

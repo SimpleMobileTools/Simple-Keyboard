@@ -31,27 +31,6 @@
     <string name="show_popup">Afișați o fereastră pop-up la apăsarea unei taste</string>
     <string name="vibrate_on_keypress">Vibrează la apăsarea tastelor</string>
     <string name="keyboard_language">Limba tastaturii</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Keyboard</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Tastatură pentru inserarea tuturor tipurilor de texte, caractere și numere</string>
-    <string name="app_long_description">
-        A quick lightweight keyboard app that helps chatting with your friends, or inserting any other texts, numbers or symbols.
-
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
-
-        Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
-
-        <b>Check out the full suite of Simple Tools here:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

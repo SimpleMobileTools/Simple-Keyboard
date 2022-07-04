@@ -31,12 +31,6 @@
     <string name="show_popup">Afficher une fenêtre contextuelle en cas de pression sur une touche</string>
     <string name="vibrate_on_keypress">Vibrer lorsqu\'une touche est pressée</string>
     <string name="keyboard_language">Langue du clavier</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Clavier simple</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Clavier facile à utiliser pour insérer toutes sortes de textes et de chiffres</string>
-    <string name="app_long_description"> Une application de clavier rapide et légère qui permet de chatter avec vos amis, ou d\'insérer d\'autres textes, chiffres ou symboles. Il est livré avec un design matériel et un thème sombre par défaut, offrant une grande expérience utilisateur pour une utilisation facile. L\'absence d\'accès à Internet vous offre plus de confidentialité, de sécurité et de stabilité que les autres applications. Ne contient pas de publicités ni de permissions inutiles. Le code source est entièrement ouvert, fournit des couleurs personnalisables. <b>Voyez la suite complète de Simple Tools ici :</b> https://www.simplemobiletools.com <b>Facebook :</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

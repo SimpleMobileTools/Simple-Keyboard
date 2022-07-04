@@ -31,10 +31,8 @@
     <string name="show_popup">הצג חלון קופץ בלחיצת מקש</string>
     <string name="vibrate_on_keypress">רטט בלחיצה על המקש</string>
     <string name="keyboard_language">שפת מקלדת</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">מקלדת פשוטה</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">מקלדת קלה להכנסת כל מיני טקסטים, תווים מיוחדים ומספרים</string>
-    <string name="app_long_description"> אפליקציית מקלדת קלה ומהירה המסייעת לשוחח בצ\'אט עם החברים שלך, או בהכנסת כל טקסט, מספרים או סמלים אחרים. זה מגיע עם עיצוב חומר וערכת נושא כהה כברירת מחדל, מספק חווית משתמש נהדרת לשימוש קל. היעדר גישה לאינטרנט נותן לך יותר פרטיות, אבטחה ויציבות מאשר אפליקציות אחרות. אינו מכיל פרסומות או הרשאות מיותרות. זה קוד פתוח לחלוטין, מספק צבעים הניתנים להתאמה אישית. <b>בדוק את החבילה המלאה של כלים פשוטים כאן:</b> https://www.simplemobiletools.com <b>פייסבוק:</b> https://www.facebook.com/simplemobiletools <b>Reddit :</b> https://www.reddit.com/r/SimpleMobileTools </string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
 </resources>
