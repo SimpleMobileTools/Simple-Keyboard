@@ -1,10 +1,12 @@
 Una aplicació de teclat ràpida i lleugera que ajuda a xatejar amb els vostres amics o a inserir qualsevol altre text, nombre o símbol.
 
+Podeu crear clips pràctics i fixar els utilitzats amb freqüència per a un accés fàcil. Podeu commutar vibracions i finestres emergents en prémer tecles o seleccionar l'idioma de la llista dels admesos.
+
 De manera predeterminada, inclou el «material design» i un tema fosc, proporciona una gran experiència d'usuari per facilitar-ne l'ús. La manca d'accés a Internet us ofereix més privadesa, seguretat i estabilitat que altres aplicacions.
 
 No conté anuncis ni permisos innecessaris. És totalment de codi obert, proporciona colors personalitzables.
 
-<b>Consulteu el conjunt complet d'eines simples aquí:</b>
+Consulteu el conjunt complet d'eines simples aquí:
 https://www.simplemobiletools.com
 
 Facebook:
@@ -12,3 +14,6 @@ https://www.facebook.com/simplemobiletools
 
 Reddit:
 https://www.reddit.com/r/SimpleMobileTools
+
+Telegram:
+https://t.me/SimpleMobileTools
