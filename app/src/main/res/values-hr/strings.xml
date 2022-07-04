@@ -5,38 +5,38 @@
     <string name="redirection_note">Aktiviraj jednostavnu tipkovnicu na sljedećem ekranu kako bi tipkovnica bila dostupna. Nakon što je aktivirana pritisni „Natrag”.</string>
     <string name="change_keyboard">Promijeni tipkovnicu</string>
     <!-- Clipboard -->
-    <string name="manage_clipboard_items">Upravljajte stavkama međuspremnika</string>
-    <string name="manage_clipboard_empty">Vaš međuspremnik je prazan.</string>
-    <string name="manage_clipboard_label">Kada kopirate neki tekst, on će se pojaviti ovdje. Također možete prikvačiti isječke kako ne bi kasnije nestali.</string>
+    <string name="manage_clipboard_items">Upravljaj stavkama međuspremnika</string>
+    <string name="manage_clipboard_empty">Tvoj međuspremnik je prazan.</string>
+    <string name="manage_clipboard_label">Kada kopiraš neki tekst, on će se pojaviti ovdje. Također možeš prikvačiti isječke kako kasnije ne bi nestali.</string>
     <string name="clear_clipboard_data">Izbriši podatke međuspremnika</string>
     <string name="clear_clipboard_data_confirmation">Stvarno želiš izbrisati podatke međuspremnika\?</string>
-    <string name="clipboard">Clipboard</string>
-    <string name="clipboard_recent">Recent</string>
-    <string name="clipboard_current">Sadašnji</string>
-    <string name="clipboard_pinned">Prikvačeno</string>
-    <string name="add_new_item">Dodajte novu stavku</string>
-    <string name="manage_clips">Ovdje možete upravljati ili dodavati isječke za brzi pristup.</string>
-    <string name="clip_text">Tekst isječka</string>
-    <string name="pin_text">Pin text</string>
+    <string name="clipboard">Međuspremnik</string>
+    <string name="clipboard_recent">Nedavni</string>
+    <string name="clipboard_current">Aktualni</string>
+    <string name="clipboard_pinned">Prikvačeni</string>
+    <string name="add_new_item">Dodaj novu stavku</string>
+    <string name="manage_clips">Ovdje možeš upravljati ili dodati isječke za brzi pristup.</string>
+    <string name="clip_text">Odreži tekst</string>
+    <string name="pin_text">Prikvači tekst</string>
     <string name="text_pinned">Tekst je prikvačen</string>
-    <string name="export_clipboard_items">Export clipboard items</string>
-    <string name="import_clipboard_items">Import clipboard items</string>
+    <string name="export_clipboard_items">Izvezi stavke međuspremnika</string>
+    <string name="import_clipboard_items">Uvezi stavke međuspremnika</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Izbriži</string>
     <string name="keycode_mode_change">Promijeni vrstu tipkovnice</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
     <!-- Settings -->
-    <string name="show_clipboard_content">Prikaži sadržaj međuspremnika ako je dostupan</string>
-    <string name="show_popup">Prikažite skočni prozor pri pritisku tipke</string>
-    <string name="vibrate_on_keypress">Vibracija pri pritisku tipke</string>
+    <string name="show_clipboard_content">Prikaži sadržaj međuspremnika ako postoji</string>
+    <string name="show_popup">Prikaži skočni prozor prilikom pritiskanja tipke</string>
+    <string name="vibrate_on_keypress">Vibriraj prilikom pritiskanja tipke</string>
     <string name="keyboard_language">Jezik tipkovnice</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 30 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Jednostavna tipkovnica</string>
-    <string name="app_short_description">Jednostavna tipkovnica za umetanje svih vrsta tekstova, posebnih znakova i brojeva</string>
+    <string name="app_short_description">Tipkovnica za umetanje svih vrsta tekstova, posebnih znakova i brojeva</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_long_description"> Brza lagana aplikacija za tipkovnicu koja pomaže u razgovoru s prijateljima ili umetanju bilo kojeg drugog teksta, brojeva ili simbola. Dolazi s materijalnim dizajnom i tamnom temom prema zadanim postavkama, pruža izvrsno korisničko iskustvo za jednostavnu upotrebu. Nedostatak pristupa internetu daje vam više privatnosti, sigurnosti i stabilnosti od drugih aplikacija. Ne sadrži oglase niti nepotrebna dopuštenja. Potpuno je otvorenog koda, pruža prilagodljive boje. <b>Pogledajte cijeli paket Jednostavni Alati ovdje:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
+    <string name="app_long_description"> Brza i mala aplikacija za tipkovnicu koja pomaže u razgovorima s prijateljima ili umetanju bilo kojeg drugog teksta, brojeva ili simbola. Aplikacija je izrađena u material-dizajnu i standardno koristi tamnu temu, pruža izvrsno korisničko iskustvo za jednostavnu upotrebu. Nedostatak pristupa internetu pruža bolju privatnost, sigurnost i stabilnost od drugih aplikacija. Ne sadrži oglase niti nepotrebne dozvole. Potpuno je otvorenog koda, pruža prilagodljive boje. <b>Pogledaj cijeli paket „Jednostavni alati” ovdje:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

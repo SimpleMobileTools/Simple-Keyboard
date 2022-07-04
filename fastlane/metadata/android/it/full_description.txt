@@ -1,10 +1,12 @@
 Un'app rapida e leggera per la tastiera che aiuta a chattare con i tuoi amici, o a inserire qualsiasi altro testo, numero o simbolo.
 
+È possibile creare clip a portata di mano e fissare quelle utilizzate di frequente per un facile accesso. Puoi abilitare le vibrazioni, i popup sulla pressione dei tasti o scegliere la tua lingua dalla lista di quelle supportate.
+
 Viene fornito con Material Design e tema scuro per impostazione predefinita, fornisce una grande esperienza utente per un facile utilizzo. La mancanza di accesso a internet ti dà più privacy, sicurezza e stabilità rispetto ad altre app. 
 
 Non contiene annunci o permessi inutili. Il codice sorgente è completamente aperto, fornisce colori personalizzabili.
 
-<b> Guarda la suite completa di Simple Tools qui:</b>
+Guarda la suite completa di Simple Tools qui:
 https://www.simplemobiletools.com
 
 Facebook:
@@ -12,3 +14,6 @@ https://www.facebook.com/simplemobiletools
 
 Reddit:
 https://www.reddit.com/r/SimpleMobileTools
+
+Telegram:
+https://t.me/SimpleMobileTools
