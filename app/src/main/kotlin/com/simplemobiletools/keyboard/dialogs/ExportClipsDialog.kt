@@ -37,12 +37,12 @@ class ExportClipsDialog(
             }
         }
 
-        AlertDialog.Builder(activity)
+        activity.getAlertDialogBuilder()
             .setPositiveButton(R.string.ok, null)
             .setNegativeButton(R.string.cancel, null)
-            .create().apply {
-                activity.setupDialogStuff(view, this, R.string.export_clipboard_items) {
-                    getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            .apply {
+                activity.setupDialogStuff(view, this, R.string.export_clipboard_items) { alertDialog ->
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                         val filename = view.export_clips_filename.value
                         if (filename.isEmpty()) {
                             activity.toast(R.string.filename_cannot_be_empty)
@@ -60,11 +60,11 @@ class ExportClipsDialog(
                             val title = String.format(activity.getString(R.string.file_already_exists_overwrite), newPath.getFilenameFromPath())
                             ConfirmationDialog(activity, title) {
                                 callback(newPath, filename)
-                                dismiss()
+                                alertDialog.dismiss()
                             }
                         } else {
                             callback(newPath, filename)
-                            dismiss()
+                            alertDialog.dismiss()
                         }
                     }
                 }
