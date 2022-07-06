@@ -1,6 +1,7 @@
 package com.simplemobiletools.keyboard.dialogs
 
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatEditText
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
@@ -20,8 +21,14 @@ class ExportClipsDialog(
             activity.internalStoragePath
         }
 
-        val view = activity.layoutInflater.inflate(R.layout.dialog_export_clips, null).apply {
-            export_clips_filename.setText("${activity.getString(R.string.app_launcher_name)}_${activity.getCurrentFormattedDateTime()}")
+        val layoutId = if (activity.baseConfig.isUsingSystemTheme) {
+            R.layout.dialog_export_clips_material
+        } else {
+            R.layout.dialog_export_clips
+        }
+
+        val view = activity.layoutInflater.inflate(layoutId, null).apply {
+            findViewById<AppCompatEditText>(R.id.export_clips_filename).setText("${activity.getString(R.string.app_launcher_name)}_${activity.getCurrentFormattedDateTime()}")
 
             if (hidePath) {
                 export_clips_path_label.beGone()
@@ -42,8 +49,9 @@ class ExportClipsDialog(
             .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(view, this, R.string.export_clipboard_items) { alertDialog ->
+                    alertDialog.showKeyboard(view.findViewById(R.id.export_clips_filename))
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                        val filename = view.export_clips_filename.value
+                        val filename = view.findViewById<AppCompatEditText>(R.id.export_clips_filename).value
                         if (filename.isEmpty()) {
                             activity.toast(R.string.filename_cannot_be_empty)
                             return@setOnClickListener
