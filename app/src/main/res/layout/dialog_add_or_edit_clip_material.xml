@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/activity_margin">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/add_clip_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_margin"
+        android:layout_marginEnd="@dimen/activity_margin"
+        android:hint="@string/clip_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_clip_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences|textMultiLine"
+            android:textSize="@dimen/bigger_text_size" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+</RelativeLayout>
