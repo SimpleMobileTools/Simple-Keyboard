@@ -1,42 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/clipboard_items_wrapper"
+    android:id="@+id/clipboard_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.simplemobiletools.commons.views.MyRecyclerView
-        android:id="@+id/clipboard_items_list"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/coordinator_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/clipboard_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/color_primary"
+            app:menu="@menu/menu_manage_clipboard_items"
+            app:title="@string/manage_clipboard_items"
+            app:titleTextAppearance="@style/AppTheme.ActionBar.TitleTextStyle" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/coordinator_nested_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/clipboard_items_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:alpha="0.8"
-        android:gravity="center_horizontal"
-        android:paddingStart="@dimen/activity_margin"
-        android:paddingTop="@dimen/big_margin"
-        android:paddingEnd="@dimen/activity_margin"
-        android:text="@string/manage_clips"
-        android:textSize="@dimen/bigger_text_size"
-        android:textStyle="italic"
-        android:visibility="gone" />
+        <RelativeLayout
+            android:id="@+id/clipboard_items_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/clipboard_items_placeholder_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/clipboard_items_placeholder"
-        android:layout_centerHorizontal="true"
-        android:background="?attr/selectableItemBackground"
-        android:gravity="center"
-        android:padding="@dimen/activity_margin"
-        android:text="@string/add_new_item"
-        android:textSize="@dimen/bigger_text_size"
-        android:visibility="gone" />
+            <com.simplemobiletools.commons.views.MyRecyclerView
+                android:id="@+id/clipboard_items_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
 
-</RelativeLayout>
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/clipboard_items_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.8"
+                android:gravity="center_horizontal"
+                android:paddingStart="@dimen/activity_margin"
+                android:paddingTop="@dimen/big_margin"
+                android:paddingEnd="@dimen/activity_margin"
+                android:text="@string/manage_clips"
+                android:textSize="@dimen/bigger_text_size"
+                android:textStyle="italic"
+                android:visibility="gone" />
+
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/clipboard_items_placeholder_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/clipboard_items_placeholder"
+                android:layout_centerHorizontal="true"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:padding="@dimen/activity_margin"
+                android:text="@string/add_new_item"
+                android:textSize="@dimen/bigger_text_size"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

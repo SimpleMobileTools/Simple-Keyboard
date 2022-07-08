@@ -4,17 +4,12 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.PERMISSION_READ_STORAGE
-import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.adapters.ClipsActivityAdapter
@@ -36,6 +31,7 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_clipboard_items)
+        setupOptionsMenu()
         updateTextColors(clipboard_items_wrapper)
         updateClips()
 
@@ -49,21 +45,9 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_manage_clipboard_items, menu)
-        updateMenuItemColors(menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.add_clipboard_item -> addOrEditClip()
-            R.id.export_clips -> exportClips()
-            R.id.import_clips -> importClips()
-            else -> return super.onOptionsItemSelected(item)
-        }
-
-        return true
+    override fun onResume() {
+        super.onResume()
+        setupToolbar(clipboard_toolbar, NavigationIcon.Arrow)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
@@ -74,6 +58,27 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
         } else if (requestCode == PICK_IMPORT_CLIPS_SOURCE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
             val inputStream = contentResolver.openInputStream(resultData.data!!)
             parseFile(inputStream)
+        }
+    }
+
+
+    private fun setupOptionsMenu() {
+        clipboard_toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.add_clipboard_item -> {
+                    addOrEditClip()
+                    true
+                }
+                R.id.export_clips -> {
+                    exportClips()
+                    true
+                }
+                R.id.import_clips -> {
+                    importClips()
+                    true
+                }
+                else -> false
+            }
         }
     }
 

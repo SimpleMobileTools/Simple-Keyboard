@@ -5,8 +5,6 @@ import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.RippleDrawable
 import android.os.Bundle
 import android.provider.Settings
-import android.view.Menu
-import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
 import com.simplemobiletools.commons.extensions.*
@@ -20,6 +18,7 @@ class MainActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setupOptionsMenu()
         appLaunched(BuildConfig.APPLICATION_ID)
         change_keyboard_holder.setOnClickListener {
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showInputMethodPicker()
@@ -28,6 +27,7 @@ class MainActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
+        setupToolbar(main_toolbar)
         if (!isKeyboardEnabled()) {
             ConfirmationAdvancedDialog(this, messageId = R.string.redirection_note, positive = R.string.ok, negative = 0) { success ->
                 if (success) {
@@ -41,24 +41,24 @@ class MainActivity : SimpleActivity() {
             }
         }
 
-        updateTextColors(main_holder)
+        updateTextColors(main_nested_scrollview)
         updateChangeKeyboardColor()
-        main_holder.setBackgroundColor(getProperBackgroundColor())
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        updateMenuItemColors(menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.settings -> launchSettings()
-            R.id.about -> launchAbout()
-            else -> return super.onOptionsItemSelected(item)
+    private fun setupOptionsMenu() {
+        main_toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.settings -> {
+                    launchSettings()
+                    true
+                }
+                R.id.about -> {
+                    launchAbout()
+                    true
+                }
+                else -> false
+            }
         }
-        return true
     }
 
     private fun launchSettings() {

@@ -31,7 +31,6 @@
             android:name=".activities.MainActivity"
             android:exported="false" />
 
-
         <activity
             android:name=".activities.ManageClipboardItemsActivity"
             android:exported="false"

@@ -2,9 +2,9 @@ package com.simplemobiletools.keyboard.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
@@ -22,6 +22,7 @@ class SettingsActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
+        setupToolbar(settings_toolbar, NavigationIcon.Arrow)
 
         setupPurchaseThankYou()
         setupCustomizeColors()
@@ -31,7 +32,7 @@ class SettingsActivity : SimpleActivity() {
         setupShowPopupOnKeypress()
         setupKeyboardLanguage()
 
-        updateTextColors(settings_scrollview)
+        updateTextColors(settings_nested_scrollview)
 
         arrayOf(settings_color_customization_label, settings_general_settings_label).forEach {
             it.setTextColor(getProperPrimaryColor())
@@ -40,11 +41,6 @@ class SettingsActivity : SimpleActivity() {
         arrayOf(settings_color_customization_holder, settings_general_settings_holder).forEach {
             it.background.applyColorFilter(getProperBackgroundColor().getContrastColor())
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        updateMenuItemColors(menu)
-        return super.onCreateOptionsMenu(menu)
     }
 
     private fun setupPurchaseThankYou() {
