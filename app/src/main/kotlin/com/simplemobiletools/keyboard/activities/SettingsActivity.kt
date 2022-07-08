@@ -52,7 +52,7 @@ class SettingsActivity : SimpleActivity() {
         }
 
         settings_purchase_thank_you_holder.setOnClickListener {
-            handleCustomizeColorsClick()
+            launchPurchaseThankYouIntent()
         }
     }
 
