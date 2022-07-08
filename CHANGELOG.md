@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.2.0 *(2022-07-08)*
+----------------------------
+
+ * Added Slovenian and Romanian keyboard layouts
+ * Updating to more Material design, especially with System Default theme
+ * Adding some stability, translation and UX improvements
+
 Version 5.1.3 *(2022-06-08)*
 ----------------------------
 
