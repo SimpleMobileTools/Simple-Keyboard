@@ -48,16 +48,11 @@ class MainActivity : SimpleActivity() {
     private fun setupOptionsMenu() {
         main_toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.settings -> {
-                    launchSettings()
-                    true
-                }
-                R.id.about -> {
-                    launchAbout()
-                    true
-                }
-                else -> false
+                R.id.settings -> launchSettings()
+                R.id.about -> launchAbout()
+                else -> return@setOnMenuItemClickListener false
             }
+            return@setOnMenuItemClickListener true
         }
     }
 
