@@ -1,0 +1,3 @@
+S'han afegit disposicions de teclat eslovè i romanès
+Actualització a més «Material design», especialment amb el tema predeterminat del sistema
+Addició de millores d'estabilitat, traducció i UX
