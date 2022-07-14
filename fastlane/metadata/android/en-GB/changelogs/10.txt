@@ -1,3 +1,0 @@
-Added Slovenian and Romanian keyboard layouts
-Updating to more Material design, especially with System Default theme
-Adding some stability, translation and UX improvements
