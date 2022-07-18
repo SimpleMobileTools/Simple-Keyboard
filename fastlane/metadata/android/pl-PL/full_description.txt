@@ -1,4 +1,4 @@
-Szybka, lekka aplikacja klawiatury, która pomaga rozmawiać ze znajomymi lub wstawiać inne teksty, liczby lub symbole.
+Lekka aplikacja klawiatury, która pomaga rozmawiać ze znajomymi lub wstawiać inne teksty, liczby lub symbole. Możesz wybierać spośród wielu różnych języków i układów.
 
 Możesz tworzyć przydatne wpisy i przypinać często używane, aby mieć do nich łatwy dostęp. Możesz również włączyć wibracje, wyskakujące okienka przy naciśnięciu klawiszy lub wybrać język z listy obsługiwanych.
 
