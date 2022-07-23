@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">jednoduchá klávesnice</string>
+    <string name="app_name">Jednoduchá klávesnice</string>
     <string name="app_launcher_name">Klávesnice</string>
-    <string name="redirection_note">Please enable Simple Keyboard on the next screen, to make it an available keyboard. Press \'Back\' once enabled.</string>
+    <string name="redirection_note">Prosím, povolte na následující obrazovce Jednoduchou klávesnici, aby byla dostupná jako klávesnice. Jakmile bude povolená, stiskněte „Zpět“.</string>
     <string name="change_keyboard">Změnit klávesnici</string>
     <!-- Clipboard -->
-    <string name="manage_clipboard_items">Spravovat schránku</string>
+    <string name="manage_clipboard_items">Spravovat položky schránky</string>
     <string name="manage_clipboard_empty">Vaše schránka je prázdná.</string>
-    <string name="manage_clipboard_label">Once you copy some text, it will show up here. You can also pin clips so they won\'t disappear later.</string>
+    <string name="manage_clipboard_label">Jakmile zkopírujete nějaký text, zobrazí se zde. Výstřižky můžete také připnout, aby později nezmizely.</string>
     <string name="clear_clipboard_data">Vyčistit schránku</string>
-    <string name="clear_clipboard_data_confirmation">Opravdu chcete vymazat schránku\?</string>
+    <string name="clear_clipboard_data_confirmation">Opravdu chcete vyčistit data schránky\?</string>
     <string name="clipboard">Schránka</string>
-    <string name="clipboard_recent">Recent</string>
-    <string name="clipboard_current">Current</string>
+    <string name="clipboard_recent">Nedávné</string>
+    <string name="clipboard_current">Současná</string>
     <string name="clipboard_pinned">Připnuté</string>
-    <string name="add_new_item">Přidat nový předmět</string>
-    <string name="manage_clips">You can manage or add clips here for quick access.</string>
-    <string name="clip_text">Clip text</string>
-    <string name="pin_text">Pin text</string>
-    <string name="text_pinned">Text has been pinned</string>
-    <string name="export_clipboard_items">Exportovat schránku</string>
-    <string name="import_clipboard_items">Importovat schránku</string>
+    <string name="add_new_item">Přidat novou položku</string>
+    <string name="manage_clips">Můžete spravovat nebo přidat výstřižky pro rychlý přístup.</string>
+    <string name="clip_text">Text výštřižku</string>
+    <string name="pin_text">Připnout text</string>
+    <string name="text_pinned">Text byl připnut</string>
+    <string name="export_clipboard_items">Exportovat položky schránky</string>
+    <string name="import_clipboard_items">Importovat položky schránky</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Smazat</string>
     <string name="keycode_mode_change">Změnit typ klávesnice</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
     <!-- Settings -->
-    <string name="show_clipboard_content">Show clipboard content if available</string>
-    <string name="show_popup">Show a popup on keypress</string>
+    <string name="show_clipboard_content">Zobrazit obsah schránky, pokud je k dispozici</string>
+    <string name="show_popup">Zobrazit vyskakovací okno při stisknutí klávesy</string>
     <string name="vibrate_on_keypress">Vibrovat při stisknutí klávesy</string>
     <string name="keyboard_language">Jazyk klávesnice</string>
     <!--
