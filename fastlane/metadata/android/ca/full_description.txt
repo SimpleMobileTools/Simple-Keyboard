@@ -1,4 +1,4 @@
-Una aplicació de teclat ràpida i lleugera que ajuda a xatejar amb els vostres amics o a inserir qualsevol altre text, nombre o símbol.
+Una aplicació lleugera de teclat que ajuda a xatejar amb els vostres amics o a inserir qualsevol altre text, nombre o símbol. Podeu triar idiomes i disposicions diferents.
 
 Podeu crear clips pràctics i fixar els utilitzats amb freqüència per a un accés fàcil. Podeu commutar vibracions i finestres emergents en prémer tecles o seleccionar l'idioma de la llista dels admesos.
 
