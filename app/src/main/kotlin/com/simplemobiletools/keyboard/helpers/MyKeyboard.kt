@@ -13,7 +13,6 @@ import android.view.inputmethod.EditorInfo.IME_ACTION_NONE
 import androidx.annotation.XmlRes
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
-import java.util.*
 import kotlin.math.roundToInt
 
 /**
@@ -249,7 +248,7 @@ class MyKeyboard {
         mDefaultHorizontalGap = 0
         mDefaultWidth = mDisplayWidth / 10
         mDefaultHeight = mDefaultWidth
-        mKeyboardHeightMultiplier = when (context.config.keyboardHeightMultiplier){
+        mKeyboardHeightMultiplier = when (context.config.keyboardHeightMultiplier) {
             KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> 1F
             KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> 1.2F
             KEYBOARD_HEIGHT_MULTIPLIER_BIG -> 1.4F
@@ -278,7 +277,7 @@ class MyKeyboard {
         row.defaultHeight = mDefaultHeight
         row.defaultWidth = keyWidth
         row.defaultHorizontalGap = mDefaultHorizontalGap
-        mKeyboardHeightMultiplier = when (context.config.keyboardHeightMultiplier){
+        mKeyboardHeightMultiplier = when (context.config.keyboardHeightMultiplier) {
             KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> 1F
             KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> 1.2F
             KEYBOARD_HEIGHT_MULTIPLIER_BIG -> 1.4F
