@@ -1,14 +1,17 @@
-Rýchla a ľahká klávesnica, pomocou ktorej si môžete písať s kamošmi, alebo vkladať iný text, čísla a symboli.
+Rýchla a ľahká klávesnica, pomocou ktorej si môžete písať s kamošmi, alebo vkladať iný text, čísla a symboli. Môžete si zvoliť z niekoľkých rôznych jazykov a rozložení.
 
 Táto apka je založená na Material dizajne a má prednastavenú tmavú tému, poskytuje výbornú používateľskú skúsenosť pre ľahké používanie. Chýbajúci prístup k internetu garantuje lepšie súkromie, bezpečnosť a stabilitu ako ostatné apky.
 
 Neobsahuje žiadne reklamy a nepotrebné oprávnenia. Je opensource, poskytuje možnosť zmeny farieb.
 
-<b>Pozrite si celú sadu aplikácií na:</b>
+Pozrite si celú sadu aplikácií na:
 https://www.simplemobiletools.com
 
-<b>Facebook:</b>
+Facebook:
 https://www.facebook.com/simplemobiletools
 
-<b>Reddit:</b>
+Reddit:
 https://www.reddit.com/r/SimpleMobileTools
+
+Telegram:
+https://t.me/SimpleMobileTools
