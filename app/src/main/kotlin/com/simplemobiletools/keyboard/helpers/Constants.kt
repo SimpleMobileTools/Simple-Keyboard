@@ -12,6 +12,7 @@ const val VIBRATE_ON_KEYPRESS = "vibrate_on_keypress"
 const val SHOW_POPUP_ON_KEYPRESS = "show_popup_on_keypress"
 const val LAST_EXPORTED_CLIPS_FOLDER = "last_exported_clips_folder"
 const val KEYBOARD_LANGUAGE = "keyboard_language"
+const val HEIGHT_MULTIPLIER = "height_multiplier"
 
 // differentiate current and pinned clips at the keyboards' Clipboard section
 const val ITEM_SECTION_LABEL = 0
@@ -26,3 +27,8 @@ const val LANGUAGE_GERMAN = 5
 const val LANGUAGE_ENGLISH_DVORAK = 6
 const val LANGUAGE_ROMANIAN = 7
 const val LANGUAGE_SLOVENIAN = 8
+
+// keyboard height multiplier options
+const val KEYBOARD_HEIGHT_MULTIPLIER_SMALL = 1
+const val KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM = 2
+const val KEYBOARD_HEIGHT_MULTIPLIER_BIG = 3
