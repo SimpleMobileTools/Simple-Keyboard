@@ -12,7 +12,9 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.EditorInfo.IME_ACTION_NONE
 import androidx.annotation.XmlRes
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.extensions.config
 import java.util.*
+import kotlin.math.roundToInt
 
 /**
  * Loads an XML description of a keyboard and stores the attributes of the keys. A keyboard consists of rows of keys.
@@ -28,6 +30,9 @@ class MyKeyboard {
 
     /** Default key height  */
     private var mDefaultHeight = 0
+
+    /** Multiplier for the keyboard height */
+    var mKeyboardHeightMultiplier: Float = 1F
 
     /** Is the keyboard in the shifted state  */
     var mShiftState = SHIFT_OFF
@@ -100,7 +105,7 @@ class MyKeyboard {
             this.parent = parent
             val a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard)
             defaultWidth = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, parent.mDisplayWidth, parent.mDefaultWidth)
-            defaultHeight = res.getDimension(R.dimen.key_height).toInt()
+            defaultHeight = (res.getDimension(R.dimen.key_height) * this.parent.mKeyboardHeightMultiplier).roundToInt()
             defaultHorizontalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, parent.mDisplayWidth, parent.mDefaultHorizontalGap)
             a.recycle()
         }
@@ -244,6 +249,12 @@ class MyKeyboard {
         mDefaultHorizontalGap = 0
         mDefaultWidth = mDisplayWidth / 10
         mDefaultHeight = mDefaultWidth
+        mKeyboardHeightMultiplier = when (context.config.keyboardHeightMultiplier){
+            KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> 1F
+            KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> 1.2F
+            KEYBOARD_HEIGHT_MULTIPLIER_BIG -> 1.4F
+            else -> 1F
+        }
         mKeys = ArrayList()
         mEnterKeyType = enterKeyType
         loadKeyboard(context, context.resources.getXml(xmlLayoutResId))
@@ -267,6 +278,12 @@ class MyKeyboard {
         row.defaultHeight = mDefaultHeight
         row.defaultWidth = keyWidth
         row.defaultHorizontalGap = mDefaultHorizontalGap
+        mKeyboardHeightMultiplier = when (context.config.keyboardHeightMultiplier){
+            KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> 1F
+            KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> 1.2F
+            KEYBOARD_HEIGHT_MULTIPLIER_BIG -> 1.4F
+            else -> 1F
+        }
 
         characters.forEachIndexed { index, character ->
             val key = Key(row)

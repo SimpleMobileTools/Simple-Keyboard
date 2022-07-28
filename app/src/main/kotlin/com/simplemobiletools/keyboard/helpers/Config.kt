@@ -25,6 +25,11 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getInt(KEYBOARD_LANGUAGE, getDefaultLanguage())
         set(keyboardLanguage) = prefs.edit().putInt(KEYBOARD_LANGUAGE, keyboardLanguage).apply()
 
+    var keyboardHeightMultiplier: Int
+        get() = prefs.getInt(HEIGHT_MULTIPLIER, 1)
+        set(keyboardHeightMultiplier) = prefs.edit().putInt(HEIGHT_MULTIPLIER, keyboardHeightMultiplier).apply()
+
+
     private fun getDefaultLanguage(): Int {
         val conf = context.resources.configuration
         return if (conf.locale.toString().toLowerCase(Locale.getDefault()).startsWith("ru_")) {
