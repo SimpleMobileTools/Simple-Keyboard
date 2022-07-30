@@ -262,6 +262,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
         super.onVisibilityChanged(changedView, visibility)
         closeClipboardManager()
+        closeEmojiPalette()
 
         if (visibility == VISIBLE) {
             mTextColor = context.getProperTextColor()
@@ -417,7 +418,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mEmojiPaletteHolder!!.apply {
             emoji_palette_close.setOnClickListener {
                 vibrateIfNeeded()
-                closeEmojiChooser()
+                closeEmojiPalette()
             }
         }
     }
@@ -1392,7 +1393,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             emoji_palette_mode_change.apply {
                 setTextColor(bottomTextColor)
                 setOnClickListener {
-                    closeEmojiChooser()
+                    closeEmojiPalette()
                 }
             }
             emoji_palette_backspace.apply {
@@ -1423,12 +1424,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         setupEmojis()
     }
 
-    fun openEmojiChooser() {
+    fun openEmojiPalette() {
         mEmojiPaletteHolder!!.emoji_palette_holder.beVisible()
         setupEmojis()
     }
 
-    private fun closeEmojiChooser() {
+    private fun closeEmojiPalette() {
         mEmojiPaletteHolder?.apply {
             emoji_palette_holder?.beGone()
             mEmojiPaletteHolder?.emojis_list?.scrollToPosition(0)
