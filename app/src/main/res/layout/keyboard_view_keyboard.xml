@@ -106,6 +106,100 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <RelativeLayout
+        android:id="@+id/emoji_palette_holder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_holder">
+
+        <RelativeLayout
+            android:id="@+id/emoji_palette_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/emoji_palette_close"
+                android:layout_width="@dimen/toolbar_icon_height"
+                android:layout_height="@dimen/toolbar_icon_height"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/emojis"
+                android:padding="@dimen/small_margin"
+                android:src="@drawable/ic_arrow_left_vector" />
+
+            <TextView
+                android:id="@+id/emoji_palette_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_toEndOf="@+id/emoji_palette_close"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/emojis"
+                android:textSize="@dimen/big_text_size" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/emoji_content_holder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/emoji_palette_bottom_bar"
+            android:layout_below="@+id/emoji_palette_top_bar">
+
+            <com.simplemobiletools.commons.views.MyRecyclerView
+                android:id="@+id/emojis_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:padding="@dimen/small_margin" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/emoji_palette_bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/emoji_palette_mode_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:background="@drawable/keyboard_key_selector"
+                android:padding="@dimen/normal_margin"
+                android:text="@string/abc" />
+
+            <ImageView
+                android:id="@+id/emoji_palette_backspace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/medium_margin"
+                android:background="@drawable/keyboard_key_selector"
+                android:padding="@dimen/normal_margin"
+                android:src="@drawable/ic_clear_outline_vector" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/clipboard_manager_holder"
         android:layout_width="match_parent"
         android:layout_height="0dp"

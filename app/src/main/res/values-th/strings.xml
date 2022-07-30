@@ -31,6 +31,9 @@
     <string name="show_popup">Show a popup on keypress</string>
     <string name="vibrate_on_keypress">Vibrate on keypress</string>
     <string name="keyboard_language">Keyboard language</string>
+    <!-- Emojis -->
+    <string name="emojis">Emojis</string>
+    <string name="abc">ABC</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

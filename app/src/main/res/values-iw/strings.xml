@@ -31,6 +31,9 @@
     <string name="show_popup">הצג חלון קופץ בלחיצת מקש</string>
     <string name="vibrate_on_keypress">רטט בלחיצה על המקש</string>
     <string name="keyboard_language">שפת מקלדת</string>
+    <!-- Emojis -->
+    <string name="emojis">Emojis</string>
+    <string name="abc">ABC</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
