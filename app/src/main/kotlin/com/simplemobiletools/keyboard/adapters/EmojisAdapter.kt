@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.emoji2.text.EmojiCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.keyboard.R
 import kotlinx.android.synthetic.main.item_emoji.view.*
@@ -32,7 +33,8 @@ class EmojisAdapter(
     }
 
     private fun setupEmoji(view: View, emoji: String) {
-        view.emoji_value.text = emoji
+        val processed = EmojiCompat.get().process(emoji)
+        view.emoji_value.text = processed
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

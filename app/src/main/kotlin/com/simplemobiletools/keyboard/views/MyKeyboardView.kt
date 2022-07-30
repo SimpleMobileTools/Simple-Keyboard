@@ -22,10 +22,13 @@ import android.view.*
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.view.animation.AccelerateInterpolator
+import android.view.inputmethod.EditorInfo
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
+import androidx.emoji2.text.EmojiCompat
+import androidx.emoji2.text.EmojiCompat.EMOJI_SUPPORTED
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isPiePlus
@@ -153,6 +156,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mToolbarHolder: View? = null
     private var mClipboardManagerHolder: View? = null
     private var mEmojiPaletteHolder: View? = null
+    private var emojiCompatMetadataVersion = 0
 
     // For multi-tap
     private var mLastTapTime = 0L
@@ -421,6 +425,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 closeEmojiPalette()
             }
         }
+    }
+
+    fun setEditorInfo(editorInfo: EditorInfo) {
+        emojiCompatMetadataVersion = editorInfo.extras?.getInt(EmojiCompat.EDITOR_INFO_METAVERSION_KEY, 0) ?: 0
     }
 
     fun vibrateIfNeeded() {
@@ -1443,7 +1451,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 typeface = Typeface.DEFAULT
             }
             val emojis = fullEmojiList.filter { emoji ->
-                systemFontPaint.hasGlyph(emoji)
+                systemFontPaint.hasGlyph(emoji) || EmojiCompat.get().getEmojiMatch(emoji, emojiCompatMetadataVersion) == EMOJI_SUPPORTED
             }
             Handler(Looper.getMainLooper()).post {
                 setupEmojiAdapter(emojis)
