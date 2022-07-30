@@ -43,8 +43,6 @@ import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_MODE_
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SHIFT
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SPACE
 import com.simplemobiletools.keyboard.interfaces.RefreshClipsListener
-import com.simplemobiletools.keyboard.media.emoji.Emoji
-import com.simplemobiletools.keyboard.media.emoji.parseRawEmojiSpecsFile
 import com.simplemobiletools.keyboard.models.Clip
 import com.simplemobiletools.keyboard.models.ClipsSectionLabel
 import com.simplemobiletools.keyboard.models.ListItem
@@ -1444,7 +1442,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 typeface = Typeface.DEFAULT
             }
             val emojis = fullEmojiList.filter { emoji ->
-                systemFontPaint.hasGlyph(emoji.value)
+                systemFontPaint.hasGlyph(emoji)
             }
             Handler(Looper.getMainLooper()).post {
                 setupEmojiAdapter(emojis)
@@ -1452,14 +1450,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
     }
 
-    private fun setupEmojiAdapter(emojis: List<Emoji>) {
+    private fun setupEmojiAdapter(emojis: List<String>) {
         val emojiItemWidth = context.resources.getDimensionPixelSize(R.dimen.emoji_item_size)
         val emojiTopBarElevation = context.resources.getDimensionPixelSize(R.dimen.emoji_top_bar_elevation).toFloat()
 
         mEmojiPaletteHolder!!.emojis_list.apply {
             layoutManager = AutoGridLayoutManager(context, emojiItemWidth)
             adapter = EmojisAdapter(context = context, items = emojis) { emoji ->
-                mOnKeyboardActionListener!!.onText(emoji.value)
+                mOnKeyboardActionListener!!.onText(emoji)
                 vibrateIfNeeded()
             }
             onScroll {

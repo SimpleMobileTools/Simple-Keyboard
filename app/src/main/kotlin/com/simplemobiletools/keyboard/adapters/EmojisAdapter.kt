@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.keyboard.R
-import com.simplemobiletools.keyboard.media.emoji.Emoji
 import kotlinx.android.synthetic.main.item_emoji.view.*
 
 class EmojisAdapter(
-    val context: Context, var items: List<Emoji>, val itemClick: (emoji: Emoji) -> Unit
+    val context: Context, var items: List<String>, val itemClick: (emoji: String) -> Unit
 ) : RecyclerView.Adapter<EmojisAdapter.ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
@@ -32,17 +31,17 @@ class EmojisAdapter(
         return items.size
     }
 
-    private fun setupEmoji(view: View, emoji: Emoji) {
-        view.emoji_value.text = emoji.value
+    private fun setupEmoji(view: View, emoji: String) {
+        view.emoji_value.text = emoji
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(any: Emoji, callback: (itemView: View) -> Unit): View {
+        fun bindView(emoji: String, callback: (itemView: View) -> Unit): View {
             return itemView.apply {
                 callback(this)
 
                 setOnClickListener {
-                    itemClick.invoke(any)
+                    itemClick.invoke(emoji)
                 }
             }
         }

@@ -1,8 +1,8 @@
-package com.simplemobiletools.keyboard.media.emoji
+package com.simplemobiletools.keyboard.helpers
 
 import android.content.Context
 
-private var cachedEmojiData: MutableList<Emoji>? = null
+private var cachedEmojiData: MutableList<String>? = null
 
 /**
  * Reads the emoji list at the given [path] and returns an parsed [MutableList]. If the
@@ -13,10 +13,10 @@ private var cachedEmojiData: MutableList<Emoji>? = null
  */
 fun parseRawEmojiSpecsFile(
     context: Context, path: String
-): MutableList<Emoji> {
+): MutableList<String> {
     cachedEmojiData?.let { return it }
-    val emojis = mutableListOf<Emoji>()
-    var emojiEditorList: MutableList<Emoji>? = null
+    val emojis = mutableListOf<String>()
+    var emojiEditorList: MutableList<String>? = null
 
     fun commitEmojiEditorList() {
         emojiEditorList?.let {
@@ -42,11 +42,7 @@ fun parseRawEmojiSpecsFile(
                 // Assume it is a data line
                 val data = line.split(";")
                 if (data.size == 3) {
-                    val emoji = Emoji(
-                        value = data[0].trim(),
-                        name = data[1].trim(),
-                        keywords = data[2].split("|").map { it.trim() }
-                    )
+                    val emoji = data[0].trim()
                     if (emojiEditorList != null) {
                         emojiEditorList!!.add(emoji)
                     } else {
