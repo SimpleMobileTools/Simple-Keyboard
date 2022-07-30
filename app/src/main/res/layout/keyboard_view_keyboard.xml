@@ -176,23 +176,23 @@
 
             <TextView
                 android:id="@+id/emoji_palette_mode_change"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/emoji_palette_btn_size"
+                android:layout_height="@dimen/emoji_palette_btn_size"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/medium_margin"
                 android:background="@drawable/keyboard_key_selector"
-                android:padding="@dimen/normal_margin"
+                android:gravity="center"
                 android:text="@string/abc" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/emoji_palette_backspace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/emoji_palette_btn_size"
+                android:layout_height="@dimen/emoji_palette_btn_size"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/medium_margin"
                 android:background="@drawable/keyboard_key_selector"
-                android:padding="@dimen/normal_margin"
+                android:contentDescription="@string/delete"
                 android:src="@drawable/ic_clear_outline_vector" />
 
         </RelativeLayout>
