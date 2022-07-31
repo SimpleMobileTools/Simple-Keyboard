@@ -17,7 +17,9 @@ class AutoGridLayoutManager(
 ) : GridLayoutManager(context, 1) {
 
     init {
-        require(itemWidth >= 0) { "itemWidth must be >= 0" }
+        require(itemWidth >= 0) {
+            "itemWidth must be >= 0"
+        }
     }
 
     override fun onLayoutChildren(recycler: RecyclerView.Recycler?, state: RecyclerView.State?) {
