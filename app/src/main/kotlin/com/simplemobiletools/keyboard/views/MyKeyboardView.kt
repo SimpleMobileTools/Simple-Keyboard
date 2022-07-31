@@ -1401,6 +1401,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             emoji_palette_mode_change.apply {
                 setTextColor(bottomTextColor)
                 setOnClickListener {
+                    vibrateIfNeeded()
                     closeEmojiPalette()
                 }
             }
@@ -1412,6 +1413,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                             isPressed = true
                             mRepeatKeyIndex = mKeys.indexOfFirst { it.code == KEYCODE_DELETE }
                             mCurrentKey = mRepeatKeyIndex
+                            vibrateIfNeeded()
                             mOnKeyboardActionListener!!.onKey(KEYCODE_DELETE)
                             // setup repeating backspace
                             val msg = mHandler!!.obtainMessage(MSG_REPEAT)
