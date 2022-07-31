@@ -419,6 +419,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
             }
         }
+
         mEmojiPaletteHolder!!.apply {
             emoji_palette_close.setOnClickListener {
                 vibrateIfNeeded()
