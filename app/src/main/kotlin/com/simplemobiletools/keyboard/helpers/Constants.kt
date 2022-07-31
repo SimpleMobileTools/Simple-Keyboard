@@ -26,3 +26,6 @@ const val LANGUAGE_GERMAN = 5
 const val LANGUAGE_ENGLISH_DVORAK = 6
 const val LANGUAGE_ROMANIAN = 7
 const val LANGUAGE_SLOVENIAN = 8
+
+
+const val EMOJI_SPEC_FILE_PATH = "media/emoji_spec.txt"

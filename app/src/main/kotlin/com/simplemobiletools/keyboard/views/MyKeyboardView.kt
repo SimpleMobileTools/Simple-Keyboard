@@ -22,10 +22,13 @@ import android.view.*
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.view.animation.AccelerateInterpolator
+import android.view.inputmethod.EditorInfo
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
+import androidx.emoji2.text.EmojiCompat
+import androidx.emoji2.text.EmojiCompat.EMOJI_SUPPORTED
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isPiePlus
@@ -33,12 +36,11 @@ import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.activities.ManageClipboardItemsActivity
 import com.simplemobiletools.keyboard.activities.SettingsActivity
 import com.simplemobiletools.keyboard.adapters.ClipsKeyboardAdapter
-import com.simplemobiletools.keyboard.extensions.clipsDB
-import com.simplemobiletools.keyboard.extensions.config
-import com.simplemobiletools.keyboard.extensions.getCurrentClip
-import com.simplemobiletools.keyboard.extensions.getStrokeColor
+import com.simplemobiletools.keyboard.adapters.EmojisAdapter
+import com.simplemobiletools.keyboard.extensions.*
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_DELETE
+import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_EMOJI
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_ENTER
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_MODE_CHANGE
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SHIFT
@@ -51,7 +53,7 @@ import kotlinx.android.synthetic.main.keyboard_popup_keyboard.view.*
 import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 import java.util.*
 
-@SuppressLint("UseCompatLoadingForDrawables")
+@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility")
 class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int = 0) :
     View(context, attrs, defStyleRes) {
 
@@ -153,6 +155,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private var mToolbarHolder: View? = null
     private var mClipboardManagerHolder: View? = null
+    private var mEmojiPaletteHolder: View? = null
+    private var emojiCompatMetadataVersion = 0
 
     // For multi-tap
     private var mLastTapTime = 0L
@@ -262,6 +266,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
         super.onVisibilityChanged(changedView, visibility)
         closeClipboardManager()
+        closeEmojiPalette()
 
         if (visibility == VISIBLE) {
             mTextColor = context.getProperTextColor()
@@ -331,6 +336,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 clipboard_content_placeholder_2.setTextColor(mTextColor)
             }
 
+            setupEmojiPalette(toolbarColor = toolbarColor, backgroundColor = mBackgroundColor, textColor = mTextColor)
             setupStoredClips()
         }
     }
@@ -364,6 +370,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     fun setKeyboardHolder(keyboardHolder: View) {
         mToolbarHolder = keyboardHolder.toolbar_holder
         mClipboardManagerHolder = keyboardHolder.clipboard_manager_holder
+        mEmojiPaletteHolder = keyboardHolder.emoji_palette_holder
 
         mToolbarHolder!!.apply {
             settings_cog.setOnLongClickListener { context.toast(R.string.settings); true; }
@@ -412,6 +419,17 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
             }
         }
+
+        mEmojiPaletteHolder!!.apply {
+            emoji_palette_close.setOnClickListener {
+                vibrateIfNeeded()
+                closeEmojiPalette()
+            }
+        }
+    }
+
+    fun setEditorInfo(editorInfo: EditorInfo) {
+        emojiCompatMetadataVersion = editorInfo.extras?.getInt(EmojiCompat.EDITOR_INFO_METAVERSION_KEY, 0) ?: 0
     }
 
     fun vibrateIfNeeded() {
@@ -436,7 +454,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @return true if the shift is in a pressed state, false otherwise
      */
     private fun isShifted(): Boolean {
-        return mKeyboard?.mShiftState ?: SHIFT_OFF > SHIFT_OFF
+        return (mKeyboard?.mShiftState ?: SHIFT_OFF) > SHIFT_OFF
     }
 
     private fun setPopupOffset(x: Int, y: Int) {
@@ -450,7 +468,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private fun adjustCase(label: CharSequence): CharSequence? {
         var newLabel: CharSequence? = label
         if (newLabel != null && newLabel.isNotEmpty() && mKeyboard!!.mShiftState > SHIFT_OFF && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
-            newLabel = newLabel.toString().toUpperCase()
+            newLabel = newLabel.toString().uppercase(Locale.getDefault())
         }
         return newLabel
     }
@@ -607,7 +625,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                 if (code == KEYCODE_ENTER) {
                     key.icon!!.applyColorFilter(mPrimaryColor.getContrastColor())
-                } else if (code == KEYCODE_DELETE || code == KEYCODE_SHIFT) {
+                } else if (code == KEYCODE_DELETE || code == KEYCODE_SHIFT || code == KEYCODE_EMOJI) {
                     key.icon!!.applyColorFilter(mTextColor)
                 }
 
@@ -1370,6 +1388,94 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         mClipboardManagerHolder?.clips_list?.adapter = adapter
+    }
+
+    private fun setupEmojiPalette(toolbarColor: Int, backgroundColor: Int, textColor: Int) {
+        mEmojiPaletteHolder?.apply {
+            emoji_palette_top_bar.background = ColorDrawable(toolbarColor)
+            emoji_palette_holder.background = ColorDrawable(backgroundColor)
+            emoji_palette_close.applyColorFilter(textColor)
+            emoji_palette_label.setTextColor(textColor)
+
+            emoji_palette_bottom_bar.background = ColorDrawable(backgroundColor)
+            val bottomTextColor = textColor.darkenColor()
+            emoji_palette_mode_change.apply {
+                setTextColor(bottomTextColor)
+                setOnClickListener {
+                    vibrateIfNeeded()
+                    closeEmojiPalette()
+                }
+            }
+            emoji_palette_backspace.apply {
+                applyColorFilter(bottomTextColor)
+                setOnTouchListener { _, event ->
+                    when (event.action) {
+                        MotionEvent.ACTION_DOWN -> {
+                            isPressed = true
+                            mRepeatKeyIndex = mKeys.indexOfFirst { it.code == KEYCODE_DELETE }
+                            mCurrentKey = mRepeatKeyIndex
+                            vibrateIfNeeded()
+                            mOnKeyboardActionListener!!.onKey(KEYCODE_DELETE)
+                            // setup repeating backspace
+                            val msg = mHandler!!.obtainMessage(MSG_REPEAT)
+                            mHandler!!.sendMessageDelayed(msg, REPEAT_START_DELAY.toLong())
+                            true
+                        }
+                        MotionEvent.ACTION_UP -> {
+                            mHandler!!.removeMessages(MSG_REPEAT)
+                            mRepeatKeyIndex = NOT_A_KEY
+                            isPressed = false
+                            false
+                        }
+                        else -> false
+                    }
+                }
+            }
+        }
+        setupEmojis()
+    }
+
+    fun openEmojiPalette() {
+        mEmojiPaletteHolder!!.emoji_palette_holder.beVisible()
+        setupEmojis()
+    }
+
+    private fun closeEmojiPalette() {
+        mEmojiPaletteHolder?.apply {
+            emoji_palette_holder?.beGone()
+            mEmojiPaletteHolder?.emojis_list?.scrollToPosition(0)
+        }
+    }
+
+    private fun setupEmojis() {
+        ensureBackgroundThread {
+            val fullEmojiList = parseRawEmojiSpecsFile(context, EMOJI_SPEC_FILE_PATH)
+            val systemFontPaint = Paint().apply {
+                typeface = Typeface.DEFAULT
+            }
+            val emojis = fullEmojiList.filter { emoji ->
+                systemFontPaint.hasGlyph(emoji) || EmojiCompat.get().getEmojiMatch(emoji, emojiCompatMetadataVersion) == EMOJI_SUPPORTED
+            }
+            Handler(Looper.getMainLooper()).post {
+                setupEmojiAdapter(emojis)
+            }
+        }
+    }
+
+    private fun setupEmojiAdapter(emojis: List<String>) {
+        val emojiItemWidth = context.resources.getDimensionPixelSize(R.dimen.emoji_item_size)
+        val emojiTopBarElevation = context.resources.getDimensionPixelSize(R.dimen.emoji_top_bar_elevation).toFloat()
+
+        mEmojiPaletteHolder!!.emojis_list.apply {
+            layoutManager = AutoGridLayoutManager(context, emojiItemWidth)
+            adapter = EmojisAdapter(context = context, items = emojis) { emoji ->
+                mOnKeyboardActionListener!!.onText(emoji)
+                vibrateIfNeeded()
+            }
+            onScroll {
+                mEmojiPaletteHolder!!.emoji_palette_top_bar.elevation = if (it > 4) emojiTopBarElevation else 0f
+            }
+        }
     }
 
     private fun closing() {

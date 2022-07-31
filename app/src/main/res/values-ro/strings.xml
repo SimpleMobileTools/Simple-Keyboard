@@ -4,7 +4,7 @@
     <string name="app_launcher_name">Tastatură</string>
     <string name="redirection_note">Vă rugăm să activați Simple Keyboard în ecranul următor, pentru a o face disponibilă. Apăsați \"Înapoi\" după activare.</string>
     <string name="change_keyboard">Schimbați tastatura</string>
-    <!-- Clipboard -->    
+    <!-- Clipboard -->
     <string name="manage_clipboard_items">Gestionați elementele din clipboard</string>
     <string name="manage_clipboard_empty">Clipboard-ul dvs. este gol.</string>
     <string name="manage_clipboard_label">Odată ce ați copiat un text, acesta va apărea aici. De asemenea, puteți fixa clipuri pentru ca acestea să nu dispară mai târziu.</string>
@@ -31,6 +31,8 @@
     <string name="show_popup">Afișați o fereastră pop-up la apăsarea unei taste</string>
     <string name="vibrate_on_keypress">Vibrează la apăsarea tastelor</string>
     <string name="keyboard_language">Limba tastaturii</string>
+    <!-- Emojis -->
+    <string name="emojis">Emojis</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

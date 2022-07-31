@@ -45,6 +45,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         keyboardView = keyboardHolder.keyboard_view as MyKeyboardView
         keyboardView!!.setKeyboard(keyboard!!)
         keyboardView!!.setKeyboardHolder(keyboardHolder.keyboard_holder)
+        keyboardView!!.setEditorInfo(currentInputEditorInfo)
         keyboardView!!.mOnKeyboardActionListener = this
         return keyboardHolder!!
     }
@@ -73,6 +74,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
         keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
         keyboardView?.setKeyboard(keyboard!!)
+        keyboardView?.setEditorInfo(attribute)
         updateShiftKeyState()
     }
 
@@ -106,7 +108,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
                 val selectedText = inputConnection.getSelectedText(0)
                 if (TextUtils.isEmpty(selectedText)) {
-                    inputConnection.deleteSurroundingText(1, 0)
+                    inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
+                    inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL))
                 } else {
                     inputConnection.commitText("", 1)
                 }
@@ -154,6 +157,9 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 }
                 keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
                 keyboardView!!.setKeyboard(keyboard!!)
+            }
+            MyKeyboard.KEYCODE_EMOJI -> {
+                keyboardView?.openEmojiPalette()
             }
             else -> {
                 var codeChar = code.toChar()
