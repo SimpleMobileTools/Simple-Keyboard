@@ -33,7 +33,7 @@
     <string name="keyboard_language">Język klawiatury</string>
     <string name="keyboard_height">Keyboard height</string>
     <!-- Emojis -->
-    <string name="emojis">Emojis</string>
+    <string name="emojis">Emoji</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
