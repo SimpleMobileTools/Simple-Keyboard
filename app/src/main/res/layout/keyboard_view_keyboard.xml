@@ -162,7 +162,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:padding="@dimen/small_margin" />
+                android:padding="@dimen/small_margin"
+                android:scrollbars="vertical" />
 
         </RelativeLayout>
 
@@ -196,7 +197,6 @@
                 android:src="@drawable/ic_clear_vector" />
 
         </RelativeLayout>
-
     </RelativeLayout>
 
     <RelativeLayout
