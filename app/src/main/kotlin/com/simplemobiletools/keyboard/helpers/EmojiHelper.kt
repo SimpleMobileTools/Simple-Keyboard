@@ -11,10 +11,11 @@ private var cachedEmojiData: MutableList<String>? = null
  * @param context The initiating view's context.
  * @param path The path to the asset file.
  */
-fun parseRawEmojiSpecsFile(
-    context: Context, path: String
-): MutableList<String> {
-    cachedEmojiData?.let { return it }
+fun parseRawEmojiSpecsFile(context: Context, path: String): MutableList<String> {
+    if (cachedEmojiData != null) {
+        return cachedEmojiData!!
+    }
+
     val emojis = mutableListOf<String>()
     var emojiEditorList: MutableList<String>? = null
 
@@ -39,6 +40,7 @@ fun parseRawEmojiSpecsFile(
                 if (!line.startsWith("\t")) {
                     commitEmojiEditorList()
                 }
+
                 // Assume it is a data line
                 val data = line.split(";")
                 if (data.size == 3) {
