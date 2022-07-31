@@ -9,10 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.keyboard.R
 import kotlinx.android.synthetic.main.item_emoji.view.*
 
-class EmojisAdapter(
-    val context: Context, var items: List<String>, val itemClick: (emoji: String) -> Unit
-) : RecyclerView.Adapter<EmojisAdapter.ViewHolder>() {
-
+class EmojisAdapter(val context: Context, var items: List<String>, val itemClick: (emoji: String) -> Unit) : RecyclerView.Adapter<EmojisAdapter.ViewHolder>() {
     private val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmojisAdapter.ViewHolder {
@@ -28,9 +25,7 @@ class EmojisAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount() = items.size
 
     private fun setupEmoji(view: View, emoji: String) {
         val processed = EmojiCompat.get().process(emoji)
