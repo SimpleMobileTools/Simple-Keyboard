@@ -183,7 +183,8 @@
                 android:layout_marginStart="@dimen/medium_margin"
                 android:background="@drawable/keyboard_key_selector"
                 android:gravity="center"
-                android:text="@string/abc" />
+                android:text="@string/abc"
+                android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/emoji_palette_backspace"
