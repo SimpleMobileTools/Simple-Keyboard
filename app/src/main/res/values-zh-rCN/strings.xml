@@ -31,6 +31,7 @@
     <string name="show_popup">按键时显示弹框</string>
     <string name="vibrate_on_keypress">按键时振动</string>
     <string name="keyboard_language">键盘语言</string>
+    <string name="keyboard_height">Keyboard height</string>
     <!-- Emojis -->
     <string name="emojis">Emojis</string>
     <!--

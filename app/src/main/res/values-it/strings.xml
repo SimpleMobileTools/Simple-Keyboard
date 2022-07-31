@@ -31,6 +31,7 @@
     <string name="show_popup">Mostra un popup alla pressione di un tasto</string>
     <string name="vibrate_on_keypress">Vibra premendo un tasto</string>
     <string name="keyboard_language">Lingua della tastiera</string>
+    <string name="keyboard_height">Keyboard height</string>
     <!-- Emojis -->
     <string name="emojis">Emojis</string>
     <!--

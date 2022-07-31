@@ -31,6 +31,7 @@
     <string name="show_popup">Mostrar notificação pop-up ao premir tecla</string>
     <string name="vibrate_on_keypress">Vibrar ao premir tecla</string>
     <string name="keyboard_language">Keyboard language</string>
+    <string name="keyboard_height">Keyboard height</string>
     <!-- Emojis -->
     <string name="emojis">Emojis</string>
     <!--

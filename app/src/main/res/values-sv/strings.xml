@@ -31,6 +31,7 @@
     <string name="show_popup">Visa en popupp vid knapptryck</string>
     <string name="vibrate_on_keypress">Vibrera på knapptryck</string>
     <string name="keyboard_language">Tangentbordsspråk</string>
+    <string name="keyboard_height">Keyboard height</string>
     <!-- Emojis -->
     <string name="emojis">Emojis</string>
     <!--
