@@ -193,7 +193,7 @@
                 android:layout_marginEnd="@dimen/medium_margin"
                 android:background="@drawable/keyboard_key_selector"
                 android:contentDescription="@string/delete"
-                android:src="@drawable/ic_clear_outline_vector" />
+                android:src="@drawable/ic_clear_vector" />
 
         </RelativeLayout>
 
