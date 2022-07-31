@@ -1453,9 +1453,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val systemFontPaint = Paint().apply {
                 typeface = Typeface.DEFAULT
             }
+
             val emojis = fullEmojiList.filter { emoji ->
                 systemFontPaint.hasGlyph(emoji) || EmojiCompat.get().getEmojiMatch(emoji, emojiCompatMetadataVersion) == EMOJI_SUPPORTED
             }
+
             Handler(Looper.getMainLooper()).post {
                 setupEmojiAdapter(emojis)
             }
@@ -1466,12 +1468,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val emojiItemWidth = context.resources.getDimensionPixelSize(R.dimen.emoji_item_size)
         val emojiTopBarElevation = context.resources.getDimensionPixelSize(R.dimen.emoji_top_bar_elevation).toFloat()
 
-        mEmojiPaletteHolder!!.emojis_list.apply {
+        mEmojiPaletteHolder?.emojis_list?.apply {
             layoutManager = AutoGridLayoutManager(context, emojiItemWidth)
             adapter = EmojisAdapter(context = context, items = emojis) { emoji ->
                 mOnKeyboardActionListener!!.onText(emoji)
                 vibrateIfNeeded()
             }
+
             onScroll {
                 mEmojiPaletteHolder!!.emoji_palette_top_bar.elevation = if (it > 4) emojiTopBarElevation else 0f
             }
