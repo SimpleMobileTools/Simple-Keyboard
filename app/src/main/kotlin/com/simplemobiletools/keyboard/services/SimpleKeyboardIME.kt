@@ -159,7 +159,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 keyboardView!!.setKeyboard(keyboard!!)
             }
             MyKeyboard.KEYCODE_EMOJI -> {
-                keyboardView?.vibrateIfNeeded()
                 keyboardView?.openEmojiPalette()
             }
             else -> {
