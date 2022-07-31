@@ -74,6 +74,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
         keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
         keyboardView?.setKeyboard(keyboard!!)
+        keyboardView?.setEditorInfo(attribute)
         updateShiftKeyState()
     }
 
