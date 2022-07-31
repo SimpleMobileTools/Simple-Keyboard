@@ -31,9 +31,9 @@
     <string name="show_popup">Tuşa basıldığında bir açılır menü göster</string>
     <string name="vibrate_on_keypress">Tuşa basıldığında titret</string>
     <string name="keyboard_language">Klavye dili</string>
-    <string name="keyboard_height">Keyboard height</string>
+    <string name="keyboard_height">Klavye yüksekliği</string>
     <!-- Emojis -->
-    <string name="emojis">Emojis</string>
+    <string name="emojis">Emojiler</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
