@@ -2,6 +2,8 @@ Una aplicació lleugera de teclat que ajuda a xatejar amb els vostres amics o a 
 
 Podeu crear clips pràctics i fixar els utilitzats amb freqüència per a un accés fàcil. Podeu commutar vibracions i finestres emergents en prémer tecles o seleccionar l'idioma de la llista dels admesos.
 
+També podeu triar entre una gran varietat d'emojis disponibles.
+
 De manera predeterminada, inclou el «material design» i un tema fosc, proporciona una gran experiència d'usuari per facilitar-ne l'ús. La manca d'accés a Internet us ofereix més privadesa, seguretat i estabilitat que altres aplicacions.
 
 No conté anuncis ni permisos innecessaris. És totalment de codi obert, proporciona colors personalitzables.
