@@ -31,7 +31,7 @@
     <string name="show_popup">Mostra una finestra emergent en prémer les tecles</string>
     <string name="vibrate_on_keypress">Vibra en prémer les tecles</string>
     <string name="keyboard_language">Idioma del teclat</string>
-    <string name="keyboard_height">Keyboard height</string>
+    <string name="keyboard_height">Alçada del teclat</string>
     <!-- Emojis -->
     <string name="emojis">Emojis</string>
     <!--
