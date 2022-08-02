@@ -1,10 +1,14 @@
-Una aplicación de teclado rápida y liviana que te ayuda a hablar con tus amigos, o insertar cualquier otro texto, número, o símbolo.
+Una aplicación de teclado ligera que ayuda a chatear con tus amigos, o a insertar cualquier otro texto, número o símbolo. Puedes elegir entre varios idiomas y diseños diferentes.
 
-Viene con diseño material y oscuro por defecto, provee gran experiencia de usuario para fácil uso. La falta de acceso a internet te da mayor privacidad, seguridad, y estabilidad que otras aplicaciones.
+Puedes crear prácticos clips y anclar los más utilizados para acceder a ellos fácilmente. Puedes activar las vibraciones, las ventanas emergentes al pulsar las teclas o seleccionar tu idioma de la lista de los admitidos.
 
-No contiene anuncios o permisos innecesarios. Es completamente código abierto, y provee colores personalizables.
+También puedes elegir entre una gran variedad de emojis disponibles.
 
-Mira la suite completa de Herramientas Simples aquí:
+Viene con material design y tema oscuro por defecto, proporciona una gran experiencia de usuario para un uso fácil. La falta de acceso a internet te da más privacidad, seguridad y estabilidad que otras aplicaciones.
+
+No contiene anuncios ni permisos innecesarios. Es totalmente opensource, proporciona colores personalizables.
+
+Consulta el conjunto completo de Simple Tools aquí:
 https://www.simplemobiletools.com
 
 Facebook:
