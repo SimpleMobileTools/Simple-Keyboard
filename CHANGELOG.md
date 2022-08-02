@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.2.1 *(2022-08-02)*
+----------------------------
+
+ * Adding an initial implementation of emojis
+ * Adding some stability, translation and UX improvements
+
 Version 5.2.0 *(2022-07-08)*
 ----------------------------
 
