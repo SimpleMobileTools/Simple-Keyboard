@@ -1,11 +1,15 @@
-Arkadaşlarınızla sohbet etmenize veya başka metinler, sayılar veya simgeler eklemenize yardımcı olan hızlı, hafif bir klavye uygulaması. 
+Arkadaşlarınızla sohbet etmenize veya başka metinler, sayılar veya semboller eklemenize yardımcı olan hafif bir klavye uygulaması. Birden çok farklı dil ve düzen arasından seçim yapabilirsiniz.
 
-Varsayılan olarak materyal tasarım ve koyu tema ile birlikte gelir, kolay kullanım için harika bir kullanıcı deneyimi sağlar. 
+Kolay erişim için sık kullanılan klipleri ve iğneleri oluşturabilirsiniz. Tuşlara basıldığında titreşim ve açılır pencereler arasında geçiş yapabilir veya desteklenen diller listesinden dilinizi seçebilirsiniz.
 
-İnternet erişiminin olmaması size diğer uygulamalardan daha fazla gizlilik, güvenlik ve istikrar sağlar. Reklam veya gereksiz izinler içermez. Tamamen açık kaynaktır, özelleştirilebilir renkler sunar. 
+Çok çeşitli emojiler arasından da seçim yapabilirsiniz.
 
-Basit Araçlar paketinin tamamını buradan inceleyin:
-https://www.simplemobiletools.com 
+Malzeme tasarımı ve varsayılan olarak koyu renkli temasıyla birlikte, kolay kullanım için mükemmel bir kullanıcı deneyimi sunar. İnternet erişiminin olmaması size diğer uygulamalardan daha fazla gizlilik, güvenlik ve kararlılık sağlar.
+
+Reklam veya gereksiz izinler içermez. Tamamen açık kaynaktır ve özelleştirilebilir renkler sunar.
+
+Basit Araçlar paketinin tamamına buradan göz atın:
+https://www.simplemobiletools.com
 
 Facebook:
 https://www.facebook.com/simplemobiletools
@@ -13,5 +17,5 @@ https://www.facebook.com/simplemobiletools
 Reddit:
 https://www.reddit.com/r/SimpleMobileTools
 
-Telegram:
+Telgraf:
 https://t.me/SimpleMobileTools
