@@ -28,9 +28,6 @@
     <string name="keycode_enter">Enter</string>
     <!-- Settings -->
     <string name="keyboard_height_multiplier">Keyboard height</string>
-    <string name="settings_keyboard_height_multiplier_option_small">Small</string>
-    <string name="settings_keyboard_height_multiplier_option_medium">Medium</string>
-    <string name="settings_keyboard_height_multiplier_option_big">Large</string>
     <string name="show_clipboard_content">إظهار محتوى الحافظة إذا كان متوفرا</string>
     <string name="show_popup">إظهار نافذة منبثقة عند الضغط على المفاتيح</string>
     <string name="vibrate_on_keypress">يهتز عند ضغط الزر</string>

@@ -157,11 +157,11 @@ class SettingsActivity : SimpleActivity() {
 
     private fun getKeyboardHeightMultiplierText(multiplier: Int): String {
         return when (multiplier) {
-            KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> getString(R.string.settings_keyboard_height_multiplier_option_small)
-            KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> getString(R.string.settings_keyboard_height_multiplier_option_medium)
-            KEYBOARD_HEIGHT_MULTIPLIER_BIG -> getString(R.string.settings_keyboard_height_multiplier_option_big)
+            KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> getString(R.string.small)
+            KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> getString(R.string.medium)
+            KEYBOARD_HEIGHT_MULTIPLIER_BIG -> getString(R.string.large)
             else -> {
-                getString(R.string.settings_keyboard_height_multiplier_option_small)
+                getString(R.string.small)
             }
         }
     }

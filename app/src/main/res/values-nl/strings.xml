@@ -32,9 +32,6 @@
     <string name="vibrate_on_keypress">Trillen bij toetsaanslagen</string>
     <string name="keyboard_language">Toetsenbordtaal</string>
     <string name="keyboard_height_multiplier">Toetsenbord hoogte</string>
-    <string name="settings_keyboard_height_multiplier_option_small">Klein</string>
-    <string name="settings_keyboard_height_multiplier_option_medium">Middel</string>
-    <string name="settings_keyboard_height_multiplier_option_big">Groot</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

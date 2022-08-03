@@ -206,7 +206,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/settings_keyboard_height_multiplier_label"
-                        tools:text="@string/settings_keyboard_height_multiplier_option_small" />
+                        tools:text="@string/small" />
                 </RelativeLayout>
 
             </LinearLayout>

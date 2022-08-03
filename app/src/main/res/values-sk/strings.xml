@@ -32,9 +32,6 @@
     <string name="vibrate_on_keypress">Vibrovať pri stlačení</string>
     <string name="keyboard_language">Jazyk klávesnice</string>
     <string name="keyboard_height_multiplier">Keyboard height</string>
-    <string name="settings_keyboard_height_multiplier_option_small">Small</string>
-    <string name="settings_keyboard_height_multiplier_option_medium">Medium</string>
-    <string name="settings_keyboard_height_multiplier_option_big">Large</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
