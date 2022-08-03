@@ -248,12 +248,7 @@ class MyKeyboard {
         mDefaultHorizontalGap = 0
         mDefaultWidth = mDisplayWidth / 10
         mDefaultHeight = mDefaultWidth
-        mKeyboardHeightMultiplier = when (context.config.keyboardHeightMultiplier) {
-            KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> 1F
-            KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> 1.2F
-            KEYBOARD_HEIGHT_MULTIPLIER_BIG -> 1.4F
-            else -> 1F
-        }
+        mKeyboardHeightMultiplier = getKeyboardHeightMultiplier(context.config.keyboardHeightMultiplier);
         mKeys = ArrayList()
         mEnterKeyType = enterKeyType
         loadKeyboard(context, context.resources.getXml(xmlLayoutResId))
@@ -277,12 +272,7 @@ class MyKeyboard {
         row.defaultHeight = mDefaultHeight
         row.defaultWidth = keyWidth
         row.defaultHorizontalGap = mDefaultHorizontalGap
-        mKeyboardHeightMultiplier = when (context.config.keyboardHeightMultiplier) {
-            KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> 1F
-            KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> 1.2F
-            KEYBOARD_HEIGHT_MULTIPLIER_BIG -> 1.4F
-            else -> 1F
-        }
+        mKeyboardHeightMultiplier = getKeyboardHeightMultiplier(context.config.keyboardHeightMultiplier);
 
         characters.forEachIndexed { index, character ->
             val key = Key(row)
@@ -392,5 +382,14 @@ class MyKeyboard {
         mDefaultHeight = res.getDimension(R.dimen.key_height).toInt()
         mDefaultHorizontalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, mDisplayWidth, 0)
         a.recycle()
+    }
+
+    private fun getKeyboardHeightMultiplier(multiplierType: Int): Float {
+        return when(multiplierType) {
+            KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> 1.0F
+            KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> 1.2F
+            KEYBOARD_HEIGHT_MULTIPLIER_BIG -> 1.4F
+            else -> 1.0F
+        }
     }
 }
