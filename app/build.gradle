@@ -16,8 +16,8 @@ android {
         applicationId "com.simplemobiletools.keyboard"
         minSdk 23
         targetSdk 31
-        versionCode 10
-        versionName "5.2.0"
+        versionCode 11
+        versionName "5.2.1"
         multiDexEnabled true
         setProperty("archivesBaseName", "keyboard")
         vectorDrawables.useSupportLibrary = true
@@ -65,9 +65,10 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:c05de1687e'
+    implementation 'com.github.SimpleMobileTools:Simple-Commons:0c82e5f216'
+    implementation 'androidx.emoji2:emoji2-bundled:1.1.0'
 
-    kapt 'androidx.room:room-compiler:2.4.2'
-    implementation 'androidx.room:room-runtime:2.4.2'
-    annotationProcessor 'androidx.room:room-compiler:2.4.2'
+    kapt 'androidx.room:room-compiler:2.4.3'
+    implementation 'androidx.room:room-runtime:2.4.3'
+    annotationProcessor 'androidx.room:room-compiler:2.4.3'
 }

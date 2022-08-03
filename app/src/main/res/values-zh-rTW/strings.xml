@@ -32,7 +32,9 @@
     <string name="show_popup">按下按鍵時顯示彈出效果</string>
     <string name="vibrate_on_keypress">按下按鍵時震動</string>
     <string name="keyboard_language">鍵盤語言</string>
-    <string name="keyboard_height_multiplier">Keyboard height</string>
+    <string name="keyboard_height">Keyboard height</string>
+    <!-- Emojis -->
+    <string name="emojis">Emojis</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

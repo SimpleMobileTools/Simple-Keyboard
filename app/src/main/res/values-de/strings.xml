@@ -31,7 +31,9 @@
     <string name="show_popup">Ein Popup bei Tastendruck anzeigen</string>
     <string name="vibrate_on_keypress">Bei Tastendruck vibrieren</string>
     <string name="keyboard_language">Tastatursprache</string>
-    <string name="keyboard_height_multiplier">Keyboard height</string>
+    <string name="keyboard_height">Keyboard height</string>
+    <!-- Emojis -->
+    <string name="emojis">Emojis</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

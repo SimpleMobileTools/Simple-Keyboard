@@ -31,7 +31,9 @@
     <string name="show_popup">Pokazuj wyskakujące okienko przy naciśnięciu klawisza</string>
     <string name="vibrate_on_keypress">Wibracja przy naciśnięciu klawisza</string>
     <string name="keyboard_language">Język klawiatury</string>
-    <string name="keyboard_height_multiplier">Keyboard height</string>
+    <string name="keyboard_height">Wysokość klawiatury</string>
+    <!-- Emojis -->
+    <string name="emojis">Emoji</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
