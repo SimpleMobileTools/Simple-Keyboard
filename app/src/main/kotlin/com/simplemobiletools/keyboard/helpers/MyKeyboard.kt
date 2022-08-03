@@ -388,7 +388,7 @@ class MyKeyboard {
         return when(multiplierType) {
             KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> 1.0F
             KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> 1.2F
-            KEYBOARD_HEIGHT_MULTIPLIER_BIG -> 1.4F
+            KEYBOARD_HEIGHT_MULTIPLIER_LARGE -> 1.4F
             else -> 1.0F
         }
     }

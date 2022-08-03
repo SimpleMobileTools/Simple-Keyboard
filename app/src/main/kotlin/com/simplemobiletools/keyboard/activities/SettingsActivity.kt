@@ -145,7 +145,7 @@ class SettingsActivity : SimpleActivity() {
             val items = arrayListOf(
                 RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_SMALL, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_SMALL)),
                 RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM)),
-                RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_BIG, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_BIG)),
+                RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_LARGE, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_LARGE)),
             )
 
             RadioGroupDialog(this@SettingsActivity, items, config.keyboardHeightMultiplier) {
@@ -159,7 +159,7 @@ class SettingsActivity : SimpleActivity() {
         return when (multiplier) {
             KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> getString(R.string.small)
             KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> getString(R.string.medium)
-            KEYBOARD_HEIGHT_MULTIPLIER_BIG -> getString(R.string.large)
+            KEYBOARD_HEIGHT_MULTIPLIER_LARGE -> getString(R.string.large)
             else -> {
                 getString(R.string.small)
             }
