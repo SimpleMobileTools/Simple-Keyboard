@@ -1,13 +1,17 @@
-A quick lightweight keyboard app that helps chatting with your friends, or inserting any other texts, numbers or symbols.
+Lengva klaviatūros programėlė, kuri padeda bendrauti su draugais arba įterpti bet kokius kitus tekstus, skaičius ar simbolius. Galite rinktis iš kelių skirtingų kalbų ir išdėstymų.
 
-It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+Galite kurti patogius įrašus ir prisegti dažnai naudojamus įrašus, kad juos būtų lengva pasiekti. Galite perjungti vibraciją ir iššokančius langus paspaudus klavišą arba pasirinkti kalbą iš palaikomų kalbų sąrašo.
 
-Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
+Taip pat galite rinktis iš daugybės galimų emotikonų.
 
-Check out the full suite of Simple Tools here:
-https://www.simplemobiletools.com
+Pagal numatytuosius nustatymus įdiegtas materialus dizainas ir tamsi tema, todėl užtikrinama puiki naudotojo patirtis, kad būtų lengva naudotis. Interneto prieigos nebuvimas suteikia daugiau privatumo, saugumo ir stabilumo nei kitos programėlės.
 
-Facebook:
+Nėra reklamų ar nereikalingų leidimų. Ji yra visiškai atvirojo kodo ir suteikia galimybę keisti spalvas.
+
+Visą "Simple Tools" rinkinį rasite čia:
+https://www.simplemobiletools.com.
+
+"Facebook":
 https://www.facebook.com/simplemobiletools
 
 Reddit:
