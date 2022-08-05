@@ -1,12 +1,14 @@
-En snabb och lätt tangentbordsapp som hjälper dig att chatta med dina vänner eller infoga andra texter, siffror eller symboler.
+En lätt tangentbordsapp som hjälper dig att chatta med dina vänner eller infoga andra texter, siffror eller symboler. Du kan välja mellan flera olika språk och layouter.
 
-Den levereras med materialdesign och mörkt tema som standard, vilket ger en bra användarupplevelse för enkel användning.
+Du kan skapa praktiska klipp och fästa ofta använda klipp för att få enkel åtkomst. Du kan växla vibrationer, popup-fönster vid tangenttryckningar eller välja ditt språk från listan över stödda språk.
 
-Eftersom du inte har tillgång till internet får du mer integritet, säkerhet och stabilitet än med andra appar.
+Du kan också välja mellan ett stort antal tillgängliga emojis.
+
+Den levereras med materialdesign och mörkt tema som standard, vilket ger en fantastisk användarupplevelse för enkel användning. Avsaknaden av internetåtkomst ger dig mer integritet, säkerhet och stabilitet än andra appar.
 
 Innehåller inga annonser eller onödiga behörigheter. Den är helt öppen källkod, ger anpassningsbara färger.
 
-Kika på hela paketet av Simple Tools här:
+Kolla in hela sviten av Simple Tools här:
 https://www.simplemobiletools.com
 
 Facebook:
