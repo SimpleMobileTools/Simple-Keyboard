@@ -5,7 +5,7 @@
     <string name="redirection_note">Aktivera Simpelt tangentbord på nästa skärm så att det blir ett tillgängligt tangentbord. Tryck på \"Tillbaka\" när du har aktiverat det.</string>
     <string name="change_keyboard">Skifta tangentbord</string>
     <!-- Clipboard -->
-    <string name="manage_clipboard_items">Hantera objekt i klippbordet</string>
+    <string name="manage_clipboard_items">Hantera urklippsobjekt</string>
     <string name="manage_clipboard_empty">Ditt urklipp är tomt.</string>
     <string name="manage_clipboard_label">När du väl kopierar viss text, så dyker det up här. Du kan också pinna klipp så de inte försvinner senare.</string>
     <string name="clear_clipboard_data">Rensa urklippsdata</string>
@@ -14,7 +14,7 @@
     <string name="clipboard_recent">Nyligen</string>
     <string name="clipboard_current">Nuvarande</string>
     <string name="clipboard_pinned">Nålad</string>
-    <string name="add_new_item">Addera en ny sak</string>
+    <string name="add_new_item">Lägg till ett nytt objekt</string>
     <string name="manage_clips">Du kan hantera eller addera nya klipp här för snabb tillgänglighet.</string>
     <string name="clip_text">Klipp text</string>
     <string name="pin_text">Nåla text</string>
@@ -24,16 +24,16 @@
     <!-- Accessibility -->
     <string name="keycode_delete">Radera</string>
     <string name="keycode_mode_change">Ändra tangentbordstyp</string>
-    <string name="keycode_shift">Shift</string>
+    <string name="keycode_shift">Skift</string>
     <string name="keycode_enter">Enter</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Visa urklippets innehåll om tillgängligt</string>
     <string name="show_popup">Visa en popupp vid knapptryck</string>
     <string name="vibrate_on_keypress">Vibrera på knapptryck</string>
     <string name="keyboard_language">Tangentbordsspråk</string>
-    <string name="keyboard_height">Keyboard height</string>
+    <string name="keyboard_height">Tangentbordshöjd</string>
     <!-- Emojis -->
-    <string name="emojis">Emojis</string>
+    <string name="emojis">Emojier</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
