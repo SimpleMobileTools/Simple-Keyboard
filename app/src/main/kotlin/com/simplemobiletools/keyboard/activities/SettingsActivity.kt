@@ -2,6 +2,7 @@ package com.simplemobiletools.keyboard.activities
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.content.ContextCompat.startActivity
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.NavigationIcon
@@ -114,7 +115,8 @@ class SettingsActivity : SimpleActivity() {
                 RadioItem(LANGUAGE_ROMANIAN, getKeyboardLanguageText(LANGUAGE_ROMANIAN)),
                 RadioItem(LANGUAGE_RUSSIAN, getKeyboardLanguageText(LANGUAGE_RUSSIAN)),
                 RadioItem(LANGUAGE_SLOVENIAN, getKeyboardLanguageText(LANGUAGE_SLOVENIAN)),
-                RadioItem(LANGUAGE_SPANISH, getKeyboardLanguageText(LANGUAGE_SPANISH))
+                RadioItem(LANGUAGE_SPANISH, getKeyboardLanguageText(LANGUAGE_SPANISH)),
+                RadioItem(LANGUAGE_BULGARIAN, getKeyboardLanguageText(LANGUAGE_BULGARIAN)),
             )
 
             RadioGroupDialog(this@SettingsActivity, items, config.keyboardLanguage) {
@@ -134,6 +136,7 @@ class SettingsActivity : SimpleActivity() {
             LANGUAGE_SPANISH -> getString(R.string.translation_spanish)
             LANGUAGE_SLOVENIAN -> getString(R.string.translation_slovenian)
             LANGUAGE_ROMANIAN -> getString(R.string.translation_romanian)
+            LANGUAGE_BULGARIAN -> getString(R.string.translation_bulgarian)
             else -> "${getString(R.string.translation_english)} (QWERTY)"
         }
     }
