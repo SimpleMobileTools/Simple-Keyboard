@@ -117,6 +117,7 @@ class SettingsActivity : SimpleActivity() {
                 RadioItem(LANGUAGE_SLOVENIAN, getKeyboardLanguageText(LANGUAGE_SLOVENIAN)),
                 RadioItem(LANGUAGE_SPANISH, getKeyboardLanguageText(LANGUAGE_SPANISH)),
                 RadioItem(LANGUAGE_BULGARIAN, getKeyboardLanguageText(LANGUAGE_BULGARIAN)),
+                RadioItem(LANGUAGE_TURKISH_Q, getKeyboardLanguageText(LANGUAGE_TURKISH_Q)),
             )
 
             RadioGroupDialog(this@SettingsActivity, items, config.keyboardLanguage) {
@@ -137,6 +138,7 @@ class SettingsActivity : SimpleActivity() {
             LANGUAGE_SLOVENIAN -> getString(R.string.translation_slovenian)
             LANGUAGE_ROMANIAN -> getString(R.string.translation_romanian)
             LANGUAGE_BULGARIAN -> getString(R.string.translation_bulgarian)
+            LANGUAGE_TURKISH_Q -> "${getString(R.string.translation_turkish)} (Q)"
             else -> "${getString(R.string.translation_english)} (QWERTY)"
         }
     }
