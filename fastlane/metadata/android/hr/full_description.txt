@@ -1,12 +1,14 @@
-Brza lagana aplikacija za tipkovnicu koja pomaže u razgovoru s prijateljima ili umetanju bilo kojeg drugog teksta, brojeva ili simbola. 
+Lagana aplikacija za tipkovnicu koja pomaže razgovarati s prijateljima ili umetnuti bilo koje druge tekstove, brojeve ili simbole. Možete birati između više različitih jezika i izgleda.
 
-Dolazi s materijalnim dizajnom i tamnom temom prema zadanim postavkama, pruža izvrsno korisničko iskustvo za jednostavnu upotrebu. 
+Možete stvoriti prikladne kopče i često koristiti one za jednostavan pristup. Možete bacati vibracije i iskopati tipke ili odabrati svoj jezik s popisa podržanih.
 
-Nedostatak pristupa internetu daje vam više privatnosti, sigurnosti i stabilnosti od drugih aplikacija. Ne sadrži oglase niti nepotrebna dopuštenja. 
+Možete birati i iz ogromne raznolikosti dostupnih emojisa.
 
-Potpuno je otvorenog koda, pruža prilagodljive boje. 
+Dolazi s dizajnom materijala i tamnom temom prema zadanim postavkama, pružajući sjajno korisničko iskustvo za jednostavno korištenje. Nedostatak pristupa internetu daje vam više privatnosti, sigurnosti i stabilnosti od ostalih aplikacija.
 
-Pogledajte cijeli paket Jednostavni Alati ovdje:
+Ne sadrži oglase ili nepotrebne dozvole. Potpuno je open-source i pruža prilagođene boje.
+
+Ovdje pogledajte cijeli paket jednostavnih alata:
 https://www.simplemobiletools.com
 
 Facebook:
