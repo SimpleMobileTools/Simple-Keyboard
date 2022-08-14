@@ -1,21 +1,21 @@
-A lightweight keyboard app that helps chatting with your friends, or inserting any other texts, numbers or symbols. You can choose from multiple different languages and layouts.
+Aplikace Jednoduchá klávesnice, která pomáhá komunikovat s vašimi přáteli nebo vkládat jakékoli jiné texty, čísla nebo symboly. Můžete si vybrat z několika různých jazyků a rozvržení.
 
-You can create handy clips and pin frequently used ones for easy access. You can toggle vibrations, popups on keypresses or select your language from the list of supported ones.
+Pro snadný přístup můžete vytvářet šikovné výstřižky a připíchnout si často používané. Můžete nastavit vibrace, vyskakovací okna při stisku kláves nebo vybrat svůj jazyk ze seznamu podporovaných.
 
-You can choose from a huge variety of available emojis too.
+Můžete si také vybrat z velkého množství dostupných emotikon.
 
-It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+Ve výchozím nastavení přichází s designem ve stylu Material a tmavým motivem, což poskytuje skvělý uživatelský zážitek pro snadné použití. Nepoužívání přístupu k Internetu vám poskytuje větší soukromí, zabezpečení a stabilitu než jiné aplikace.
 
-Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
+Neobsahuje žádné reklamy ani nepotřebná oprávnění. Má otevřený zdrojový kód, poskytuje možnost změny barev.
 
-Check out the full suite of Simple Tools here:
+Podívejte se na celou sadu jednoduchých nástrojů zde:
 https://www.simplemobiletools.com
 
 Facebook:
 https://www.facebook.com/simplemobiletools
 
 Reddit:
-https://www.reddit.com/r/SimpleMobileTools
+https://www.reddit.com/r/simplemobiletools
 
 Telegram:
-https://t.me/SimpleMobileTools
+https://t.me/simplemobiletools
