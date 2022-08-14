@@ -1,10 +1,14 @@
-A quick lightweight keyboard app that helps chatting with your friends, or inserting any other texts, numbers or symbols.
+O aplicație de tastatură ușoară care vă ajută să discutați cu prietenii sau să introduceți orice alt text, numere sau simboluri. Puteți alege dintre mai multe limbi și layout-uri diferite.
 
-It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+Puteți crea clipuri la îndemână și le puteți fixa pe cele utilizate frecvent pentru a le accesa ușor. Puteți să comutați vibrațiile, pop-up-urile la apăsarea tastelor sau să selectați limba dvs. din lista celor acceptate.
 
-Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
+De asemenea, puteți alege dintr-o mare varietate de emoji disponibile.
 
-Check out the full suite of Simple Tools here:
+Vine cu design material și temă întunecată în mod implicit, oferă o experiență de utilizare excelentă pentru o utilizare ușoară. Lipsa accesului la internet vă oferă mai multă intimitate, securitate și stabilitate decât alte aplicații.
+
+Nu conține reclame sau permisiuni inutile. Este complet opensource, oferă culori personalizabile.
+
+Consultați suita completă de instrumente Simple Tools aici:
 https://www.simplemobiletools.com
 
 Facebook:
