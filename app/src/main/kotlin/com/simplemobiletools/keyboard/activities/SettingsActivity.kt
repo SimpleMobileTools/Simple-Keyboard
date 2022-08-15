@@ -140,7 +140,7 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupKeyboardHeightMultiplier() {
-        settings_height_multiplier.text = getKeyboardHeightMultiplierText(config.keyboardHeightMultiplier)
+        settings_keyboard_height_multiplier.text = getKeyboardHeightMultiplierText(config.keyboardHeightMultiplier)
         settings_keyboard_height_multiplier_holder.setOnClickListener {
             val items = arrayListOf(
                 RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_SMALL, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_SMALL)),
@@ -150,7 +150,7 @@ class SettingsActivity : SimpleActivity() {
 
             RadioGroupDialog(this@SettingsActivity, items, config.keyboardHeightMultiplier) {
                 config.keyboardHeightMultiplier = it as Int
-                settings_height_multiplier.text = getKeyboardHeightMultiplierText(config.keyboardHeightMultiplier)
+                settings_keyboard_height_multiplier.text = getKeyboardHeightMultiplierText(config.keyboardHeightMultiplier)
             }
         }
     }
