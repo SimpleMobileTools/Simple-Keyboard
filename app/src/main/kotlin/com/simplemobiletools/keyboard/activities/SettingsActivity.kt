@@ -160,9 +160,7 @@ class SettingsActivity : SimpleActivity() {
             KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> getString(R.string.small)
             KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> getString(R.string.medium)
             KEYBOARD_HEIGHT_MULTIPLIER_LARGE -> getString(R.string.large)
-            else -> {
-                getString(R.string.small)
-            }
+            else -> getString(R.string.small)
         }
     }
 }
