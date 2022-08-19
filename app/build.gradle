@@ -10,12 +10,12 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.simplemobiletools.keyboard"
         minSdk 23
-        targetSdk 31
+        targetSdk 33
         versionCode 11
         versionName "5.2.1"
         multiDexEnabled true
