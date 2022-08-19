@@ -106,6 +106,7 @@ class SettingsActivity : SimpleActivity() {
         settings_keyboard_language.text = getKeyboardLanguageText(config.keyboardLanguage)
         settings_keyboard_language_holder.setOnClickListener {
             val items = arrayListOf(
+                RadioItem(LANGUAGE_BENGALI, getKeyboardLanguageText(LANGUAGE_BENGALI)),
                 RadioItem(LANGUAGE_BULGARIAN, getKeyboardLanguageText(LANGUAGE_BULGARIAN)),
                 RadioItem(LANGUAGE_ENGLISH_QWERTY, getKeyboardLanguageText(LANGUAGE_ENGLISH_QWERTY)),
                 RadioItem(LANGUAGE_ENGLISH_QWERTZ, getKeyboardLanguageText(LANGUAGE_ENGLISH_QWERTZ)),
@@ -129,6 +130,7 @@ class SettingsActivity : SimpleActivity() {
 
     private fun getKeyboardLanguageText(language: Int): String {
         return when (language) {
+            LANGUAGE_BENGALI -> getString(R.string.translation_bengali)
             LANGUAGE_BULGARIAN -> getString(R.string.translation_bulgarian)
             LANGUAGE_ENGLISH_DVORAK -> "${getString(R.string.translation_english)} (DVORAK)"
             LANGUAGE_ENGLISH_QWERTZ -> "${getString(R.string.translation_english)} (QWERTZ)"
