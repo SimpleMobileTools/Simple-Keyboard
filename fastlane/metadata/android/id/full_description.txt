@@ -1,10 +1,14 @@
-Aplikasi papan ketik cepat ringan yang membantu mengobrol dengan teman Anda, atau menyisipkan teks, angka, atau simbol lainnya. 
+Aplikasi keyboard ringan yang membantu mengobrol dengan teman-teman Anda, atau menyisipkan teks, angka, atau simbol lainnya. Anda dapat memilih dari beberapa bahasa dan tata letak yang berbeda.
 
-Muncul dengan desain material dan tema gelap secara default, memberikan pengalaman pengguna yang luar biasa untuk penggunaan yang mudah.
+Anda dapat membuat klip praktis dan menyematkan yang sering digunakan untuk akses mudah. Anda dapat beralih getaran, dan popup pada penekanan tombol atau memilih bahasa Anda dari daftar yang didukung.
 
-Kurangnya akses internet memberi Anda lebih banyak privasi, keamanan, dan stabilitas daripada aplikasi lain. Tidak mengandung iklan atau izin yang tidak perlu. Ini sepenuhnya sumber-terbuka, menyediakan warna yang dapat disesuaikan.
+Anda juga dapat memilih dari berbagai macam emoji yang tersedia.
 
-Lihat rangkaian lengkap Simple Tools di sini:
+Muncul dengan desain material dan tema gelap secara default, memberikan pengalaman pengguna yang luar biasa untuk penggunaan yang mudah. Kurangnya akses internet memberi Anda lebih banyak privasi, keamanan, dan stabilitas daripada aplikasi lain.
+
+Tidak berisi iklan atau izin yang tidak perlu. Ini sepenuhnya open-source dan menyediakan warna yang dapat disesuaikan.
+
+Lihat rangkaian lengkap Alat Sederhana di sini:
 https://www.simplemobiletools.com
 
 Facebook:

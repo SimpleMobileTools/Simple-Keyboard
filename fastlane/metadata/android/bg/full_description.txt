@@ -1,12 +1,14 @@
-A lightweight keyboard app that helps chatting with your friends, or inserting any other texts, numbers or symbols. You can choose from multiple different languages and layouts.
+Леко приложение с клавиатура, което ви помага да чатите с приятелите си или да вмъквате други текстове, цифри или символи. Можете да избирате от няколко различни езика и оформления.
 
-You can create handy clips and pin frequently used ones for easy access. You can toggle vibrations, popups on keypresses or select your language from the list of supported ones.
+Можете да създавате удобни клипове и да закачате често използвани такива за лесен достъп. Можете да превключвате вибрациите и изскачащите прозорци при натискане на клавишите или да изберете езика си от списъка с поддържани такива.
 
-It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+Можете да избирате и от огромно разнообразие от налични емотикони.
 
-Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
+По подразбиране се предлага с Material Design и тъмна тема, което осигурява страхотно потребителско изживяване за лесно използване. Липсата на достъп до интернет ви осигурява повече неприкосновеност на личния живот, сигурност и стабилност в сравнение с други приложения.
 
-Check out the full suite of Simple Tools here:
+Не съдържа реклами или ненужни разрешения. Напълно е с отворен код и предоставя възможност за персонализиране на цветовете.
+
+Разгледайте пълния набор от прости инструменти тук:
 https://www.simplemobiletools.com
 
 Facebook:

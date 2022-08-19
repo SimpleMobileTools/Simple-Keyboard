@@ -31,6 +31,7 @@ class SettingsActivity : SimpleActivity() {
         setupVibrateOnKeypress()
         setupShowPopupOnKeypress()
         setupKeyboardLanguage()
+        setupKeyboardHeightMultiplier()
 
         updateTextColors(settings_nested_scrollview)
 
@@ -143,6 +144,31 @@ class SettingsActivity : SimpleActivity() {
             LANGUAGE_SPANISH -> getString(R.string.translation_spanish)
             LANGUAGE_TURKISH_Q -> "${getString(R.string.translation_turkish)} (Q)"
             else -> "${getString(R.string.translation_english)} (QWERTY)"
+        }
+    }
+
+    private fun setupKeyboardHeightMultiplier() {
+        settings_keyboard_height_multiplier.text = getKeyboardHeightMultiplierText(config.keyboardHeightMultiplier)
+        settings_keyboard_height_multiplier_holder.setOnClickListener {
+            val items = arrayListOf(
+                RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_SMALL, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_SMALL)),
+                RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM)),
+                RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_LARGE, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_LARGE)),
+            )
+
+            RadioGroupDialog(this@SettingsActivity, items, config.keyboardHeightMultiplier) {
+                config.keyboardHeightMultiplier = it as Int
+                settings_keyboard_height_multiplier.text = getKeyboardHeightMultiplierText(config.keyboardHeightMultiplier)
+            }
+        }
+    }
+
+    private fun getKeyboardHeightMultiplierText(multiplier: Int): String {
+        return when (multiplier) {
+            KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> getString(R.string.small)
+            KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> getString(R.string.medium)
+            KEYBOARD_HEIGHT_MULTIPLIER_LARGE -> getString(R.string.large)
+            else -> getString(R.string.small)
         }
     }
 }
