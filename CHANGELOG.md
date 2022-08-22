@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 5.3.0 *(2022-08-22)*
+----------------------------
+
+ * Added some more language keyboards
+ * Allow changing the keyboard size
+ * Added Monochrome icon and Language picker support on Android 13+
+ * Added some translation and UX improvements
+
 Version 5.2.1 *(2022-08-02)*
 ----------------------------
 
