@@ -1465,10 +1465,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun setupEmojiAdapter(emojis: List<String>) {
-        val emojiItemWidth = context.resources.getDimensionPixelSize(R.dimen.emoji_item_size)
-        val emojiTopBarElevation = context.resources.getDimensionPixelSize(R.dimen.emoji_top_bar_elevation).toFloat()
-
         mEmojiPaletteHolder?.emojis_list?.apply {
+            val emojiItemWidth = context.resources.getDimensionPixelSize(R.dimen.emoji_item_size)
+            val emojiTopBarElevation = context.resources.getDimensionPixelSize(R.dimen.emoji_top_bar_elevation).toFloat()
+
             layoutManager = AutoGridLayoutManager(context, emojiItemWidth)
             adapter = EmojisAdapter(context = context, items = emojis) { emoji ->
                 mOnKeyboardActionListener!!.onText(emoji)

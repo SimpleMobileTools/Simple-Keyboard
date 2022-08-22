@@ -27,6 +27,10 @@ const val LANGUAGE_GERMAN = 5
 const val LANGUAGE_ENGLISH_DVORAK = 6
 const val LANGUAGE_ROMANIAN = 7
 const val LANGUAGE_SLOVENIAN = 8
+const val LANGUAGE_BULGARIAN = 9
+const val LANGUAGE_TURKISH_Q = 10
+const val LANGUAGE_LITHUANIAN = 11
+const val LANGUAGE_BENGALI = 12
 
 // keyboard height multiplier options
 const val KEYBOARD_HEIGHT_MULTIPLIER_SMALL = 1

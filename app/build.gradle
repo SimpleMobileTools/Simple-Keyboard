@@ -10,12 +10,12 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.simplemobiletools.keyboard"
         minSdk 23
-        targetSdk 31
+        targetSdk 33
         versionCode 11
         versionName "5.2.1"
         multiDexEnabled true
@@ -65,8 +65,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:0c82e5f216'
-    implementation 'androidx.emoji2:emoji2-bundled:1.1.0'
+    implementation 'com.github.SimpleMobileTools:Simple-Commons:dfcf3990b0'
+    implementation 'androidx.emoji2:emoji2-bundled:1.2.0'
 
     kapt 'androidx.room:room-compiler:2.4.3'
     implementation 'androidx.room:room-runtime:2.4.3'
