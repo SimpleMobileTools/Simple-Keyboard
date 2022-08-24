@@ -1455,7 +1455,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             val emojis = fullEmojiList.filter { emoji ->
-                systemFontPaint.hasGlyph(emoji) || EmojiCompat.get().getEmojiMatch(emoji, emojiCompatMetadataVersion) == EMOJI_SUPPORTED
+                systemFontPaint.hasGlyph(emoji) || (EmojiCompat.get().loadState == EmojiCompat.LOAD_STATE_SUCCEEDED && EmojiCompat.get()
+                    .getEmojiMatch(emoji, emojiCompatMetadataVersion) == EMOJI_SUPPORTED)
             }
 
             Handler(Looper.getMainLooper()).post {
