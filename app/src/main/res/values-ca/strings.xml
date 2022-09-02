@@ -10,7 +10,7 @@
     <string name="manage_clipboard_label">Després de copiar text, es mostrarà aquí. També podeu fixar clips perquè no desapareguin més tard.</string>
     <string name="clear_clipboard_data">Neteja les dades del porta-retalls</string>
     <string name="clear_clipboard_data_confirmation">Esteu segur que voleu netejar les dades del porta-retalls\?</string>
-    <string name="clipboard">Clipboard</string>
+    <string name="clipboard">Porta-retalls</string>
     <string name="clipboard_recent">Recent</string>
     <string name="clipboard_current">Actual</string>
     <string name="clipboard_pinned">Fixat</string>
@@ -19,8 +19,8 @@
     <string name="clip_text">Text del clip</string>
     <string name="pin_text">Pin text</string>
     <string name="text_pinned">S\'ha fixat el text</string>
-    <string name="export_clipboard_items">Export clipboard items</string>
-    <string name="import_clipboard_items">Import clipboard items</string>
+    <string name="export_clipboard_items">Exporta elements del porta-retalls</string>
+    <string name="import_clipboard_items">Importa elements del porta-retalls</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Suprimeix</string>
     <string name="keycode_mode_change">Canvia el tipus de teclat</string>
