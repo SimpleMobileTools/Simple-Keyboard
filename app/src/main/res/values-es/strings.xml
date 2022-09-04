@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Teclado Simple</string>
+    <string name="app_name">Teclado sencillo</string>
     <string name="app_launcher_name">Teclado</string>
-    <string name="redirection_note">Por favor, active el Teclado Simple en la siguiente pantalla para que sea un teclado disponible. Pulse \'Atrás\' una vez habilitado.</string>
-    <string name="change_keyboard">Cambiar teclado</string>
+    <string name="redirection_note">Por favor, active el Teclado Simple en la siguiente pantalla, para que sea un teclado disponible. Pulse \"Atrás\" una vez habilitado.</string>
+    <string name="change_keyboard">Cambio de teclado</string>
     <!-- Clipboard -->
     <string name="manage_clipboard_items">Gestionar los elementos del portapapeles</string>
     <string name="manage_clipboard_empty">Su portapapeles está vacío.</string>
-    <string name="manage_clipboard_label">Una vez que copie algún texto, aparecerá aquí. También puede anclar clips para que no desaparezcan más tarde.</string>
+    <string name="manage_clipboard_label">Una vez que copies un texto, aparecerá aquí. También puedes anclar clips para que no desaparezcan después.</string>
     <string name="clear_clipboard_data">Borrar los datos del portapapeles</string>
     <string name="clear_clipboard_data_confirmation">¿Está seguro de que desea borrar los datos del portapapeles\?</string>
     <string name="clipboard">Portapapeles</string>
@@ -15,10 +15,10 @@
     <string name="clipboard_current">Actual</string>
     <string name="clipboard_pinned">Fijado</string>
     <string name="add_new_item">Añadir un nuevo elemento</string>
-    <string name="manage_clips">Aquí puedes gestionar o añadir clips para acceder rápidamente a ellos.</string>
-    <string name="clip_text">Agregar texto al portapapeles</string>
-    <string name="pin_text">Anclar texto</string>
-    <string name="text_pinned">El texto ha sido anclado</string>
+    <string name="manage_clips">Puede administrar o agregar clips aquí para un acceso rápido.</string>
+    <string name="clip_text">Recortar texto</string>
+    <string name="pin_text">Fijar el texto</string>
+    <string name="text_pinned">El texto se ha fijado</string>
     <string name="export_clipboard_items">Exportar elementos del portapapeles</string>
     <string name="import_clipboard_items">Importar elementos al portapapeles</string>
     <!-- Accessibility -->
@@ -27,11 +27,11 @@
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
     <!-- Settings -->
-    <string name="show_clipboard_content">Mostrar contenido del portapapeles si está disponible</string>
-    <string name="show_popup">Agrandar la tecla al pulsarla</string>
+    <string name="show_clipboard_content">Mostrar el contenido del portapapeles si está disponible</string>
+    <string name="show_popup">Mostrar una ventana emergente al pulsar una tecla</string>
     <string name="vibrate_on_keypress">Vibrar al pulsar una tecla</string>
     <string name="keyboard_language">Idioma del teclado</string>
-    <string name="keyboard_height">Keyboard height</string>
+    <string name="keyboard_height">Altura del teclado</string>
     <!-- Emojis -->
     <string name="emojis">Emojis</string>
     <!--
