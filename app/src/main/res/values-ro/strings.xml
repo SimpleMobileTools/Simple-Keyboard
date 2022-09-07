@@ -31,9 +31,9 @@
     <string name="show_popup">Afișați o fereastră pop-up la apăsarea unei taste</string>
     <string name="vibrate_on_keypress">Vibrează la apăsarea tastelor</string>
     <string name="keyboard_language">Limba tastaturii</string>
-    <string name="keyboard_height">Keyboard height</string>
+    <string name="keyboard_height">Înălțime tastatură</string>
     <!-- Emojis -->
-    <string name="emojis">Emojis</string>
+    <string name="emojis">Emoticoane</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
