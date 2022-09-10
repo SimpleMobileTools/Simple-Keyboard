@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Teclado sencillo</string>
     <string name="app_launcher_name">Teclado</string>
-    <string name="redirection_note">Por favor, active el Teclado Simple en la siguiente pantalla, para que sea un teclado disponible. Pulse \"Atrás\" una vez habilitado.</string>
+    <string name="redirection_note">Por favor, active el Teclado Simple en la siguiente pantalla, para que sea su teclado. Pulse \"Atrás\" una vez habilitado.</string>
     <string name="change_keyboard">Cambio de teclado</string>
     <!-- Clipboard -->
     <string name="manage_clipboard_items">Gestionar los elementos del portapapeles</string>
@@ -33,7 +33,7 @@
     <string name="keyboard_language">Idioma del teclado</string>
     <string name="keyboard_height">Altura del teclado</string>
     <!-- Emojis -->
-    <string name="emojis">Emojis</string>
+    <string name="emojis">Emoticonos</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
