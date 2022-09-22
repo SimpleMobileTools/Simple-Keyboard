@@ -10,19 +10,19 @@
     <string name="manage_clipboard_label">След като копирате някакъв текст, той ще се появи тук. Можете също да закачите клипове, за да не изчезнат по-късно.</string>
     <string name="clear_clipboard_data">Изчистване на клипборд данните</string>
     <string name="clear_clipboard_data_confirmation">Сигурни ли сте, че искате да изтриете клипборд данните\?</string>
-    <string name="clipboard">Clipboard</string>
-    <string name="clipboard_recent">Recent</string>
+    <string name="clipboard">Клипборд</string>
+    <string name="clipboard_recent">Скорошни</string>
     <string name="clipboard_current">Текущо</string>
     <string name="clipboard_pinned">Закачено</string>
     <string name="add_new_item">Добавяне на нов елемент</string>
     <string name="manage_clips">Тук можете да управлявате или добавяте клипове за бърз достъп.</string>
-    <string name="clip_text">Clip text</string>
-    <string name="pin_text">Pin text</string>
+    <string name="clip_text">Изрязване на текст</string>
+    <string name="pin_text">Закачи текст</string>
     <string name="text_pinned">Текстът е закачен</string>
-    <string name="export_clipboard_items">Export clipboard items</string>
-    <string name="import_clipboard_items">Import clipboard items</string>
+    <string name="export_clipboard_items">Експортиране на елементи от клипборда</string>
+    <string name="import_clipboard_items">Импортиране на елементи от клипборда</string>
     <!-- Accessibility -->
-    <string name="keycode_delete">Delete</string>
+    <string name="keycode_delete">Изтрий</string>
     <string name="keycode_mode_change">Промяна на типа клавиатура</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
@@ -31,9 +31,9 @@
     <string name="show_popup">Показване на изскачащ прозорец при натискане на клавиш</string>
     <string name="vibrate_on_keypress">Вибриране при натискане на клавиш</string>
     <string name="keyboard_language">Език на клавиатурата</string>
-    <string name="keyboard_height">Keyboard height</string>
+    <string name="keyboard_height">Височина на клавиатурата</string>
     <!-- Emojis -->
-    <string name="emojis">Emojis</string>
+    <string name="emojis">Емоджита</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

@@ -1,0 +1,1 @@
+Egyszerű billentyűzet szövegek, speciális karakter és szám beillesztéséhez
