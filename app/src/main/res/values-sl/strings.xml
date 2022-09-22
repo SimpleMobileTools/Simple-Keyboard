@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="clipboard_pinned">Pripeto</string>
     <string name="app_name">Simple Keyboard</string>
     <string name="app_launcher_name">Tipkovnica</string>
     <string name="redirection_note">Prosimo, na naslednjem zaslonu omogočite Simple Keyboard, da bo na voljo kot tipkovnica. Ko jo omogočite, pritisnite \"Nazaj\".</string>
     <string name="change_keyboard">Spremeni tipkovnico</string>
+    <!-- Clipboard -->
     <string name="manage_clipboard_items">Upravljaj elemente odložišča</string>
     <string name="manage_clipboard_empty">Vaše odložišče je prazno.</string>
     <string name="manage_clipboard_label">Skopirano besedilo se bo prikazalo tu. Izrezke lahko tudi pripnete, da pozneje ne bodo izginili.</string>
-    <string name="clipboard_recent">Nedavno</string>
     <string name="clear_clipboard_data">Počisti podatke odložišča</string>
     <string name="clear_clipboard_data_confirmation">Ali ste prepričani, da želite izbrisati podatke iz odložišča\?</string>
     <string name="clipboard">Odložišče</string>
+    <string name="clipboard_recent">Nedavno</string>
     <string name="clipboard_current">Trenutno</string>
+    <string name="clipboard_pinned">Pripeto</string>
     <string name="add_new_item">Dodaj nov element</string>
     <string name="manage_clips">Tukaj lahko upravljate ali dodajate izrezke za hiter dostop.</string>
     <string name="clip_text">Besedilo izrezka</string>
@@ -20,14 +21,17 @@
     <string name="text_pinned">Besedilo je bilo pripeto</string>
     <string name="export_clipboard_items">Izvozi elemente odložišča</string>
     <string name="import_clipboard_items">Uvozi elemente odložišča</string>
+    <!-- Accessibility -->
     <string name="keycode_delete">Izbriši</string>
     <string name="keycode_mode_change">Spremeni vrsto tipkovnice</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
+    <!-- Settings -->
     <string name="show_clipboard_content">Prikaži vsebino odložišča, če je na voljo</string>
     <string name="show_popup">Prikaži pojavno okno ob pritisku tipke</string>
     <string name="vibrate_on_keypress">Vibriraj ob pritisku tipke</string>
     <string name="keyboard_language">Jezik tipkovnice</string>
     <string name="keyboard_height">Višina tipkovnice</string>
+    <!-- Emojis -->
     <string name="emojis">Emoji-ji</string>
 </resources>
