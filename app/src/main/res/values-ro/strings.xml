@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple Keyboard</string>
+    <string name="app_name">Tastatură simplă</string>
     <string name="app_launcher_name">Tastatură</string>
-    <string name="redirection_note">Vă rugăm să activați Simple Keyboard în ecranul următor, pentru a o face disponibilă. Apăsați \"Înapoi\" după activare.</string>
+    <string name="redirection_note">Vă rugăm să activați Tastatura simplă în ecranul următor, pentru a o face disponibilă. Apăsați \"Înapoi\" după activare.</string>
     <string name="change_keyboard">Schimbați tastatura</string>
     <!-- Clipboard -->
     <string name="manage_clipboard_items">Gestionați elementele din clipboard</string>
