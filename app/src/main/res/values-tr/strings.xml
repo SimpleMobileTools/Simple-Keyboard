@@ -33,6 +33,7 @@
     <string name="keyboard_language">Klavye dili</string>
     <string name="keyboard_height">Klavye yüksekliği</string>
     <string name="show_key_borders">Show key borders</string>
+    <string name="show_numbers_row">Show numbers on a separate row</string>
     <!-- Emojis -->
     <string name="emojis">Emojiler</string>
     <!--

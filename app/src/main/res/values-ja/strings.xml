@@ -33,6 +33,7 @@
     <string name="keyboard_language">キーボードの言語</string>
     <string name="keyboard_height">キーボードの高さ</string>
     <string name="show_key_borders">Show key borders</string>
+    <string name="show_numbers_row">Show numbers on a separate row</string>
     <!-- Emojis -->
     <string name="emojis">絵文字</string>
     <!--

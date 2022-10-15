@@ -33,6 +33,7 @@
     <string name="keyboard_language">Jezik tipkovnice</string>
     <string name="keyboard_height">Višina tipkovnice</string>
     <string name="show_key_borders">Show key borders</string>
+    <string name="show_numbers_row">Show numbers on a separate row</string>
     <!-- Emojis -->
     <string name="emojis">Emoji-ji</string>
 </resources>

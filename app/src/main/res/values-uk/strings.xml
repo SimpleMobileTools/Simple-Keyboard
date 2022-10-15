@@ -33,6 +33,7 @@
     <string name="keyboard_language">Мова клавіатури</string>
     <string name="keyboard_height">Keyboard height</string>
     <string name="show_key_borders">Show key borders</string>
+    <string name="show_numbers_row">Show numbers on a separate row</string>
     <!-- Emojis -->
     <string name="emojis">Emojis</string>
     <!--
