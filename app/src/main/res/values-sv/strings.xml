@@ -32,6 +32,7 @@
     <string name="vibrate_on_keypress">Vibrera på knapptryck</string>
     <string name="keyboard_language">Tangentbordsspråk</string>
     <string name="keyboard_height">Tangentbordshöjd</string>
+    <string name="show_key_borders">Show key borders</string>
     <!-- Emojis -->
     <string name="emojis">Emojier</string>
     <!--

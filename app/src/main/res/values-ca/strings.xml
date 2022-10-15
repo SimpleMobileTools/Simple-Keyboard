@@ -32,6 +32,7 @@
     <string name="vibrate_on_keypress">Vibra en prémer les tecles</string>
     <string name="keyboard_language">Idioma del teclat</string>
     <string name="keyboard_height">Alçada del teclat</string>
+    <string name="show_key_borders">Show key borders</string>
     <!-- Emojis -->
     <string name="emojis">Emojis</string>
     <!--

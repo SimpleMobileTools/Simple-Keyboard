@@ -32,6 +32,7 @@
     <string name="vibrate_on_keypress">Вибриране при натискане на клавиш</string>
     <string name="keyboard_language">Език на клавиатурата</string>
     <string name="keyboard_height">Височина на клавиатурата</string>
+    <string name="show_key_borders">Show key borders</string>
     <!-- Emojis -->
     <string name="emojis">Емоджита</string>
     <!--

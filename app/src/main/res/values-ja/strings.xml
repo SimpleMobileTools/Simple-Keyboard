@@ -32,6 +32,7 @@
     <string name="vibrate_on_keypress">キー入力時にバイブする</string>
     <string name="keyboard_language">キーボードの言語</string>
     <string name="keyboard_height">キーボードの高さ</string>
+    <string name="show_key_borders">Show key borders</string>
     <!-- Emojis -->
     <string name="emojis">絵文字</string>
     <!--

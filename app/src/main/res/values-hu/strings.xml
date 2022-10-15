@@ -32,6 +32,7 @@
     <string name="vibrate_on_keypress">Rezgés a billentyű lenyomásakor</string>
     <string name="keyboard_language">A billentyűzet nyelve</string>
     <string name="keyboard_height">Billentyűzet magassága</string>
+    <string name="show_key_borders">Show key borders</string>
     <!-- Emojis -->
     <string name="emojis">Emojik</string>
     <!--

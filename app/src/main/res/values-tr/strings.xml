@@ -32,6 +32,7 @@
     <string name="vibrate_on_keypress">Tuşa basıldığında titret</string>
     <string name="keyboard_language">Klavye dili</string>
     <string name="keyboard_height">Klavye yüksekliği</string>
+    <string name="show_key_borders">Show key borders</string>
     <!-- Emojis -->
     <string name="emojis">Emojiler</string>
     <!--

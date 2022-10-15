@@ -32,6 +32,7 @@
     <string name="vibrate_on_keypress">Vibrovať pri stlačení</string>
     <string name="keyboard_language">Jazyk klávesnice</string>
     <string name="keyboard_height">Výška klávesnice</string>
+    <string name="show_key_borders">Zobraziť hranice kláves</string>
     <!-- Emojis -->
     <string name="emojis">Emoji</string>
     <!--

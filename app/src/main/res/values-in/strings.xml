@@ -32,6 +32,7 @@
     <string name="vibrate_on_keypress">Getar pada penekanan tombol</string>
     <string name="keyboard_language">Bahasa keyboard</string>
     <string name="keyboard_height">Tinggi papan tik</string>
+    <string name="show_key_borders">Show key borders</string>
     <!-- Emojis -->
     <string name="emojis">Emoji</string>
     <!--

@@ -32,6 +32,7 @@
     <string name="vibrate_on_keypress">Vibrer lorsqu\'une touche est pressée</string>
     <string name="keyboard_language">Langue du clavier</string>
     <string name="keyboard_height">Hauteur du clavier</string>
+    <string name="show_key_borders">Show key borders</string>
     <!-- Emojis -->
     <string name="emojis">Émojis</string>
     <!--

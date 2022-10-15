@@ -32,6 +32,7 @@
     <string name="vibrate_on_keypress">按键时振动</string>
     <string name="keyboard_language">键盘语言</string>
     <string name="keyboard_height">键盘高度</string>
+    <string name="show_key_borders">Show key borders</string>
     <!-- Emojis -->
     <string name="emojis">表情符号</string>
     <!--
