@@ -32,8 +32,8 @@
     <string name="vibrate_on_keypress">Δόνηση στο πάτημα πλήκτρου</string>
     <string name="keyboard_language">Γλώσσα πληκτρολογίου</string>
     <string name="keyboard_height">Ύψος πληκτρολογίου</string>
-    <string name="show_key_borders">Show key borders</string>
-    <string name="show_numbers_row">Show numbers on a separate row</string>
+    <string name="show_key_borders">Εμφάνιση ορίων πλήκτρου</string>
+    <string name="show_numbers_row">Εμφάνιση αριθμών σε ξεχωριστή γραμμή</string>
     <!-- Emojis -->
     <string name="emojis">Emojis</string>
     <!--
