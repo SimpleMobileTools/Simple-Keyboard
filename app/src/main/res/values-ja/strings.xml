@@ -32,8 +32,8 @@
     <string name="vibrate_on_keypress">キー入力時にバイブする</string>
     <string name="keyboard_language">キーボードの言語</string>
     <string name="keyboard_height">キーボードの高さ</string>
-    <string name="show_key_borders">Show key borders</string>
-    <string name="show_numbers_row">Show numbers on a separate row</string>
+    <string name="show_key_borders">キー枠を表示する</string>
+    <string name="show_numbers_row">数字を別の行に表示する</string>
     <!-- Emojis -->
     <string name="emojis">絵文字</string>
     <!--
