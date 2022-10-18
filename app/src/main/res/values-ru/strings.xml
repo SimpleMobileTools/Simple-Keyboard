@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Простая клавиатура</string>
     <string name="app_launcher_name">Клавиатура</string>
-    <string name="redirection_note">Пожалуйста, активируйте Simple Keyboard на следующем экране. Затем нажмите \"назад\".</string>
+    <string name="redirection_note">Активируйте Simple Keyboard на следующем экране, затем нажмите \"назад\".</string>
     <string name="change_keyboard">Сменить клавиатуру</string>
     <!-- Clipboard -->
     <string name="manage_clipboard_items">Управлять данными из буфера обмена</string>
@@ -28,12 +28,12 @@
     <string name="keycode_enter">Enter</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Показывать содержимое буфера обмена при наличии</string>
-    <string name="show_popup">Показ ввода по нажатию</string>
+    <string name="show_popup">Показывать ввод по нажатию</string>
     <string name="vibrate_on_keypress">Вибрация по нажатию</string>
     <string name="keyboard_language">Язык клавиатуры</string>
     <string name="keyboard_height">Высота клавиатуры</string>
-    <string name="show_key_borders">Show key borders</string>
-    <string name="show_numbers_row">Show numbers on a separate row</string>
+    <string name="show_key_borders">Показывать границы кнопок</string>
+    <string name="show_numbers_row">Показывать цифры отдельной строкой</string>
     <!-- Emojis -->
     <string name="emojis">Эмодзи</string>
     <!--
