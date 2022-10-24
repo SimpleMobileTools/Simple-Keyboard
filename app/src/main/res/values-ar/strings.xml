@@ -32,8 +32,8 @@
     <string name="vibrate_on_keypress">يهتز عند ضغط الزر</string>
     <string name="keyboard_language">لغة لوحة المفاتيح</string>
     <string name="keyboard_height">ارتفاع لوحة المفاتيح</string>
-    <string name="show_key_borders">Show key borders</string>
-    <string name="show_numbers_row">Show numbers on a separate row</string>
+    <string name="show_key_borders">إظهار حدود المفاتيح</string>
+    <string name="show_numbers_row">إظهار الأرقام في صف منفصل</string>
     <!-- Emojis -->
     <string name="emojis">الرموز التعبيرية</string>
     <!--
