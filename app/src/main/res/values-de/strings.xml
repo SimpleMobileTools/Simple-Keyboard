@@ -32,7 +32,7 @@
     <string name="vibrate_on_keypress">Bei Tastendruck vibrieren</string>
     <string name="keyboard_language">Tastatursprache</string>
     <string name="keyboard_height">Höhe der Tastatur</string>
-    <string name="show_key_borders">Tastegrenzen anzeigen</string>
+    <string name="show_key_borders">Tastengrenzen anzeigen</string>
     <string name="show_numbers_row">Zahlen in einer separaten Zeile anzeigen</string>
     <!-- Emojis -->
     <string name="emojis">Emojis</string>
