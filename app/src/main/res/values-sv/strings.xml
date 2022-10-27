@@ -19,8 +19,8 @@
     <string name="clip_text">Klipp text</string>
     <string name="pin_text">Nåla text</string>
     <string name="text_pinned">Text har blivit nålad</string>
-    <string name="export_clipboard_items">Exportera urklipp saker</string>
-    <string name="import_clipboard_items">Importera urklipp saker</string>
+    <string name="export_clipboard_items">Exportera urklippsobjekt</string>
+    <string name="import_clipboard_items">Importera urklippsobjekt</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Radera</string>
     <string name="keycode_mode_change">Ändra tangentbordstyp</string>
@@ -32,8 +32,8 @@
     <string name="vibrate_on_keypress">Vibrera på knapptryck</string>
     <string name="keyboard_language">Tangentbordsspråk</string>
     <string name="keyboard_height">Tangentbordshöjd</string>
-    <string name="show_key_borders">Show key borders</string>
-    <string name="show_numbers_row">Show numbers on a separate row</string>
+    <string name="show_key_borders">Visa ramar runt tangenterna</string>
+    <string name="show_numbers_row">Visa siffror på en separat rad</string>
     <!-- Emojis -->
     <string name="emojis">Emojier</string>
     <!--

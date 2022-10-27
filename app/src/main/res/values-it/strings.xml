@@ -32,8 +32,8 @@
     <string name="vibrate_on_keypress">Vibra premendo un tasto</string>
     <string name="keyboard_language">Lingua della tastiera</string>
     <string name="keyboard_height">Altezza della tastiera</string>
-    <string name="show_key_borders">Show key borders</string>
-    <string name="show_numbers_row">Show numbers on a separate row</string>
+    <string name="show_key_borders">Mostra i bordi dei tasti</string>
+    <string name="show_numbers_row">Mostra i numeri su una riga separata</string>
     <!-- Emojis -->
     <string name="emojis">Emoji</string>
     <!--

@@ -32,8 +32,8 @@
     <string name="vibrate_on_keypress">Trillen bij toetsaanslagen</string>
     <string name="keyboard_language">Toetsenbordtaal</string>
     <string name="keyboard_height">Hoogte toetsenbord</string>
-    <string name="show_key_borders">Show key borders</string>
-    <string name="show_numbers_row">Show numbers on a separate row</string>
+    <string name="show_key_borders">Toetsen omranden</string>
+    <string name="show_numbers_row">Cijfers op een aparte rij</string>
     <!-- Emojis -->
     <string name="emojis">Emoji\'s</string>
     <!--

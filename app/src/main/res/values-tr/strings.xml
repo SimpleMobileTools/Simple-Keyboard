@@ -32,8 +32,8 @@
     <string name="vibrate_on_keypress">Tuşa basıldığında titret</string>
     <string name="keyboard_language">Klavye dili</string>
     <string name="keyboard_height">Klavye yüksekliği</string>
-    <string name="show_key_borders">Show key borders</string>
-    <string name="show_numbers_row">Show numbers on a separate row</string>
+    <string name="show_key_borders">Tuş sınırlarını göster</string>
+    <string name="show_numbers_row">Sayıları ayrı bir satırda göster</string>
     <!-- Emojis -->
     <string name="emojis">Emojiler</string>
     <!--
