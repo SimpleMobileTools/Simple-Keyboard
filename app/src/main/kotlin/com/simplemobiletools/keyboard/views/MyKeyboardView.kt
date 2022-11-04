@@ -37,6 +37,7 @@ import com.simplemobiletools.keyboard.activities.ManageClipboardItemsActivity
 import com.simplemobiletools.keyboard.activities.SettingsActivity
 import com.simplemobiletools.keyboard.adapters.ClipsKeyboardAdapter
 import com.simplemobiletools.keyboard.adapters.EmojisAdapter
+import com.simplemobiletools.keyboard.dialogs.ChangeLanguagePopup
 import com.simplemobiletools.keyboard.extensions.*
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_DELETE
@@ -90,6 +91,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
          * @param text the string to be displayed.
          */
         fun onText(text: String)
+
+        /**
+         * Called to force the KeyboardView to reload the keyboard
+         */
+        fun reloadKeyboard()
     }
 
     private var mKeyboard: MyKeyboard? = null
@@ -932,7 +938,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         val popupKey = mKeys[mCurrentKey]
-        val result = onLongPress(popupKey, me)
+        val result = if (popupKey.code == KEYCODE_EMOJI) {
+            ChangeLanguagePopup(this, onSelect = {
+                mOnKeyboardActionListener?.reloadKeyboard()
+            })
+            true
+        } else {
+            onLongPress(popupKey, me)
+        }
+
         if (result) {
             mAbortKey = true
             showPreview(NOT_A_KEY)
@@ -981,6 +995,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                     override fun onText(text: String) {
                         mOnKeyboardActionListener!!.onText(text)
+                    }
+
+                    override fun reloadKeyboard() {
+                        mOnKeyboardActionListener!!.reloadKeyboard()
                     }
                 }
 

@@ -13,4 +13,11 @@
     <style name="MyKeyboardViewPopup" parent="MyKeyboard">
         <item name="keyTextSize">@dimen/preview_text_size</item>
     </style>
+
+    <style name="MyKeyboard.Alert" parent="Theme.Material3.Light.Dialog.Alert">
+        <item name="colorAccent">@color/color_primary</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/DialogButtonStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/DialogButtonStyle</item>
+        <item name="android:buttonBarNeutralButtonStyle">@style/DialogButtonStyle</item>
+    </style>
 </resources>
