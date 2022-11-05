@@ -52,7 +52,6 @@ fun Context.getKeyboardDialogBuilder() = if (baseConfig.isUsingSystemTheme) {
     AlertDialog.Builder(this, R.style.MyKeyboard_Alert)
 }
 
-
 fun Context.setupKeyboardDialogStuff(
     windowToken: IBinder,
     view: View,
@@ -62,8 +61,6 @@ fun Context.setupKeyboardDialogStuff(
     cancelOnTouchOutside: Boolean = true,
     callback: ((alertDialog: AlertDialog) -> Unit)? = null
 ) {
-
-
     val textColor = getProperTextColor()
     val backgroundColor = getProperBackgroundColor()
     val primaryColor = getProperPrimaryColor()
