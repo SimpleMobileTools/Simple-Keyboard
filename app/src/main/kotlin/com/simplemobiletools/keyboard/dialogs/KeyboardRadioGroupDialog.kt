@@ -12,8 +12,7 @@ import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.getKeyboardDialogBuilder
 import com.simplemobiletools.keyboard.extensions.setupKeyboardDialogStuff
-import kotlinx.android.synthetic.main.dialog_radio_group.view.dialog_radio_group
-import kotlinx.android.synthetic.main.dialog_radio_group.view.dialog_radio_holder
+import kotlinx.android.synthetic.main.dialog_radio_group.view.*
 
 class KeyboardRadioGroupDialog(
     private val inputView: View,
@@ -61,7 +60,6 @@ class KeyboardRadioGroupDialog(
                 dialog = alertDialog
             }
         }
-
 
         if (selectedItemId != -1) {
             view.dialog_radio_holder.apply {
