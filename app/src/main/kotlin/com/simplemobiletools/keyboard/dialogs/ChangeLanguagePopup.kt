@@ -27,7 +27,7 @@ class ChangeLanguagePopup(
             RadioItem(LANGUAGE_RUSSIAN, getKeyboardLanguageText(LANGUAGE_RUSSIAN)),
             RadioItem(LANGUAGE_SLOVENIAN, getKeyboardLanguageText(LANGUAGE_SLOVENIAN)),
             RadioItem(LANGUAGE_SPANISH, getKeyboardLanguageText(LANGUAGE_SPANISH)),
-            RadioItem(LANGUAGE_TURKISH_Q, getKeyboardLanguageText(LANGUAGE_TURKISH_Q)),
+            RadioItem(LANGUAGE_TURKISH_Q, getKeyboardLanguageText(LANGUAGE_TURKISH_Q))
         )
 
         KeyboardRadioGroupDialog(inputView, items, config.keyboardLanguage) {
@@ -35,7 +35,6 @@ class ChangeLanguagePopup(
             onSelect.invoke()
         }
     }
-
 
     private fun getKeyboardLanguageText(language: Int): String {
         return when (language) {
