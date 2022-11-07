@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Једноставна тастатура</string>
+    <string name="app_launcher_name">Тастатура</string>
+    <string name="redirection_note">Омогућите Једноставну тастатуру на следећем екрану да бисте је учинили доступном тастатуром. Притисните \'Назад\' када је омогућено.</string>
+    <string name="change_keyboard">Промените тастатуру</string>
+    <!-- Clipboard -->
+    <string name="manage_clipboard_items">Управљајте ставкама међумеморије</string>
+    <string name="manage_clipboard_empty">Ваш међуспремник је празан.</string>
+    <string name="manage_clipboard_label">Када копирате неки текст, он ће се појавити овде. Такође можете да закачите клипове како касније не би нестали.</string>
+    <string name="clear_clipboard_data">Обришите податке међумеморије</string>
+    <string name="clear_clipboard_data_confirmation">Да ли сте сигурни да желите да обришете податке из међуспремника\?</string>
+    <string name="clipboard">Цлипбоард</string>
+    <string name="clipboard_recent">Скорашњи</string>
+    <string name="clipboard_current">Тренутни</string>
+    <string name="clipboard_pinned">Закачен</string>
+    <string name="add_new_item">Додајте нову ставку</string>
+    <string name="manage_clips">Овде можете управљати или додавати клипове ради брзог приступа.</string>
+    <string name="clip_text">Текст исечка</string>
+    <string name="pin_text">Закачите текст</string>
+    <string name="text_pinned">Текст је закачен</string>
+    <string name="export_clipboard_items">Извезите ставке међуспремника</string>
+    <string name="import_clipboard_items">Увезите ставке међуспремника</string>
+    <!-- Accessibility -->
+    <string name="keycode_delete">Избриши</string>
+    <string name="keycode_mode_change">Промените тип тастатуре</string>
+    <string name="keycode_shift">Смена</string>
+    <string name="keycode_enter">Унеси</string>
+    <!-- Settings -->
+    <string name="show_clipboard_content">Прикажи садржај међуспремника ако је доступан</string>
+    <string name="show_popup">Прикажи искачући прозор при притиску на тастер</string>
+    <string name="vibrate_on_keypress">Вибрација при притиску на тастер</string>
+    <string name="keyboard_language">Језик тастатуре</string>
+    <string name="keyboard_height">Висина тастатуре</string>
+    <string name="show_key_borders">Прикажи ивице кључева</string>
+    <string name="show_numbers_row">Прикажи бројеве у посебном реду</string>
+    <!-- Emojis -->
+    <string name="emojis">Емоји</string>
+</resources>
