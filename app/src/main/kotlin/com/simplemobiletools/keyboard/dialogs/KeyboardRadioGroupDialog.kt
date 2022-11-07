@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.extensions.onGlobalLayout
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.getKeyboardDialogBuilder
 import com.simplemobiletools.keyboard.extensions.setupKeyboardDialogStuff
-import kotlinx.android.synthetic.main.dialog_radio_group.view.*
 
 class KeyboardRadioGroupDialog(
     private val inputView: View,
@@ -31,7 +31,7 @@ class KeyboardRadioGroupDialog(
 
     init {
         val view = layoutInflater.inflate(R.layout.dialog_radio_group, null)
-        view.dialog_radio_group.apply {
+        val radioGroup = view.findViewById<RadioGroup>(R.id.dialog_radio_group).apply {
             for (i in 0 until items.size) {
                 val radioButton = (layoutInflater.inflate(R.layout.radio_button, null) as RadioButton).apply {
                     text = items[i].title
@@ -62,9 +62,9 @@ class KeyboardRadioGroupDialog(
         }
 
         if (selectedItemId != -1) {
-            view.dialog_radio_holder.apply {
+            view.findViewById<ScrollView>(R.id.dialog_radio_holder).apply {
                 onGlobalLayout {
-                    scrollY = view.dialog_radio_group.findViewById<View>(selectedItemId).bottom - height
+                    scrollY = radioGroup.findViewById<View>(selectedItemId).bottom - height
                 }
             }
         }
