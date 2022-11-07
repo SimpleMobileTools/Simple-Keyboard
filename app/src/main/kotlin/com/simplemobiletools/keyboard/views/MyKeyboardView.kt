@@ -37,6 +37,7 @@ import com.simplemobiletools.keyboard.activities.ManageClipboardItemsActivity
 import com.simplemobiletools.keyboard.activities.SettingsActivity
 import com.simplemobiletools.keyboard.adapters.ClipsKeyboardAdapter
 import com.simplemobiletools.keyboard.adapters.EmojisAdapter
+import com.simplemobiletools.keyboard.dialogs.ChangeLanguagePopup
 import com.simplemobiletools.keyboard.extensions.*
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_DELETE
@@ -90,6 +91,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
          * @param text the string to be displayed.
          */
         fun onText(text: String)
+
+        /**
+         * Called to force the KeyboardView to reload the keyboard
+         */
+        fun reloadKeyboard()
     }
 
     private var mKeyboard: MyKeyboard? = null
@@ -949,100 +955,111 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * handle the call.
      */
     private fun onLongPress(popupKey: MyKeyboard.Key, me: MotionEvent): Boolean {
-        val popupKeyboardId = popupKey.popupResId
-        if (popupKeyboardId != 0) {
-            mMiniKeyboardContainer = mMiniKeyboardCache[popupKey]
-            if (mMiniKeyboardContainer == null) {
-                val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                mMiniKeyboardContainer = inflater.inflate(mPopupLayout, null)
-                mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.mini_keyboard_view) as MyKeyboardView
-
-                mMiniKeyboard!!.mOnKeyboardActionListener = object : OnKeyboardActionListener {
-                    override fun onKey(code: Int) {
-                        mOnKeyboardActionListener!!.onKey(code)
-                        dismissPopupKeyboard()
-                    }
-
-                    override fun onPress(primaryCode: Int) {
-                        mOnKeyboardActionListener!!.onPress(primaryCode)
-                    }
-
-                    override fun onActionUp() {
-                        mOnKeyboardActionListener!!.onActionUp()
-                    }
-
-                    override fun moveCursorLeft() {
-                        mOnKeyboardActionListener!!.moveCursorLeft()
-                    }
-
-                    override fun moveCursorRight() {
-                        mOnKeyboardActionListener!!.moveCursorRight()
-                    }
-
-                    override fun onText(text: String) {
-                        mOnKeyboardActionListener!!.onText(text)
-                    }
-                }
-
-                val keyboard = if (popupKey.popupCharacters != null) {
-                    MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!, popupKey.width)
-                } else {
-                    MyKeyboard(context, popupKeyboardId, 0)
-                }
-
-                mMiniKeyboard!!.setKeyboard(keyboard)
-                mPopupParent = this
-                mMiniKeyboardContainer!!.measure(
-                    MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
-                    MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
-                )
-                mMiniKeyboardCache[popupKey] = mMiniKeyboardContainer
-            } else {
-                mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.mini_keyboard_view) as MyKeyboardView
-            }
-
-            getLocationInWindow(mCoordinates)
-            mPopupX = popupKey.x
-            mPopupY = popupKey.y
-
-            val widthToUse = mMiniKeyboardContainer!!.measuredWidth - (popupKey.popupCharacters!!.length / 2) * popupKey.width
-            mPopupX = mPopupX + popupKey.width - widthToUse
-            mPopupY -= mMiniKeyboardContainer!!.measuredHeight
-            val x = mPopupX + mCoordinates[0]
-            val y = mPopupY + mCoordinates[1]
-            val xOffset = Math.max(0, x)
-            mMiniKeyboard!!.setPopupOffset(xOffset, y)
-
-            // make sure we highlight the proper key right after long pressing it, before any ACTION_MOVE event occurs
-            val miniKeyboardX = if (xOffset + mMiniKeyboard!!.measuredWidth <= measuredWidth) {
-                xOffset
-            } else {
-                measuredWidth - mMiniKeyboard!!.measuredWidth
-            }
-
-            val keysCnt = mMiniKeyboard!!.mKeys.size
-            var selectedKeyIndex = Math.floor((me.x - miniKeyboardX) / popupKey.width.toDouble()).toInt()
-            if (keysCnt > MAX_KEYS_PER_MINI_ROW) {
-                selectedKeyIndex += MAX_KEYS_PER_MINI_ROW
-            }
-            selectedKeyIndex = Math.max(0, Math.min(selectedKeyIndex, keysCnt - 1))
-
-            for (i in 0 until keysCnt) {
-                mMiniKeyboard!!.mKeys[i].focused = i == selectedKeyIndex
-            }
-
-            mMiniKeyboardSelectedKeyIndex = selectedKeyIndex
-            mMiniKeyboard!!.invalidateAllKeys()
-
-            val miniShiftStatus = if (isShifted()) SHIFT_ON_PERMANENT else SHIFT_OFF
-            mMiniKeyboard!!.setShifted(miniShiftStatus)
-            mPopupKeyboard.contentView = mMiniKeyboardContainer
-            mPopupKeyboard.width = mMiniKeyboardContainer!!.measuredWidth
-            mPopupKeyboard.height = mMiniKeyboardContainer!!.measuredHeight
-            mPopupKeyboard.showAtLocation(this, Gravity.NO_GRAVITY, x, y)
-            mMiniKeyboardOnScreen = true
-            invalidateAllKeys()
+        if (popupKey.code == KEYCODE_EMOJI) {
+            ChangeLanguagePopup(this, onSelect = {
+                mOnKeyboardActionListener?.reloadKeyboard()
+            })
             return true
+        } else {
+            val popupKeyboardId = popupKey.popupResId
+            if (popupKeyboardId != 0) {
+                mMiniKeyboardContainer = mMiniKeyboardCache[popupKey]
+                if (mMiniKeyboardContainer == null) {
+                    val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                    mMiniKeyboardContainer = inflater.inflate(mPopupLayout, null)
+                    mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.mini_keyboard_view) as MyKeyboardView
+
+                    mMiniKeyboard!!.mOnKeyboardActionListener = object : OnKeyboardActionListener {
+                        override fun onKey(code: Int) {
+                            mOnKeyboardActionListener!!.onKey(code)
+                            dismissPopupKeyboard()
+                        }
+
+                        override fun onPress(primaryCode: Int) {
+                            mOnKeyboardActionListener!!.onPress(primaryCode)
+                        }
+
+                        override fun onActionUp() {
+                            mOnKeyboardActionListener!!.onActionUp()
+                        }
+
+                        override fun moveCursorLeft() {
+                            mOnKeyboardActionListener!!.moveCursorLeft()
+                        }
+
+                        override fun moveCursorRight() {
+                            mOnKeyboardActionListener!!.moveCursorRight()
+                        }
+
+                        override fun onText(text: String) {
+                            mOnKeyboardActionListener!!.onText(text)
+                        }
+
+                        override fun reloadKeyboard() {
+                            mOnKeyboardActionListener!!.reloadKeyboard()
+                        }
+                    }
+
+                    val keyboard = if (popupKey.popupCharacters != null) {
+                        MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!, popupKey.width)
+                    } else {
+                        MyKeyboard(context, popupKeyboardId, 0)
+                    }
+
+                    mMiniKeyboard!!.setKeyboard(keyboard)
+                    mPopupParent = this
+                    mMiniKeyboardContainer!!.measure(
+                        MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
+                        MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
+                    )
+                    mMiniKeyboardCache[popupKey] = mMiniKeyboardContainer
+                } else {
+                    mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.mini_keyboard_view) as MyKeyboardView
+                }
+
+                getLocationInWindow(mCoordinates)
+                mPopupX = popupKey.x
+                mPopupY = popupKey.y
+
+                val widthToUse = mMiniKeyboardContainer!!.measuredWidth - (popupKey.popupCharacters!!.length / 2) * popupKey.width
+                mPopupX = mPopupX + popupKey.width - widthToUse
+                mPopupY -= mMiniKeyboardContainer!!.measuredHeight
+                val x = mPopupX + mCoordinates[0]
+                val y = mPopupY + mCoordinates[1]
+                val xOffset = Math.max(0, x)
+                mMiniKeyboard!!.setPopupOffset(xOffset, y)
+
+                // make sure we highlight the proper key right after long pressing it, before any ACTION_MOVE event occurs
+                val miniKeyboardX = if (xOffset + mMiniKeyboard!!.measuredWidth <= measuredWidth) {
+                    xOffset
+                } else {
+                    measuredWidth - mMiniKeyboard!!.measuredWidth
+                }
+
+                val keysCnt = mMiniKeyboard!!.mKeys.size
+                var selectedKeyIndex = Math.floor((me.x - miniKeyboardX) / popupKey.width.toDouble()).toInt()
+                if (keysCnt > MAX_KEYS_PER_MINI_ROW) {
+                    selectedKeyIndex += MAX_KEYS_PER_MINI_ROW
+                }
+                selectedKeyIndex = Math.max(0, Math.min(selectedKeyIndex, keysCnt - 1))
+
+                for (i in 0 until keysCnt) {
+                    mMiniKeyboard!!.mKeys[i].focused = i == selectedKeyIndex
+                }
+
+                mMiniKeyboardSelectedKeyIndex = selectedKeyIndex
+                mMiniKeyboard!!.invalidateAllKeys()
+
+                val miniShiftStatus = if (isShifted()) SHIFT_ON_PERMANENT else SHIFT_OFF
+                mMiniKeyboard!!.setShifted(miniShiftStatus)
+                mPopupKeyboard.contentView = mMiniKeyboardContainer
+                mPopupKeyboard.width = mMiniKeyboardContainer!!.measuredWidth
+                mPopupKeyboard.height = mMiniKeyboardContainer!!.measuredHeight
+                mPopupKeyboard.showAtLocation(this, Gravity.NO_GRAVITY, x, y)
+                mMiniKeyboardOnScreen = true
+                invalidateAllKeys()
+                return true
+            }
         }
         return false
     }

@@ -61,18 +61,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         inputTypeClass = attribute!!.inputType and TYPE_MASK_CLASS
         enterKeyType = attribute.imeOptions and (IME_MASK_ACTION or IME_FLAG_NO_ENTER_ACTION)
 
-        val keyboardXml = when (inputTypeClass) {
-            TYPE_CLASS_NUMBER, TYPE_CLASS_DATETIME, TYPE_CLASS_PHONE -> {
-                keyboardMode = KEYBOARD_SYMBOLS
-                R.xml.keys_symbols
-            }
-            else -> {
-                keyboardMode = KEYBOARD_LETTERS
-                getKeyboardLayoutXML()
-            }
-        }
-
-        keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
+        keyboard = getKeyBoard()
         keyboardView?.setKeyboard(keyboard!!)
         keyboardView?.setEditorInfo(attribute)
         updateShiftKeyState()
@@ -218,6 +207,27 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
     override fun onText(text: String) {
         currentInputConnection?.commitText(text, 0)
+    }
+
+    override fun reloadKeyboard() {
+        val keyboard = getKeyBoard()
+        this.keyboard = keyboard
+        keyboardView?.setKeyboard(keyboard)
+    }
+
+    private fun getKeyBoard(): MyKeyboard {
+        val keyboardXml = when (inputTypeClass) {
+            TYPE_CLASS_NUMBER, TYPE_CLASS_DATETIME, TYPE_CLASS_PHONE -> {
+                keyboardMode = KEYBOARD_SYMBOLS
+                R.xml.keys_symbols
+            }
+            else -> {
+                keyboardMode = KEYBOARD_LETTERS
+                getKeyboardLayoutXML()
+            }
+        }
+
+        return MyKeyboard(this, keyboardXml, enterKeyType)
     }
 
     override fun onUpdateSelection(oldSelStart: Int, oldSelEnd: Int, newSelStart: Int, newSelEnd: Int, candidatesStart: Int, candidatesEnd: Int) {
