@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.3.2 *(2022-11-08)*
+----------------------------
+
+ * Allow changing the keyboard language by long pressing the emoji button
+ * Added some translation, stability and UX improvements
+
 Version 5.3.1 *(2022-10-10)*
 ----------------------------
 
