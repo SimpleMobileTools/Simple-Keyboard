@@ -162,7 +162,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 if (keyboardMode != KEYBOARD_LETTERS && code == MyKeyboard.KEYCODE_SPACE) {
                     val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text ?: return
                     inputConnection.commitText(codeChar.toString(), 1)
-                    val newText = inputConnection.getExtractedText(ExtractedTextRequest(), 0).text
+                    val newText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text
                     switchToLetters = originalText != newText
                 } else {
                     inputConnection.commitText(codeChar.toString(), 1)
