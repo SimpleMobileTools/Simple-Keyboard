@@ -32,8 +32,8 @@
     <string name="vibrate_on_keypress">Vibrovat při stisknutí klávesy</string>
     <string name="keyboard_language">Jazyk klávesnice</string>
     <string name="keyboard_height">Výška klávesnice</string>
-    <string name="show_key_borders">Show key borders</string>
-    <string name="show_numbers_row">Show numbers on a separate row</string>
+    <string name="show_key_borders">Zobrazit ohraničení kláves</string>
+    <string name="show_numbers_row">Zobrazit čísla na samostatném řádku</string>
     <!-- Emojis -->
     <string name="emojis">Emotikony</string>
     <!--
