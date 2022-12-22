@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto">
+    <Row>
+        <Key 
+            app:keyEdgeFlags="left" 
+            app:keyLabel=";" 
+            app:popupCharacters="1:" 
+            app:popupKeyboard="@xml/keyboard_popup_template" 
+            app:topSmallNumber="1" />
+        <Key 
+            app:keyLabel="ς" 
+            app:popupCharacters="2" 
+            app:popupKeyboard="@xml/keyboard_popup_template" 
+            app:topSmallNumber="2" />
+        <Key 
+            app:keyLabel="ε" 
+            app:popupCharacters="έ3" 
+            app:popupKeyboard="@xml/keyboard_popup_template" 
+            app:topSmallNumber="3" />
+        <Key 
+            app:keyLabel="ρ" 
+            app:popupCharacters="4" 
+            app:popupKeyboard="@xml/keyboard_popup_template" 
+            app:topSmallNumber="4" />
+        <Key 
+            app:keyLabel="τ" 
+            app:popupCharacters="5" 
+            app:popupKeyboard="@xml/keyboard_popup_template" 
+            app:topSmallNumber="5" />
+        <Key 
+            app:keyLabel="υ" 
+            app:popupCharacters="ύ6ϋ" 
+            app:popupKeyboard="@xml/keyboard_popup_template" 
+            app:topSmallNumber="6" />
+        <Key 
+            app:keyLabel="θ" 
+            app:popupCharacters="7" 
+            app:popupKeyboard="@xml/keyboard_popup_template" 
+            app:topSmallNumber="7" />
+        <Key 
+            app:keyLabel="ι" 
+            app:popupCharacters="ί8"
+            app:popupKeyboard="@xml/keyboard_popup_template" 
+            app:topSmallNumber="8" />
+        <Key 
+            app:keyLabel="ο" 
+            app:popupCharacters="ό9" 
+            app:popupKeyboard="@xml/keyboard_popup_template" 
+            app:topSmallNumber="9" />
+        <Key 
+            app:keyEdgeFlags="right" 
+            app:keyLabel="π" 
+            app:popupCharacters="0" 
+            app:popupKeyboard="@xml/keyboard_popup_template" 
+            app:topSmallNumber="0" />
+    </Row>
+    <Row>
+        <Key 
+            app:horizontalGap="4.999995%" 
+            app:keyEdgeFlags="left" 
+            app:keyLabel="α" 
+            app:popupCharacters="ά@" 
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key 
+            app:keyLabel="σ" 
+            app:popupCharacters="#" 
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key 
+            app:keyLabel="δ" 
+            app:popupCharacters="€" 
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key 
+            app:keyLabel="φ" 
+            app:popupCharacters="_" 
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key 
+            app:keyLabel="γ"  
+            app:popupCharacters="&amp;" 
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key 
+            app:keyLabel="η" 
+            app:popupCharacters="ή" 
+            app:popupKeyboard="@xml/keyboard_popup_template"/>
+        <Key app:keyLabel="ξ" />
+        <Key 
+            app:keyLabel="κ" 
+            app:popupCharacters="(" 
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key 
+            app:keyEdgeFlags="right" 
+            app:keyLabel="λ" 
+            app:popupCharacters=")" 
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+    </Row>
+    <Row>
+        <Key 
+            app:code="-1" 
+            app:keyEdgeFlags="left" 
+            app:keyIcon="@drawable/ic_caps_outline_vector" 
+            app:keyWidth="14.999998%p" />
+        <Key 
+            app:keyLabel="ζ" 
+            app:popupCharacters="*" 
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key app:keyLabel="χ" />
+        <Key
+            app:keyLabel="ψ" 
+            app:popupCharacters="«?»" 
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key 
+            app:keyLabel="ω" 
+            app:popupCharacters="ώ" 
+            app:popupKeyboard="@xml/keyboard_popup_template"/>
+        <Key app:keyLabel="β" />
+        <Key 
+            app:keyLabel="ν" 
+            app:popupCharacters="!" 
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key app:keyLabel="μ" />
+        <Key 
+            app:code="-5" 
+            app:isRepeatable="true" 
+            app:keyEdgeFlags="right" 
+            app:keyIcon="@drawable/ic_clear_vector" app:keyWidth="14.999998%p" />
+    </Row>
+    <Row>
+        <Key 
+            app:code="-2" 
+            app:keyEdgeFlags="left" 
+            app:keyLabel="123" 
+            app:keyWidth="14.999998%p" />
+        <Key 
+            app:keyLabel="," 
+            app:keyWidth="10.000002%p" />
+        <Key 
+            app:code="-6" 
+            app:keyEdgeFlags="left" 
+            app:keyIcon="@drawable/ic_emoji_emotions_outline_vector" 
+            app:keyWidth="8.000004%p" />
+        <Key 
+            app:code="32" 
+            app:isRepeatable="true" 
+            app:keyWidth="39.999996%p" />
+        <Key 
+            app:keyLabel="." 
+            app:keyWidth="10.000002%p" />
+        <Key 
+            app:code="-4" 
+            app:keyEdgeFlags="right" 
+            app:keyIcon="@drawable/ic_enter_vector" 
+            app:keyWidth="14.999998%p" />
+    </Row>
+</Keyboard>
