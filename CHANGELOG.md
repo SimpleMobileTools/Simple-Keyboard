@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.4.0 *(2022-12-24)*
+----------------------------
+
+ * Added a Greek keyboard
+ * Use Material You theme by default on Android 12+
+ * Added some UI, translation and stability improvements
+
 Version 5.3.2 *(2022-11-08)*
 ----------------------------
 
