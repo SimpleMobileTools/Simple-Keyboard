@@ -65,7 +65,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:9162225f33'
+    implementation 'com.github.SimpleMobileTools:Simple-Commons:6323be1fd7'
     implementation 'androidx.emoji2:emoji2-bundled:1.2.0'
 
     kapt 'androidx.room:room-compiler:2.4.3'

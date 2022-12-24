@@ -265,6 +265,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             LANGUAGE_ENGLISH_QWERTZ -> R.xml.keys_letters_english_qwertz
             LANGUAGE_FRENCH -> R.xml.keys_letters_french
             LANGUAGE_GERMAN -> R.xml.keys_letters_german
+            LANGUAGE_GREEK -> R.xml.keys_letters_greek
             LANGUAGE_LITHUANIAN -> R.xml.keys_letters_lithuanian
             LANGUAGE_ROMANIAN -> R.xml.keys_letters_romanian
             LANGUAGE_RUSSIAN -> R.xml.keys_letters_russian

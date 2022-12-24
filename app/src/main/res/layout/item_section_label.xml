@@ -22,6 +22,6 @@
         android:alpha="0.8"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:padding="@dimen/small_margin"
-        android:src="@drawable/ic_pin" />
+        android:src="@drawable/ic_pin_vector" />
 
 </RelativeLayout>

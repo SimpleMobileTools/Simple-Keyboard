@@ -91,7 +91,7 @@ class ClipsKeyboardAdapter(
 
                 if (sectionLabel.isCurrent) {
                     setOnLongClickListener { context.toast(R.string.pin_text); true; }
-                    setImageDrawable(resources.getDrawable(R.drawable.ic_pin))
+                    setImageDrawable(resources.getDrawable(R.drawable.ic_pin_vector))
                     setOnClickListener {
                         ensureBackgroundThread {
                             val currentClip = context.getCurrentClip() ?: return@ensureBackgroundThread
@@ -105,7 +105,7 @@ class ClipsKeyboardAdapter(
                         }
                     }
                 } else {
-                    setImageDrawable(resources.getDrawable(R.drawable.ic_pin_filled))
+                    setImageDrawable(resources.getDrawable(R.drawable.ic_pin_filled_vector))
                     background = null   // avoid doing any animations on clicking clipboard_manager_holder
                 }
             }
