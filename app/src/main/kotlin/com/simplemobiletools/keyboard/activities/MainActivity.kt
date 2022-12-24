@@ -18,8 +18,10 @@ class MainActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setupOptionsMenu()
         appLaunched(BuildConfig.APPLICATION_ID)
+        setupOptionsMenu()
+        refreshMenuItems()
+
         change_keyboard_holder.setOnClickListener {
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showInputMethodPicker()
         }
@@ -48,11 +50,18 @@ class MainActivity : SimpleActivity() {
     private fun setupOptionsMenu() {
         main_toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
+                R.id.more_apps_from_us -> launchMoreAppsFromUsIntent()
                 R.id.settings -> launchSettings()
                 R.id.about -> launchAbout()
                 else -> return@setOnMenuItemClickListener false
             }
             return@setOnMenuItemClickListener true
+        }
+    }
+
+    private fun refreshMenuItems() {
+        main_toolbar.menu.apply {
+            findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(R.bool.hide_google_relations)
         }
     }
 
