@@ -16,11 +16,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
         setupOptionsMenu()
         refreshMenuItems()
+
+        updateMaterialActivityViews(main_coordinator, main_holder)
+        setupMaterialScrollListener(main_nested_scrollview, main_toolbar)
 
         change_keyboard_holder.setOnClickListener {
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showInputMethodPicker()
