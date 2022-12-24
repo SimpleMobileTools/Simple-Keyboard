@@ -16,8 +16,8 @@ android {
         applicationId "com.simplemobiletools.keyboard"
         minSdk 23
         targetSdk 33
-        versionCode 14
-        versionName "5.3.2"
+        versionCode 15
+        versionName "5.4.0"
         multiDexEnabled true
         setProperty("archivesBaseName", "keyboard")
         vectorDrawables.useSupportLibrary = true
