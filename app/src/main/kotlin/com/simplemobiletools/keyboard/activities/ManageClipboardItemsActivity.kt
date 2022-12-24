@@ -29,11 +29,15 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
     private val PICK_IMPORT_CLIPS_SOURCE_INTENT = 22
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_clipboard_items)
         setupOptionsMenu()
-        updateTextColors(clipboard_items_wrapper)
+        updateTextColors(clipboard_items_holder)
         updateClips()
+
+        updateMaterialActivityViews(clipboard_coordinator, clipboard_items_list)
+        setupMaterialScrollListener(clipboard_nested_scrollview, clipboard_toolbar)
 
         clipboard_items_placeholder.text = "${getText(R.string.manage_clipboard_empty)}\n\n${getText(R.string.manage_clips)}"
         clipboard_items_placeholder_2.apply {
