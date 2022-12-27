@@ -26,6 +26,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     private val KEYBOARD_LETTERS = 0
     private val KEYBOARD_SYMBOLS = 1
     private val KEYBOARD_SYMBOLS_SHIFT = 2
+    private val KEYBOARD_NUMBERS = 3
+    private val KEYBOARD_PHONE = 4
 
     private var keyboard: MyKeyboard? = null
     private var keyboardView: MyKeyboardView? = null
@@ -217,7 +219,15 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
     private fun getKeyBoard(): MyKeyboard {
         val keyboardXml = when (inputTypeClass) {
-            TYPE_CLASS_NUMBER, TYPE_CLASS_DATETIME, TYPE_CLASS_PHONE -> {
+            TYPE_CLASS_NUMBER -> {
+                keyboardMode = KEYBOARD_NUMBERS
+                R.xml.keys_numbers
+            }
+            TYPE_CLASS_PHONE -> {
+                keyboardMode = KEYBOARD_PHONE
+                R.xml.keys_phone
+            }
+            TYPE_CLASS_DATETIME -> {
                 keyboardMode = KEYBOARD_SYMBOLS
                 R.xml.keys_symbols
             }
