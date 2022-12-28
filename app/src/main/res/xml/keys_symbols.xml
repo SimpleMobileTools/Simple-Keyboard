@@ -25,7 +25,10 @@
         <Key app:keyLabel="%" />
         <Key app:keyLabel="&amp;" />
         <Key app:keyLabel="*" />
-        <Key app:keyLabel="-" />
+        <Key
+            app:keyLabel="-"
+            app:popupCharacters="-–—"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key app:keyLabel="=" />
         <Key app:keyLabel="(" />
         <Key
