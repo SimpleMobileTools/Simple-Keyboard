@@ -39,8 +39,14 @@
             app:keyLabel="\?123"
             app:keyWidth="15%p" />
         <Key app:keyLabel="¡" />
-        <Key app:keyLabel="&lt;" />
-        <Key app:keyLabel="&gt;" />
+        <Key
+            app:keyLabel="&lt;"
+            app:popupCharacters="‹«"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
+        <Key
+            app:keyLabel="&gt;"
+            app:popupCharacters="›»"
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key app:keyLabel="¢" />
         <Key app:keyLabel="|" />
         <Key app:keyLabel="\\" />
