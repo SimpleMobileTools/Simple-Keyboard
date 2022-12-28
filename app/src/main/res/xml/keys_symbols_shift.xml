@@ -67,6 +67,8 @@
             app:keyWidth="48%p" />
         <Key
             app:keyLabel="."
+            app:popupCharacters=",?!;:…"
+            app:popupKeyboard="@xml/keyboard_popup_template"
             app:keyWidth="10%p" />
         <Key
             app:code="-4"
