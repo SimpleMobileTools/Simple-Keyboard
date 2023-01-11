@@ -2,38 +2,38 @@
 <resources>
     <string name="app_name">Simple Keyboard</string>
     <string name="app_launcher_name">Teclado</string>
-    <string name="redirection_note">Por favor habilite o Simple Keyboard no próximo ecrã para o tornar disponível. Depois prima \'Voltar\'.</string>
+    <string name="redirection_note">Ative Simple Keyboard no próximo ecrã para o tornar disponível. Depois prima \'Back\'.</string>
     <string name="change_keyboard">Trocar de teclado</string>
     <!-- Clipboard -->
-    <string name="manage_clipboard_items">Gerir itens da Área de transferência</string>
+    <string name="manage_clipboard_items">Gerir itens da area de transferência</string>
     <string name="manage_clipboard_empty">Área de transferência vazia.</string>
     <string name="manage_clipboard_label">Assim que algum texto for copiado será apresentado aqui. Pode marcar entradas para que não desapareçam.</string>
-    <string name="clear_clipboard_data">Esvaziar a Área de transferência</string>
-    <string name="clear_clipboard_data_confirmation">Tem a certeza de que quer esvaziar a Área de transferência\?</string>
+    <string name="clear_clipboard_data">Limpar área de transferência</string>
+    <string name="clear_clipboard_data_confirmation">Tem a certeza de que pretende limpar a área de transferência\?</string>
     <string name="clipboard">Área de transferência</string>
     <string name="clipboard_recent">Recente</string>
-    <string name="clipboard_current">Actual</string>
-    <string name="clipboard_pinned">Marcado</string>
-    <string name="add_new_item">Adicionar um novo item</string>
+    <string name="clipboard_current">Atual</string>
+    <string name="clipboard_pinned">Fixado</string>
+    <string name="add_new_item">Adicionar novo item</string>
     <string name="manage_clips">Aqui, pode gerir ou adicionar entradas rapidamente.</string>
     <string name="clip_text">Cortar texto</string>
-    <string name="pin_text">Marcar texto</string>
-    <string name="text_pinned">Texto marcado</string>
-    <string name="export_clipboard_items">Exportar itens da Área de transferência</string>
-    <string name="import_clipboard_items">Importar itens da Área de transferência</string>
+    <string name="pin_text">Fixar texto</string>
+    <string name="text_pinned">Texto fixado</string>
+    <string name="export_clipboard_items">Exportar itens da área de transferência</string>
+    <string name="import_clipboard_items">Importar itens da área de transferência</string>
     <!-- Accessibility -->
-    <string name="keycode_delete">Apagar</string>
-    <string name="keycode_mode_change">Alterar o tipo de teclado</string>
-    <string name="keycode_shift">shift</string>
-    <string name="keycode_enter">enter</string>
+    <string name="keycode_delete">Eliminar</string>
+    <string name="keycode_mode_change">Alterar tipo de teclado</string>
+    <string name="keycode_shift">Shift</string>
+    <string name="keycode_enter">Enter</string>
     <!-- Settings -->
-    <string name="show_clipboard_content">Mostrar o conteúdo da Área de transferência se disponível</string>
-    <string name="show_popup">Mostrar notificação pop-up ao premir tecla</string>
-    <string name="vibrate_on_keypress">Vibrar ao premir tecla</string>
-    <string name="keyboard_language">Keyboard language</string>
-    <string name="keyboard_height">Keyboard height</string>
-    <string name="show_key_borders">Show key borders</string>
-    <string name="show_numbers_row">Show numbers on a separate row</string>
+    <string name="show_clipboard_content">Mostrar conteúdo da área de transferência, se disponível</string>
+    <string name="show_popup">Mostrar pop-up ao premir as teclas</string>
+    <string name="vibrate_on_keypress">Vibrar ao premir as teclas</string>
+    <string name="keyboard_language">Idioma do teclado</string>
+    <string name="keyboard_height">Altura do teclado</string>
+    <string name="show_key_borders">Mostrar contorno das teclas</string>
+    <string name="show_numbers_row">Mostrar números em linha distinta</string>
     <!-- Emojis -->
     <string name="emojis">Emojis</string>
     <!--
