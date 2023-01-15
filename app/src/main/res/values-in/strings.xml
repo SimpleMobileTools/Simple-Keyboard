@@ -32,8 +32,8 @@
     <string name="vibrate_on_keypress">Getar pada penekanan tombol</string>
     <string name="keyboard_language">Bahasa keyboard</string>
     <string name="keyboard_height">Tinggi papan tik</string>
-    <string name="show_key_borders">Show key borders</string>
-    <string name="show_numbers_row">Show numbers on a separate row</string>
+    <string name="show_key_borders">Tampilkan garis luar tombol</string>
+    <string name="show_numbers_row">Tampilkan nomor di baris terpisah</string>
     <!-- Emojis -->
     <string name="emojis">Emoji</string>
     <!--
