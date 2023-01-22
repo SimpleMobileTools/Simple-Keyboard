@@ -42,6 +42,7 @@ class SettingsActivity : SimpleActivity() {
         setupShowPopupOnKeypress()
         setupKeyboardLanguage()
         setupKeyboardHeightMultiplier()
+        setupShowClipboardContent()
 
         updateTextColors(settings_nested_scrollview)
 
@@ -139,6 +140,14 @@ class SettingsActivity : SimpleActivity() {
             KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> getString(R.string.medium)
             KEYBOARD_HEIGHT_MULTIPLIER_LARGE -> getString(R.string.large)
             else -> getString(R.string.small)
+        }
+    }
+
+    private fun setupShowClipboardContent() {
+        settings_show_clipboard_content.isChecked = config.showClipboardContent
+        settings_show_clipboard_content_holder.setOnClickListener {
+            settings_show_clipboard_content.toggle()
+            config.showClipboardContent = settings_show_clipboard_content.isChecked
         }
     }
 }
