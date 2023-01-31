@@ -753,10 +753,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun showPreview(keyIndex: Int) {
-        if (!context.config.showPopupOnKeypress) {
-            return
-        }
-
         val oldKeyIndex = mCurrentKeyIndex
         val previewPopup = mPreviewPopup
         mCurrentKeyIndex = keyIndex
@@ -782,6 +778,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 invalidateKey(mCurrentKeyIndex)
                 sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, code)
             }
+        }
+
+        if (!context.config.showPopupOnKeypress) {
+            return
         }
 
         // If key changed and preview is on ...
