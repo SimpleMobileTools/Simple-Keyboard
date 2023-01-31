@@ -654,7 +654,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         if (key.focused || keyCode == KEYCODE_ENTER) {
-            keyBackground.applyColorFilter(mPrimaryColor)
+            val keyColor = if (key.pressed) {
+                mPrimaryColor.adjustAlpha(0.8f)
+            } else {
+                mPrimaryColor
+            }
+            keyBackground.applyColorFilter(keyColor)
         } else if (showKeyBorders && drawableId == R.drawable.keyboard_key_selector_outlined) {
             val keyColor = getKeyColor(key.pressed)
             keyBackground.applyColorFilter(keyColor)
