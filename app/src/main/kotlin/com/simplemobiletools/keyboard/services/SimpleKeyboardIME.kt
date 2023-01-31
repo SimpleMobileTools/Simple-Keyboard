@@ -1,5 +1,6 @@
 package com.simplemobiletools.keyboard.services
 
+import android.content.SharedPreferences
 import android.inputmethodservice.InputMethodService
 import android.text.InputType
 import android.text.InputType.TYPE_CLASS_DATETIME
@@ -14,6 +15,7 @@ import android.view.inputmethod.EditorInfo.IME_ACTION_NONE
 import android.view.inputmethod.EditorInfo.IME_FLAG_NO_ENTER_ACTION
 import android.view.inputmethod.EditorInfo.IME_MASK_ACTION
 import android.view.inputmethod.ExtractedTextRequest
+import com.simplemobiletools.commons.extensions.getSharedPrefs
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
@@ -21,7 +23,7 @@ import com.simplemobiletools.keyboard.views.MyKeyboardView
 import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 
 // based on https://www.androidauthority.com/lets-build-custom-keyboard-android-832362/
-class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionListener {
+class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionListener, SharedPreferences.OnSharedPreferenceChangeListener {
     private var SHIFT_PERM_TOGGLE_SPEED = 500   // how quickly do we have to doubletap shift to enable permanent caps lock
     private val KEYBOARD_LETTERS = 0
     private val KEYBOARD_SYMBOLS = 1
@@ -38,6 +40,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     override fun onInitializeInterface() {
         super.onInitializeInterface()
         keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType)
+        getSharedPrefs().registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onCreateInputView(): View {
@@ -274,5 +277,9 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             LANGUAGE_TURKISH_Q -> R.xml.keys_letters_turkish_q
             else -> R.xml.keys_letters_english_qwerty
         }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        keyboardView?.setupKeyboard()
     }
 }
