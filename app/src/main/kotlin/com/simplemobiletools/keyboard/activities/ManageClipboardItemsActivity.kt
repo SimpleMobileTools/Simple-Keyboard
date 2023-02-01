@@ -36,7 +36,7 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
         updateTextColors(clipboard_items_holder)
         updateClips()
 
-        updateMaterialActivityViews(clipboard_coordinator, clipboard_items_list)
+        updateMaterialActivityViews(clipboard_coordinator, clipboard_items_list, useTransparentNavigation = true, useTopSearchMenu = false)
         setupMaterialScrollListener(clipboard_nested_scrollview, clipboard_toolbar)
 
         clipboard_items_placeholder.text = "${getText(R.string.manage_clipboard_empty)}\n\n${getText(R.string.manage_clips)}"
