@@ -378,7 +378,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         mShowKeyBorders = context.config.showKeyBorders
         mUsingSystemTheme = context.config.isUsingSystemTheme
-        mKeyBackground = if (mShowKeyBorders) {
+
+        val isMainKeyboard = changedView == null || changedView != mini_keyboard_view
+        mKeyBackground = if (mShowKeyBorders && isMainKeyboard) {
             resources.getDrawable(R.drawable.keyboard_key_selector_outlined, context.theme)
         } else {
             resources.getDrawable(R.drawable.keyboard_key_selector, context.theme)
@@ -392,7 +394,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val darkerColor = getKeyboardBackgroundColor()
         val miniKeyboardBackgroundColor = getToolbarColor(4)
 
-        if (changedView != null && changedView == mini_keyboard_view) {
+        if (!isMainKeyboard) {
             val previewBackground = background as LayerDrawable
             previewBackground.findDrawableByLayerId(R.id.button_background_shape).applyColorFilter(miniKeyboardBackgroundColor)
             previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(strokeColor)
@@ -1570,7 +1572,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun maybeDarkenColor(color: Int, factor: Int): Int {
         // use darker background color when key borders are enabled
-        if (context.config.showKeyBorders && !context.isUsingSystemDarkTheme()) {
+        if (context.config.showKeyBorders) {
             val darkerColor = color.darkenColor(factor)
             return if (darkerColor == Color.WHITE) {
                 resources.getColor(R.color.md_grey_200, context.theme)
