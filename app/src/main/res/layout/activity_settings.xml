@@ -162,6 +162,21 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/settings_show_key_borders_holder"
+                style="@style/SettingsHolderCheckboxStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+                    android:id="@+id/settings_show_key_borders"
+                    style="@style/SettingsCheckboxStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/show_key_borders" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/settings_keyboard_language_holder"
                 style="@style/SettingsHolderTextViewStyle"
                 android:layout_width="match_parent"

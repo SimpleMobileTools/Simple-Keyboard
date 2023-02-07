@@ -9,10 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.*
 import android.graphics.Paint.Align
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.LayerDrawable
-import android.graphics.drawable.RippleDrawable
+import android.graphics.drawable.*
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
@@ -107,6 +104,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mTextColor = 0
     private var mBackgroundColor = 0
     private var mPrimaryColor = 0
+    private var mKeyColor = 0
+    private var mKeyColorPressed = 0
 
     private var mPreviewText: TextView? = null
     private val mPreviewPopup: PopupWindow
@@ -158,6 +157,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var ignoreTouches = false
 
     private var mKeyBackground: Drawable? = null
+    private var mShowKeyBorders: Boolean = false
+    private var mUsingSystemTheme: Boolean = true
 
     private var mToolbarHolder: View? = null
     private var mClipboardManagerHolder: View? = null
@@ -275,75 +276,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         closeEmojiPalette()
 
         if (visibility == VISIBLE) {
-            mTextColor = context.getProperTextColor()
-            mBackgroundColor = context.getProperBackgroundColor()
-            mPrimaryColor = context.getProperPrimaryColor()
-            val strokeColor = context.getStrokeColor()
-
-            val toolbarColor = if (context.config.isUsingSystemTheme) {
-                resources.getColor(R.color.you_keyboard_toolbar_color, context.theme)
-            } else {
-                mBackgroundColor.darkenColor()
-            }
-
-            val darkerColor = if (context.config.isUsingSystemTheme) {
-                resources.getColor(R.color.you_keyboard_background_color, context.theme)
-            } else {
-                mBackgroundColor.darkenColor(2)
-            }
-
-            val miniKeyboardBackgroundColor = if (context.config.isUsingSystemTheme) {
-                resources.getColor(R.color.you_keyboard_toolbar_color, context.theme)
-            } else {
-                mBackgroundColor.darkenColor(4)
-            }
-
-            if (changedView == mini_keyboard_view) {
-                val previewBackground = background as LayerDrawable
-                previewBackground.findDrawableByLayerId(R.id.button_background_shape).applyColorFilter(miniKeyboardBackgroundColor)
-                previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(strokeColor)
-                background = previewBackground
-            } else {
-                background.applyColorFilter(darkerColor)
-            }
-
-            val rippleBg = resources.getDrawable(R.drawable.clipboard_background, context.theme) as RippleDrawable
-            val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
-            layerDrawable.findDrawableByLayerId(R.id.clipboard_background_stroke).applyColorFilter(strokeColor)
-            layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(mBackgroundColor)
-
-            val wasDarkened = mBackgroundColor != mBackgroundColor.darkenColor()
-            mToolbarHolder?.apply {
-                top_keyboard_divider.beGoneIf(wasDarkened)
-                top_keyboard_divider.background = ColorDrawable(strokeColor)
-
-                background = ColorDrawable(toolbarColor)
-                clipboard_value.apply {
-                    background = rippleBg
-                    setTextColor(mTextColor)
-                    setLinkTextColor(mTextColor)
-                }
-
-                settings_cog.applyColorFilter(mTextColor)
-                pinned_clipboard_items.applyColorFilter(mTextColor)
-                clipboard_clear.applyColorFilter(mTextColor)
-            }
-
-            mClipboardManagerHolder?.apply {
-                top_clipboard_divider.beGoneIf(wasDarkened)
-                top_clipboard_divider.background = ColorDrawable(strokeColor)
-                clipboard_manager_holder.background = ColorDrawable(toolbarColor)
-
-                clipboard_manager_close.applyColorFilter(mTextColor)
-                clipboard_manager_manage.applyColorFilter(mTextColor)
-
-                clipboard_manager_label.setTextColor(mTextColor)
-                clipboard_content_placeholder_1.setTextColor(mTextColor)
-                clipboard_content_placeholder_2.setTextColor(mTextColor)
-            }
-
-            setupEmojiPalette(toolbarColor = toolbarColor, backgroundColor = mBackgroundColor, textColor = mTextColor)
-            setupStoredClips()
+            setupKeyboard(changedView)
         }
     }
 
@@ -436,6 +369,77 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     fun setEditorInfo(editorInfo: EditorInfo) {
         emojiCompatMetadataVersion = editorInfo.extras?.getInt(EmojiCompat.EDITOR_INFO_METAVERSION_KEY, 0) ?: 0
+    }
+
+    fun setupKeyboard(changedView: View? = null) {
+        mTextColor = context.getProperTextColor()
+        mBackgroundColor = context.getProperBackgroundColor()
+        mPrimaryColor = context.getProperPrimaryColor()
+
+        mShowKeyBorders = context.config.showKeyBorders
+        mUsingSystemTheme = context.config.isUsingSystemTheme
+
+        val isMainKeyboard = changedView == null || changedView != mini_keyboard_view
+        mKeyBackground = if (mShowKeyBorders && isMainKeyboard) {
+            resources.getDrawable(R.drawable.keyboard_key_selector_outlined, context.theme)
+        } else {
+            resources.getDrawable(R.drawable.keyboard_key_selector, context.theme)
+        }
+        mKeyColor = getKeyColor()
+        mKeyColorPressed = mKeyColor.adjustAlpha(0.2f)
+
+        val strokeColor = context.getStrokeColor()
+
+        val toolbarColor = getToolbarColor()
+        val darkerColor = getKeyboardBackgroundColor()
+        val miniKeyboardBackgroundColor = getToolbarColor(4)
+
+        if (!isMainKeyboard) {
+            val previewBackground = background as LayerDrawable
+            previewBackground.findDrawableByLayerId(R.id.button_background_shape).applyColorFilter(miniKeyboardBackgroundColor)
+            previewBackground.findDrawableByLayerId(R.id.button_background_stroke).applyColorFilter(strokeColor)
+            background = previewBackground
+        } else {
+            background.applyColorFilter(darkerColor)
+        }
+
+        val rippleBg = resources.getDrawable(R.drawable.clipboard_background, context.theme) as RippleDrawable
+        val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
+        layerDrawable.findDrawableByLayerId(R.id.clipboard_background_stroke).applyColorFilter(strokeColor)
+        layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(mBackgroundColor)
+
+        val wasDarkened = mBackgroundColor != mBackgroundColor.darkenColor()
+        mToolbarHolder?.apply {
+            top_keyboard_divider.beGoneIf(wasDarkened)
+            top_keyboard_divider.background = ColorDrawable(strokeColor)
+
+            background = ColorDrawable(toolbarColor)
+            clipboard_value.apply {
+                background = rippleBg
+                setTextColor(mTextColor)
+                setLinkTextColor(mTextColor)
+            }
+
+            settings_cog.applyColorFilter(mTextColor)
+            pinned_clipboard_items.applyColorFilter(mTextColor)
+            clipboard_clear.applyColorFilter(mTextColor)
+        }
+
+        mClipboardManagerHolder?.apply {
+            top_clipboard_divider.beGoneIf(wasDarkened)
+            top_clipboard_divider.background = ColorDrawable(strokeColor)
+            clipboard_manager_holder.background = ColorDrawable(toolbarColor)
+
+            clipboard_manager_close.applyColorFilter(mTextColor)
+            clipboard_manager_manage.applyColorFilter(mTextColor)
+
+            clipboard_manager_label.setTextColor(mTextColor)
+            clipboard_content_placeholder_1.setTextColor(mTextColor)
+            clipboard_content_placeholder_2.setTextColor(mTextColor)
+        }
+
+        setupEmojiPalette(toolbarColor = toolbarColor, backgroundColor = mBackgroundColor, textColor = mTextColor)
+        setupStoredClips()
     }
 
     fun vibrateIfNeeded() {
@@ -563,36 +567,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         for (i in 0 until keyCount) {
             val key = keys[i]
             val code = key.code
-            var keyBackground = mKeyBackground
-            if (code == KEYCODE_SPACE) {
-                keyBackground = if (context.config.isUsingSystemTheme) {
-                    resources.getDrawable(R.drawable.keyboard_space_background_material, context.theme)
-                } else {
-                    resources.getDrawable(R.drawable.keyboard_space_background, context.theme)
-                }
-            } else if (code == KEYCODE_ENTER) {
-                keyBackground = resources.getDrawable(R.drawable.keyboard_enter_background, context.theme)
-            }
+            setupKeyBackground(key, code, canvas)
 
             // Switch the character to uppercase if shift is pressed
             val label = adjustCase(key.label)?.toString()
-            val bounds = keyBackground!!.bounds
-            if (key.width != bounds.right || key.height != bounds.bottom) {
-                keyBackground.setBounds(0, 0, key.width, key.height)
-            }
-
-            keyBackground.state = when {
-                key.pressed -> intArrayOf(android.R.attr.state_pressed)
-                key.focused -> intArrayOf(android.R.attr.state_focused)
-                else -> intArrayOf()
-            }
-
-            if (key.focused || code == KEYCODE_ENTER) {
-                keyBackground.applyColorFilter(mPrimaryColor)
-            }
-
-            canvas.translate(key.x.toFloat(), key.y.toFloat())
-            keyBackground.draw(canvas)
             if (label?.isNotEmpty() == true) {
                 // For characters, use large font. For labels like "Done", use small font.
                 if (label.length > 1) {
@@ -654,6 +632,72 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mCanvas!!.restore()
         mDrawPending = false
         mDirtyRect.setEmpty()
+    }
+
+    private fun setupKeyBackground(key: MyKeyboard.Key, keyCode: Int, canvas: Canvas) {
+        val keyBackground = when (keyCode) {
+            KEYCODE_SPACE -> getSpaceKeyBackground()
+            KEYCODE_ENTER -> getEnterKeyBackground()
+            else -> mKeyBackground
+        }
+
+        val bounds = keyBackground!!.bounds
+        if (key.width != bounds.right || key.height != bounds.bottom) {
+            keyBackground.setBounds(0, 0, key.width, key.height)
+        }
+
+        keyBackground.state = when {
+            key.pressed -> intArrayOf(android.R.attr.state_pressed)
+            key.focused -> intArrayOf(android.R.attr.state_focused)
+            else -> intArrayOf()
+        }
+
+        if (key.focused || keyCode == KEYCODE_ENTER) {
+            val keyColor = if (key.pressed) {
+                mPrimaryColor.adjustAlpha(0.8f)
+            } else {
+                mPrimaryColor
+            }
+            keyBackground.applyColorFilter(keyColor)
+        } else if (mShowKeyBorders) {
+            if (keyCode != KEYCODE_SPACE || !mUsingSystemTheme) {
+                val keyColor = if (key.pressed) {
+                    mKeyColorPressed
+                } else {
+                    mKeyColor
+                }
+                keyBackground.applyColorFilter(keyColor)
+            }
+        }
+
+        canvas.translate(key.x.toFloat(), key.y.toFloat())
+        keyBackground.draw(canvas)
+    }
+
+    private fun getSpaceKeyBackground(): Drawable? {
+        val drawableId = if (mUsingSystemTheme) {
+            if (mShowKeyBorders) {
+                R.drawable.keyboard_space_background_material_outlined
+            } else {
+                R.drawable.keyboard_space_background_material
+            }
+        } else {
+            if (mShowKeyBorders) {
+                R.drawable.keyboard_key_selector_outlined
+            } else {
+                R.drawable.keyboard_space_background
+            }
+        }
+        return resources.getDrawable(drawableId, context.theme)
+    }
+
+    private fun getEnterKeyBackground(): Drawable? {
+        val drawableId = if (mShowKeyBorders) {
+            R.drawable.keyboard_enter_background_outlined
+        } else {
+            R.drawable.keyboard_enter_background
+        }
+        return resources.getDrawable(drawableId, context.theme)
     }
 
     private fun handleClipboard() {
@@ -745,10 +789,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun showPreview(keyIndex: Int) {
-        if (!context.config.showPopupOnKeypress) {
-            return
-        }
-
         val oldKeyIndex = mCurrentKeyIndex
         val previewPopup = mPreviewPopup
         mCurrentKeyIndex = keyIndex
@@ -767,13 +807,17 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 val newKey = keys[mCurrentKeyIndex]
 
                 val code = newKey.code
-                if (code == KEYCODE_SHIFT || code == KEYCODE_MODE_CHANGE || code == KEYCODE_DELETE || code == KEYCODE_ENTER || code == KEYCODE_SPACE) {
+                if (context.config.showKeyBorders || (code == KEYCODE_SHIFT || code == KEYCODE_MODE_CHANGE || code == KEYCODE_DELETE || code == KEYCODE_ENTER || code == KEYCODE_SPACE)) {
                     newKey.pressed = true
                 }
 
                 invalidateKey(mCurrentKeyIndex)
                 sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, code)
             }
+        }
+
+        if (!context.config.showPopupOnKeypress) {
+            return
         }
 
         // If key changed and preview is on ...
@@ -819,11 +863,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
         }
 
-        val previewBackgroundColor = if (context.config.isUsingSystemTheme) {
-            resources.getColor(R.color.you_keyboard_toolbar_color, context.theme)
-        } else {
-            mBackgroundColor.darkenColor(4)
-        }
+        val previewBackgroundColor = getToolbarColor(4)
 
         val previewBackground = mPreviewText!!.background as LayerDrawable
         previewBackground.findDrawableByLayerId(R.id.button_background_shape).applyColorFilter(previewBackgroundColor)
@@ -1528,5 +1568,51 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mMiniKeyboardOnScreen = false
             invalidateAllKeys()
         }
+    }
+
+    private fun maybeDarkenColor(color: Int, factor: Int): Int {
+        // use darker background color when key borders are enabled
+        if (context.config.showKeyBorders) {
+            val darkerColor = color.darkenColor(factor)
+            return if (darkerColor == Color.WHITE) {
+                resources.getColor(R.color.md_grey_200, context.theme)
+            } else {
+                darkerColor
+            }
+        }
+        return color
+    }
+
+    private fun getToolbarColor(factor: Int = 8): Int {
+        val color = if (context.config.isUsingSystemTheme) {
+            resources.getColor(R.color.you_keyboard_toolbar_color, context.theme)
+        } else {
+            mBackgroundColor.darkenColor(factor)
+        }
+        return maybeDarkenColor(color, 2)
+    }
+
+    private fun getKeyboardBackgroundColor(): Int {
+        val color = if (context.config.isUsingSystemTheme) {
+            resources.getColor(R.color.you_keyboard_background_color, context.theme)
+        } else {
+            mBackgroundColor.darkenColor(2)
+        }
+        return maybeDarkenColor(color, 6)
+    }
+
+    private fun getKeyColor(): Int {
+        val backgroundColor = getKeyboardBackgroundColor()
+        val lighterColor = backgroundColor.lightenColor()
+        val keyColor = if (context.config.isUsingSystemTheme) {
+            lighterColor
+        } else {
+            if (backgroundColor == Color.BLACK) {
+                backgroundColor.getContrastColor().adjustAlpha(0.1f)
+            } else {
+                lighterColor
+            }
+        }
+        return keyColor
     }
 }

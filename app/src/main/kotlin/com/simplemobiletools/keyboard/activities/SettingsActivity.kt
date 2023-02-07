@@ -40,6 +40,7 @@ class SettingsActivity : SimpleActivity() {
         setupManageClipboardItems()
         setupVibrateOnKeypress()
         setupShowPopupOnKeypress()
+        setupShowKeyBorders()
         setupKeyboardLanguage()
         setupKeyboardHeightMultiplier()
 
@@ -103,6 +104,14 @@ class SettingsActivity : SimpleActivity() {
         settings_show_popup_on_keypress_holder.setOnClickListener {
             settings_show_popup_on_keypress.toggle()
             config.showPopupOnKeypress = settings_show_popup_on_keypress.isChecked
+        }
+    }
+
+    private fun setupShowKeyBorders() {
+        settings_show_key_borders.isChecked = config.showKeyBorders
+        settings_show_key_borders_holder.setOnClickListener {
+            settings_show_key_borders.toggle()
+            config.showKeyBorders = settings_show_key_borders.isChecked
         }
     }
 
