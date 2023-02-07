@@ -33,6 +33,10 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getInt(HEIGHT_MULTIPLIER, 1)
         set(keyboardHeightMultiplier) = prefs.edit().putInt(HEIGHT_MULTIPLIER, keyboardHeightMultiplier).apply()
 
+    var showClipboardContent: Boolean
+        get() = prefs.getBoolean(SHOW_CLIPBOARD_CONTENT, true)
+        set(showClipboardContent) = prefs.edit().putBoolean(SHOW_CLIPBOARD_CONTENT, showClipboardContent).apply()
+
 
     private fun getDefaultLanguage(): Int {
         val conf = context.resources.configuration

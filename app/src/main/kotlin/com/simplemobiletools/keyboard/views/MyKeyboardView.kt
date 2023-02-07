@@ -701,7 +701,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun handleClipboard() {
-        if (mToolbarHolder != null && mPopupParent.id != R.id.mini_keyboard_view) {
+        if (mToolbarHolder != null && mPopupParent.id != R.id.mini_keyboard_view && context.config.showClipboardContent) {
             val clipboardContent = context.getCurrentClip()
             if (clipboardContent?.isNotEmpty() == true) {
                 mToolbarHolder?.apply {

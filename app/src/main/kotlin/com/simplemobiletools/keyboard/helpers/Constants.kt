@@ -14,6 +14,7 @@ const val SHOW_KEY_BORDERS = "show_key_borders"
 const val LAST_EXPORTED_CLIPS_FOLDER = "last_exported_clips_folder"
 const val KEYBOARD_LANGUAGE = "keyboard_language"
 const val HEIGHT_MULTIPLIER = "height_multiplier"
+const val SHOW_CLIPBOARD_CONTENT = "show_clipboard_content"
 
 // differentiate current and pinned clips at the keyboards' Clipboard section
 const val ITEM_SECTION_LABEL = 0
