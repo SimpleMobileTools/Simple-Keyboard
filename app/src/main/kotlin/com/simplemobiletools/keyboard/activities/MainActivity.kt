@@ -23,7 +23,7 @@ class MainActivity : SimpleActivity() {
         setupOptionsMenu()
         refreshMenuItems()
 
-        updateMaterialActivityViews(main_coordinator, main_holder)
+        updateMaterialActivityViews(main_coordinator, main_holder, useTransparentNavigation = false, useTopSearchMenu = false)
         setupMaterialScrollListener(main_nested_scrollview, main_toolbar)
 
         change_keyboard_holder.setOnClickListener {

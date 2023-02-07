@@ -25,7 +25,7 @@ class SettingsActivity : SimpleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        updateMaterialActivityViews(settings_coordinator, settings_holder)
+        updateMaterialActivityViews(settings_coordinator, settings_holder, useTransparentNavigation = false, useTopSearchMenu = false)
         setupMaterialScrollListener(settings_nested_scrollview, settings_toolbar)
     }
 
@@ -40,6 +40,7 @@ class SettingsActivity : SimpleActivity() {
         setupManageClipboardItems()
         setupVibrateOnKeypress()
         setupShowPopupOnKeypress()
+        setupShowKeyBorders()
         setupKeyboardLanguage()
         setupKeyboardHeightMultiplier()
         setupShowClipboardContent()
@@ -104,6 +105,14 @@ class SettingsActivity : SimpleActivity() {
         settings_show_popup_on_keypress_holder.setOnClickListener {
             settings_show_popup_on_keypress.toggle()
             config.showPopupOnKeypress = settings_show_popup_on_keypress.isChecked
+        }
+    }
+
+    private fun setupShowKeyBorders() {
+        settings_show_key_borders.isChecked = config.showKeyBorders
+        settings_show_key_borders_holder.setOnClickListener {
+            settings_show_key_borders.toggle()
+            config.showKeyBorders = settings_show_key_borders.isChecked
         }
     }
 

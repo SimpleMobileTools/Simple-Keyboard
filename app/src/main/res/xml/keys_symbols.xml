@@ -64,7 +64,7 @@
         <Key
             app:code="32"
             app:isRepeatable="true"
-            app:keyWidth="48%p" />
+            app:keyWidth="50%p" />
         <Key
             app:keyLabel="."
             app:keyWidth="10%p" />

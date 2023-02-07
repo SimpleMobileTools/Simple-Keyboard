@@ -10,6 +10,7 @@ const val MAX_KEYS_PER_MINI_ROW = 9
 // shared prefs
 const val VIBRATE_ON_KEYPRESS = "vibrate_on_keypress"
 const val SHOW_POPUP_ON_KEYPRESS = "show_popup_on_keypress"
+const val SHOW_KEY_BORDERS = "show_key_borders"
 const val LAST_EXPORTED_CLIPS_FOLDER = "last_exported_clips_folder"
 const val KEYBOARD_LANGUAGE = "keyboard_language"
 const val HEIGHT_MULTIPLIER = "height_multiplier"
