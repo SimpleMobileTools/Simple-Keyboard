@@ -612,13 +612,33 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 } else if (code == KEYCODE_DELETE || code == KEYCODE_SHIFT || code == KEYCODE_EMOJI) {
                     key.icon!!.applyColorFilter(mTextColor)
                 }
+                val keyIcon = key.icon!!
+                val secondaryIcon = key.secondaryIcon
 
-                val drawableX = (key.width - key.icon!!.intrinsicWidth) / 2
-                val drawableY = (key.height - key.icon!!.intrinsicHeight) / 2
-                canvas.translate(drawableX.toFloat(), drawableY.toFloat())
-                key.icon!!.setBounds(0, 0, key.icon!!.intrinsicWidth, key.icon!!.intrinsicHeight)
-                key.icon!!.draw(canvas)
-                canvas.translate(-drawableX.toFloat(), -drawableY.toFloat())
+                if (secondaryIcon != null) {
+                    val keyIconWidth = keyIcon.intrinsicWidth * 1
+                    val keyIconHeight = keyIcon.intrinsicWidth * 1
+                    val secondaryIconWidth = (secondaryIcon.intrinsicWidth * 0.6).toInt()
+                    val secondaryIconHeight = (secondaryIcon.intrinsicHeight * 0.6).toInt()
+
+                    secondaryIcon.setBounds(key.width - secondaryIconWidth, 0, key.width, secondaryIconHeight)
+                    secondaryIcon.draw(canvas)
+
+                    val drawableX = (key.width - keyIconWidth) / 2
+                    val drawableY = (key.height - keyIconHeight) / 2
+                    canvas.translate(drawableX.toFloat(), drawableY.toFloat() / 1.5f)
+
+                    keyIcon.setBounds(0, 0, keyIconWidth, keyIconHeight)
+                    keyIcon.draw(canvas)
+                    canvas.translate(-drawableX.toFloat(), -drawableY.toFloat())
+                } else {
+                    val drawableX = (key.width - keyIcon.intrinsicWidth) / 2
+                    val drawableY = (key.height - keyIcon.intrinsicHeight) / 2
+                    canvas.translate(drawableX.toFloat(), drawableY.toFloat())
+                    keyIcon.setBounds(0, 0, keyIcon.intrinsicWidth, keyIcon.intrinsicHeight)
+                    keyIcon.draw(canvas)
+                    canvas.translate(-drawableX.toFloat(), -drawableY.toFloat())
+                }
             }
             canvas.translate(-key.x.toFloat(), -key.y.toFloat())
         }

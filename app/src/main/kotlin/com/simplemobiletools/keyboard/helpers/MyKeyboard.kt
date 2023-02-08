@@ -138,6 +138,9 @@ class MyKeyboard {
         /** Icon to display instead of a label. Icon takes precedence over a label  */
         var icon: Drawable? = null
 
+        /** Icon to display top left of an icon.*/
+        var secondaryIcon: Drawable? = null
+
         /** Width of the key, not including the gap  */
         var width: Int
 
@@ -204,6 +207,9 @@ class MyKeyboard {
             icon = a.getDrawable(R.styleable.MyKeyboard_Key_keyIcon)
             icon?.setBounds(0, 0, icon!!.intrinsicWidth, icon!!.intrinsicHeight)
 
+            secondaryIcon = a.getDrawable(R.styleable.MyKeyboard_Key_secondaryKeyIcon)
+            secondaryIcon?.setBounds(0, 0, secondaryIcon!!.intrinsicWidth, secondaryIcon!!.intrinsicHeight)
+
             label = a.getText(R.styleable.MyKeyboard_Key_keyLabel) ?: ""
             topSmallNumber = a.getString(R.styleable.MyKeyboard_Key_topSmallNumber) ?: ""
 
@@ -230,10 +236,12 @@ class MyKeyboard {
         fun isInside(x: Int, y: Int): Boolean {
             val leftEdge = edgeFlags and EDGE_LEFT > 0
             val rightEdge = edgeFlags and EDGE_RIGHT > 0
-            return ((x >= this.x || leftEdge && x <= this.x + width)
-                && (x < this.x + width || rightEdge && x >= this.x)
-                && (y >= this.y && y <= this.y + height)
-                && (y < this.y + height && y >= this.y))
+            return (
+                (x >= this.x || leftEdge && x <= this.x + width) &&
+                    (x < this.x + width || rightEdge && x >= this.x) &&
+                    (y >= this.y && y <= this.y + height) &&
+                    (y < this.y + height && y >= this.y)
+                )
         }
     }
 
@@ -249,7 +257,7 @@ class MyKeyboard {
         mDefaultHorizontalGap = 0
         mDefaultWidth = mDisplayWidth / 10
         mDefaultHeight = mDefaultWidth
-        mKeyboardHeightMultiplier = getKeyboardHeightMultiplier(context.config.keyboardHeightMultiplier);
+        mKeyboardHeightMultiplier = getKeyboardHeightMultiplier(context.config.keyboardHeightMultiplier)
         mKeys = ArrayList()
         mEnterKeyType = enterKeyType
         loadKeyboard(context, context.resources.getXml(xmlLayoutResId))
@@ -273,7 +281,7 @@ class MyKeyboard {
         row.defaultHeight = mDefaultHeight
         row.defaultWidth = keyWidth
         row.defaultHorizontalGap = mDefaultHorizontalGap
-        mKeyboardHeightMultiplier = getKeyboardHeightMultiplier(context.config.keyboardHeightMultiplier);
+        mKeyboardHeightMultiplier = getKeyboardHeightMultiplier(context.config.keyboardHeightMultiplier)
 
         characters.forEachIndexed { index, character ->
             val key = Key(row)
@@ -386,7 +394,7 @@ class MyKeyboard {
     }
 
     private fun getKeyboardHeightMultiplier(multiplierType: Int): Float {
-        return when(multiplierType) {
+        return when (multiplierType) {
             KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> 1.0F
             KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> 1.2F
             KEYBOARD_HEIGHT_MULTIPLIER_LARGE -> 1.4F
