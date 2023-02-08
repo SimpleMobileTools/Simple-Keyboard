@@ -616,17 +616,19 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 val secondaryIcon = key.secondaryIcon
 
                 if (secondaryIcon != null) {
-                    val keyIconWidth = keyIcon.intrinsicWidth * 1
-                    val keyIconHeight = keyIcon.intrinsicWidth * 1
-                    val secondaryIconWidth = (secondaryIcon.intrinsicWidth * 0.6).toInt()
-                    val secondaryIconHeight = (secondaryIcon.intrinsicHeight * 0.6).toInt()
+                    val keyIconWidth = keyIcon.intrinsicWidth
+                    val keyIconHeight = keyIcon.intrinsicWidth
+                    val secondaryIconWidth = (secondaryIcon.intrinsicWidth * .6).toInt()
+                    val secondaryIconHeight = (secondaryIcon.intrinsicHeight * .6).toInt()
 
-                    secondaryIcon.setBounds(key.width - secondaryIconWidth, 0, key.width, secondaryIconHeight)
+                    val paddingTop = 16 // Add padding top to secondaryIcon
+                    secondaryIcon.setBounds(key.width - secondaryIconWidth, paddingTop, key.width, secondaryIconHeight + paddingTop)
                     secondaryIcon.draw(canvas)
 
                     val drawableX = (key.width - keyIconWidth) / 2
                     val drawableY = (key.height - keyIconHeight) / 2
-                    canvas.translate(drawableX.toFloat(), drawableY.toFloat() / 1.5f)
+
+                    canvas.translate(drawableX.toFloat(), drawableY.toFloat())
 
                     keyIcon.setBounds(0, 0, keyIconWidth, keyIconHeight)
                     keyIcon.draw(canvas)
