@@ -609,8 +609,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                 if (code == KEYCODE_ENTER) {
                     key.icon!!.applyColorFilter(mPrimaryColor.getContrastColor())
+                    key.secondaryIcon?.applyColorFilter(mPrimaryColor.getContrastColor())
                 } else if (code == KEYCODE_DELETE || code == KEYCODE_SHIFT || code == KEYCODE_EMOJI) {
                     key.icon!!.applyColorFilter(mTextColor)
+                    key.secondaryIcon?.applyColorFilter(mTextColor)
                 }
                 val keyIcon = key.icon!!
                 val secondaryIcon = key.secondaryIcon
