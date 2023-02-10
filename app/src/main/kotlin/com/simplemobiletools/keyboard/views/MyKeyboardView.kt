@@ -618,14 +618,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 val secondaryIcon = key.secondaryIcon
 
                 if (secondaryIcon != null) {
-                    val keyIconWidth = keyIcon.intrinsicWidth
-                    val keyIconHeight = keyIcon.intrinsicWidth
-                    val secondaryIconWidth = (secondaryIcon.intrinsicWidth * .6).toInt()
-                    val secondaryIconHeight = (secondaryIcon.intrinsicHeight * .6).toInt()
-
-                    val paddingTop = 16 // Add padding top to secondaryIcon
-                    secondaryIcon.setBounds(key.width - secondaryIconWidth, paddingTop, key.width, secondaryIconHeight + paddingTop)
-                    secondaryIcon.draw(canvas)
+                    val keyIconWidth = (keyIcon.intrinsicWidth * .8).toInt()
+                    val keyIconHeight = (keyIcon.intrinsicWidth * .8).toInt()
+                    val secondaryIconWidth = (secondaryIcon.intrinsicWidth * .4).toInt()
+                    val secondaryIconHeight = (secondaryIcon.intrinsicHeight * .4).toInt()
 
                     val drawableX = (key.width - keyIconWidth) / 2
                     val drawableY = (key.height - keyIconHeight) / 2
@@ -634,6 +630,17 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                     keyIcon.setBounds(0, 0, keyIconWidth, keyIconHeight)
                     keyIcon.draw(canvas)
+
+                    val secIconPaddingBottom = 8
+                    val secIconPaddingRight = 4
+                    secondaryIcon.setBounds(
+                        keyIconWidth - secIconPaddingRight,
+                        -secIconPaddingBottom,
+                        (keyIconWidth + secondaryIconWidth) - secIconPaddingRight,
+                        secondaryIconHeight - secIconPaddingBottom
+                    )
+                    secondaryIcon.draw(canvas)
+
                     canvas.translate(-drawableX.toFloat(), -drawableY.toFloat())
                 } else {
                     val drawableX = (key.width - keyIcon.intrinsicWidth) / 2
