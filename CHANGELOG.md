@@ -1,6 +1,16 @@
 Changelog
 ==========
 
+Version 5.4.1 *(2023-02-11)*
+----------------------------
+
+ * Added a numeric keyboard
+ * Allow displaying key borders
+ * Allow hiding the Clipboard content
+ * Added more punctuation at long pressing the dot and dashes
+ * Added a globe icon at the emoji key for language changing
+ * Added some stability, UI and translation improvements
+
 Version 5.4.0 *(2022-12-24)*
 ----------------------------
 
