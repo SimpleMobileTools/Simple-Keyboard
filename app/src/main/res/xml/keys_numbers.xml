@@ -46,8 +46,8 @@
             app:keyLabel="9"
             app:keyWidth="25%p" />
         <Key
-            app:keyLabel="abc"
-            app:code="-2"
+            app:keyLabel="␣"
+            app:code="32"
             app:keyEdgeFlags="right"
             app:keyWidth="25%p" />
     </Row>
