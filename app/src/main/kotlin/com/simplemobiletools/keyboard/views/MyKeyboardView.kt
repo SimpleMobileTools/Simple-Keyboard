@@ -618,30 +618,36 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 val secondaryIcon = key.secondaryIcon
 
                 if (secondaryIcon != null) {
-                    val keyIconWidth = (keyIcon.intrinsicWidth * .8).toInt()
-                    val keyIconHeight = (keyIcon.intrinsicWidth * .8).toInt()
-                    val secondaryIconWidth = (secondaryIcon.intrinsicWidth * .4).toInt()
-                    val secondaryIconHeight = (secondaryIcon.intrinsicHeight * .4).toInt()
+                    val keyIconWidth = (keyIcon.intrinsicWidth * .8f).toInt()
+                    val keyIconHeight = (keyIcon.intrinsicHeight * .8f).toInt()
+                    val secondaryIconWidth = (secondaryIcon.intrinsicWidth * .6f).toInt()
+                    val secondaryIconHeight = (secondaryIcon.intrinsicHeight * .6f).toInt()
 
-                    val drawableX = (key.width - keyIconWidth) / 2
-                    val drawableY = (key.height - keyIconHeight) / 2
+                    val centerX = key.width / 2
+                    val centerY = key.height / 2
 
-                    canvas.translate(drawableX.toFloat(), drawableY.toFloat())
+                    val keyIconLeft = centerX - keyIconWidth / 2
+                    val keyIconTop = centerY - keyIconHeight / 2
 
-                    keyIcon.setBounds(0, 0, keyIconWidth, keyIconHeight)
+                    keyIcon.setBounds(keyIconLeft, keyIconTop, keyIconLeft + keyIconWidth, keyIconTop + keyIconHeight)
                     keyIcon.draw(canvas)
 
-                    val secIconPaddingBottom = 8
-                    val secIconPaddingRight = 4
+                    val secondaryIconPaddingRight = 8
+                    val secondaryIconLeft = key.width - secondaryIconPaddingRight - secondaryIconWidth
+                    val secondaryIconRight = secondaryIconLeft + secondaryIconWidth
+
+                    val secondaryIconTop = 12 // This will act as a topPadding
+                    val secondaryIconBottom = secondaryIconTop + secondaryIconHeight
+
                     secondaryIcon.setBounds(
-                        keyIconWidth - secIconPaddingRight,
-                        -secIconPaddingBottom,
-                        (keyIconWidth + secondaryIconWidth) - secIconPaddingRight,
-                        secondaryIconHeight - secIconPaddingBottom
+                        secondaryIconLeft,
+                        secondaryIconTop,
+                        secondaryIconRight,
+                        secondaryIconBottom
                     )
                     secondaryIcon.draw(canvas)
 
-                    canvas.translate(-drawableX.toFloat(), -drawableY.toFloat())
+                    secondaryIcon.draw(canvas)
                 } else {
                     val drawableX = (key.width - keyIcon.intrinsicWidth) / 2
                     val drawableY = (key.height - keyIcon.intrinsicHeight) / 2
