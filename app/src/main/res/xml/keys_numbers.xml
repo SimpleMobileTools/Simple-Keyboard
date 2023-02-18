@@ -2,8 +2,8 @@
 <Keyboard xmlns:app="http://schemas.android.com/apk/res-auto">
     <Row>
         <Key
-            app:keyLabel="1"
             app:keyEdgeFlags="left"
+            app:keyLabel="1"
             app:keyWidth="25%p" />
         <Key
             app:keyLabel="2"
@@ -12,16 +12,16 @@
             app:keyLabel="3"
             app:keyWidth="25%p" />
         <Key
-            app:keyIcon="@drawable/ic_clear_vector"
             app:code="-5"
             app:isRepeatable="true"
             app:keyEdgeFlags="right"
+            app:keyIcon="@drawable/ic_clear_vector"
             app:keyWidth="25%p" />
     </Row>
     <Row>
         <Key
-            app:keyLabel="4"
             app:keyEdgeFlags="left"
+            app:keyLabel="4"
             app:keyWidth="25%p" />
         <Key
             app:keyLabel="5"
@@ -30,14 +30,14 @@
             app:keyLabel="6"
             app:keyWidth="25%p" />
         <Key
-            app:keyLabel="-"
             app:keyEdgeFlags="right"
+            app:keyLabel="-"
             app:keyWidth="25%p" />
     </Row>
     <Row>
         <Key
-            app:keyLabel="7"
             app:keyEdgeFlags="left"
+            app:keyLabel="7"
             app:keyWidth="25%p" />
         <Key
             app:keyLabel="8"
@@ -46,15 +46,15 @@
             app:keyLabel="9"
             app:keyWidth="25%p" />
         <Key
-            app:keyLabel="␣"
             app:code="32"
             app:keyEdgeFlags="right"
+            app:keyLabel="␣"
             app:keyWidth="25%p" />
     </Row>
     <Row>
         <Key
-            app:keyLabel=","
             app:keyEdgeFlags="left"
+            app:keyLabel=","
             app:keyWidth="25%p" />
         <Key
             app:keyLabel="0"
@@ -63,9 +63,9 @@
             app:keyLabel="."
             app:keyWidth="25%p" />
         <Key
-            app:keyIcon="@drawable/ic_enter_vector"
             app:code="-4"
             app:keyEdgeFlags="right"
+            app:keyIcon="@drawable/ic_enter_vector"
             app:keyWidth="25%p" />
     </Row>
 </Keyboard>
