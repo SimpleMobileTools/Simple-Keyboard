@@ -17,10 +17,10 @@ import android.view.inputmethod.EditorInfo.IME_MASK_ACTION
 import android.view.inputmethod.ExtractedTextRequest
 import com.simplemobiletools.commons.extensions.getSharedPrefs
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.databinding.KeyboardViewKeyboardBinding
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.views.MyKeyboardView
-import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 
 // based on https://www.androidauthority.com/lets-build-custom-keyboard-android-832362/
 class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionListener, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -45,14 +45,19 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         getSharedPrefs().registerOnSharedPreferenceChangeListener(this)
     }
 
+
     override fun onCreateInputView(): View {
-        val keyboardHolder = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null)
-        keyboardView = keyboardHolder.keyboard_view as MyKeyboardView
+        // val keyboardHolder = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null)
+        val binding = KeyboardViewKeyboardBinding.inflate(layoutInflater)
+        // keyboardView = keyboardHolder.keyboard_view as MyKeyboardView
+        keyboardView = binding.keyboardView
         keyboardView!!.setKeyboard(keyboard!!)
-        keyboardView!!.setKeyboardHolder(keyboardHolder.keyboard_holder)
+        // keyboardView!!.setKeyboardHolder(keyboardHolder.keyboard_holder)
+        keyboardView!!.setKeyboardHolder(binding)
         keyboardView!!.setEditorInfo(currentInputEditorInfo)
         keyboardView!!.mOnKeyboardActionListener = this
-        return keyboardHolder!!
+        // return keyboardHolder!!
+        return binding.root
     }
 
     override fun onPress(primaryCode: Int) {

@@ -8,30 +8,32 @@ import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.helpers.isTiramisuPlus
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.databinding.ActivitySettingsBinding
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.extensions.getKeyboardLanguageText
 import com.simplemobiletools.keyboard.extensions.getKeyboardLanguages
 import com.simplemobiletools.keyboard.helpers.KEYBOARD_HEIGHT_MULTIPLIER_LARGE
 import com.simplemobiletools.keyboard.helpers.KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM
 import com.simplemobiletools.keyboard.helpers.KEYBOARD_HEIGHT_MULTIPLIER_SMALL
-import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 import kotlin.system.exitProcess
 
 class SettingsActivity : SimpleActivity() {
+    private lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        updateMaterialActivityViews(settings_coordinator, settings_holder, useTransparentNavigation = false, useTopSearchMenu = false)
-        setupMaterialScrollListener(settings_nested_scrollview, settings_toolbar)
+        updateMaterialActivityViews(binding.settingsCoordinator, binding.settingsHolder, useTransparentNavigation = false, useTopSearchMenu = false)
+        setupMaterialScrollListener(binding.settingsNestedScrollview, binding.settingsToolbar)
     }
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(settings_toolbar, NavigationIcon.Arrow)
+        setupToolbar(binding.settingsToolbar, NavigationIcon.Arrow)
 
         setupPurchaseThankYou()
         setupCustomizeColors()
@@ -45,47 +47,55 @@ class SettingsActivity : SimpleActivity() {
         setupKeyboardHeightMultiplier()
         setupShowClipboardContent()
 
-        updateTextColors(settings_nested_scrollview)
+        updateTextColors(binding.settingsNestedScrollview)
 
-        arrayOf(settings_color_customization_section_label, settings_general_settings_label).forEach {
+        arrayOf(binding.settingsColorCustomizationLabel, binding.settingsColorCustomizationLabel).forEach {
             it.setTextColor(getProperPrimaryColor())
         }
     }
 
     private fun setupPurchaseThankYou() {
-        settings_purchase_thank_you_holder.beGoneIf(isOrWasThankYouInstalled())
-        settings_purchase_thank_you_holder.setOnClickListener {
-            launchPurchaseThankYouIntent()
+        binding.settingsPurchaseThankYouHolder.apply {
+            beGoneIf(isOrWasThankYouInstalled())
+            setOnClickListener {
+                launchPurchaseThankYouIntent()
+            }
         }
     }
 
     private fun setupCustomizeColors() {
-        settings_color_customization_label.text = getCustomizeColorsString()
-        settings_color_customization_holder.setOnClickListener {
-            handleCustomizeColorsClick()
+        binding.settingsColorCustomizationLabel.apply {
+            text = getCustomizeColorsString()
+            setOnClickListener {
+                handleCustomizeColorsClick()
+            }
         }
     }
 
     private fun setupUseEnglish() {
-        settings_use_english_holder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") && !isTiramisuPlus())
-        settings_use_english.isChecked = config.useEnglish
-        settings_use_english_holder.setOnClickListener {
-            settings_use_english.toggle()
-            config.useEnglish = settings_use_english.isChecked
-            exitProcess(0)
+        binding.settingsUseEnglish.apply {
+            binding.settingsUseEnglishHolder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") && !isTiramisuPlus())
+            isChecked = config.useEnglish
+            binding.settingsUseEnglishHolder.setOnClickListener {
+                toggle()
+                config.useEnglish = isChecked
+                exitProcess(0)
+            }
         }
     }
 
     private fun setupLanguage() {
-        settings_language.text = Locale.getDefault().displayLanguage
-        settings_language_holder.beVisibleIf(isTiramisuPlus())
-        settings_language_holder.setOnClickListener {
-            launchChangeAppLanguageIntent()
+        binding.settingsLanguage.text = Locale.getDefault().displayLanguage
+        binding.settingsLanguageHolder.apply {
+            beVisibleIf(isTiramisuPlus())
+            setOnClickListener {
+                launchChangeAppLanguageIntent()
+            }
         }
     }
 
     private fun setupManageClipboardItems() {
-        settings_manage_clipboard_items_holder.setOnClickListener {
+        binding.settingsManageClipboardItemsHolder.setOnClickListener {
             Intent(this, ManageClipboardItemsActivity::class.java).apply {
                 startActivity(this)
             }
@@ -93,52 +103,62 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupVibrateOnKeypress() {
-        settings_vibrate_on_keypress.isChecked = config.vibrateOnKeypress
-        settings_vibrate_on_keypress_holder.setOnClickListener {
-            settings_vibrate_on_keypress.toggle()
-            config.vibrateOnKeypress = settings_vibrate_on_keypress.isChecked
+        binding.settingsVibrateOnKeypress.apply {
+            isChecked = config.vibrateOnKeypress
+            binding.settingsVibrateOnKeypressHolder.setOnClickListener {
+                toggle()
+                config.vibrateOnKeypress = isChecked
+            }
         }
     }
 
     private fun setupShowPopupOnKeypress() {
-        settings_show_popup_on_keypress.isChecked = config.showPopupOnKeypress
-        settings_show_popup_on_keypress_holder.setOnClickListener {
-            settings_show_popup_on_keypress.toggle()
-            config.showPopupOnKeypress = settings_show_popup_on_keypress.isChecked
+        binding.settingsShowPopupOnKeypress.apply {
+            isChecked = config.showPopupOnKeypress
+            binding.settingsShowPopupOnKeypressHolder.setOnClickListener {
+                toggle()
+                config.showPopupOnKeypress = isChecked
+            }
         }
     }
 
     private fun setupShowKeyBorders() {
-        settings_show_key_borders.isChecked = config.showKeyBorders
-        settings_show_key_borders_holder.setOnClickListener {
-            settings_show_key_borders.toggle()
-            config.showKeyBorders = settings_show_key_borders.isChecked
+        binding.settingsShowKeyBorders.apply {
+            isChecked = config.showKeyBorders
+            binding.settingsShowKeyBordersHolder.setOnClickListener {
+                toggle()
+                config.showKeyBorders = isChecked
+            }
         }
     }
 
     private fun setupKeyboardLanguage() {
-        settings_keyboard_language.text = getKeyboardLanguageText(config.keyboardLanguage)
-        settings_keyboard_language_holder.setOnClickListener {
-            val items = getKeyboardLanguages()
-            RadioGroupDialog(this@SettingsActivity, items, config.keyboardLanguage) {
-                config.keyboardLanguage = it as Int
-                settings_keyboard_language.text = getKeyboardLanguageText(config.keyboardLanguage)
+        binding.settingsKeyboardLanguage.apply {
+            text = getKeyboardLanguageText(config.keyboardLanguage)
+            binding.settingsKeyboardLanguageHolder.setOnClickListener {
+                val items = getKeyboardLanguages()
+                RadioGroupDialog(this@SettingsActivity, items, config.keyboardLanguage) {
+                    config.keyboardLanguage = it as Int
+                    text = getKeyboardLanguageText(config.keyboardLanguage)
+                }
             }
         }
     }
 
     private fun setupKeyboardHeightMultiplier() {
-        settings_keyboard_height_multiplier.text = getKeyboardHeightMultiplierText(config.keyboardHeightMultiplier)
-        settings_keyboard_height_multiplier_holder.setOnClickListener {
-            val items = arrayListOf(
-                RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_SMALL, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_SMALL)),
-                RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM)),
-                RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_LARGE, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_LARGE)),
-            )
+        binding.settingsKeyboardHeightMultiplier.apply {
+            text = getKeyboardHeightMultiplierText(config.keyboardHeightMultiplier)
+            binding.settingsKeyboardHeightMultiplierHolder.setOnClickListener {
+                val items = arrayListOf(
+                    RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_SMALL, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_SMALL)),
+                    RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM)),
+                    RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_LARGE, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_LARGE)),
+                )
 
-            RadioGroupDialog(this@SettingsActivity, items, config.keyboardHeightMultiplier) {
-                config.keyboardHeightMultiplier = it as Int
-                settings_keyboard_height_multiplier.text = getKeyboardHeightMultiplierText(config.keyboardHeightMultiplier)
+                RadioGroupDialog(this@SettingsActivity, items, config.keyboardHeightMultiplier) {
+                    config.keyboardHeightMultiplier = it as Int
+                    text = getKeyboardHeightMultiplierText(config.keyboardHeightMultiplier)
+                }
             }
         }
     }
@@ -153,10 +173,12 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupShowClipboardContent() {
-        settings_show_clipboard_content.isChecked = config.showClipboardContent
-        settings_show_clipboard_content_holder.setOnClickListener {
-            settings_show_clipboard_content.toggle()
-            config.showClipboardContent = settings_show_clipboard_content.isChecked
+        binding.settingsShowClipboardContent.apply {
+            isChecked = config.showClipboardContent
+            binding.settingsShowKeyBordersHolder.setOnClickListener {
+                toggle()
+                config.showClipboardContent = isChecked
+            }
         }
     }
 }

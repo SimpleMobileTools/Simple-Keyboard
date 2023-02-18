@@ -4,8 +4,11 @@ import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
@@ -17,12 +20,12 @@ import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.commons.views.MyTextView
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.dialogs.AddOrEditClipDialog
 import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.helpers.ClipsHelper
 import com.simplemobiletools.keyboard.models.Clip
-import kotlinx.android.synthetic.main.item_clip_in_activity.view.*
 import java.util.*
 
 class ClipsActivityAdapter(
@@ -154,13 +157,18 @@ class ClipsActivityAdapter(
 
         val isSelected = selectedKeys.contains(clip.id!!.toInt())
         view.apply {
-            clip_value.text = clip.value
-            clip_value.setTextColor(textColor)
-            clip_drag_handle.applyColorFilter(textColor)
+            // Temporary solution until simple-commons are also updated to use bindings instead of synthetics
+            val clipValue: MyTextView = findViewById(R.id.clip_value)
+            val clipDragHandle: ImageView = findViewById(R.id.clip_drag_handle)
+            val clipHolder: RelativeLayout = findViewById(R.id.clip_holder)
 
-            clip_drag_handle.beVisibleIf(selectedKeys.isNotEmpty())
-            clip_holder.isSelected = isSelected
-            clip_drag_handle.setOnTouchListener { v, event ->
+            clipValue.text = clip.value
+            clipValue.setTextColor(textColor)
+            clipDragHandle.applyColorFilter(textColor)
+
+            clipDragHandle.beVisibleIf(selectedKeys.isNotEmpty())
+            clipHolder.isSelected = isSelected
+            clipDragHandle.setOnTouchListener { v, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     startReorderDragListener.requestDrag(holder)
                 }

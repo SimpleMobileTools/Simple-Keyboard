@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+// apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -32,6 +32,10 @@ android {
                 storePassword keystoreProperties['storePassword']
             }
         }
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {

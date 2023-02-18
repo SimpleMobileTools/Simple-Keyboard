@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.databinding.ItemClipOnKeyboardBinding
+import com.simplemobiletools.keyboard.databinding.ItemSectionLabelBinding
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.extensions.getCurrentClip
 import com.simplemobiletools.keyboard.extensions.getStrokeColor
@@ -22,8 +24,6 @@ import com.simplemobiletools.keyboard.interfaces.RefreshClipsListener
 import com.simplemobiletools.keyboard.models.Clip
 import com.simplemobiletools.keyboard.models.ClipsSectionLabel
 import com.simplemobiletools.keyboard.models.ListItem
-import kotlinx.android.synthetic.main.item_clip_on_keyboard.view.*
-import kotlinx.android.synthetic.main.item_section_label.view.*
 
 class ClipsKeyboardAdapter(
     val context: Context, var items: ArrayList<ListItem>, val refreshClipsListener: RefreshClipsListener,
@@ -64,13 +64,15 @@ class ClipsKeyboardAdapter(
     }
 
     private fun setupClip(view: View, clip: Clip) {
+        val binding = ItemClipOnKeyboardBinding.bind(view)  // TODO check bind() is on correct View
+
         view.apply {
-            val rippleBg = clip_holder.background as RippleDrawable
+            val rippleBg = binding.clipHolder.background as RippleDrawable
             val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
             layerDrawable.findDrawableByLayerId(R.id.clipboard_background_stroke).applyColorFilter(context.getStrokeColor())
             layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(backgroundColor)
 
-            clip_value.apply {
+            binding.clipValue.apply {
                 text = clip.value
                 removeUnderlines()
                 setTextColor(textColor)
@@ -80,13 +82,14 @@ class ClipsKeyboardAdapter(
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setupSection(view: View, sectionLabel: ClipsSectionLabel) {
+        val binding = ItemSectionLabelBinding.bind(view)
         view.apply {
-            clips_section_label.apply {
+            binding.clipsSectionLabel.apply {
                 text = sectionLabel.value
                 setTextColor(textColor)
             }
 
-            clips_section_icon.apply {
+            binding.clipsSectionIcon.apply {
                 applyColorFilter(textColor)
 
                 if (sectionLabel.isCurrent) {

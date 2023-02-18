@@ -12,28 +12,30 @@ import com.simplemobiletools.commons.helpers.LICENSE_GSON
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.keyboard.BuildConfig
 import com.simplemobiletools.keyboard.R
-import kotlinx.android.synthetic.main.activity_main.*
+import com.simplemobiletools.keyboard.databinding.ActivityMainBinding
 
 class MainActivity : SimpleActivity() {
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         appLaunched(BuildConfig.APPLICATION_ID)
         setupOptionsMenu()
         refreshMenuItems()
 
-        updateMaterialActivityViews(main_coordinator, main_holder, useTransparentNavigation = false, useTopSearchMenu = false)
-        setupMaterialScrollListener(main_nested_scrollview, main_toolbar)
+        updateMaterialActivityViews(binding.mainCoordinator, binding.mainHolder, useTransparentNavigation = false, useTopSearchMenu = false)
+        setupMaterialScrollListener(binding.mainNestedScrollview, binding.mainToolbar)
 
-        change_keyboard_holder.setOnClickListener {
+        binding.changeKeyboardHolder.setOnClickListener {
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showInputMethodPicker()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(main_toolbar)
+        setupToolbar(binding.mainToolbar)
         if (!isKeyboardEnabled()) {
             ConfirmationAdvancedDialog(this, messageId = R.string.redirection_note, positive = R.string.ok, negative = 0) { success ->
                 if (success) {
@@ -47,12 +49,12 @@ class MainActivity : SimpleActivity() {
             }
         }
 
-        updateTextColors(main_nested_scrollview)
+        updateTextColors(binding.mainNestedScrollview)
         updateChangeKeyboardColor()
     }
 
     private fun setupOptionsMenu() {
-        main_toolbar.setOnMenuItemClickListener { menuItem ->
+        binding.mainToolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.more_apps_from_us -> launchMoreAppsFromUsIntent()
                 R.id.settings -> launchSettings()
@@ -64,7 +66,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun refreshMenuItems() {
-        main_toolbar.menu.apply {
+        binding.mainToolbar.menu.apply {
             findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(R.bool.hide_google_relations)
         }
     }
@@ -89,8 +91,10 @@ class MainActivity : SimpleActivity() {
     private fun updateChangeKeyboardColor() {
         val applyBackground = resources.getDrawable(R.drawable.button_background_rounded, theme) as RippleDrawable
         (applyBackground as LayerDrawable).findDrawableByLayerId(R.id.button_background_holder).applyColorFilter(getProperPrimaryColor())
-        change_keyboard.background = applyBackground
-        change_keyboard.setTextColor(getProperPrimaryColor().getContrastColor())
+        binding.changeKeyboard.apply {
+            background = applyBackground
+            setTextColor(getProperPrimaryColor().getContrastColor())
+        }
     }
 
     private fun isKeyboardEnabled(): Boolean {
