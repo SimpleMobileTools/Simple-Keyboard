@@ -2,38 +2,38 @@
 <resources>
     <string name="app_name">Yksinkertainen näppäimistö</string>
     <string name="app_launcher_name">Näppäimistö</string>
-    <string name="redirection_note">Ota Simple Keyboard (Yksinkertainen näppäimistö) käyttöön seuraavassa näytössä, jotta se on käytettävissä oleva näppäimistö. Paina \'Back\', kun se on otettu käyttöön.</string>
+    <string name="redirection_note">Ota Simple Keyboard käyttöön seuraavasta ruudusta lisätäksesi sen käytettävissä oleviin näppäimistöihin. Paina käyttöönoton jälkeen \'Takaisin\'.</string>
     <string name="change_keyboard">Vaihda näppäimistö</string>
     <!-- Clipboard -->
-    <string name="manage_clipboard_items">Leikepöydän kohteiden hallinta</string>
+    <string name="manage_clipboard_items">Hallitse leikepöydän kohteita</string>
     <string name="manage_clipboard_empty">Leikepöytä on tyhjä.</string>
-    <string name="manage_clipboard_label">Kun kopioit tekstiä, se näkyy tässä. Voit myös kiinnittää leikkeet, jotta ne eivät katoa myöhemmin.</string>
+    <string name="manage_clipboard_label">Kun kopioit tekstiä, se näkyy tässä. Voit myös kiinnittää leikkeiyä, jotta ne eivät katoa myöhemmin.</string>
     <string name="clear_clipboard_data">Tyhjennä leikepöydän tiedot</string>
-    <string name="clear_clipboard_data_confirmation">Oletko varma, että haluat tyhjentää leikepöydän tiedot\?</string>
+    <string name="clear_clipboard_data_confirmation">Haluatko varmasti tyhjentää leikepöydän tiedot\?</string>
     <string name="clipboard">Leikepöytä</string>
     <string name="clipboard_recent">Viimeisimmät</string>
     <string name="clipboard_current">Nykyinen</string>
-    <string name="clipboard_pinned">Pinnattu</string>
+    <string name="clipboard_pinned">Kiinnitetty</string>
     <string name="add_new_item">Lisää uusi kohde</string>
-    <string name="manage_clips">Voit hallita tai lisätä leikkeitä täällä nopeaa käyttöä varten.</string>
-    <string name="clip_text">Clip-teksti</string>
-    <string name="pin_text">Pin-teksti</string>
+    <string name="manage_clips">Tässä voit hallita tai lisätä leikkeitä nopeaa käyttöä varten.</string>
+    <string name="clip_text">Leikkeen teksti</string>
+    <string name="pin_text">Kiinnitä teksti</string>
     <string name="text_pinned">Teksti on kiinnitetty</string>
-    <string name="export_clipboard_items">Vie leikepöydän kohteita</string>
-    <string name="import_clipboard_items">Tuo leikepöydän kohteita</string>
+    <string name="export_clipboard_items">Vie leikepöydän kohteet</string>
+    <string name="import_clipboard_items">Tuo leikepöydän kohteet</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Poista</string>
     <string name="keycode_mode_change">Vaihda näppäimistön tyyppi</string>
-    <string name="keycode_shift">Siirtää</string>
-    <string name="keycode_enter">Syötä</string>
+    <string name="keycode_shift">Shift</string>
+    <string name="keycode_enter">Enter</string>
     <!-- Settings -->
-    <string name="show_clipboard_content">Näytä leikepöydän sisältö, jos se on käytettävissä</string>
-    <string name="show_popup">Näytä ponnahdusikkuna näppäimen painalluksen yhteydessä</string>
-    <string name="vibrate_on_keypress">Värinä näppäintä painettaessa</string>
+    <string name="show_clipboard_content">Näytä leikepöydän sisältö, jos saatavilla</string>
+    <string name="show_popup">Näytä ponnahdus näppäinten painalluksesta</string>
+    <string name="vibrate_on_keypress">Värähdä näppäinten painalluksesta</string>
     <string name="keyboard_language">Näppäimistön kieli</string>
     <string name="keyboard_height">Näppäimistön korkeus</string>
-    <string name="show_key_borders">Show key borders</string>
-    <string name="show_numbers_row">Show numbers on a separate row</string>
+    <string name="show_key_borders">Näytä näppäinten ääriviivat</string>
+    <string name="show_numbers_row">Näytä erillinen numerorivi</string>
     <!-- Emojis -->
     <string name="emojis">Emojit</string>
     <!--
