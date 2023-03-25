@@ -33,7 +33,7 @@
     <string name="keyboard_language">Jezik tipkovnice</string>
     <string name="keyboard_height">Visina tipkovnice</string>
     <string name="show_key_borders">Prikaži obrube ključeva</string>
-    <string name="show_numbers_row">Pokažite brojeve u zasebnom retku</string>
+    <string name="show_numbers_row">Pokaži brojeve u zasebnom retku</string>
     <!-- Emojis -->
     <string name="emojis">Emoji</string>
     <!--
