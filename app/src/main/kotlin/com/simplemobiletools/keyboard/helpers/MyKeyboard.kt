@@ -97,6 +97,8 @@ class MyKeyboard {
 
         var parent: MyKeyboard
 
+        var isNumRow: Boolean = false
+
         constructor(parent: MyKeyboard) {
             this.parent = parent
         }
@@ -107,6 +109,7 @@ class MyKeyboard {
             defaultWidth = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, parent.mDisplayWidth, parent.mDefaultWidth)
             defaultHeight = (res.getDimension(R.dimen.key_height) * this.parent.mKeyboardHeightMultiplier).roundToInt()
             defaultHorizontalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, parent.mDisplayWidth, parent.mDefaultHorizontalGap)
+            isNumRow = a.getBoolean(R.styleable.MyKeyboard_isNumRow, false)
             a.recycle()
         }
     }
@@ -342,12 +345,19 @@ class MyKeyboard {
                 if (event == XmlResourceParser.START_TAG) {
                     when (parser.name) {
                         TAG_ROW -> {
+                            currentRow = createRowFromXml(res, parser)
+                            if (currentRow.isNumRow && !context.config.showNumbersRow) {
+                                continue
+                            }
                             inRow = true
                             x = 0
-                            currentRow = createRowFromXml(res, parser)
                             mRows.add(currentRow)
                         }
+
                         TAG_KEY -> {
+                            if (currentRow?.isNumRow == true && !context.config.showNumbersRow) {
+                                continue
+                            }
                             inKey = true
                             key = createKeyFromXml(res, currentRow!!, x, y, parser)
                             mKeys!!.add(key)
@@ -362,6 +372,7 @@ class MyKeyboard {
                             }
                             currentRow.mKeys.add(key)
                         }
+
                         TAG_KEYBOARD -> {
                             parseKeyboardAttributes(res, parser)
                         }

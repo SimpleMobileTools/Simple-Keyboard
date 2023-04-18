@@ -263,6 +263,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                             val repeat = Message.obtain(this, MSG_REPEAT)
                             sendMessageDelayed(repeat, REPEAT_INTERVAL.toLong())
                         }
+
                         MSG_LONGPRESS -> openPopupIfRequired(msg.obj as MotionEvent)
                     }
                 }
@@ -591,7 +592,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     label, (key.width / 2).toFloat(), key.height / 2 + (paint.textSize - paint.descent()) / 2, paint
                 )
 
-                if (key.topSmallNumber.isNotEmpty()) {
+                if (key.topSmallNumber.isNotEmpty() && !context.config.showNumbersRow) {
                     canvas.drawText(key.topSmallNumber, key.width - mTopSmallNumberMarginWidth, mTopSmallNumberMarginHeight, smallLetterPaint)
                 }
 
@@ -1204,6 +1205,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         }
                     }
                 }
+
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     mMiniKeyboard?.mKeys?.firstOrNull { it.focused }?.apply {
                         mOnKeyboardActionListener!!.onKey(code)
@@ -1262,6 +1264,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 invalidateKey(mCurrentKey)
                 return true
             }
+
             MotionEvent.ACTION_DOWN -> {
                 mAbortKey = false
                 mLastCodeX = touchX
@@ -1310,6 +1313,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     showPreview(keyIndex)
                 }
             }
+
             MotionEvent.ACTION_MOVE -> {
                 var continueLongPress = false
                 if (keyIndex != NOT_A_KEY) {
@@ -1363,6 +1367,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     mLastMoveTime = eventTime
                 }
             }
+
             MotionEvent.ACTION_UP -> {
                 mLastSpaceMoveX = 0
                 removeMessages()
@@ -1396,6 +1401,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 mOnKeyboardActionListener!!.onActionUp()
                 mIsLongPressingSpace = false
             }
+
             MotionEvent.ACTION_CANCEL -> {
                 mIsLongPressingSpace = false
                 mLastSpaceMoveX = 0
@@ -1515,12 +1521,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                             mHandler!!.sendMessageDelayed(msg, REPEAT_START_DELAY.toLong())
                             true
                         }
+
                         MotionEvent.ACTION_UP -> {
                             mHandler!!.removeMessages(MSG_REPEAT)
                             mRepeatKeyIndex = NOT_A_KEY
                             isPressed = false
                             false
                         }
+
                         else -> false
                     }
                 }
