@@ -360,6 +360,16 @@ class MyKeyboard {
                             }
                             inKey = true
                             key = createKeyFromXml(res, currentRow!!, x, y, parser)
+                            if(context.config.showNumbersRow){
+                                // Removes numbers (i.e 0-9) from the popupCharacters if numbers row is enabled
+                                key.apply{
+                                    popupCharacters = popupCharacters?.replace(Regex("\\d+"), "")
+                                    if(popupCharacters.isNullOrEmpty()){
+                                        popupResId = 0
+                                    }
+                                }
+
+                            }
                             mKeys!!.add(key)
                             if (key.code == KEYCODE_ENTER) {
                                 val enterResourceId = when (mEnterKeyType) {
