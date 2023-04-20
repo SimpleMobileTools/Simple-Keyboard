@@ -97,7 +97,7 @@ class MyKeyboard {
 
         var parent: MyKeyboard
 
-        var isNumRow: Boolean = false
+        var isNumbersRow: Boolean = false
 
         constructor(parent: MyKeyboard) {
             this.parent = parent
@@ -109,7 +109,7 @@ class MyKeyboard {
             defaultWidth = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, parent.mDisplayWidth, parent.mDefaultWidth)
             defaultHeight = (res.getDimension(R.dimen.key_height) * this.parent.mKeyboardHeightMultiplier).roundToInt()
             defaultHorizontalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, parent.mDisplayWidth, parent.mDefaultHorizontalGap)
-            isNumRow = a.getBoolean(R.styleable.MyKeyboard_isNumRow, false)
+            isNumbersRow = a.getBoolean(R.styleable.MyKeyboard_isNumbersRow, false)
             a.recycle()
         }
     }
@@ -346,7 +346,7 @@ class MyKeyboard {
                     when (parser.name) {
                         TAG_ROW -> {
                             currentRow = createRowFromXml(res, parser)
-                            if (currentRow.isNumRow && !context.config.showNumbersRow) {
+                            if (currentRow.isNumbersRow && !context.config.showNumbersRow) {
                                 continue
                             }
                             inRow = true
@@ -355,7 +355,7 @@ class MyKeyboard {
                         }
 
                         TAG_KEY -> {
-                            if (currentRow?.isNumRow == true && !context.config.showNumbersRow) {
+                            if (currentRow?.isNumbersRow == true && !context.config.showNumbersRow) {
                                 continue
                             }
                             inKey = true

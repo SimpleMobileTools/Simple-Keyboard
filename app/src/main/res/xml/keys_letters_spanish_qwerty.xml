@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:app="http://schemas.android.com/apk/res-auto">
-    <Row app:isNumRow="true">
+    <Row app:isNumbersRow="true">
         <Key
             app:keyEdgeFlags="left"
             app:keyLabel="1"
