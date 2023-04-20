@@ -138,6 +138,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mLastKey = 0
     private var mLastCodeX = 0
     private var mLastCodeY = 0
+    private var mLastKeyPressedCode = 0
     private var mCurrentKey: Int = NOT_A_KEY
     private var mLastKeyTime = 0L
     private var mCurrentKeyTime = 0L
@@ -1281,8 +1282,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 } else {
                     0
                 }
-
                 mOnKeyboardActionListener!!.onPress(onPressKey)
+                mLastKeyPressedCode = onPressKey
 
                 var wasHandled = false
                 if (mCurrentKey >= 0 && mKeys[mCurrentKey].repeatable) {
@@ -1396,7 +1397,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
                 }
 
-                invalidateKey(keyIndex)
+                if (mLastKeyPressedCode != KEYCODE_MODE_CHANGE) {
+                    invalidateKey(keyIndex)
+                }
                 mRepeatKeyIndex = NOT_A_KEY
                 mOnKeyboardActionListener!!.onActionUp()
                 mIsLongPressingSpace = false
