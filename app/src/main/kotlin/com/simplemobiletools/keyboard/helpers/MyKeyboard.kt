@@ -360,11 +360,11 @@ class MyKeyboard {
                             }
                             inKey = true
                             key = createKeyFromXml(res, currentRow!!, x, y, parser)
-                            if(context.config.showNumbersRow){
+                            if (context.config.showNumbersRow) {
                                 // Removes numbers (i.e 0-9) from the popupCharacters if numbers row is enabled
-                                key.apply{
+                                key.apply {
                                     popupCharacters = popupCharacters?.replace(Regex("\\d+"), "")
-                                    if(popupCharacters.isNullOrEmpty()){
+                                    if (popupCharacters.isNullOrEmpty()) {
                                         popupResId = 0
                                     }
                                 }
