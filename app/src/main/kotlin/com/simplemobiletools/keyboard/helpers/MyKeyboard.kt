@@ -97,6 +97,8 @@ class MyKeyboard {
 
         var parent: MyKeyboard
 
+        var isNumbersRow: Boolean = false
+
         constructor(parent: MyKeyboard) {
             this.parent = parent
         }
@@ -107,6 +109,7 @@ class MyKeyboard {
             defaultWidth = getDimensionOrFraction(a, R.styleable.MyKeyboard_keyWidth, parent.mDisplayWidth, parent.mDefaultWidth)
             defaultHeight = (res.getDimension(R.dimen.key_height) * this.parent.mKeyboardHeightMultiplier).roundToInt()
             defaultHorizontalGap = getDimensionOrFraction(a, R.styleable.MyKeyboard_horizontalGap, parent.mDisplayWidth, parent.mDefaultHorizontalGap)
+            isNumbersRow = a.getBoolean(R.styleable.MyKeyboard_isNumbersRow, false)
             a.recycle()
         }
     }
@@ -342,14 +345,31 @@ class MyKeyboard {
                 if (event == XmlResourceParser.START_TAG) {
                     when (parser.name) {
                         TAG_ROW -> {
+                            currentRow = createRowFromXml(res, parser)
+                            if (currentRow.isNumbersRow && !context.config.showNumbersRow) {
+                                continue
+                            }
                             inRow = true
                             x = 0
-                            currentRow = createRowFromXml(res, parser)
                             mRows.add(currentRow)
                         }
+
                         TAG_KEY -> {
+                            if (currentRow?.isNumbersRow == true && !context.config.showNumbersRow) {
+                                continue
+                            }
                             inKey = true
                             key = createKeyFromXml(res, currentRow!!, x, y, parser)
+                            if (context.config.showNumbersRow) {
+                                // Removes numbers (i.e 0-9) from the popupCharacters if numbers row is enabled
+                                key.apply {
+                                    popupCharacters = popupCharacters?.replace(Regex("\\d+"), "")
+                                    if (popupCharacters.isNullOrEmpty()) {
+                                        popupResId = 0
+                                    }
+                                }
+
+                            }
                             mKeys!!.add(key)
                             if (key.code == KEYCODE_ENTER) {
                                 val enterResourceId = when (mEnterKeyType) {
@@ -362,6 +382,7 @@ class MyKeyboard {
                             }
                             currentRow.mKeys.add(key)
                         }
+
                         TAG_KEYBOARD -> {
                             parseKeyboardAttributes(res, parser)
                         }

@@ -138,6 +138,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private var mLastKey = 0
     private var mLastCodeX = 0
     private var mLastCodeY = 0
+    private var mLastKeyPressedCode = 0
     private var mCurrentKey: Int = NOT_A_KEY
     private var mLastKeyTime = 0L
     private var mCurrentKeyTime = 0L
@@ -263,6 +264,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                             val repeat = Message.obtain(this, MSG_REPEAT)
                             sendMessageDelayed(repeat, REPEAT_INTERVAL.toLong())
                         }
+
                         MSG_LONGPRESS -> openPopupIfRequired(msg.obj as MotionEvent)
                     }
                 }
@@ -591,7 +593,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     label, (key.width / 2).toFloat(), key.height / 2 + (paint.textSize - paint.descent()) / 2, paint
                 )
 
-                if (key.topSmallNumber.isNotEmpty()) {
+                if (key.topSmallNumber.isNotEmpty() && !context.config.showNumbersRow) {
                     canvas.drawText(key.topSmallNumber, key.width - mTopSmallNumberMarginWidth, mTopSmallNumberMarginHeight, smallLetterPaint)
                 }
 
@@ -1204,6 +1206,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         }
                     }
                 }
+
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     mMiniKeyboard?.mKeys?.firstOrNull { it.focused }?.apply {
                         mOnKeyboardActionListener!!.onKey(code)
@@ -1262,6 +1265,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 invalidateKey(mCurrentKey)
                 return true
             }
+
             MotionEvent.ACTION_DOWN -> {
                 mAbortKey = false
                 mLastCodeX = touchX
@@ -1278,8 +1282,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 } else {
                     0
                 }
-
                 mOnKeyboardActionListener!!.onPress(onPressKey)
+                mLastKeyPressedCode = onPressKey
 
                 var wasHandled = false
                 if (mCurrentKey >= 0 && mKeys[mCurrentKey].repeatable) {
@@ -1310,6 +1314,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     showPreview(keyIndex)
                 }
             }
+
             MotionEvent.ACTION_MOVE -> {
                 var continueLongPress = false
                 if (keyIndex != NOT_A_KEY) {
@@ -1363,6 +1368,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     mLastMoveTime = eventTime
                 }
             }
+
             MotionEvent.ACTION_UP -> {
                 mLastSpaceMoveX = 0
                 removeMessages()
@@ -1391,11 +1397,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
                 }
 
-                invalidateKey(keyIndex)
+                if (mLastKeyPressedCode != KEYCODE_MODE_CHANGE) {
+                    invalidateKey(keyIndex)
+                }
                 mRepeatKeyIndex = NOT_A_KEY
                 mOnKeyboardActionListener!!.onActionUp()
                 mIsLongPressingSpace = false
             }
+
             MotionEvent.ACTION_CANCEL -> {
                 mIsLongPressingSpace = false
                 mLastSpaceMoveX = 0
@@ -1515,12 +1524,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                             mHandler!!.sendMessageDelayed(msg, REPEAT_START_DELAY.toLong())
                             true
                         }
+
                         MotionEvent.ACTION_UP -> {
                             mHandler!!.removeMessages(MSG_REPEAT)
                             mRepeatKeyIndex = NOT_A_KEY
                             isPressed = false
                             false
                         }
+
                         else -> false
                     }
                 }

@@ -11,6 +11,7 @@
     <declare-styleable name="MyKeyboard">
         <attr name="keyWidth" format="fraction" />
         <attr name="horizontalGap" format="fraction" />
+        <attr name="isNumbersRow" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="MyKeyboard_Key">
