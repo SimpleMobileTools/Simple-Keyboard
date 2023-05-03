@@ -37,6 +37,9 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getBoolean(SHOW_CLIPBOARD_CONTENT, true)
         set(showClipboardContent) = prefs.edit().putBoolean(SHOW_CLIPBOARD_CONTENT, showClipboardContent).apply()
 
+    var showNumbersRow: Boolean
+        get() = prefs.getBoolean(SHOW_NUMBERS_ROW, false)
+        set(showNumbersRow) = prefs.edit().putBoolean(SHOW_NUMBERS_ROW, showNumbersRow).apply()
 
     private fun getDefaultLanguage(): Int {
         val conf = context.resources.configuration

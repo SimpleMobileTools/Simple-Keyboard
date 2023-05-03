@@ -44,6 +44,7 @@ class SettingsActivity : SimpleActivity() {
         setupKeyboardLanguage()
         setupKeyboardHeightMultiplier()
         setupShowClipboardContent()
+        setupShowNumbersRow()
 
         updateTextColors(settings_nested_scrollview)
 
@@ -157,6 +158,13 @@ class SettingsActivity : SimpleActivity() {
         settings_show_clipboard_content_holder.setOnClickListener {
             settings_show_clipboard_content.toggle()
             config.showClipboardContent = settings_show_clipboard_content.isChecked
+        }
+    }
+    private fun setupShowNumbersRow() {
+        settings_show_numbers_row.isChecked = config.showNumbersRow
+        settings_show_numbers_row_holder.setOnClickListener {
+            settings_show_numbers_row.toggle()
+            config.showNumbersRow = settings_show_numbers_row.isChecked
         }
     }
 }
