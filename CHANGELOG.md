@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.4.2 *(2023-05-04)*
+----------------------------
+
+ * Allow always showing a separate numeric row
+ * Added some stability, UI and translation improvements
+
 Version 5.4.1 *(2023-02-11)*
 ----------------------------
 
