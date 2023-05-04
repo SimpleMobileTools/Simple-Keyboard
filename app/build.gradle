@@ -65,10 +65,10 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:98e11621bd'
+    implementation 'com.github.SimpleMobileTools:Simple-Commons:5d5e4e1ac5'
     implementation 'androidx.emoji2:emoji2-bundled:1.2.0'
 
-    kapt 'androidx.room:room-compiler:2.5.0'
-    implementation 'androidx.room:room-runtime:2.5.0'
-    annotationProcessor 'androidx.room:room-compiler:2.5.0'
+    kapt 'androidx.room:room-compiler:2.5.1'
+    implementation 'androidx.room:room-runtime:2.5.1'
+    annotationProcessor 'androidx.room:room-compiler:2.5.1'
 }
