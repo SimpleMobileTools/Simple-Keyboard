@@ -96,7 +96,7 @@
             app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:keyLabel="o"
-            app:popupCharacters="őöóôôòõō"
+            app:popupCharacters="őöøóôôòõō"
             app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:keyLabel="e"
