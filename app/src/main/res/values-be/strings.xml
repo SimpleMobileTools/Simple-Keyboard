@@ -31,11 +31,11 @@
     <string name="show_popup">Паказваць усплывальнае акно пры націску клавішы</string>
     <string name="vibrate_on_keypress">Вібрацыя пры націсканні клавіш</string>
     <string name="keyboard_language">Мова клавіятуры</string>
-    <string name="keyboard_height">Keyboard height</string>
-    <string name="show_key_borders">Show key borders</string>
-    <string name="show_numbers_row">Show numbers on a separate row</string>
+    <string name="keyboard_height">Вышыня клавіятуры</string>
+    <string name="show_key_borders">Паказаць контуры клавіш</string>
+    <string name="show_numbers_row">Паказаць лічбы ў асобным радку</string>
     <!-- Emojis -->
-    <string name="emojis">Emojis</string>
+    <string name="emojis">Эмодзі</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
