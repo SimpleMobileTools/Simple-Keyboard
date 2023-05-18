@@ -164,7 +164,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 // If the keyboard is set to symbols and the user presses space, we usually should switch back to the letters keyboard.
                 // However, avoid doing that in cases when the EditText for example requires numbers as the input.
                 // We can detect that by the text not changing on pressing Space.
-                if (keyboardMode != KEYBOARD_LETTERS && code == MyKeyboard.KEYCODE_SPACE) {
+                if (keyboardMode != KEYBOARD_LETTERS && keyboardMode != KEYBOARD_PHONE && code == MyKeyboard.KEYCODE_SPACE) {
                     val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text ?: return
                     inputConnection.commitText(codeChar.toString(), 1)
                     val newText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text

@@ -201,7 +201,13 @@ class MyKeyboard {
 
             a.recycle()
             a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard_Key)
+
+            label = a.getText(R.styleable.MyKeyboard_Key_keyLabel) ?: ""
             code = a.getInt(R.styleable.MyKeyboard_Key_code, 0)
+
+            if (label.isNotEmpty() && code == 0) {
+                code = label[0].code
+            }
 
             popupCharacters = a.getText(R.styleable.MyKeyboard_Key_popupCharacters)
             popupResId = a.getResourceId(R.styleable.MyKeyboard_Key_popupKeyboard, 0)
@@ -213,12 +219,9 @@ class MyKeyboard {
             secondaryIcon = a.getDrawable(R.styleable.MyKeyboard_Key_secondaryKeyIcon)
             secondaryIcon?.setBounds(0, 0, secondaryIcon!!.intrinsicWidth, secondaryIcon!!.intrinsicHeight)
 
-            label = a.getText(R.styleable.MyKeyboard_Key_keyLabel) ?: ""
             topSmallNumber = a.getString(R.styleable.MyKeyboard_Key_topSmallNumber) ?: ""
 
-            if (label.isNotEmpty() && code != KEYCODE_MODE_CHANGE && code != KEYCODE_SHIFT) {
-                code = label[0].code
-            }
+
             a.recycle()
         }
 
