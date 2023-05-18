@@ -34,6 +34,7 @@
     <string name="keyboard_height">Visina tipkovnice</string>
     <string name="show_key_borders">Prikaži obrube ključeva</string>
     <string name="show_numbers_row">Pokaži brojeve u zasebnom retku</string>
+    <string name="start_sentences_capitalised">Start sentences with a capital letter</string>
     <!-- Emojis -->
     <string name="emojis">Emoji</string>
     <!--

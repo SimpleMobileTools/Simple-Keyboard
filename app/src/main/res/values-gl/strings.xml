@@ -34,6 +34,7 @@
     <string name="keyboard_height">Altura do teclado</string>
     <string name="show_key_borders">Mostralos bordes das teclas</string>
     <string name="show_numbers_row">Mostralos números nunha fila afastada</string>
+    <string name="start_sentences_capitalised">Start sentences with a capital letter</string>
     <!-- Emojis -->
     <string name="emojis">Emoticona</string>
     <!--
