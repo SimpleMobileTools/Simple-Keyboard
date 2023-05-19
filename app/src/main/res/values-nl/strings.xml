@@ -34,7 +34,7 @@
     <string name="keyboard_height">Hoogte toetsenbord</string>
     <string name="show_key_borders">Toetsen omranden</string>
     <string name="show_numbers_row">Cijfers op een aparte rij</string>
-    <string name="start_sentences_capitalised">Start sentences with a capital letter</string>
+    <string name="start_sentences_capitalised">Zinnen met een hoofdletter beginnen</string>
     <!-- Emojis -->
     <string name="emojis">Emoji\'s</string>
     <!--
