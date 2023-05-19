@@ -34,7 +34,7 @@
     <string name="keyboard_height">键盘高度</string>
     <string name="show_key_borders">显示键符边界</string>
     <string name="show_numbers_row">在单独的行上显示数字</string>
-    <string name="start_sentences_capitalised">Start sentences with a capital letter</string>
+    <string name="start_sentences_capitalised">句子开头使用大写字母</string>
     <!-- Emojis -->
     <string name="emojis">表情符号</string>
     <!--

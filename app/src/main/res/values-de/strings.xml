@@ -34,7 +34,7 @@
     <string name="keyboard_height">Höhe der Tastatur</string>
     <string name="show_key_borders">Tastenränder anzeigen</string>
     <string name="show_numbers_row">Zahlen in einer separaten Zeile anzeigen</string>
-    <string name="start_sentences_capitalised">Start sentences with a capital letter</string>
+    <string name="start_sentences_capitalised">Sätze mit einem Großbuchstaben beginnen</string>
     <!-- Emojis -->
     <string name="emojis">Emojis</string>
     <!--
