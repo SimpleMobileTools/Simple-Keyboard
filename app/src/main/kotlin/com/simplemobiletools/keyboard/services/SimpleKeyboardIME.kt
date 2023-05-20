@@ -149,7 +149,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
 
                     if (config.enableSentencesCapitalization) {
-                        keyboard!!.mShiftState = ShiftState.ON_ONE_CHAR
+                        keyboard!!.setShifted(ShiftState.ON_ONE_CHAR)
+                        keyboardView!!.invalidateAllKeys()
                     }
                 }
             }
