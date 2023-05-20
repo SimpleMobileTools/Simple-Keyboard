@@ -34,7 +34,7 @@ class MyKeyboard {
     var mKeyboardHeightMultiplier: Float = 1F
 
     /** Is the keyboard in the shifted state  */
-    var mShiftState = SHIFT_OFF
+    var mShiftState = ShiftState.OFF
 
     /** Total height of the keyboard, including the padding and keys  */
     var mHeight = 0
@@ -312,12 +312,11 @@ class MyKeyboard {
         mRows.add(row)
     }
 
-    fun setShifted(shiftState: Int): Boolean {
+    fun setShifted(shiftState: ShiftState): Boolean {
         if (this.mShiftState != shiftState) {
             this.mShiftState = shiftState
             return true
         }
-
         return false
     }
 

@@ -75,9 +75,9 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     private fun updateShiftKeyState() {
         if (keyboardMode == KEYBOARD_LETTERS) {
             val editorInfo = currentInputEditorInfo
-            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != SHIFT_ON_PERMANENT) {
+            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != ShiftState.ON_PERMANENT) {
                 if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
-                    keyboard?.setShifted(SHIFT_ON_ONE_CHAR)
+                    keyboard?.setShifted(ShiftState.ON_ONE_CHAR)
                     keyboardView?.invalidateAllKeys()
                 }
             }
@@ -96,8 +96,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
         when (code) {
             MyKeyboard.KEYCODE_DELETE -> {
-                if (keyboard!!.mShiftState == SHIFT_ON_ONE_CHAR) {
-                    keyboard!!.mShiftState = SHIFT_OFF
+                if (keyboard!!.mShiftState == ShiftState.ON_ONE_CHAR) {
+                    keyboard!!.mShiftState = ShiftState.OFF
                 }
 
                 val selectedText = inputConnection.getSelectedText(0)
@@ -112,10 +112,10 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             MyKeyboard.KEYCODE_SHIFT -> {
                 if (keyboardMode == KEYBOARD_LETTERS) {
                     when {
-                        keyboard!!.mShiftState == SHIFT_ON_PERMANENT -> keyboard!!.mShiftState = SHIFT_OFF
-                        System.currentTimeMillis() - lastShiftPressTS < SHIFT_PERM_TOGGLE_SPEED -> keyboard!!.mShiftState = SHIFT_ON_PERMANENT
-                        keyboard!!.mShiftState == SHIFT_ON_ONE_CHAR -> keyboard!!.mShiftState = SHIFT_OFF
-                        keyboard!!.mShiftState == SHIFT_OFF -> keyboard!!.mShiftState = SHIFT_ON_ONE_CHAR
+                        keyboard!!.mShiftState == ShiftState.ON_PERMANENT -> keyboard!!.mShiftState = ShiftState.OFF
+                        System.currentTimeMillis() - lastShiftPressTS < SHIFT_PERM_TOGGLE_SPEED -> keyboard!!.mShiftState = ShiftState.ON_PERMANENT
+                        keyboard!!.mShiftState == ShiftState.ON_ONE_CHAR -> keyboard!!.mShiftState = ShiftState.OFF
+                        keyboard!!.mShiftState == ShiftState.OFF -> keyboard!!.mShiftState = ShiftState.ON_ONE_CHAR
                     }
 
                     lastShiftPressTS = System.currentTimeMillis()
@@ -157,7 +157,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             }
             else -> {
                 var codeChar = code.toChar()
-                if (Character.isLetter(codeChar) && keyboard!!.mShiftState > SHIFT_OFF) {
+                if (Character.isLetter(codeChar) && keyboard!!.mShiftState > ShiftState.OFF) {
                     codeChar = Character.toUpperCase(codeChar)
                 }
 
@@ -173,8 +173,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     inputConnection.commitText(codeChar.toString(), 1)
                 }
 
-                if (keyboard!!.mShiftState == SHIFT_ON_ONE_CHAR && keyboardMode == KEYBOARD_LETTERS) {
-                    keyboard!!.mShiftState = SHIFT_OFF
+                if (keyboard!!.mShiftState == ShiftState.ON_ONE_CHAR && keyboardMode == KEYBOARD_LETTERS) {
+                    keyboard!!.mShiftState = ShiftState.OFF
                     keyboardView!!.invalidateAllKeys()
                 }
             }
@@ -191,9 +191,9 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType)
 
             val editorInfo = currentInputEditorInfo
-            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != SHIFT_ON_PERMANENT) {
+            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != ShiftState.ON_PERMANENT) {
                 if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
-                    keyboard?.setShifted(SHIFT_ON_ONE_CHAR)
+                    keyboard?.setShifted(ShiftState.ON_ONE_CHAR)
                 }
             }
 

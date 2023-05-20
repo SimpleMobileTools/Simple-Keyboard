@@ -1,8 +1,10 @@
 package com.simplemobiletools.keyboard.helpers
 
-const val SHIFT_OFF = 0
-const val SHIFT_ON_ONE_CHAR = 1
-const val SHIFT_ON_PERMANENT = 2
+enum class ShiftState {
+    OFF,
+    ON_ONE_CHAR,
+    ON_PERMANENT;
+}
 
 // limit the count of alternative characters that show up at long pressing a key
 const val MAX_KEYS_PER_MINI_ROW = 9
@@ -11,6 +13,7 @@ const val MAX_KEYS_PER_MINI_ROW = 9
 const val VIBRATE_ON_KEYPRESS = "vibrate_on_keypress"
 const val SHOW_POPUP_ON_KEYPRESS = "show_popup_on_keypress"
 const val SHOW_KEY_BORDERS = "show_key_borders"
+const val SENTENCES_CAPITALIZATION = "show_key_borders"
 const val LAST_EXPORTED_CLIPS_FOLDER = "last_exported_clips_folder"
 const val KEYBOARD_LANGUAGE = "keyboard_language"
 const val HEIGHT_MULTIPLIER = "height_multiplier"
