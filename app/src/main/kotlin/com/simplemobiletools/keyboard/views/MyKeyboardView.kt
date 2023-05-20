@@ -569,6 +569,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         for (i in 0 until keyCount) {
             val key = keys[i]
             val code = key.code
+
+            // TODO: Space key background on a KEYBOARD_PHONE should not be applied
             setupKeyBackground(key, code, canvas)
 
             // Switch the character to uppercase if shift is pressed
@@ -674,9 +676,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun setupKeyBackground(key: MyKeyboard.Key, keyCode: Int, canvas: Canvas) {
-        val keyBackground = when (keyCode) {
-            KEYCODE_SPACE -> getSpaceKeyBackground()
-            KEYCODE_ENTER -> getEnterKeyBackground()
+        val keyBackground = when {
+            keyCode == KEYCODE_SPACE && key.label.isBlank() -> getSpaceKeyBackground()
+            keyCode == KEYCODE_ENTER -> getEnterKeyBackground()
             else -> mKeyBackground
         }
 

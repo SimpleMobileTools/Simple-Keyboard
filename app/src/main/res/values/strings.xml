@@ -35,7 +35,7 @@
     <string name="show_key_borders">Show key borders</string>
     <string name="show_numbers_row">Show numbers on a separate row</string>
     <string name="enable_sentences_capitalization">Capisalise the first word of each sentence</string>
-c    <!-- Emojis -->
+    <!-- Emojis -->
     <string name="emojis">Emojis</string>
     <!--
         Haven't found some strings? There's more at

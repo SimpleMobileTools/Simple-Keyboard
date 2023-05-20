@@ -34,6 +34,7 @@
     <string name="keyboard_height">Výška klávesnice</string>
     <string name="show_key_borders">Zobraziť hranice kláves</string>
     <string name="show_numbers_row">Zobraziť čísla na samostatnom riadku</string>
+    <string name="start_sentences_capitalised">Začať vety veľkým písmenom</string>
     <!-- Emojis -->
     <string name="emojis">Emoji</string>
     <!--
