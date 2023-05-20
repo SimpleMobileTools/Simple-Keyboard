@@ -207,17 +207,17 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/settings_enable_capitalization_row_holder"
+                android:id="@+id/settings_start_sentences_capitalised_holder"
                 style="@style/SettingsHolderCheckboxStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.simplemobiletools.commons.views.MyAppCompatCheckbox
-                    android:id="@+id/settings_enable_sentences_capitalization_row"
+                    android:id="@+id/settings_start_sentences_capitalised_row"
                     style="@style/SettingsCheckboxStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/enable_sentences_capitalization" />
+                    android:text="@string/start_sentences_capitalised" />
 
             </RelativeLayout>
 

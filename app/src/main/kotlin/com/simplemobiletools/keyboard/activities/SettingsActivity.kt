@@ -163,10 +163,10 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupSentencesCapitalization() {
-        settings_enable_sentences_capitalization_row.isChecked = config.enableSentencesCapitalization
-        settings_enable_capitalization_row_holder.setOnClickListener {
-            settings_enable_sentences_capitalization_row.toggle()
-            config.enableSentencesCapitalization = settings_enable_sentences_capitalization_row.isChecked
+        settings_start_sentences_capitalised_row.isChecked = config.enableSentencesCapitalization
+        settings_start_sentences_capitalised_holder.setOnClickListener {
+            settings_start_sentences_capitalised_row.toggle()
+            config.enableSentencesCapitalization = settings_start_sentences_capitalised_row.isChecked
         }
     }
 
