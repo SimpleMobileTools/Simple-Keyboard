@@ -44,6 +44,7 @@ class SettingsActivity : SimpleActivity() {
         setupKeyboardLanguage()
         setupKeyboardHeightMultiplier()
         setupShowClipboardContent()
+        setupSentencesCapitalization()
         setupShowNumbersRow()
 
         updateTextColors(settings_nested_scrollview)
@@ -160,6 +161,15 @@ class SettingsActivity : SimpleActivity() {
             config.showClipboardContent = settings_show_clipboard_content.isChecked
         }
     }
+
+    private fun setupSentencesCapitalization() {
+        settings_enable_sentences_capitalization_row.isChecked = config.enableSentencesCapitalization
+        settings_enable_capitalization_row_holder.setOnClickListener {
+            settings_enable_sentences_capitalization_row.toggle()
+            config.enableSentencesCapitalization = settings_show_numbers_row.isChecked
+        }
+    }
+
     private fun setupShowNumbersRow() {
         settings_show_numbers_row.isChecked = config.showNumbersRow
         settings_show_numbers_row_holder.setOnClickListener {

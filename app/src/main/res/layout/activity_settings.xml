@@ -190,6 +190,7 @@
                     android:text="@string/show_clipboard_content" />
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/settings_show_numbers_row_holder"
                 style="@style/SettingsHolderCheckboxStyle"
@@ -202,6 +203,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/show_numbers_row" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_enable_capitalization_row_holder"
+                style="@style/SettingsHolderCheckboxStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+                    android:id="@+id/settings_enable_sentences_capitalization_row"
+                    style="@style/SettingsCheckboxStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enable_sentences_capitalization" />
 
             </RelativeLayout>
 
