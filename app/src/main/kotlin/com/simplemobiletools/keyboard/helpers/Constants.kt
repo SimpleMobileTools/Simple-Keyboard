@@ -1,9 +1,49 @@
 package com.simplemobiletools.keyboard.helpers
 
+import android.content.Context
+import com.simplemobiletools.keyboard.extensions.config
+import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SPACE
+
 enum class ShiftState {
     OFF,
     ON_ONE_CHAR,
     ON_PERMANENT;
+
+    companion object {
+        private val endOfSentenceChars: List<Char> = listOf('.', '?', '!')
+
+        fun getDefaultShiftState(context: Context): ShiftState {
+            return when (context.config.enableSentencesCapitalization) {
+                true -> ON_ONE_CHAR
+                else -> OFF
+            }
+        }
+
+        fun getShiftStateForText(context: Context, newText: CharSequence?): ShiftState {
+            if (context.config.enableSentencesCapitalization.not()) return OFF
+
+            val twoLastSymbols = newText?.takeLast(2)
+            return when {
+                twoLastSymbols?.getOrNull(1) == KEYCODE_SPACE.toChar() && endOfSentenceChars.contains(twoLastSymbols.getOrNull(0)) -> {
+                    ON_ONE_CHAR
+                }
+
+                else -> OFF
+            }
+        }
+
+        fun shouldCapitalizeSentence(previousChar: Char?, currentChar: Char): Boolean {
+            return currentChar.code == KEYCODE_SPACE && endOfSentenceChars.contains(previousChar)
+        }
+
+        fun shouldCapitalizeOnDelete(text: CharSequence?): Boolean {
+            if (text.isNullOrEmpty()) {
+                return true
+            }
+
+            return shouldCapitalizeSentence(currentChar = text.last(), previousChar = text.getOrNull(text.lastIndex - 1))
+        }
+    }
 }
 
 // limit the count of alternative characters that show up at long pressing a key

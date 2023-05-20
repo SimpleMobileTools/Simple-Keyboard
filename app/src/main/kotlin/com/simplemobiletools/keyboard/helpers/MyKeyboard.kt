@@ -255,13 +255,14 @@ class MyKeyboard {
      * @param enterKeyType determines what icon should we show on Enter key
      */
     @JvmOverloads
-    constructor(context: Context, @XmlRes xmlLayoutResId: Int, enterKeyType: Int) {
+    constructor(context: Context, @XmlRes xmlLayoutResId: Int, enterKeyType: Int, shiftState: ShiftState = ShiftState.OFF) {
         mDisplayWidth = context.resources.displayMetrics.widthPixels
         mDefaultHorizontalGap = 0
         mDefaultWidth = mDisplayWidth / 10
         mDefaultHeight = mDefaultWidth
         mKeyboardHeightMultiplier = getKeyboardHeightMultiplier(context.config.keyboardHeightMultiplier)
         mKeys = ArrayList()
+        mShiftState = shiftState
         mEnterKeyType = enterKeyType
         loadKeyboard(context, context.resources.getXml(xmlLayoutResId))
     }
