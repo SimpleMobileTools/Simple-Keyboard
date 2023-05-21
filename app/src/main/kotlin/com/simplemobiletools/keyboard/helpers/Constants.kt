@@ -20,7 +20,7 @@ enum class ShiftState {
         }
 
         fun getShiftStateForText(context: Context, newText: String?): ShiftState {
-            if (context.config.enableSentencesCapitalization.not()) {
+            if (!context.config.enableSentencesCapitalization) {
                 return OFF
             }
 
@@ -36,7 +36,7 @@ enum class ShiftState {
         }
 
         fun getCapitalizationOnDelete(context: Context, text: CharSequence?): ShiftState {
-            if (context.config.enableSentencesCapitalization.not()) {
+            if (!context.config.enableSentencesCapitalization) {
                 return OFF
             }
 
