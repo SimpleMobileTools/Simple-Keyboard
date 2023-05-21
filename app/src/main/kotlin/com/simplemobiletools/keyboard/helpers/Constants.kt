@@ -19,29 +19,40 @@ enum class ShiftState {
             }
         }
 
-        fun getShiftStateForText(context: Context, newText: CharSequence?): ShiftState {
-            if (context.config.enableSentencesCapitalization.not()) return OFF
+        fun getShiftStateForText(context: Context, newText: String?): ShiftState {
+            if (context.config.enableSentencesCapitalization.not()) {
+                return OFF
+            }
 
             val twoLastSymbols = newText?.takeLast(2)
             return when {
-                twoLastSymbols?.getOrNull(1) == KEYCODE_SPACE.toChar() && endOfSentenceChars.contains(twoLastSymbols.getOrNull(0)) -> {
+                shouldCapitalizeSentence(previousChar = twoLastSymbols?.getOrNull(0), currentChar = twoLastSymbols?.getOrNull(1)) -> {
                     ON_ONE_CHAR
                 }
-
-                else -> OFF
+                else -> {
+                    OFF
+                }
             }
         }
 
-        fun shouldCapitalizeSentence(previousChar: Char?, currentChar: Char): Boolean {
+        fun getCapitalizationOnDelete(context: Context, text: CharSequence?): ShiftState {
+            if (context.config.enableSentencesCapitalization.not()) {
+                return OFF
+            }
+
+            return if (text.isNullOrEmpty() || shouldCapitalizeSentence(currentChar = text.last(), previousChar = text.getOrNull(text.lastIndex - 1))) {
+                ON_ONE_CHAR
+            } else {
+                OFF
+            }
+        }
+
+        private fun shouldCapitalizeSentence(previousChar: Char?, currentChar: Char?): Boolean {
+            if (previousChar == null || currentChar == null) {
+                return false
+            }
+
             return currentChar.code == KEYCODE_SPACE && endOfSentenceChars.contains(previousChar)
-        }
-
-        fun shouldCapitalizeOnDelete(text: CharSequence?): Boolean {
-            if (text.isNullOrEmpty()) {
-                return true
-            }
-
-            return shouldCapitalizeSentence(currentChar = text.last(), previousChar = text.getOrNull(text.lastIndex - 1))
         }
     }
 }

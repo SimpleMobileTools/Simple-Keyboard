@@ -95,15 +95,10 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
         when (code) {
             MyKeyboard.KEYCODE_DELETE -> {
-                if (keyboard!!.mShiftState == ShiftState.ON_ONE_CHAR) {
-                    keyboard!!.setShifted(ShiftState.OFF)
-                }
 
-                if (config.enableSentencesCapitalization) {
+                if (keyboard!!.mShiftState != ShiftState.ON_PERMANENT) {
                     val extractedText = inputConnection.getTextBeforeCursor(3, 0)?.dropLast(1)
-                    if (ShiftState.shouldCapitalizeOnDelete(text = extractedText)) {
-                        keyboard!!.setShifted(ShiftState.ON_ONE_CHAR)
-                    }
+                    keyboard!!.setShifted(ShiftState.getCapitalizationOnDelete(context = this, text = extractedText))
                 }
 
                 val selectedText = inputConnection.getSelectedText(0)
@@ -192,16 +187,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     inputConnection.commitText(codeChar.toString(), 1)
                 }
 
-                if (keyboardMode == KEYBOARD_LETTERS) {
-                    if (keyboard!!.mShiftState == ShiftState.ON_ONE_CHAR) {
-                        keyboard!!.setShifted(ShiftState.OFF)
-                    }
-                    if (config.enableSentencesCapitalization && ShiftState.shouldCapitalizeSentence(
-                            previousChar = originalText.lastOrNull(), currentChar = code.toChar()
-                        )
-                    ) {
-                        keyboard!!.setShifted(ShiftState.ON_ONE_CHAR)
-                    }
+                if (keyboardMode == KEYBOARD_LETTERS && keyboard!!.mShiftState != ShiftState.ON_PERMANENT) {
+                    keyboard!!.setShifted(ShiftState.getShiftStateForText(this, newText = "$originalText$codeChar"))
                     keyboardView!!.invalidateAllKeys()
                 }
 
@@ -218,7 +205,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             // TODO: Change keyboardMode to enum class
             keyboardMode = KEYBOARD_LETTERS
             val text = currentInputConnection?.getExtractedText(ExtractedTextRequest(), 0)?.text
-            val newShiftState = ShiftState.getShiftStateForText(this, text)
+            val newShiftState = ShiftState.getShiftStateForText(this, text?.toString().orEmpty())
 
             keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType, shiftState = newShiftState)
 
