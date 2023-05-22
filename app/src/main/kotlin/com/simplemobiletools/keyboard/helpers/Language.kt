@@ -46,6 +46,15 @@ enum class Language(@StringRes private val stringRes: Int, private val layout: I
     ),
     GREEK(
         R.string.translation_greek, R.xml.keys_letters_greek
+    ),
+    Norwegian(
+        R.string.translation_norwegian, R.xml.keys_letters_norwegian
+    ),
+    Swedish(
+        R.string.translation_swedish, R.xml.keys_letters_swedish
+    ),
+    Danish(
+        R.string.translation_danish, R.xml.keys_letters_danish
     );
 
     fun getName(context: Context): String {
