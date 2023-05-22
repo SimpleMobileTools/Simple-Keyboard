@@ -34,7 +34,7 @@
     <string name="keyboard_height">Billentyűzet magassága</string>
     <string name="show_key_borders">Gombszélek megjelenítése</string>
     <string name="show_numbers_row">Számok megjelenítése külön sorban</string>
-    <string name="start_sentences_capitalised">Start sentences with a capital letter</string>
+    <string name="start_sentences_capitalized">Start sentences with a capital letter</string>
     <!-- Emojis -->
     <string name="emojis">Emojik</string>
     <!--

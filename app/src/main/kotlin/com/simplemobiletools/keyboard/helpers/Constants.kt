@@ -1,8 +1,61 @@
 package com.simplemobiletools.keyboard.helpers
 
-const val SHIFT_OFF = 0
-const val SHIFT_ON_ONE_CHAR = 1
-const val SHIFT_ON_PERMANENT = 2
+import android.content.Context
+import com.simplemobiletools.keyboard.extensions.config
+import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SPACE
+
+enum class ShiftState {
+    OFF,
+    ON_ONE_CHAR,
+    ON_PERMANENT;
+
+    companion object {
+        private val endOfSentenceChars: List<Char> = listOf('.', '?', '!')
+
+        fun getDefaultShiftState(context: Context): ShiftState {
+            return when (context.config.enableSentencesCapitalization) {
+                true -> ON_ONE_CHAR
+                else -> OFF
+            }
+        }
+
+        fun getShiftStateForText(context: Context, newText: String?): ShiftState {
+            if (!context.config.enableSentencesCapitalization) {
+                return OFF
+            }
+
+            val twoLastSymbols = newText?.takeLast(2)
+            return when {
+                shouldCapitalizeSentence(previousChar = twoLastSymbols?.getOrNull(0), currentChar = twoLastSymbols?.getOrNull(1)) -> {
+                    ON_ONE_CHAR
+                }
+                else -> {
+                    OFF
+                }
+            }
+        }
+
+        fun getCapitalizationOnDelete(context: Context, text: CharSequence?): ShiftState {
+            if (!context.config.enableSentencesCapitalization) {
+                return OFF
+            }
+
+            return if (text.isNullOrEmpty() || shouldCapitalizeSentence(currentChar = text.last(), previousChar = text.getOrNull(text.lastIndex - 1))) {
+                ON_ONE_CHAR
+            } else {
+                OFF
+            }
+        }
+
+        private fun shouldCapitalizeSentence(previousChar: Char?, currentChar: Char?): Boolean {
+            if (previousChar == null || currentChar == null) {
+                return false
+            }
+
+            return currentChar.code == KEYCODE_SPACE && endOfSentenceChars.contains(previousChar)
+        }
+    }
+}
 
 // limit the count of alternative characters that show up at long pressing a key
 const val MAX_KEYS_PER_MINI_ROW = 9
@@ -11,6 +64,7 @@ const val MAX_KEYS_PER_MINI_ROW = 9
 const val VIBRATE_ON_KEYPRESS = "vibrate_on_keypress"
 const val SHOW_POPUP_ON_KEYPRESS = "show_popup_on_keypress"
 const val SHOW_KEY_BORDERS = "show_key_borders"
+const val SENTENCES_CAPITALIZATION = "sentences_capitalization"
 const val LAST_EXPORTED_CLIPS_FOLDER = "last_exported_clips_folder"
 const val KEYBOARD_LANGUAGE = "keyboard_language"
 const val HEIGHT_MULTIPLIER = "height_multiplier"

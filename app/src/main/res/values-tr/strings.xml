@@ -34,7 +34,7 @@
     <string name="keyboard_height">Klavye yüksekliği</string>
     <string name="show_key_borders">Tuş sınırlarını göster</string>
     <string name="show_numbers_row">Sayıları ayrı bir satırda göster</string>
-    <string name="start_sentences_capitalised">Cümlelere büyük harfle başla</string>
+    <string name="start_sentences_capitalized">Cümlelere büyük harfle başla</string>
     <!-- Emojis -->
     <string name="emojis">Emojiler</string>
     <!--
