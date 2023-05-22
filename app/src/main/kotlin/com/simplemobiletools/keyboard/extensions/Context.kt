@@ -149,40 +149,9 @@ fun Context.setupKeyboardDialogStuff(
 }
 
 fun Context.getKeyboardLanguages(): ArrayList<RadioItem> {
-    return arrayListOf(
-        RadioItem(LANGUAGE_BENGALI, getKeyboardLanguageText(LANGUAGE_BENGALI)),
-        RadioItem(LANGUAGE_BULGARIAN, getKeyboardLanguageText(LANGUAGE_BULGARIAN)),
-        RadioItem(LANGUAGE_ENGLISH_QWERTY, getKeyboardLanguageText(LANGUAGE_ENGLISH_QWERTY)),
-        RadioItem(LANGUAGE_ENGLISH_QWERTZ, getKeyboardLanguageText(LANGUAGE_ENGLISH_QWERTZ)),
-        RadioItem(LANGUAGE_ENGLISH_DVORAK, getKeyboardLanguageText(LANGUAGE_ENGLISH_DVORAK)),
-        RadioItem(LANGUAGE_FRENCH, getKeyboardLanguageText(LANGUAGE_FRENCH)),
-        RadioItem(LANGUAGE_GERMAN, getKeyboardLanguageText(LANGUAGE_GERMAN)),
-        RadioItem(LANGUAGE_GREEK, getKeyboardLanguageText(LANGUAGE_GREEK)),
-        RadioItem(LANGUAGE_LITHUANIAN, getKeyboardLanguageText(LANGUAGE_LITHUANIAN)),
-        RadioItem(LANGUAGE_ROMANIAN, getKeyboardLanguageText(LANGUAGE_ROMANIAN)),
-        RadioItem(LANGUAGE_RUSSIAN, getKeyboardLanguageText(LANGUAGE_RUSSIAN)),
-        RadioItem(LANGUAGE_SLOVENIAN, getKeyboardLanguageText(LANGUAGE_SLOVENIAN)),
-        RadioItem(LANGUAGE_SPANISH, getKeyboardLanguageText(LANGUAGE_SPANISH)),
-        RadioItem(LANGUAGE_TURKISH_Q, getKeyboardLanguageText(LANGUAGE_TURKISH_Q)),
-    )
+    val languages = Language.values().map { RadioItem(it.ordinal, it.getName(this)) }
+    return ArrayList(languages)
 }
 
-fun Context.getKeyboardLanguageText(language: Int): String {
-    return when (language) {
-        LANGUAGE_BENGALI -> getString(R.string.translation_bengali)
-        LANGUAGE_BULGARIAN -> getString(R.string.translation_bulgarian)
-        LANGUAGE_ENGLISH_DVORAK -> "${getString(R.string.translation_english)} (DVORAK)"
-        LANGUAGE_ENGLISH_QWERTZ -> "${getString(R.string.translation_english)} (QWERTZ)"
-        LANGUAGE_FRENCH -> getString(R.string.translation_french)
-        LANGUAGE_GERMAN -> getString(R.string.translation_german)
-        LANGUAGE_GREEK -> getString(R.string.translation_greek)
-        LANGUAGE_LITHUANIAN -> getString(R.string.translation_lithuanian)
-        LANGUAGE_ROMANIAN -> getString(R.string.translation_romanian)
-        LANGUAGE_RUSSIAN -> getString(R.string.translation_russian)
-        LANGUAGE_SLOVENIAN -> getString(R.string.translation_slovenian)
-        LANGUAGE_SPANISH -> getString(R.string.translation_spanish)
-        LANGUAGE_TURKISH_Q -> "${getString(R.string.translation_turkish)} (Q)"
-        else -> "${getString(R.string.translation_english)} (QWERTY)"
-    }
-}
+fun Context.getKeyboardLanguageText(language: Int) = Language.getKeyboardName(this, language)
 

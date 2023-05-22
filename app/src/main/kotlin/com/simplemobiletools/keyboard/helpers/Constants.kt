@@ -1,5 +1,9 @@
 package com.simplemobiletools.keyboard.helpers
 
+import android.content.Context
+import androidx.annotation.StringRes
+import com.simplemobiletools.keyboard.R
+
 const val SHIFT_OFF = 0
 const val SHIFT_ON_ONE_CHAR = 1
 const val SHIFT_ON_PERMANENT = 2
@@ -21,20 +25,72 @@ const val SHOW_NUMBERS_ROW = "show_numbers_row"
 const val ITEM_SECTION_LABEL = 0
 const val ITEM_CLIP = 1
 
-const val LANGUAGE_ENGLISH_QWERTY = 0
-const val LANGUAGE_RUSSIAN = 1
-const val LANGUAGE_FRENCH = 2
-const val LANGUAGE_ENGLISH_QWERTZ = 3
-const val LANGUAGE_SPANISH = 4
-const val LANGUAGE_GERMAN = 5
-const val LANGUAGE_ENGLISH_DVORAK = 6
-const val LANGUAGE_ROMANIAN = 7
-const val LANGUAGE_SLOVENIAN = 8
-const val LANGUAGE_BULGARIAN = 9
-const val LANGUAGE_TURKISH_Q = 10
-const val LANGUAGE_LITHUANIAN = 11
-const val LANGUAGE_BENGALI = 12
-const val LANGUAGE_GREEK = 13
+enum class Language(@StringRes private val stringRes: Int, private val layout: Int) {
+    ENGLISH_QWERTY(
+        R.string.translation_english, R.xml.keys_letters_english_qwerty
+    ),
+    RUSSIAN(
+        R.string.translation_russian, R.xml.keys_letters_russian
+    ),
+    FRENCH(
+        R.string.translation_french, R.xml.keys_letters_french
+    ),
+    ENGLISH_QWERTZ(
+        R.string.translation_english, R.xml.keys_letters_english_qwertz
+    ),
+    SPANISH(
+        R.string.translation_spanish, R.string.translation_spanish
+    ),
+    GERMAN(
+        R.string.translation_german, R.xml.keys_letters_german
+    ),
+    ENGLISH_DVORAK(
+        R.string.translation_english, R.xml.keys_letters_english_dvorak
+    ),
+    ROMANIAN(
+        R.string.translation_romanian, R.xml.keys_letters_romanian
+    ),
+    SLOVENIAN(
+        R.string.translation_slovenian, R.xml.keys_letters_slovenian
+    ),
+    BULGARIAN(
+        R.string.translation_bulgarian, R.xml.keys_letters_bulgarian
+    ),
+    TURKISH_Q(
+        R.string.translation_turkish, R.xml.keys_letters_turkish_q
+    ),
+    LITHUANIAN(
+        R.string.translation_lithuanian, R.xml.keys_letters_lithuanian
+    ),
+    BENGALI(
+        R.string.translation_bengali, R.xml.keys_letters_bengali
+    ),
+    GREEK(
+        R.string.translation_greek, R.xml.keys_letters_greek
+    );
+
+    fun getName(context: Context): String {
+        with(context) {
+            return when (val language = this@Language) {
+                ENGLISH_DVORAK -> "${getString(language.stringRes)} (DVORAK)"
+                ENGLISH_QWERTY -> "${getString(language.stringRes)} (QWERTY)"
+                ENGLISH_QWERTZ -> "${getString(language.stringRes)} (QWERTZ)"
+                else -> getString(language.stringRes)
+            }
+        }
+    }
+
+    companion object {
+        fun getKeyboardLayout(keyboardLanguage: Int): Int {
+            return Language.values().getOrElse(keyboardLanguage) { ENGLISH_QWERTY }.layout
+        }
+
+        fun getKeyboardName(context: Context, language: Int): String {
+            return Language.values().getOrElse(language) { ENGLISH_QWERTY }.getName(context)
+        }
+    }
+
+}
 
 // keyboard height multiplier options
 const val KEYBOARD_HEIGHT_MULTIPLIER_SMALL = 1
