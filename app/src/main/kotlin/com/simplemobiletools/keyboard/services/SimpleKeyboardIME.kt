@@ -195,7 +195,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             }
         }
 
-        if (code != MyKeyboard.KEYCODE_SHIFT) {
+        if (code != MyKeyboard.KEYCODE_SHIFT && config.enableSentencesCapitalization) {
             updateShiftKeyState()
         }
     }
