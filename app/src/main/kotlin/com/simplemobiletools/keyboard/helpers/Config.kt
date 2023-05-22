@@ -18,7 +18,7 @@ class Config(context: Context) : BaseConfig(context) {
         set(showPopupOnKeypress) = prefs.edit().putBoolean(SHOW_POPUP_ON_KEYPRESS, showPopupOnKeypress).apply()
 
     var enableSentencesCapitalization: Boolean
-        get() = prefs.getBoolean(SENTENCES_CAPITALIZATION, false)
+        get() = prefs.getBoolean(SENTENCES_CAPITALIZATION, true)
         set(enableCapitalization) = prefs.edit().putBoolean(SENTENCES_CAPITALIZATION, enableCapitalization).apply()
 
     var showKeyBorders: Boolean
