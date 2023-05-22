@@ -34,7 +34,7 @@ class MyKeyboard {
     var mKeyboardHeightMultiplier: Float = 1F
 
     /** Is the keyboard in the shifted state  */
-    var mShiftState = SHIFT_OFF
+    var mShiftState = ShiftState.OFF
 
     /** Total height of the keyboard, including the padding and keys  */
     var mHeight = 0
@@ -258,13 +258,14 @@ class MyKeyboard {
      * @param enterKeyType determines what icon should we show on Enter key
      */
     @JvmOverloads
-    constructor(context: Context, @XmlRes xmlLayoutResId: Int, enterKeyType: Int) {
+    constructor(context: Context, @XmlRes xmlLayoutResId: Int, enterKeyType: Int, shiftState: ShiftState = ShiftState.OFF) {
         mDisplayWidth = context.resources.displayMetrics.widthPixels
         mDefaultHorizontalGap = 0
         mDefaultWidth = mDisplayWidth / 10
         mDefaultHeight = mDefaultWidth
         mKeyboardHeightMultiplier = getKeyboardHeightMultiplier(context.config.keyboardHeightMultiplier)
         mKeys = ArrayList()
+        mShiftState = shiftState
         mEnterKeyType = enterKeyType
         loadKeyboard(context, context.resources.getXml(xmlLayoutResId))
     }
@@ -315,12 +316,11 @@ class MyKeyboard {
         mRows.add(row)
     }
 
-    fun setShifted(shiftState: Int): Boolean {
+    fun setShifted(shiftState: ShiftState): Boolean {
         if (this.mShiftState != shiftState) {
             this.mShiftState = shiftState
             return true
         }
-
         return false
     }
 
