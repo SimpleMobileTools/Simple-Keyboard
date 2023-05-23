@@ -12,6 +12,14 @@ enum class ShiftState {
 
     companion object {
         private const val MIN_TEXT_LENGTH = 2
+        private val inputTypeExceptions = listOf(
+            InputType.TYPE_TEXT_VARIATION_PASSWORD,
+            InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD,
+            InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD,
+            InputType.TYPE_NUMBER_VARIATION_PASSWORD,
+            InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
+            InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
+        )
         private val endOfSentenceChars: List<Char> = listOf('.', '?', '!')
 
         fun getDefaultShiftState(context: Context, inputTypeClassVariation: Int): ShiftState {
@@ -32,6 +40,7 @@ enum class ShiftState {
                 shouldCapitalize(context, text) -> {
                     ON_ONE_CHAR
                 }
+
                 else -> {
                     OFF
                 }
@@ -63,12 +72,7 @@ enum class ShiftState {
         }
 
         fun isInputTypePasswordOrEmail(inputTypeVariation: Int): Boolean {
-            return inputTypeVariation == InputType.TYPE_TEXT_VARIATION_PASSWORD
-                || inputTypeVariation == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                || inputTypeVariation == InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD
-                || inputTypeVariation == InputType.TYPE_NUMBER_VARIATION_PASSWORD
-                || inputTypeVariation == InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-                || inputTypeVariation == InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
+            return inputTypeVariation in inputTypeExceptions
         }
     }
 }
