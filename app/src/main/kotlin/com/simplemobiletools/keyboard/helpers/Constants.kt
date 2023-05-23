@@ -11,11 +11,11 @@ enum class ShiftState {
     ON_PERMANENT;
 
     companion object {
-        private val MIN_TEXT_LENGTH = 2
+        private const val MIN_TEXT_LENGTH = 2
         private val endOfSentenceChars: List<Char> = listOf('.', '?', '!')
 
         fun getDefaultShiftState(context: Context, inputTypeClassVariation: Int): ShiftState {
-            if (isInputTypePassword(inputTypeClassVariation)) {
+            if (isInputTypePasswordOrEmail(inputTypeClassVariation)) {
                 return OFF
             }
             return when (context.config.enableSentencesCapitalization) {
@@ -25,7 +25,7 @@ enum class ShiftState {
         }
 
         fun getShiftStateForText(context: Context, inputTypeClassVariation: Int, text: String?): ShiftState {
-            if (isInputTypePassword(inputTypeClassVariation)) {
+            if (isInputTypePasswordOrEmail(inputTypeClassVariation)) {
                 return OFF
             }
             return when {
@@ -38,8 +38,13 @@ enum class ShiftState {
             }
         }
 
+        /**
+         * The function is checking whether there is a need in capitalizing based on the given text
+         * @param context Used for checking current sentences capitalization setting
+         * @param text Last text from the input
+         */
         fun shouldCapitalize(context: Context, text: String?): Boolean {
-            //To capitalize first letter in textField
+            // check whether it is the first letter in textField
             if (text.isNullOrEmpty()) {
                 return true
             }
@@ -57,11 +62,13 @@ enum class ShiftState {
             return endOfSentenceChars.contains(twoLastSymbols.first()) && twoLastSymbols.last().code == KEYCODE_SPACE
         }
 
-        fun isInputTypePassword(inputTypeVariation: Int): Boolean {
+        fun isInputTypePasswordOrEmail(inputTypeVariation: Int): Boolean {
             return inputTypeVariation == InputType.TYPE_TEXT_VARIATION_PASSWORD
                 || inputTypeVariation == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
                 || inputTypeVariation == InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD
                 || inputTypeVariation == InputType.TYPE_NUMBER_VARIATION_PASSWORD
+                || inputTypeVariation == InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                || inputTypeVariation == InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
         }
     }
 }

@@ -76,22 +76,22 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             return
         }
 
-        if (keyboardMode != KEYBOARD_LETTERS || ShiftState.isInputTypePassword(inputTypeClassVariation)) {
+        if (keyboardMode != KEYBOARD_LETTERS || ShiftState.isInputTypePasswordOrEmail(inputTypeClassVariation)) {
             return
         }
 
         val text = currentInputConnection.getTextBeforeCursor(2, 0) ?: return
-        //Capitalize first letter on startup or if text is empty
+        // capitalize first letter on startup or if text is empty
         if (code == null || text.isEmpty()) {
             keyboard!!.setShifted(ShiftState.ON_ONE_CHAR)
             keyboardView?.invalidateAllKeys()
             return
         }
 
-        //Capitalize sentences if needed
+        // capitalize sentences if needed
         if (config.enableSentencesCapitalization) {
 
-            //Capitalize on Enter click
+            // capitalize on Enter click
             if (code == MyKeyboard.KEYCODE_ENTER) {
                 keyboard!!.setShifted(ShiftState.ON_ONE_CHAR)
                 keyboardView?.invalidateAllKeys()
@@ -104,10 +104,10 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 keyboardView?.invalidateAllKeys()
                 return
             } else {
-                //Try capitalizing based on the editor info like google keep or google messenger apps
+                // try capitalizing based on the editor info like google keep or google messenger apps
                 val editorInfo = currentInputEditorInfo
 
-                if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != ShiftState.ON_PERMANENT) {
+                if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL) {
                     if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
                         keyboard?.setShifted(ShiftState.ON_ONE_CHAR)
                         keyboardView?.invalidateAllKeys()
@@ -117,7 +117,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             }
         }
 
-        //Else just reset shift to OFF
+        // In other cases reset shift to OFF
         keyboard?.setShifted(ShiftState.OFF)
         keyboardView?.invalidateAllKeys()
     }
@@ -127,6 +127,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         if (keyboard == null || inputConnection == null) {
             return
         }
+
+//        this.keyboardView.setEditorInfo(EditorInfo)
 
         if (code != MyKeyboard.KEYCODE_SHIFT) {
             lastShiftPressTS = 0
