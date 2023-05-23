@@ -3,10 +3,7 @@ package com.simplemobiletools.keyboard.services
 import android.content.SharedPreferences
 import android.inputmethodservice.InputMethodService
 import android.text.InputType
-import android.text.InputType.TYPE_CLASS_DATETIME
-import android.text.InputType.TYPE_CLASS_NUMBER
-import android.text.InputType.TYPE_CLASS_PHONE
-import android.text.InputType.TYPE_MASK_CLASS
+import android.text.InputType.*
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
@@ -37,6 +34,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     private var lastShiftPressTS = 0L
     private var keyboardMode = KEYBOARD_LETTERS
     private var inputTypeClass = InputType.TYPE_CLASS_TEXT
+    private var inputTypeClassVariation = InputType.TYPE_CLASS_TEXT
     private var enterKeyType = IME_ACTION_NONE
     private var switchToLetters = false
 
@@ -64,23 +62,64 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         super.onStartInput(attribute, restarting)
         inputTypeClass = attribute!!.inputType and TYPE_MASK_CLASS
+        inputTypeClassVariation = attribute!!.inputType and TYPE_MASK_VARIATION
+
         enterKeyType = attribute.imeOptions and (IME_MASK_ACTION or IME_FLAG_NO_ENTER_ACTION)
         keyboard = createNewKeyboard()
         keyboardView?.setKeyboard(keyboard!!)
         keyboardView?.setEditorInfo(attribute)
-        updateShiftKeyState()
+        updateShiftKeyState(null)
     }
 
-    private fun updateShiftKeyState() {
-        if (keyboardMode == KEYBOARD_LETTERS) {
-            val editorInfo = currentInputEditorInfo
-            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != ShiftState.ON_PERMANENT) {
-                if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
-                    keyboard?.setShifted(ShiftState.ON_ONE_CHAR)
-                    keyboardView?.invalidateAllKeys()
+    private fun updateShiftKeyState(code: Int?) {
+        if (code == MyKeyboard.KEYCODE_SHIFT || code == MyKeyboard.KEYCODE_DELETE) {
+            return
+        }
+
+        if (keyboardMode != KEYBOARD_LETTERS || ShiftState.isInputTypePassword(inputTypeClassVariation)) {
+            return
+        }
+
+        val text = currentInputConnection.getTextBeforeCursor(2, 0) ?: return
+        //Capitalize first letter on startup or if text is empty
+        if (code == null || text.isEmpty()) {
+            keyboard!!.setShifted(ShiftState.ON_ONE_CHAR)
+            keyboardView?.invalidateAllKeys()
+            return
+        }
+
+        //Capitalize sentences if needed
+        if (config.enableSentencesCapitalization) {
+
+            //Capitalize on Enter click
+            if (code == MyKeyboard.KEYCODE_ENTER) {
+                keyboard!!.setShifted(ShiftState.ON_ONE_CHAR)
+                keyboardView?.invalidateAllKeys()
+                return
+            }
+
+
+            if (ShiftState.shouldCapitalize(this, text.toString())) {
+                keyboard!!.setShifted(ShiftState.ON_ONE_CHAR)
+                keyboardView?.invalidateAllKeys()
+                return
+            } else {
+                //Try capitalizing based on the editor info like google keep or google messenger apps
+                val editorInfo = currentInputEditorInfo
+
+                if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != ShiftState.ON_PERMANENT) {
+                    if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
+                        keyboard?.setShifted(ShiftState.ON_ONE_CHAR)
+                        keyboardView?.invalidateAllKeys()
+                        return
+                    }
                 }
             }
         }
+
+        //Else just reset shift to OFF
+        keyboard?.setShifted(ShiftState.OFF)
+        keyboardView?.invalidateAllKeys()
     }
 
     override fun onKey(code: Int) {
@@ -96,19 +135,22 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         when (code) {
             MyKeyboard.KEYCODE_DELETE -> {
 
-                if (keyboard!!.mShiftState != ShiftState.ON_PERMANENT) {
-                    val extractedText = inputConnection.getTextBeforeCursor(3, 0)?.dropLast(1)
-                    keyboard!!.setShifted(ShiftState.getCapitalizationOnDelete(context = this, text = extractedText))
-                }
-
                 val selectedText = inputConnection.getSelectedText(0)
                 if (TextUtils.isEmpty(selectedText)) {
+                    val text = inputConnection.getTextBeforeCursor(3, 0)?.dropLast(1)
+
+                    if (keyboard?.mShiftState != ShiftState.ON_PERMANENT) {
+                        keyboard?.setShifted(ShiftState.getShiftStateForText(this, inputTypeClassVariation, text?.toString()))
+                        keyboardView?.invalidateAllKeys()
+                    }
+
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL))
                 } else {
+
+
                     inputConnection.commitText("", 1)
                 }
-                keyboardView!!.invalidateAllKeys()
             }
 
             MyKeyboard.KEYCODE_SHIFT -> {
@@ -142,11 +184,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 } else {
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
-
-                    if (config.enableSentencesCapitalization) {
-                        keyboard!!.setShifted(ShiftState.ON_ONE_CHAR)
-                        keyboardView!!.invalidateAllKeys()
-                    }
                 }
             }
 
@@ -186,17 +223,10 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 } else {
                     inputConnection.commitText(codeChar.toString(), 1)
                 }
-
-                if (keyboardMode == KEYBOARD_LETTERS && keyboard!!.mShiftState != ShiftState.ON_PERMANENT) {
-                    keyboard!!.setShifted(ShiftState.getShiftStateForText(this, newText = "$originalText$codeChar"))
-                    keyboardView!!.invalidateAllKeys()
-                }
-
             }
         }
-
-        if (code != MyKeyboard.KEYCODE_SHIFT && config.enableSentencesCapitalization) {
-            updateShiftKeyState()
+        if (keyboard!!.mShiftState != ShiftState.ON_PERMANENT) {
+            updateShiftKeyState(code)
         }
     }
 
@@ -204,8 +234,10 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         if (switchToLetters) {
             // TODO: Change keyboardMode to enum class
             keyboardMode = KEYBOARD_LETTERS
-            val text = currentInputConnection?.getExtractedText(ExtractedTextRequest(), 0)?.text
-            val newShiftState = ShiftState.getShiftStateForText(this, text?.toString().orEmpty())
+
+            //Check if capitalization is needed after switching to letters layout
+            val text = currentInputConnection?.getTextBeforeCursor(2, 0)
+            val newShiftState = ShiftState.getShiftStateForText(this, inputTypeClassVariation, text?.toString())
 
             keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType, shiftState = newShiftState)
 
@@ -261,9 +293,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 getKeyboardLayoutXML()
             }
         }
-
         return MyKeyboard(
-            context = this, xmlLayoutResId = keyboardXml, enterKeyType = enterKeyType, shiftState = ShiftState.getDefaultShiftState(this)
+            context = this, xmlLayoutResId = keyboardXml, enterKeyType = enterKeyType, shiftState = ShiftState.getDefaultShiftState(this, inputTypeClassVariation)
         )
     }
 

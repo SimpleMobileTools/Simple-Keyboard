@@ -1,6 +1,7 @@
 package com.simplemobiletools.keyboard.helpers
 
 import android.content.Context
+import android.text.InputType
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SPACE
 
@@ -10,23 +11,25 @@ enum class ShiftState {
     ON_PERMANENT;
 
     companion object {
+        private val MIN_TEXT_LENGTH = 2
         private val endOfSentenceChars: List<Char> = listOf('.', '?', '!')
 
-        fun getDefaultShiftState(context: Context): ShiftState {
+        fun getDefaultShiftState(context: Context, inputTypeClassVariation: Int): ShiftState {
+            if (isInputTypePassword(inputTypeClassVariation)) {
+                return OFF
+            }
             return when (context.config.enableSentencesCapitalization) {
                 true -> ON_ONE_CHAR
                 else -> OFF
             }
         }
 
-        fun getShiftStateForText(context: Context, newText: String?): ShiftState {
-            if (!context.config.enableSentencesCapitalization) {
+        fun getShiftStateForText(context: Context, inputTypeClassVariation: Int, text: String?): ShiftState {
+            if (isInputTypePassword(inputTypeClassVariation)) {
                 return OFF
             }
-
-            val twoLastSymbols = newText?.takeLast(2)
             return when {
-                shouldCapitalizeSentence(previousChar = twoLastSymbols?.getOrNull(0), currentChar = twoLastSymbols?.getOrNull(1)) -> {
+                shouldCapitalize(context, text) -> {
                     ON_ONE_CHAR
                 }
                 else -> {
@@ -35,24 +38,30 @@ enum class ShiftState {
             }
         }
 
-        fun getCapitalizationOnDelete(context: Context, text: CharSequence?): ShiftState {
+        fun shouldCapitalize(context: Context, text: String?): Boolean {
+            //To capitalize first letter in textField
+            if (text.isNullOrEmpty()) {
+                return true
+            }
+
             if (!context.config.enableSentencesCapitalization) {
-                return OFF
-            }
-
-            return if (text.isNullOrEmpty() || shouldCapitalizeSentence(currentChar = text.last(), previousChar = text.getOrNull(text.lastIndex - 1))) {
-                ON_ONE_CHAR
-            } else {
-                OFF
-            }
-        }
-
-        private fun shouldCapitalizeSentence(previousChar: Char?, currentChar: Char?): Boolean {
-            if (previousChar == null || currentChar == null) {
                 return false
             }
 
-            return currentChar.code == KEYCODE_SPACE && endOfSentenceChars.contains(previousChar)
+            val twoLastSymbols = text.takeLast(2)
+
+            if (twoLastSymbols.length < MIN_TEXT_LENGTH) {
+                return false
+            }
+
+            return endOfSentenceChars.contains(twoLastSymbols.first()) && twoLastSymbols.last().code == KEYCODE_SPACE
+        }
+
+        fun isInputTypePassword(inputTypeVariation: Int): Boolean {
+            return inputTypeVariation == InputType.TYPE_TEXT_VARIATION_PASSWORD
+                || inputTypeVariation == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                || inputTypeVariation == InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD
+                || inputTypeVariation == InputType.TYPE_NUMBER_VARIATION_PASSWORD
         }
     }
 }
