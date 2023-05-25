@@ -5,56 +5,56 @@ import androidx.annotation.StringRes
 import com.simplemobiletools.keyboard.R
 
 enum class Language(@StringRes private val stringRes: Int, private val layout: Int) {
-    ENGLISH_QWERTY(
-        R.string.translation_english, R.xml.keys_letters_english_qwerty
-    ),
-    RUSSIAN(
-        R.string.translation_russian, R.xml.keys_letters_russian
-    ),
-    FRENCH(
-        R.string.translation_french, R.xml.keys_letters_french
-    ),
-    ENGLISH_QWERTZ(
-        R.string.translation_english, R.xml.keys_letters_english_qwertz
-    ),
-    SPANISH(
-        R.string.translation_spanish, R.string.translation_spanish
-    ),
-    GERMAN(
-        R.string.translation_german, R.xml.keys_letters_german
-    ),
-    ENGLISH_DVORAK(
-        R.string.translation_english, R.xml.keys_letters_english_dvorak
-    ),
-    ROMANIAN(
-        R.string.translation_romanian, R.xml.keys_letters_romanian
-    ),
-    SLOVENIAN(
-        R.string.translation_slovenian, R.xml.keys_letters_slovenian
+    BENGALI(
+        R.string.translation_bengali, R.xml.keys_letters_bengali
     ),
     BULGARIAN(
         R.string.translation_bulgarian, R.xml.keys_letters_bulgarian
     ),
-    TURKISH_Q(
-        R.string.translation_turkish, R.xml.keys_letters_turkish_q
+    DANISH(
+        R.string.translation_danish, R.xml.keys_letters_danish
     ),
-    LITHUANIAN(
-        R.string.translation_lithuanian, R.xml.keys_letters_lithuanian
+    ENGLISH_DVORAK(
+        R.string.translation_english, R.xml.keys_letters_english_dvorak
     ),
-    BENGALI(
-        R.string.translation_bengali, R.xml.keys_letters_bengali
+    ENGLISH_QWERTY(
+        R.string.translation_english, R.xml.keys_letters_english_qwerty
+    ),
+    ENGLISH_QWERTZ(
+        R.string.translation_english, R.xml.keys_letters_english_qwertz
+    ),
+    FRENCH(
+        R.string.translation_french, R.xml.keys_letters_french
+    ),
+    GERMAN(
+        R.string.translation_german, R.xml.keys_letters_german
     ),
     GREEK(
         R.string.translation_greek, R.xml.keys_letters_greek
     ),
-    Norwegian(
+    LITHUANIAN(
+        R.string.translation_lithuanian, R.xml.keys_letters_lithuanian
+    ),
+    NORWEGIAN(
         R.string.translation_norwegian, R.xml.keys_letters_norwegian
     ),
-    Swedish(
+    ROMANIAN(
+        R.string.translation_romanian, R.xml.keys_letters_romanian
+    ),
+    RUSSIAN(
+        R.string.translation_russian, R.xml.keys_letters_russian
+    ),
+    SLOVENIAN(
+        R.string.translation_slovenian, R.xml.keys_letters_slovenian
+    ),
+    SPANISH(
+        R.string.translation_spanish, R.string.translation_spanish
+    ),
+    SWEDISH(
         R.string.translation_swedish, R.xml.keys_letters_swedish
     ),
-    Danish(
-        R.string.translation_danish, R.xml.keys_letters_danish
+    TURKISH_Q(
+        R.string.translation_turkish, R.xml.keys_letters_turkish_q
     );
 
     fun getName(context: Context): String {
