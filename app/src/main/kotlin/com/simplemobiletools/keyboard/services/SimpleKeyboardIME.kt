@@ -72,11 +72,11 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     }
 
     private fun updateShiftKeyState(code: Int?) {
-        if (code == MyKeyboard.KEYCODE_SHIFT || code == MyKeyboard.KEYCODE_DELETE) {
+        if (keyboardMode != KEYBOARD_LETTERS || ShiftState.isInputTypeAllowedCapitalizing(inputTypeClassVariation)) {
             return
         }
 
-        if (keyboardMode != KEYBOARD_LETTERS || ShiftState.isInputTypePasswordOrEmail(inputTypeClassVariation)) {
+        if (code == MyKeyboard.KEYCODE_SHIFT || code == MyKeyboard.KEYCODE_DELETE) {
             return
         }
 
