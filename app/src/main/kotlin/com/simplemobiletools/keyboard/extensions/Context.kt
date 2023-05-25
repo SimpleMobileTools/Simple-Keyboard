@@ -21,7 +21,7 @@ import com.simplemobiletools.keyboard.databases.ClipsDatabase
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.interfaces.ClipsDao
 
-val Context.config: Config get() = Config.newInstance(applicationContext)
+val Context.config: Config get() = Config.newInstance(applicationContext.safeStorageContext)
 
 val Context.clipsDB: ClipsDao get() = ClipsDatabase.getInstance(applicationContext).ClipsDao()
 
