@@ -34,6 +34,7 @@
     <string name="keyboard_height">Tinggi papan tik</string>
     <string name="show_key_borders">Tampilkan garis luar tombol</string>
     <string name="show_numbers_row">Tampilkan nomor di baris terpisah</string>
+    <string name="start_sentences_capitalized">Start sentences with a capital letter</string>
     <!-- Emojis -->
     <string name="emojis">Emoji</string>
     <!--

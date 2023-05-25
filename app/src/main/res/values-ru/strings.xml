@@ -34,6 +34,7 @@
     <string name="keyboard_height">Высота клавиатуры</string>
     <string name="show_key_borders">Показывать границы кнопок</string>
     <string name="show_numbers_row">Показывать цифры отдельной строкой</string>
+    <string name="start_sentences_capitalized">Начинать предложения с заглавной буквы</string>
     <!-- Emojis -->
     <string name="emojis">Эмодзи</string>
     <!--
