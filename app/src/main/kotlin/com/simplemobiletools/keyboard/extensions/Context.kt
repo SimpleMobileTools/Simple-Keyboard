@@ -149,7 +149,7 @@ fun Context.setupKeyboardDialogStuff(
 }
 
 fun Context.getKeyboardLanguages(): ArrayList<RadioItem> {
-    val languages = Language.values().map { RadioItem(it.ordinal, it.getName(this)) }
+    val languages = Language.sorted(this).map { RadioItem(it.ordinal, it.getName(this)) }
     return ArrayList(languages)
 }
 

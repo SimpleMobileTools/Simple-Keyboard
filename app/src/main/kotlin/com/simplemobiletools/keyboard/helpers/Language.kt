@@ -60,6 +60,8 @@ enum class Language(@StringRes private val stringRes: Int, private val layout: I
     }
 
     companion object {
+        fun sorted(context: Context) = Language.values().sortedBy { context.getString(it.stringRes) }
+
         fun getKeyboardLayout(keyboardLanguage: Int): Int {
             return Language.values().getOrElse(keyboardLanguage) { ENGLISH_QWERTY }.layout
         }
