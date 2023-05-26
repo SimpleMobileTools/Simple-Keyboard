@@ -3,6 +3,7 @@ package com.simplemobiletools.keyboard.extensions
 import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
 import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
@@ -21,9 +22,21 @@ import com.simplemobiletools.keyboard.databases.ClipsDatabase
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.interfaces.ClipsDao
 
-val Context.config: Config get() = Config.newInstance(applicationContext.safeStorageContext)
+val Context.config: Config get() = Config.newInstance(applicationContext)
 
-val Context.clipsDB: ClipsDao get() = ClipsDatabase.getInstance(applicationContext).ClipsDao()
+val Context.safeStorageContext: Context
+    get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        createDeviceProtectedStorageContext()
+    } else {
+        this
+    }
+
+val Context.clipsDB: ClipsDao
+    get() = if (isDeviceLocked) {
+        ClipsDatabase.getInstance(applicationContext.safeStorageContext).ClipsDao()
+    } else {
+        ClipsDatabase.getInstance(applicationContext).ClipsDao()
+    }
 
 fun Context.getCurrentClip(): String? {
     val clipboardManager = (getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)

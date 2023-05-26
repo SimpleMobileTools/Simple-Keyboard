@@ -25,7 +25,6 @@
 
         <activity
             android:name=".activities.SplashActivity"
-            android:directBootAware="true"
             android:exported="false"
             android:theme="@style/SplashTheme" />
 
