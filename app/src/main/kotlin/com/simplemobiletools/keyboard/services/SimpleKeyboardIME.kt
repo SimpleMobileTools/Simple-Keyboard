@@ -13,8 +13,10 @@ import android.view.inputmethod.EditorInfo.IME_FLAG_NO_ENTER_ACTION
 import android.view.inputmethod.EditorInfo.IME_MASK_ACTION
 import android.view.inputmethod.ExtractedTextRequest
 import com.simplemobiletools.commons.extensions.getSharedPrefs
+import com.simplemobiletools.commons.extensions.isDeviceLocked
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
+import com.simplemobiletools.keyboard.extensions.safeStorageContext
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.views.MyKeyboardView
 import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.keyboard_holder
@@ -40,7 +42,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
     override fun onInitializeInterface() {
         super.onInitializeInterface()
-        getSharedPrefs().registerOnSharedPreferenceChangeListener(this)
+        safeStorageContext.getSharedPrefs().registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onCreateInputView(): View {
@@ -63,7 +65,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         super.onStartInput(attribute, restarting)
         inputTypeClass = attribute!!.inputType and TYPE_MASK_CLASS
         inputTypeClassVariation = attribute!!.inputType and TYPE_MASK_VARIATION
-
         enterKeyType = attribute.imeOptions and (IME_MASK_ACTION or IME_FLAG_NO_ENTER_ACTION)
         keyboard = createNewKeyboard()
         keyboardView?.setKeyboard(keyboard!!)

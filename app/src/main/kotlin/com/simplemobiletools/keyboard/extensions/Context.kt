@@ -22,11 +22,12 @@ import com.simplemobiletools.keyboard.databases.ClipsDatabase
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.interfaces.ClipsDao
 
-val Context.config: Config get() = Config.newInstance(applicationContext)
+val Context.config: Config get() = Config.newInstance(applicationContext.safeStorageContext)
 
 val Context.safeStorageContext: Context
     get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        createDeviceProtectedStorageContext()
+        val deviceContext = createDeviceProtectedStorageContext()
+        deviceContext
     } else {
         this
     }

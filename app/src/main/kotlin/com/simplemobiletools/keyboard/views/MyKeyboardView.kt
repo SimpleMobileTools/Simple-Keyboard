@@ -225,9 +225,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mLabelTextSize = resources.getDimension(R.dimen.label_text_size).toInt()
         mPreviewHeight = resources.getDimension(R.dimen.key_height).toInt()
         mSpaceMoveThreshold = resources.getDimension(R.dimen.medium_margin).toInt()
-        mTextColor = context.getProperTextColor()
-        mBackgroundColor = context.getProperBackgroundColor()
-        mPrimaryColor = context.getProperPrimaryColor()
+        mTextColor = context.safeStorageContext.getProperTextColor()
+        mBackgroundColor = context.safeStorageContext.getProperBackgroundColor()
+        mPrimaryColor = context.safeStorageContext.getProperPrimaryColor()
 
         mPreviewPopup = PopupWindow(context)
         mPreviewText = inflater.inflate(resources.getLayout(R.layout.keyboard_key_preview), null) as TextView
@@ -374,12 +374,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     fun setupKeyboard(changedView: View? = null) {
-        mTextColor = context.getProperTextColor()
-        mBackgroundColor = context.getProperBackgroundColor()
-        mPrimaryColor = context.getProperPrimaryColor()
+        with(context.safeStorageContext) {
+            mTextColor = getProperTextColor()
+            mBackgroundColor = getProperBackgroundColor()
+            mPrimaryColor = getProperPrimaryColor()
 
-        mShowKeyBorders = context.config.showKeyBorders
-        mUsingSystemTheme = context.config.isUsingSystemTheme
+            mShowKeyBorders = config.showKeyBorders
+            mUsingSystemTheme = config.isUsingSystemTheme
+        }
+
 
         val isMainKeyboard = changedView == null || changedView != mini_keyboard_view
         mKeyBackground = if (mShowKeyBorders && isMainKeyboard) {
