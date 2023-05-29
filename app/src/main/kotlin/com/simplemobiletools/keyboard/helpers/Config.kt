@@ -48,9 +48,9 @@ class Config(context: Context) : BaseConfig(context) {
     private fun getDefaultLanguage(): Int {
         val conf = context.resources.configuration
         return if (conf.locale.toString().toLowerCase(Locale.getDefault()).startsWith("ru_")) {
-            Language.RUSSIAN.ordinal
+            LANGUAGE_RUSSIAN
         } else {
-            Language.ENGLISH_QWERTY.ordinal
+            LANGUAGE_ENGLISH_QWERTY
         }
     }
 }
