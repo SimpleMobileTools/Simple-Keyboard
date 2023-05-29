@@ -2,6 +2,7 @@ package com.simplemobiletools.keyboard.helpers
 
 import android.content.Context
 import com.simplemobiletools.commons.helpers.BaseConfig
+import com.simplemobiletools.keyboard.extensions.isDeviceLocked
 import com.simplemobiletools.keyboard.extensions.safeStorageContext
 import java.util.*
 
@@ -43,7 +44,11 @@ class Config(context: Context) : BaseConfig(context) {
         set(showClipboardContent) = prefs.edit().putBoolean(SHOW_CLIPBOARD_CONTENT, showClipboardContent).apply()
 
     var showNumbersRow: Boolean
-        get() = prefs.getBoolean(SHOW_NUMBERS_ROW, false)
+        get() = if (!context.isDeviceLocked) {
+            prefs.getBoolean(SHOW_NUMBERS_ROW, false)
+        } else {
+            true
+        }
         set(showNumbersRow) = prefs.edit().putBoolean(SHOW_NUMBERS_ROW, showNumbersRow).apply()
 
     private fun getDefaultLanguage(): Int {

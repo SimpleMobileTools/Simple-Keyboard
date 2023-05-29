@@ -13,7 +13,6 @@ import android.view.inputmethod.EditorInfo.IME_FLAG_NO_ENTER_ACTION
 import android.view.inputmethod.EditorInfo.IME_MASK_ACTION
 import android.view.inputmethod.ExtractedTextRequest
 import com.simplemobiletools.commons.extensions.getSharedPrefs
-import com.simplemobiletools.commons.extensions.isDeviceLocked
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.extensions.safeStorageContext

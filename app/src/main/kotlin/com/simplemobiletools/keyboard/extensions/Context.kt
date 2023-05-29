@@ -23,11 +23,13 @@ val Context.config: Config get() = Config.newInstance(applicationContext.safeSto
 
 val Context.safeStorageContext: Context
     get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && isDeviceLocked) {
-        val deviceStorageContext = createDeviceProtectedStorageContext()
-        deviceStorageContext
+        createDeviceProtectedStorageContext()
     } else {
         this
     }
+
+val Context.shouldShowKeyboardToolbar: Boolean
+    get() = !isDeviceLocked
 
 val Context.isDeviceLocked: Boolean
     get() = (getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager).isDeviceLocked
