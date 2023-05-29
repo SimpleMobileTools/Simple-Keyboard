@@ -1,15 +1,12 @@
 package com.simplemobiletools.keyboard.extensions
 
+import android.app.KeyguardManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
@@ -25,19 +22,18 @@ import com.simplemobiletools.keyboard.interfaces.ClipsDao
 val Context.config: Config get() = Config.newInstance(applicationContext.safeStorageContext)
 
 val Context.safeStorageContext: Context
-    get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        val deviceContext = createDeviceProtectedStorageContext()
-        deviceContext
+    get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && isDeviceLocked) {
+        val deviceStorageContext = createDeviceProtectedStorageContext()
+        deviceStorageContext
     } else {
         this
     }
 
+val Context.isDeviceLocked: Boolean
+    get() = (getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager).isDeviceLocked
+
 val Context.clipsDB: ClipsDao
-    get() = if (isDeviceLocked) {
-        ClipsDatabase.getInstance(applicationContext.safeStorageContext).ClipsDao()
-    } else {
-        ClipsDatabase.getInstance(applicationContext).ClipsDao()
-    }
+    get() = ClipsDatabase.getInstance(applicationContext.safeStorageContext).ClipsDao()
 
 fun Context.getCurrentClip(): String? {
     val clipboardManager = (getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
