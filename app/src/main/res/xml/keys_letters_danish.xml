@@ -81,13 +81,13 @@
         <Key
             app:keyLabel="i"
             app:keyWidth="9.05%p"
-            app:popupCharacters="íìî8ïī"
+            app:popupCharacters="íì8îïī"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="8" />
         <Key
             app:keyLabel="o"
             app:keyWidth="9.05%p"
-            app:popupCharacters="őöøóôòõ9ō"
+            app:popupCharacters="őöøóôò9õō"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="9" />
         <Key
@@ -142,13 +142,13 @@
             app:keyLabel="æ"
             app:keyWidth="9.05%p"
             app:popupCharacters="ä"
-            app:popupKeyboard="@xml/keyboard_popup_template"/>
+            app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:keyEdgeFlags="right"
             app:keyLabel="ø"
             app:keyWidth="9.05%p"
             app:popupCharacters="ö"
-            app:popupKeyboard="@xml/keyboard_popup_template"/>
+            app:popupKeyboard="@xml/keyboard_popup_template" />
 
     </Row>
     <Row>
