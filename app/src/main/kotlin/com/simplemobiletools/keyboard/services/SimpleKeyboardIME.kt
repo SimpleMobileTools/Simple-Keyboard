@@ -298,15 +298,18 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         return when (baseContext.config.keyboardLanguage) {
             LANGUAGE_BENGALI -> R.xml.keys_letters_bengali
             LANGUAGE_BULGARIAN -> R.xml.keys_letters_bulgarian
+            LANGUAGE_DANISH -> R.xml.keys_letters_danish
             LANGUAGE_ENGLISH_DVORAK -> R.xml.keys_letters_english_dvorak
             LANGUAGE_ENGLISH_QWERTZ -> R.xml.keys_letters_english_qwertz
             LANGUAGE_FRENCH -> R.xml.keys_letters_french
             LANGUAGE_GERMAN -> R.xml.keys_letters_german
             LANGUAGE_GREEK -> R.xml.keys_letters_greek
             LANGUAGE_LITHUANIAN -> R.xml.keys_letters_lithuanian
+            LANGUAGE_NORWEGIAN -> R.xml.keys_letters_norwegian
             LANGUAGE_ROMANIAN -> R.xml.keys_letters_romanian
             LANGUAGE_RUSSIAN -> R.xml.keys_letters_russian
             LANGUAGE_SLOVENIAN -> R.xml.keys_letters_slovenian
+            LANGUAGE_SWEDISH -> R.xml.keys_letters_swedish
             LANGUAGE_SPANISH -> R.xml.keys_letters_spanish_qwerty
             LANGUAGE_TURKISH_Q -> R.xml.keys_letters_turkish_q
             else -> R.xml.keys_letters_english_qwerty

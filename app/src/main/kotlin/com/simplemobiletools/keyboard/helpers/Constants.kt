@@ -89,6 +89,9 @@ const val LANGUAGE_TURKISH_Q = 10
 const val LANGUAGE_LITHUANIAN = 11
 const val LANGUAGE_BENGALI = 12
 const val LANGUAGE_GREEK = 13
+const val LANGUAGE_NORWEGIAN = 14
+const val LANGUAGE_SWEDISH = 15
+const val LANGUAGE_DANISH = 16
 
 // keyboard height multiplier options
 const val KEYBOARD_HEIGHT_MULTIPLIER_SMALL = 1
