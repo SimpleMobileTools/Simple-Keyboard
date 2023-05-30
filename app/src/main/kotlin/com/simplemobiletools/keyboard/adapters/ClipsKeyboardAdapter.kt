@@ -15,6 +15,7 @@ import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.extensions.getCurrentClip
 import com.simplemobiletools.keyboard.extensions.getStrokeColor
+import com.simplemobiletools.keyboard.extensions.safeStorageContext
 import com.simplemobiletools.keyboard.helpers.ClipsHelper
 import com.simplemobiletools.keyboard.helpers.ITEM_CLIP
 import com.simplemobiletools.keyboard.helpers.ITEM_SECTION_LABEL
@@ -31,8 +32,9 @@ class ClipsKeyboardAdapter(
 ) : RecyclerView.Adapter<ClipsKeyboardAdapter.ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
-    private var textColor = context.getProperTextColor()
-    private var backgroundColor = context.getProperBackgroundColor()
+
+    private var textColor = context.safeStorageContext.getProperTextColor()
+    private var backgroundColor = context.safeStorageContext.getProperBackgroundColor()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutId = when (viewType) {
