@@ -117,7 +117,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             }
         }
 
-        // In other cases reset shift to OFF
+        // in other cases reset shift to OFF
         keyboard?.setShifted(ShiftState.OFF)
         keyboardView?.invalidateAllKeys()
     }
@@ -127,8 +127,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         if (keyboard == null || inputConnection == null) {
             return
         }
-
-//        this.keyboardView.setEditorInfo(EditorInfo)
 
         if (code != MyKeyboard.KEYCODE_SHIFT) {
             lastShiftPressTS = 0
