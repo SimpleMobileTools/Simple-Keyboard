@@ -1,5 +1,12 @@
 package com.simplemobiletools.keyboard.helpers
 
+
+enum class ShiftState {
+    OFF,
+    ON_ONE_CHAR,
+    ON_PERMANENT;
+}
+
 // limit the count of alternative characters that show up at long pressing a key
 const val MAX_KEYS_PER_MINI_ROW = 9
 

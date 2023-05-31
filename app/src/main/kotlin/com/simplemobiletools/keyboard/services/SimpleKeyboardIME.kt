@@ -72,52 +72,20 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     }
 
     private fun updateShiftKeyState(code: Int?) {
-        if (keyboardMode != KEYBOARD_LETTERS || ShiftState.isInputTypeAllowedCapitalizing(inputTypeClassVariation)) {
+        if (code == MyKeyboard.KEYCODE_SHIFT) {
             return
         }
 
-        if (code == MyKeyboard.KEYCODE_SHIFT || code == MyKeyboard.KEYCODE_DELETE) {
-            return
-        }
-
-        val text = currentInputConnection.getTextBeforeCursor(2, 0) ?: return
-        // capitalize first letter on startup or if text is empty
-        if (code == null || text.isEmpty()) {
-            keyboard!!.setShifted(ShiftState.ON_ONE_CHAR)
-            keyboardView?.invalidateAllKeys()
-            return
-        }
-
-        // capitalize sentences if needed
-        if (config.enableSentencesCapitalization) {
-
-            // capitalize on Enter click
-            if (code == MyKeyboard.KEYCODE_ENTER) {
-                keyboard!!.setShifted(ShiftState.ON_ONE_CHAR)
+        val editorInfo = currentInputEditorInfo
+        if (config.enableSentencesCapitalization && editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL) {
+            if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
+                keyboard?.setShifted(ShiftState.ON_ONE_CHAR)
                 keyboardView?.invalidateAllKeys()
                 return
             }
-
-
-            if (ShiftState.shouldCapitalize(this, text.toString())) {
-                keyboard!!.setShifted(ShiftState.ON_ONE_CHAR)
-                keyboardView?.invalidateAllKeys()
-                return
-            } else {
-                // try capitalizing based on the editor info like google keep or google messenger apps
-                val editorInfo = currentInputEditorInfo
-
-                if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL) {
-                    if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
-                        keyboard?.setShifted(ShiftState.ON_ONE_CHAR)
-                        keyboardView?.invalidateAllKeys()
-                        return
-                    }
-                }
-            }
         }
 
-        // In other cases reset shift to OFF
+        // in other cases reset shift to OFF
         keyboard?.setShifted(ShiftState.OFF)
         keyboardView?.invalidateAllKeys()
     }
@@ -128,8 +96,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             return
         }
 
-//        this.keyboardView.setEditorInfo(EditorInfo)
-
         if (code != MyKeyboard.KEYCODE_SHIFT) {
             lastShiftPressTS = 0
         }
@@ -139,17 +105,9 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
                 val selectedText = inputConnection.getSelectedText(0)
                 if (TextUtils.isEmpty(selectedText)) {
-                    val text = inputConnection.getTextBeforeCursor(3, 0)?.dropLast(1)
-
-                    if (keyboard?.mShiftState != ShiftState.ON_PERMANENT) {
-                        keyboard?.setShifted(ShiftState.getShiftStateForText(this, inputTypeClassVariation, text?.toString()))
-                        keyboardView?.invalidateAllKeys()
-                    }
-
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL))
                 } else {
-
 
                     inputConnection.commitText("", 1)
                 }
@@ -216,7 +174,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 // If the keyboard is set to symbols and the user presses space, we usually should switch back to the letters keyboard.
                 // However, avoid doing that in cases when the EditText for example requires numbers as the input.
                 // We can detect that by the text not changing on pressing Space.
-                if (keyboardMode != KEYBOARD_LETTERS && code == MyKeyboard.KEYCODE_SPACE) {
+                if (keyboardMode != KEYBOARD_LETTERS && inputTypeClass == InputType.TYPE_CLASS_TEXT && code == MyKeyboard.KEYCODE_SPACE) {
                     inputConnection.commitText(codeChar.toString(), 1)
                     val newText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text
                     if (originalText != newText) {
@@ -227,6 +185,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 }
             }
         }
+
         if (keyboard!!.mShiftState != ShiftState.ON_PERMANENT) {
             updateShiftKeyState(code)
         }
@@ -237,11 +196,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             // TODO: Change keyboardMode to enum class
             keyboardMode = KEYBOARD_LETTERS
 
-            //Check if capitalization is needed after switching to letters layout
-            val text = currentInputConnection?.getTextBeforeCursor(2, 0)
-            val newShiftState = ShiftState.getShiftStateForText(this, inputTypeClassVariation, text?.toString())
-
-            keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType, shiftState = newShiftState)
+            keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType)
 
             val editorInfo = currentInputEditorInfo
             if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != ShiftState.ON_PERMANENT) {
@@ -296,7 +251,9 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             }
         }
         return MyKeyboard(
-            context = this, xmlLayoutResId = keyboardXml, enterKeyType = enterKeyType, shiftState = ShiftState.getDefaultShiftState(this, inputTypeClassVariation)
+            context = this,
+            xmlLayoutResId = keyboardXml,
+            enterKeyType = enterKeyType,
         )
     }
 
