@@ -77,7 +77,7 @@ const val ITEM_CLIP = 1
 
 const val LANGUAGE_ENGLISH_QWERTY = 0
 const val LANGUAGE_RUSSIAN = 1
-const val LANGUAGE_FRENCH = 2
+const val LANGUAGE_FRENCH_AZERTY = 2
 const val LANGUAGE_ENGLISH_QWERTZ = 3
 const val LANGUAGE_SPANISH = 4
 const val LANGUAGE_GERMAN = 5
