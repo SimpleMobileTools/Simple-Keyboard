@@ -147,7 +147,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         override fun onPopulateNodeForVirtualView(virtualViewId: Int, node: AccessibilityNodeInfoCompat) {
             node.className = MyKeyboardView::class.simpleName
             val key = mKeyboard?.mKeys?.get(virtualViewId)
-            node.contentDescription = key?.label ?: "keyboard key"
+            node.contentDescription = key?.getContentDescription(context)
             val bounds = updateBoundsForInterval(virtualViewId)
             node.setBoundsInParent(bounds)
         }
