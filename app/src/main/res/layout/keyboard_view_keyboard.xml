@@ -63,7 +63,7 @@
             android:layout_height="@dimen/toolbar_icon_height"
             android:layout_marginEnd="@dimen/medium_margin"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/settings"
+            android:contentDescription="@string/clipboard_pinned"
             android:padding="@dimen/small_margin"
             android:src="@drawable/ic_clipboard_vector"
             app:layout_constraintBottom_toBottomOf="parent"
