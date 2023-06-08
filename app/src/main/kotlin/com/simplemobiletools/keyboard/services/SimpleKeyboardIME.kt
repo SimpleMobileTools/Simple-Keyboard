@@ -85,7 +85,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             }
         }
 
-        // in other cases reset shift to OFF
         keyboard?.setShifted(ShiftState.OFF)
         keyboardView?.invalidateAllKeys()
     }
@@ -108,7 +107,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL))
                 } else {
-
                     inputConnection.commitText("", 1)
                 }
             }
