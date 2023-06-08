@@ -30,9 +30,11 @@ enum class ShiftState {
             if (isInputTypeAllowedCapitalizing(inputTypeClassVariation)) {
                 return OFF
             }
-            return when (context.config.enableSentencesCapitalization) {
-                true -> ON_ONE_CHAR
-                else -> OFF
+
+            return if (context.config.enableSentencesCapitalization) {
+                ON_ONE_CHAR
+            } else {
+                OFF
             }
         }
 
@@ -40,14 +42,11 @@ enum class ShiftState {
             if (isInputTypeAllowedCapitalizing(inputTypeClassVariation)) {
                 return OFF
             }
-            return when {
-                shouldCapitalize(context, text) -> {
-                    ON_ONE_CHAR
-                }
 
-                else -> {
-                    OFF
-                }
+            return if (shouldCapitalize(context, text)) {
+                ON_ONE_CHAR
+            } else {
+                OFF
             }
         }
 

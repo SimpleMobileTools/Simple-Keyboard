@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.isNougatPlus
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.views.MyTextView
 import com.simplemobiletools.keyboard.R
@@ -22,7 +23,7 @@ import com.simplemobiletools.keyboard.interfaces.ClipsDao
 val Context.config: Config get() = Config.newInstance(applicationContext.safeStorageContext)
 
 val Context.safeStorageContext: Context
-    get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && isDeviceLocked) {
+    get() = if (isNougatPlus() && isDeviceLocked) {
         createDeviceProtectedStorageContext()
     } else {
         this

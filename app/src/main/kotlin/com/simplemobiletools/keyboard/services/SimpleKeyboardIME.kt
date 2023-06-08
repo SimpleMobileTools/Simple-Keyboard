@@ -105,10 +105,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 return
             } else {
                 // try capitalizing based on the editor info like google keep or google messenger apps
-                val editorInfo = currentInputEditorInfo
-
-                if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL) {
-                    if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
+                if (currentInputEditorInfo != null && currentInputEditorInfo.inputType != InputType.TYPE_NULL) {
+                    if (currentInputConnection.getCursorCapsMode(currentInputEditorInfo.inputType) != 0) {
                         keyboard?.setShifted(ShiftState.ON_ONE_CHAR)
                         keyboardView?.invalidateAllKeys()
                         return
@@ -117,7 +115,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             }
         }
 
-        // in other cases reset shift to OFF
         keyboard?.setShifted(ShiftState.OFF)
         keyboardView?.invalidateAllKeys()
     }
