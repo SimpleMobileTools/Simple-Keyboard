@@ -2,7 +2,6 @@ package com.simplemobiletools.keyboard.services
 
 import android.content.SharedPreferences
 import android.inputmethodservice.InputMethodService
-import android.text.InputType
 import android.text.InputType.*
 import android.text.TextUtils
 import android.view.KeyEvent
@@ -17,8 +16,7 @@ import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.views.MyKeyboardView
-import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.keyboard_holder
-import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.keyboard_view
+import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 
 // based on https://www.androidauthority.com/lets-build-custom-keyboard-android-832362/
 class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionListener, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -33,8 +31,8 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     private var keyboardView: MyKeyboardView? = null
     private var lastShiftPressTS = 0L
     private var keyboardMode = KEYBOARD_LETTERS
-    private var inputTypeClass = InputType.TYPE_CLASS_TEXT
-    private var inputTypeClassVariation = InputType.TYPE_CLASS_TEXT
+    private var inputTypeClass = TYPE_CLASS_TEXT
+    private var inputTypeClassVariation = TYPE_CLASS_TEXT
     private var enterKeyType = IME_ACTION_NONE
     private var switchToLetters = false
 
@@ -62,7 +60,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         super.onStartInput(attribute, restarting)
         inputTypeClass = attribute!!.inputType and TYPE_MASK_CLASS
-        inputTypeClassVariation = attribute!!.inputType and TYPE_MASK_VARIATION
+        inputTypeClassVariation = attribute.inputType and TYPE_MASK_VARIATION
 
         enterKeyType = attribute.imeOptions and (IME_MASK_ACTION or IME_FLAG_NO_ENTER_ACTION)
         keyboard = createNewKeyboard()
@@ -77,7 +75,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         }
 
         val editorInfo = currentInputEditorInfo
-        if (config.enableSentencesCapitalization && editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL) {
+        if (config.enableSentencesCapitalization && editorInfo != null && editorInfo.inputType != TYPE_NULL) {
             if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
                 keyboard?.setShifted(ShiftState.ON_ONE_CHAR)
                 keyboardView?.invalidateAllKeys()
@@ -101,7 +99,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
 
         when (code) {
             MyKeyboard.KEYCODE_DELETE -> {
-
                 val selectedText = inputConnection.getSelectedText(0)
                 if (TextUtils.isEmpty(selectedText)) {
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
@@ -110,7 +107,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     inputConnection.commitText("", 1)
                 }
             }
-
             MyKeyboard.KEYCODE_SHIFT -> {
                 if (keyboardMode == KEYBOARD_LETTERS) {
                     when {
@@ -134,7 +130,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 }
                 keyboardView!!.invalidateAllKeys()
             }
-
             MyKeyboard.KEYCODE_ENTER -> {
                 val imeOptionsActionId = getImeOptionsActionId()
                 if (imeOptionsActionId != IME_ACTION_NONE) {
@@ -144,7 +139,6 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
                 }
             }
-
             MyKeyboard.KEYCODE_MODE_CHANGE -> {
                 val keyboardXml = if (keyboardMode == KEYBOARD_LETTERS) {
                     keyboardMode = KEYBOARD_SYMBOLS
@@ -156,11 +150,9 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
                 keyboardView!!.setKeyboard(keyboard!!)
             }
-
             MyKeyboard.KEYCODE_EMOJI -> {
                 keyboardView?.openEmojiPalette()
             }
-
             else -> {
                 var codeChar = code.toChar()
                 val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text ?: return
@@ -172,7 +164,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 // If the keyboard is set to symbols and the user presses space, we usually should switch back to the letters keyboard.
                 // However, avoid doing that in cases when the EditText for example requires numbers as the input.
                 // We can detect that by the text not changing on pressing Space.
-                if (keyboardMode != KEYBOARD_LETTERS && inputTypeClass == InputType.TYPE_CLASS_TEXT && code == MyKeyboard.KEYCODE_SPACE) {
+                if (keyboardMode != KEYBOARD_LETTERS && inputTypeClass == TYPE_CLASS_TEXT && code == MyKeyboard.KEYCODE_SPACE) {
                     inputConnection.commitText(codeChar.toString(), 1)
                     val newText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text
                     if (originalText != newText) {
@@ -197,7 +189,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
             keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType)
 
             val editorInfo = currentInputEditorInfo
-            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != ShiftState.ON_PERMANENT) {
+            if (editorInfo != null && editorInfo.inputType != TYPE_NULL && keyboard?.mShiftState != ShiftState.ON_PERMANENT) {
                 if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
                     keyboard?.setShifted(ShiftState.ON_ONE_CHAR)
                 }
@@ -232,17 +224,14 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 keyboardMode = KEYBOARD_NUMBERS
                 R.xml.keys_numbers
             }
-
             TYPE_CLASS_PHONE -> {
                 keyboardMode = KEYBOARD_PHONE
                 R.xml.keys_phone
             }
-
             TYPE_CLASS_DATETIME -> {
                 keyboardMode = KEYBOARD_SYMBOLS
                 R.xml.keys_symbols
             }
-
             else -> {
                 keyboardMode = KEYBOARD_LETTERS
                 getKeyboardLayoutXML()
