@@ -242,12 +242,7 @@ class MyKeyboard {
         fun isInside(x: Int, y: Int): Boolean {
             val leftEdge = edgeFlags and EDGE_LEFT > 0
             val rightEdge = edgeFlags and EDGE_RIGHT > 0
-            return (
-                (x >= this.x || leftEdge && x <= this.x + width) &&
-                    (x < this.x + width || rightEdge && x >= this.x) &&
-                    (y >= this.y && y <= this.y + height) &&
-                    (y < this.y + height && y >= this.y)
-                )
+            return ((x >= this.x || leftEdge && x <= this.x + width) && (x < this.x + width || rightEdge && x >= this.x) && (y >= this.y && y <= this.y + height) && (y < this.y + height && y >= this.y))
         }
     }
 
@@ -258,14 +253,13 @@ class MyKeyboard {
      * @param enterKeyType determines what icon should we show on Enter key
      */
     @JvmOverloads
-    constructor(context: Context, @XmlRes xmlLayoutResId: Int, enterKeyType: Int, shiftState: ShiftState = ShiftState.OFF) {
+    constructor(context: Context, @XmlRes xmlLayoutResId: Int, enterKeyType: Int) {
         mDisplayWidth = context.resources.displayMetrics.widthPixels
         mDefaultHorizontalGap = 0
         mDefaultWidth = mDisplayWidth / 10
         mDefaultHeight = mDefaultWidth
         mKeyboardHeightMultiplier = getKeyboardHeightMultiplier(context.config.keyboardHeightMultiplier)
         mKeys = ArrayList()
-        mShiftState = shiftState
         mEnterKeyType = enterKeyType
         loadKeyboard(context, context.resources.getXml(xmlLayoutResId))
     }
@@ -278,8 +272,7 @@ class MyKeyboard {
      * @param characters the list of characters to display on the keyboard. One key will be created for each character.
      * @param keyWidth the width of the popup key, make sure it is the same as the key itself
      */
-    constructor(context: Context, layoutTemplateResId: Int, characters: CharSequence, keyWidth: Int) :
-        this(context, layoutTemplateResId, 0) {
+    constructor(context: Context, layoutTemplateResId: Int, characters: CharSequence, keyWidth: Int) : this(context, layoutTemplateResId, 0) {
         var x = 0
         var y = 0
         var column = 0

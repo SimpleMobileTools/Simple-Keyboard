@@ -1,60 +1,10 @@
 package com.simplemobiletools.keyboard.helpers
 
-import android.content.Context
-import com.simplemobiletools.keyboard.extensions.config
-import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SPACE
 
 enum class ShiftState {
     OFF,
     ON_ONE_CHAR,
     ON_PERMANENT;
-
-    companion object {
-        private val endOfSentenceChars: List<Char> = listOf('.', '?', '!')
-
-        fun getDefaultShiftState(context: Context): ShiftState {
-            return when (context.config.enableSentencesCapitalization) {
-                true -> ON_ONE_CHAR
-                else -> OFF
-            }
-        }
-
-        fun getShiftStateForText(context: Context, newText: String?): ShiftState {
-            if (!context.config.enableSentencesCapitalization) {
-                return OFF
-            }
-
-            val twoLastSymbols = newText?.takeLast(2)
-            return when {
-                shouldCapitalizeSentence(previousChar = twoLastSymbols?.getOrNull(0), currentChar = twoLastSymbols?.getOrNull(1)) -> {
-                    ON_ONE_CHAR
-                }
-                else -> {
-                    OFF
-                }
-            }
-        }
-
-        fun getCapitalizationOnDelete(context: Context, text: CharSequence?): ShiftState {
-            if (!context.config.enableSentencesCapitalization) {
-                return OFF
-            }
-
-            return if (text.isNullOrEmpty() || shouldCapitalizeSentence(currentChar = text.last(), previousChar = text.getOrNull(text.lastIndex - 1))) {
-                ON_ONE_CHAR
-            } else {
-                OFF
-            }
-        }
-
-        private fun shouldCapitalizeSentence(previousChar: Char?, currentChar: Char?): Boolean {
-            if (previousChar == null || currentChar == null) {
-                return false
-            }
-
-            return currentChar.code == KEYCODE_SPACE && endOfSentenceChars.contains(previousChar)
-        }
-    }
 }
 
 // limit the count of alternative characters that show up at long pressing a key
