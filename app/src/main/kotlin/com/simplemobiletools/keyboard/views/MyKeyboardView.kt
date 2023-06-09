@@ -17,8 +17,6 @@ import android.os.Message
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.*
-import android.view.accessibility.AccessibilityEvent
-import android.view.accessibility.AccessibilityManager
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import android.widget.PopupWindow
@@ -57,8 +55,7 @@ import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 import java.util.*
 
 @SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility")
-class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int = 0) :
-    View(context, attrs, defStyleRes) {
+class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int = 0) : View(context, attrs, defStyleRes) {
 
     override fun dispatchHoverEvent(event: MotionEvent): Boolean {
         return if (accessHelper.dispatchHoverEvent(event)) {
@@ -225,9 +222,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     /** The canvas for the above mutable keyboard bitmap  */
     private var mCanvas: Canvas? = null
 
-    /** The accessibility manager for accessibility support  */
-    private val mAccessibilityManager: AccessibilityManager
-
     private var mHandler: Handler? = null
 
     companion object {
@@ -286,7 +280,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mPaint.textAlign = Align.CENTER
         mPaint.alpha = 255
         mMiniKeyboardCache = HashMap()
-        mAccessibilityManager = (context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager)
         mPopupMaxMoveDistance = resources.getDimension(R.dimen.popup_max_move_distance)
         mTopSmallNumberSize = resources.getDimension(R.dimen.small_text_size)
         mTopSmallNumberMarginWidth = resources.getDimension(R.dimen.top_small_number_margin_width)
@@ -685,10 +678,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     val secondaryIconBottom = secondaryIconTop + secondaryIconHeight
 
                     secondaryIcon.setBounds(
-                        secondaryIconLeft,
-                        secondaryIconTop,
-                        secondaryIconRight,
-                        secondaryIconBottom
+                        secondaryIconLeft, secondaryIconTop, secondaryIconRight, secondaryIconBottom
                     )
                     secondaryIcon.draw(canvas)
 
@@ -874,29 +864,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val oldKeyIndex = mCurrentKeyIndex
         val previewPopup = mPreviewPopup
         mCurrentKeyIndex = keyIndex
-        // Release the old key and press the new key
-        val keys = mKeys
-        if (oldKeyIndex != mCurrentKeyIndex) {
-            if (oldKeyIndex != NOT_A_KEY && keys.size > oldKeyIndex) {
-                val oldKey = keys[oldKeyIndex]
-                oldKey.pressed = false
-                invalidateKey(oldKeyIndex)
-                val keyCode = oldKey.code
-                sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED, keyCode)
-            }
-
-            if (mCurrentKeyIndex != NOT_A_KEY && keys.size > mCurrentKeyIndex) {
-                val newKey = keys[mCurrentKeyIndex]
-
-                val code = newKey.code
-                if (context.config.showKeyBorders || (code == KEYCODE_SHIFT || code == KEYCODE_MODE_CHANGE || code == KEYCODE_DELETE || code == KEYCODE_ENTER || code == KEYCODE_SPACE)) {
-                    newKey.pressed = true
-                }
-
-                invalidateKey(mCurrentKeyIndex)
-                sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, code)
-            }
-        }
 
         if (!context.config.showPopupOnKeypress) {
             return
@@ -907,8 +874,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             if (previewPopup.isShowing) {
                 if (keyIndex == NOT_A_KEY) {
                     mHandler!!.sendMessageDelayed(
-                        mHandler!!.obtainMessage(MSG_REMOVE_PREVIEW),
-                        DELAY_AFTER_PREVIEW.toLong()
+                        mHandler!!.obtainMessage(MSG_REMOVE_PREVIEW), DELAY_AFTER_PREVIEW.toLong()
                     )
                 }
             }
@@ -998,22 +964,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             previewPopup.height = popupHeight
             previewPopup.showAtLocation(mPopupParent, Gravity.NO_GRAVITY, mPopupPreviewX, mPopupPreviewY)
             mPreviewText!!.visibility = VISIBLE
-        }
-    }
-
-    private fun sendAccessibilityEventForUnicodeCharacter(eventType: Int, code: Int) {
-        if (mAccessibilityManager.isEnabled) {
-            val event = AccessibilityEvent.obtain(eventType)
-            onInitializeAccessibilityEvent(event)
-            val text: String = when (code) {
-                KEYCODE_DELETE -> context.getString(R.string.keycode_delete)
-                KEYCODE_ENTER -> context.getString(R.string.keycode_enter)
-                KEYCODE_MODE_CHANGE -> context.getString(R.string.keycode_mode_change)
-                KEYCODE_SHIFT -> context.getString(R.string.keycode_shift)
-                else -> code.toChar().toString()
-            }
-            event.text.add(text)
-            mAccessibilityManager.sendAccessibilityEvent(event)
         }
     }
 
@@ -1131,8 +1081,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     mMiniKeyboard!!.setKeyboard(keyboard)
                     mPopupParent = this
                     mMiniKeyboardContainer!!.measure(
-                        MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
-                        MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
+                        MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
                     )
                     mMiniKeyboardCache[popupKey] = mMiniKeyboardContainer
                 } else {
