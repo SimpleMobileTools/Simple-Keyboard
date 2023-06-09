@@ -1390,12 +1390,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
                 showPreview(NOT_A_KEY)
                 Arrays.fill(mKeyIndices, NOT_A_KEY)
+
+                val currentKeyCode = mKeys.getOrNull(mCurrentKey)?.code
+
                 // If we're not on a repeating key (which sends on a DOWN event)
                 if (mRepeatKeyIndex == NOT_A_KEY && !mMiniKeyboardOnScreen && !mAbortKey) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
                 }
 
-                if (mKeys.getOrNull(mCurrentKey)?.code == KEYCODE_SPACE && !mIsLongPressingSpace) {
+                if (currentKeyCode == KEYCODE_SPACE && !mIsLongPressingSpace) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
                 }
 
