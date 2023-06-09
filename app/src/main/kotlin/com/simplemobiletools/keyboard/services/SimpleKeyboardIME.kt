@@ -107,6 +107,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     inputConnection.commitText("", 1)
                 }
             }
+
             MyKeyboard.KEYCODE_SHIFT -> {
                 if (keyboardMode == KEYBOARD_LETTERS) {
                     when {
@@ -130,6 +131,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 }
                 keyboardView!!.invalidateAllKeys()
             }
+
             MyKeyboard.KEYCODE_ENTER -> {
                 val imeOptionsActionId = getImeOptionsActionId()
                 if (imeOptionsActionId != IME_ACTION_NONE) {
@@ -139,6 +141,7 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
                 }
             }
+
             MyKeyboard.KEYCODE_MODE_CHANGE -> {
                 val keyboardXml = if (keyboardMode == KEYBOARD_LETTERS) {
                     keyboardMode = KEYBOARD_SYMBOLS
@@ -150,9 +153,11 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
                 keyboardView!!.setKeyboard(keyboard!!)
             }
+
             MyKeyboard.KEYCODE_EMOJI -> {
                 keyboardView?.openEmojiPalette()
             }
+
             else -> {
                 var codeChar = code.toChar()
                 val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text ?: return
@@ -224,14 +229,17 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
                 keyboardMode = KEYBOARD_NUMBERS
                 R.xml.keys_numbers
             }
+
             TYPE_CLASS_PHONE -> {
                 keyboardMode = KEYBOARD_PHONE
                 R.xml.keys_phone
             }
+
             TYPE_CLASS_DATETIME -> {
                 keyboardMode = KEYBOARD_SYMBOLS
                 R.xml.keys_symbols
             }
+
             else -> {
                 keyboardMode = KEYBOARD_LETTERS
                 getKeyboardLayoutXML()
