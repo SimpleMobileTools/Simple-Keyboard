@@ -2,11 +2,7 @@ package com.simplemobiletools.keyboard.services
 
 import android.content.SharedPreferences
 import android.inputmethodservice.InputMethodService
-import android.text.InputType
-import android.text.InputType.TYPE_CLASS_DATETIME
-import android.text.InputType.TYPE_CLASS_NUMBER
-import android.text.InputType.TYPE_CLASS_PHONE
-import android.text.InputType.TYPE_MASK_CLASS
+import android.text.InputType.*
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
@@ -36,13 +32,13 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
     private var keyboardView: MyKeyboardView? = null
     private var lastShiftPressTS = 0L
     private var keyboardMode = KEYBOARD_LETTERS
-    private var inputTypeClass = InputType.TYPE_CLASS_TEXT
+    private var inputTypeClass = TYPE_CLASS_TEXT
+    private var inputTypeClassVariation = TYPE_CLASS_TEXT
     private var enterKeyType = IME_ACTION_NONE
     private var switchToLetters = false
 
     override fun onInitializeInterface() {
         super.onInitializeInterface()
-        keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType)
         getSharedPrefs().registerOnSharedPreferenceChangeListener(this)
     }
 
@@ -65,24 +61,31 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         super.onStartInput(attribute, restarting)
         inputTypeClass = attribute!!.inputType and TYPE_MASK_CLASS
-        enterKeyType = attribute.imeOptions and (IME_MASK_ACTION or IME_FLAG_NO_ENTER_ACTION)
+        inputTypeClassVariation = attribute.inputType and TYPE_MASK_VARIATION
 
-        keyboard = getKeyBoard()
+        enterKeyType = attribute.imeOptions and (IME_MASK_ACTION or IME_FLAG_NO_ENTER_ACTION)
+        keyboard = createNewKeyboard()
         keyboardView?.setKeyboard(keyboard!!)
         keyboardView?.setEditorInfo(attribute)
-        updateShiftKeyState()
+        updateShiftKeyState(null)
     }
 
-    private fun updateShiftKeyState() {
-        if (keyboardMode == KEYBOARD_LETTERS) {
-            val editorInfo = currentInputEditorInfo
-            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != SHIFT_ON_PERMANENT) {
-                if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
-                    keyboard?.setShifted(SHIFT_ON_ONE_CHAR)
-                    keyboardView?.invalidateAllKeys()
-                }
+    private fun updateShiftKeyState(code: Int?) {
+        if (code == MyKeyboard.KEYCODE_SHIFT) {
+            return
+        }
+
+        val editorInfo = currentInputEditorInfo
+        if (config.enableSentencesCapitalization && editorInfo != null && editorInfo.inputType != TYPE_NULL) {
+            if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
+                keyboard?.setShifted(ShiftState.ON_ONE_CHAR)
+                keyboardView?.invalidateAllKeys()
+                return
             }
         }
+
+        keyboard?.setShifted(ShiftState.OFF)
+        keyboardView?.invalidateAllKeys()
     }
 
     override fun onKey(code: Int) {
@@ -97,10 +100,6 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
 
         when (code) {
             MyKeyboard.KEYCODE_DELETE -> {
-                if (keyboard!!.mShiftState == SHIFT_ON_ONE_CHAR) {
-                    keyboard!!.mShiftState = SHIFT_OFF
-                }
-
                 val selectedText = inputConnection.getSelectedText(0)
                 if (TextUtils.isEmpty(selectedText)) {
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
@@ -108,15 +107,14 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                 } else {
                     inputConnection.commitText("", 1)
                 }
-                keyboardView!!.invalidateAllKeys()
             }
             MyKeyboard.KEYCODE_SHIFT -> {
                 if (keyboardMode == KEYBOARD_LETTERS) {
                     when {
-                        keyboard!!.mShiftState == SHIFT_ON_PERMANENT -> keyboard!!.mShiftState = SHIFT_OFF
-                        System.currentTimeMillis() - lastShiftPressTS < SHIFT_PERM_TOGGLE_SPEED -> keyboard!!.mShiftState = SHIFT_ON_PERMANENT
-                        keyboard!!.mShiftState == SHIFT_ON_ONE_CHAR -> keyboard!!.mShiftState = SHIFT_OFF
-                        keyboard!!.mShiftState == SHIFT_OFF -> keyboard!!.mShiftState = SHIFT_ON_ONE_CHAR
+                        keyboard!!.mShiftState == ShiftState.ON_PERMANENT -> keyboard!!.mShiftState = ShiftState.OFF
+                        System.currentTimeMillis() - lastShiftPressTS < SHIFT_PERM_TOGGLE_SPEED -> keyboard!!.mShiftState = ShiftState.ON_PERMANENT
+                        keyboard!!.mShiftState == ShiftState.ON_ONE_CHAR -> keyboard!!.mShiftState = ShiftState.OFF
+                        keyboard!!.mShiftState == ShiftState.OFF -> keyboard!!.mShiftState = ShiftState.ON_ONE_CHAR
                     }
 
                     lastShiftPressTS = System.currentTimeMillis()
@@ -158,43 +156,43 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
             }
             else -> {
                 var codeChar = code.toChar()
-                if (Character.isLetter(codeChar) && keyboard!!.mShiftState > SHIFT_OFF) {
+                val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text ?: return
+
+                if (Character.isLetter(codeChar) && keyboard!!.mShiftState > ShiftState.OFF) {
                     codeChar = Character.toUpperCase(codeChar)
                 }
 
                 // If the keyboard is set to symbols and the user presses space, we usually should switch back to the letters keyboard.
                 // However, avoid doing that in cases when the EditText for example requires numbers as the input.
                 // We can detect that by the text not changing on pressing Space.
-                if (keyboardMode != KEYBOARD_LETTERS && code == MyKeyboard.KEYCODE_SPACE) {
-                    val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text ?: return
+                if (keyboardMode != KEYBOARD_LETTERS && inputTypeClass == TYPE_CLASS_TEXT && code == MyKeyboard.KEYCODE_SPACE) {
                     inputConnection.commitText(codeChar.toString(), 1)
                     val newText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text
-                    switchToLetters = originalText != newText
+                    if (originalText != newText) {
+                        switchToLetters = true
+                    }
                 } else {
                     inputConnection.commitText(codeChar.toString(), 1)
-                }
-
-                if (keyboard!!.mShiftState == SHIFT_ON_ONE_CHAR && keyboardMode == KEYBOARD_LETTERS) {
-                    keyboard!!.mShiftState = SHIFT_OFF
-                    keyboardView!!.invalidateAllKeys()
                 }
             }
         }
 
-        if (code != MyKeyboard.KEYCODE_SHIFT) {
-            updateShiftKeyState()
+        if (keyboard!!.mShiftState != ShiftState.ON_PERMANENT) {
+            updateShiftKeyState(code)
         }
     }
 
     override fun onActionUp() {
         if (switchToLetters) {
+            // TODO: Change keyboardMode to enum class
             keyboardMode = KEYBOARD_LETTERS
+
             keyboard = MyKeyboard(this, getKeyboardLayoutXML(), enterKeyType)
 
             val editorInfo = currentInputEditorInfo
-            if (editorInfo != null && editorInfo.inputType != InputType.TYPE_NULL && keyboard?.mShiftState != SHIFT_ON_PERMANENT) {
+            if (editorInfo != null && editorInfo.inputType != TYPE_NULL && keyboard?.mShiftState != ShiftState.ON_PERMANENT) {
                 if (currentInputConnection.getCursorCapsMode(editorInfo.inputType) != 0) {
-                    keyboard?.setShifted(SHIFT_ON_ONE_CHAR)
+                    keyboard?.setShifted(ShiftState.ON_ONE_CHAR)
                 }
             }
 
@@ -216,12 +214,12 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
     }
 
     override fun reloadKeyboard() {
-        val keyboard = getKeyBoard()
+        val keyboard = createNewKeyboard()
         this.keyboard = keyboard
         keyboardView?.setKeyboard(keyboard)
     }
 
-    private fun getKeyBoard(): MyKeyboard {
+    private fun createNewKeyboard(): MyKeyboard {
         val keyboardXml = when (inputTypeClass) {
             TYPE_CLASS_NUMBER -> {
                 keyboardMode = KEYBOARD_NUMBERS
@@ -240,8 +238,11 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                 getKeyboardLayoutXML()
             }
         }
-
-        return MyKeyboard(this, keyboardXml, enterKeyType)
+        return MyKeyboard(
+            context = this,
+            xmlLayoutResId = keyboardXml,
+            enterKeyType = enterKeyType,
+        )
     }
 
     override fun onUpdateSelection(oldSelStart: Int, oldSelEnd: Int, newSelStart: Int, newSelEnd: Int, candidatesStart: Int, candidatesEnd: Int) {
@@ -275,15 +276,18 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
         return when (baseContext.config.keyboardLanguage) {
             LANGUAGE_BENGALI -> R.xml.keys_letters_bengali
             LANGUAGE_BULGARIAN -> R.xml.keys_letters_bulgarian
+            LANGUAGE_DANISH -> R.xml.keys_letters_danish
             LANGUAGE_ENGLISH_DVORAK -> R.xml.keys_letters_english_dvorak
             LANGUAGE_ENGLISH_QWERTZ -> R.xml.keys_letters_english_qwertz
             LANGUAGE_FRENCH -> R.xml.keys_letters_french
             LANGUAGE_GERMAN -> R.xml.keys_letters_german
             LANGUAGE_GREEK -> R.xml.keys_letters_greek
             LANGUAGE_LITHUANIAN -> R.xml.keys_letters_lithuanian
+            LANGUAGE_NORWEGIAN -> R.xml.keys_letters_norwegian
             LANGUAGE_ROMANIAN -> R.xml.keys_letters_romanian
             LANGUAGE_RUSSIAN -> R.xml.keys_letters_russian
             LANGUAGE_SLOVENIAN -> R.xml.keys_letters_slovenian
+            LANGUAGE_SWEDISH -> R.xml.keys_letters_swedish
             LANGUAGE_SPANISH -> R.xml.keys_letters_spanish_qwerty
             LANGUAGE_TURKISH_Q -> R.xml.keys_letters_turkish_q
             else -> R.xml.keys_letters_english_qwerty

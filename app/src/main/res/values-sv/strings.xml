@@ -15,7 +15,7 @@
     <string name="clipboard_current">Nuvarande</string>
     <string name="clipboard_pinned">Nålad</string>
     <string name="add_new_item">Lägg till ett nytt objekt</string>
-    <string name="manage_clips">Du kan hantera eller addera nya klipp här för snabb tillgänglighet.</string>
+    <string name="manage_clips">Du kan hantera eller lägga till klipp här för snabb åtkomst.</string>
     <string name="clip_text">Klipp text</string>
     <string name="pin_text">Nåla text</string>
     <string name="text_pinned">Text har blivit nålad</string>
@@ -34,6 +34,7 @@
     <string name="keyboard_height">Tangentbordshöjd</string>
     <string name="show_key_borders">Visa ramar runt tangenterna</string>
     <string name="show_numbers_row">Visa siffror på en separat rad</string>
+    <string name="start_sentences_capitalized">Börja meningar med stor bokstav</string>
     <!-- Emojis -->
     <string name="emojis">Emojier</string>
     <!--

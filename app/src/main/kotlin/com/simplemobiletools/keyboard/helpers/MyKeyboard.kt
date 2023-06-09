@@ -34,7 +34,7 @@ class MyKeyboard {
     var mKeyboardHeightMultiplier: Float = 1F
 
     /** Is the keyboard in the shifted state  */
-    var mShiftState = SHIFT_OFF
+    var mShiftState = ShiftState.OFF
 
     /** Total height of the keyboard, including the padding and keys  */
     var mHeight = 0
@@ -201,7 +201,13 @@ class MyKeyboard {
 
             a.recycle()
             a = res.obtainAttributes(Xml.asAttributeSet(parser), R.styleable.MyKeyboard_Key)
+
+            label = a.getText(R.styleable.MyKeyboard_Key_keyLabel) ?: ""
             code = a.getInt(R.styleable.MyKeyboard_Key_code, 0)
+
+            if (label.isNotEmpty() && code == 0) {
+                code = label[0].code
+            }
 
             popupCharacters = a.getText(R.styleable.MyKeyboard_Key_popupCharacters)
             popupResId = a.getResourceId(R.styleable.MyKeyboard_Key_popupKeyboard, 0)
@@ -213,12 +219,9 @@ class MyKeyboard {
             secondaryIcon = a.getDrawable(R.styleable.MyKeyboard_Key_secondaryKeyIcon)
             secondaryIcon?.setBounds(0, 0, secondaryIcon!!.intrinsicWidth, secondaryIcon!!.intrinsicHeight)
 
-            label = a.getText(R.styleable.MyKeyboard_Key_keyLabel) ?: ""
             topSmallNumber = a.getString(R.styleable.MyKeyboard_Key_topSmallNumber) ?: ""
 
-            if (label.isNotEmpty() && code != KEYCODE_MODE_CHANGE && code != KEYCODE_SHIFT) {
-                code = label[0].code
-            }
+
             a.recycle()
         }
 
@@ -274,12 +277,7 @@ class MyKeyboard {
         fun isInside(x: Int, y: Int): Boolean {
             val leftEdge = edgeFlags and EDGE_LEFT > 0
             val rightEdge = edgeFlags and EDGE_RIGHT > 0
-            return (
-                (x >= this.x || leftEdge && x <= this.x + width) &&
-                    (x < this.x + width || rightEdge && x >= this.x) &&
-                    (y >= this.y && y <= this.y + height) &&
-                    (y < this.y + height && y >= this.y)
-                )
+            return ((x >= this.x || leftEdge && x <= this.x + width) && (x < this.x + width || rightEdge && x >= this.x) && (y >= this.y && y <= this.y + height) && (y < this.y + height && y >= this.y))
         }
     }
 
@@ -309,8 +307,7 @@ class MyKeyboard {
      * @param characters the list of characters to display on the keyboard. One key will be created for each character.
      * @param keyWidth the width of the popup key, make sure it is the same as the key itself
      */
-    constructor(context: Context, layoutTemplateResId: Int, characters: CharSequence, keyWidth: Int) :
-        this(context, layoutTemplateResId, 0) {
+    constructor(context: Context, layoutTemplateResId: Int, characters: CharSequence, keyWidth: Int) : this(context, layoutTemplateResId, 0) {
         var x = 0
         var y = 0
         var column = 0
@@ -347,12 +344,11 @@ class MyKeyboard {
         mRows.add(row)
     }
 
-    fun setShifted(shiftState: Int): Boolean {
+    fun setShifted(shiftState: ShiftState): Boolean {
         if (this.mShiftState != shiftState) {
             this.mShiftState = shiftState
             return true
         }
-
         return false
     }
 

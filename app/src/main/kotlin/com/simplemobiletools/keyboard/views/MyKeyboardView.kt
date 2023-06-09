@@ -56,7 +56,7 @@ import kotlinx.android.synthetic.main.keyboard_popup_keyboard.view.*
 import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 import java.util.*
 
-@SuppressLint("UseCompatLoadingForDrawables")
+@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility")
 class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int = 0) :
     View(context, attrs, defStyleRes) {
 
@@ -496,7 +496,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @param shifted whether or not to enable the state of the shift key
      * @return true if the shift key state changed, false if there was no change
      */
-    private fun setShifted(shiftState: Int) {
+    private fun setShifted(shiftState: ShiftState) {
         if (mKeyboard?.setShifted(shiftState) == true) {
             invalidateAllKeys()
         }
@@ -507,7 +507,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * @return true if the shift is in a pressed state, false otherwise
      */
     private fun isShifted(): Boolean {
-        return (mKeyboard?.mShiftState ?: SHIFT_OFF) > SHIFT_OFF
+        return (mKeyboard?.mShiftState ?: ShiftState.OFF) > ShiftState.OFF
     }
 
     private fun setPopupOffset(x: Int, y: Int) {
@@ -520,7 +520,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun adjustCase(label: CharSequence): CharSequence? {
         var newLabel: CharSequence? = label
-        if (!newLabel.isNullOrEmpty() && mKeyboard!!.mShiftState > SHIFT_OFF && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
+        if (!newLabel.isNullOrEmpty() && mKeyboard!!.mShiftState != ShiftState.OFF && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
             newLabel = newLabel.toString().uppercase(Locale.getDefault())
         }
         return newLabel
@@ -610,6 +610,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         for (i in 0 until keyCount) {
             val key = keys[i]
             val code = key.code
+
+            // TODO: Space key background on a KEYBOARD_PHONE should not be applied
             setupKeyBackground(key, code, canvas)
 
             // Switch the character to uppercase if shift is pressed
@@ -643,8 +645,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             } else if (key.icon != null && mKeyboard != null) {
                 if (code == KEYCODE_SHIFT) {
                     val drawableId = when (mKeyboard!!.mShiftState) {
-                        SHIFT_OFF -> R.drawable.ic_caps_outline_vector
-                        SHIFT_ON_ONE_CHAR -> R.drawable.ic_caps_vector
+                        ShiftState.OFF -> R.drawable.ic_caps_outline_vector
+                        ShiftState.ON_ONE_CHAR -> R.drawable.ic_caps_vector
                         else -> R.drawable.ic_caps_underlined_vector
                     }
                     key.icon = resources.getDrawable(drawableId)
@@ -715,9 +717,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun setupKeyBackground(key: MyKeyboard.Key, keyCode: Int, canvas: Canvas) {
-        val keyBackground = when (keyCode) {
-            KEYCODE_SPACE -> getSpaceKeyBackground()
-            KEYCODE_ENTER -> getEnterKeyBackground()
+        val keyBackground = when {
+            keyCode == KEYCODE_SPACE && key.label.isBlank() -> getSpaceKeyBackground()
+            keyCode == KEYCODE_ENTER -> getEnterKeyBackground()
             else -> mKeyBackground
         }
 
@@ -1170,7 +1172,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 mMiniKeyboardSelectedKeyIndex = selectedKeyIndex
                 mMiniKeyboard!!.invalidateAllKeys()
 
-                val miniShiftStatus = if (isShifted()) SHIFT_ON_PERMANENT else SHIFT_OFF
+                val miniShiftStatus = if (isShifted()) ShiftState.ON_PERMANENT else ShiftState.OFF
                 mMiniKeyboard!!.setShifted(miniShiftStatus)
                 mPopupKeyboard.contentView = mMiniKeyboardContainer
                 mPopupKeyboard.width = mMiniKeyboardContainer!!.measuredWidth
