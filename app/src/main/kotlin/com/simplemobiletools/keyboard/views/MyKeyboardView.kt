@@ -47,6 +47,7 @@ import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_ENTER
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_MODE_CHANGE
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SHIFT
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SPACE
+import com.simplemobiletools.keyboard.interfaces.OnKeyboardActionListener
 import com.simplemobiletools.keyboard.interfaces.RefreshClipsListener
 import com.simplemobiletools.keyboard.models.Clip
 import com.simplemobiletools.keyboard.models.ClipsSectionLabel
@@ -55,49 +56,9 @@ import kotlinx.android.synthetic.main.keyboard_popup_keyboard.view.*
 import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 import java.util.*
 
-@SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility")
+@SuppressLint("UseCompatLoadingForDrawables")
 class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int = 0) :
     View(context, attrs, defStyleRes) {
-
-    interface OnKeyboardActionListener {
-        /**
-         * Called when the user presses a key. This is sent before the [.onKey] is called. For keys that repeat, this is only called once.
-         * @param primaryCode the unicode of the key being pressed. If the touch is not on a valid key, the value will be zero.
-         */
-        fun onPress(primaryCode: Int)
-
-        /**
-         * Send a key press to the listener.
-         * @param code this is the key that was pressed
-         */
-        fun onKey(code: Int)
-
-        /**
-         * Called when the finger has been lifted after pressing a key
-         */
-        fun onActionUp()
-
-        /**
-         * Called when the user long presses Space and moves to the left
-         */
-        fun moveCursorLeft()
-
-        /**
-         * Called when the user long presses Space and moves to the right
-         */
-        fun moveCursorRight()
-
-        /**
-         * Sends a sequence of characters to the listener.
-         * @param text the string to be displayed.
-         */
-        fun onText(text: String)
-
-        /**
-         * Called to force the KeyboardView to reload the keyboard
-         */
-        fun reloadKeyboard()
-    }
 
     override fun dispatchHoverEvent(event: MotionEvent): Boolean {
         return if (accessHelper.dispatchHoverEvent(event)) {
@@ -108,7 +69,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private val accessHelper = AccessHelper()
-
 
     inner class AccessHelper() : ExploreByTouchHelper(this) {
 
@@ -560,7 +520,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun adjustCase(label: CharSequence): CharSequence? {
         var newLabel: CharSequence? = label
-        if (newLabel != null && newLabel.isNotEmpty() && mKeyboard!!.mShiftState > SHIFT_OFF && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
+        if (!newLabel.isNullOrEmpty() && mKeyboard!!.mShiftState > SHIFT_OFF && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
             newLabel = newLabel.toString().uppercase(Locale.getDefault())
         }
         return newLabel
