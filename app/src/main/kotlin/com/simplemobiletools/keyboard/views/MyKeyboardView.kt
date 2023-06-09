@@ -10,7 +10,6 @@ import android.content.Intent
 import android.graphics.*
 import android.graphics.Paint.Align
 import android.graphics.drawable.*
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
@@ -24,8 +23,6 @@ import android.widget.TextView
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.view.ViewCompat
-import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
-import androidx.customview.widget.ExploreByTouchHelper
 import androidx.emoji2.text.EmojiCompat
 import androidx.emoji2.text.EmojiCompat.EMOJI_SUPPORTED
 import com.simplemobiletools.commons.extensions.*
@@ -58,80 +55,14 @@ import java.util.*
 class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int = 0) : View(context, attrs, defStyleRes) {
 
     override fun dispatchHoverEvent(event: MotionEvent): Boolean {
-        return if (accessHelper.dispatchHoverEvent(event)) {
+        return if (accessHelper?.dispatchHoverEvent(event) == true) {
             true
         } else {
             super.dispatchHoverEvent(event)
         }
     }
 
-    private val accessHelper = AccessHelper()
-
-    inner class AccessHelper() : ExploreByTouchHelper(this) {
-
-        /**
-         * We need to populate the list with the IDs of all of the visible virtual views (the intervals in the chart).
-         * In our case, all keys are always visible, so we’ll return a list of all IDs.
-         */
-        override fun getVisibleVirtualViews(virtualViewIds: MutableList<Int>) {
-            val keysSize = mKeyboard?.mKeys?.size ?: 0
-            for (i in 0 until keysSize) {
-                virtualViewIds.add(i)
-            }
-        }
-
-        /**
-         * For this function, we need to return the ID of the virtual view that’s under the x, y position,
-         * or ExploreByTouchHelper.HOST_ID if there’s no item at those coordinates.
-         */
-        override fun getVirtualViewAt(x: Float, y: Float): Int {
-            mKeyboard?.mKeys?.filterNotNull()?.let { keyList ->
-                val rects = keyList.map {
-                    Rect(it.x, it.y, it.x + it.width, it.y + it.height)
-                }
-                rects.firstOrNull { it.contains(x.toInt(), y.toInt()) }?.let { exactRect ->
-                    val exactIndexKey = rects.indexOf(exactRect)
-                    return exactIndexKey
-                } ?: return HOST_ID
-            }
-            return HOST_ID
-        }
-
-        /**
-         * This is where we provide all the metadata for our virtual view.
-         * We need to set the content description (or text, if it’s presented visually) and set the bounds in parent.
-         */
-        override fun onPopulateNodeForVirtualView(virtualViewId: Int, node: AccessibilityNodeInfoCompat) {
-            node.className = MyKeyboardView::class.simpleName
-            val key = mKeyboard?.mKeys?.get(virtualViewId)
-            node.contentDescription = key?.getContentDescription(context)
-            val bounds = updateBoundsForInterval(virtualViewId)
-            node.setBoundsInParent(bounds)
-        }
-
-        /**
-         * We need to set the content description (or text, if it’s presented visually) and set the bounds in parent.
-         * The bounds in the parent should match the logic in the onDraw() function.
-         */
-        private fun updateBoundsForInterval(index: Int): Rect {
-            val keys = mKeyboard?.mKeys ?: return Rect()
-            val key = keys[index]!!
-            return Rect().apply {
-                left = key.x
-                top = key.y
-                right = key.x + key.width
-                bottom = key.y + key.height
-            }
-        }
-
-        override fun onPerformActionForVirtualView(virtualViewId: Int, action: Int, arguments: Bundle?): Boolean {
-            return false
-        }
-    }
-
-    init {
-        ViewCompat.setAccessibilityDelegate(this, accessHelper)
-    }
+    private var accessHelper: AccessHelper? = null
 
     private var mKeyboard: MyKeyboard? = null
     private var mCurrentKeyIndex: Int = NOT_A_KEY
@@ -335,6 +266,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         invalidateAllKeys()
         computeProximityThreshold(keyboard)
         mMiniKeyboardCache.clear()
+
+        accessHelper = AccessHelper(this, mKeyboard?.mKeys.orEmpty())
+        ViewCompat.setAccessibilityDelegate(this, accessHelper)
+
         // Not really necessary to do every time, but will free up views
         // Switching to a different keyboard should abort any pending keys so that the key up
         // doesn't get delivered to the old or new keyboard

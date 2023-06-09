@@ -43,7 +43,7 @@ class MyKeyboard {
     var mMinWidth = 0
 
     /** List of keys in this keyboard  */
-    var mKeys: MutableList<Key?>? = null
+    var mKeys: MutableList<Key>? = null
 
     /** Width of the screen available to fit the keyboard  */
     private var mDisplayWidth = 0
