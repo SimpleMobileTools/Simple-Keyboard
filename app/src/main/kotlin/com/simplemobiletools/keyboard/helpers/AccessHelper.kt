@@ -30,9 +30,10 @@ class AccessHelper(
         val rects = keys.map {
             Rect(it.x, it.y, it.x + it.width, it.y + it.height)
         }
-        rects.firstOrNull { it.contains(x.toInt(), y.toInt()) }?.let { exactRect ->
-            return rects.indexOf(exactRect)
-        } ?: return HOST_ID
+
+        return rects.firstOrNull { it.contains(x.toInt(), y.toInt()) }?.let { exactRect ->
+            rects.indexOf(exactRect)
+        } ?: HOST_ID
     }
 
     /**
