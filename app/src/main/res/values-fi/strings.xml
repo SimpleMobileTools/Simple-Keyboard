@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">Vaihda näppäimistön tyyppi</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Näytä leikepöydän sisältö, jos saatavilla</string>
     <string name="show_popup">Näytä ponnahdus näppäinten painalluksesta</string>

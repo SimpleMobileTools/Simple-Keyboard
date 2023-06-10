@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">Zmień typ klawiatury</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Pokazuj zawartość schowka, jeśli jest dostępna</string>
     <string name="show_popup">Pokazuj wyskakujące okienko przy naciśnięciu klawisza</string>

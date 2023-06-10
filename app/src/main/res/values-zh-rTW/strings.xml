@@ -27,6 +27,7 @@
     <string name="keycode_mode_change">變更鍵盤類型</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">可以的話顯示剪貼簿內容</string>
     <string name="show_popup">按下按鍵時顯示彈出效果</string>

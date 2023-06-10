@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">Spremeni vrsto tipkovnice</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Prikaži vsebino odložišča, če je na voljo</string>
     <string name="show_popup">Prikaži pojavno okno ob pritisku tipke</string>

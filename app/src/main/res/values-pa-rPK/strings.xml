@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">کیبورڈ دی قسم بدلو</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">جے اُپلبدھ ہووے تاں کاپی کیتی لکھت ویکھو</string>
     <string name="show_popup">جدوں کنجی دباؤݨ کنجی تے وڈا اکھر ویکھو</string>
