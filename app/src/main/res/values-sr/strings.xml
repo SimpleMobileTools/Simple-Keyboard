@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">Промените тип тастатуре</string>
     <string name="keycode_shift">Смена</string>
     <string name="keycode_enter">Унеси</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Прикажи садржај међуспремника ако је доступан</string>
     <string name="show_popup">Прикажи искачући прозор при притиску на тастер</string>

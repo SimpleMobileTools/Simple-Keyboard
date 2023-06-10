@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">Ändra tangentbordstyp</string>
     <string name="keycode_shift">Skift</string>
     <string name="keycode_enter">Enter</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Visa urklippets innehåll om tillgängligt</string>
     <string name="show_popup">Visa en popupp vid knapptryck</string>

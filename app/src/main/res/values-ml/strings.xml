@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">കീബോർഡ് തരം മാറ്റുക</string>
     <string name="keycode_shift">ഷിഫ്റ്റ്</string>
     <string name="keycode_enter">നൽകുക</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">ക്ലിപ്പ്ബോർഡ് ഉള്ളടക്കം ലഭ്യമാണെങ്കിൽ കാണിക്കുക</string>
     <string name="show_popup">കീപ്രസ്സിൽ ഒരു പോപ്പ്അപ്പ് കാണിക്കുക</string>

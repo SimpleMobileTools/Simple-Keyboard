@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">Αλλαγή τύπου πληκτρολογίου</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Εμφάνιση περιεχομένου πρόχειρου εάν είναι διαθέσιμο</string>
     <string name="show_popup">Εμφάνιση ανάδυσης στο πάτημα πλήκτρων</string>

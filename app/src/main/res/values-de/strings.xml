@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">Tastaturtyp ändern</string>
     <string name="keycode_shift">Umschalttaste</string>
     <string name="keycode_enter">Eingabe</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Inhalt der Zwischenablage anzeigen, falls vorhanden</string>
     <string name="show_popup">Bei Tastendruck ein Popup anzeigen</string>

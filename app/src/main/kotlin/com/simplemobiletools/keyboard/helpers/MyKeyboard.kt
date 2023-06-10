@@ -43,7 +43,7 @@ class MyKeyboard {
     var mMinWidth = 0
 
     /** List of keys in this keyboard  */
-    var mKeys: MutableList<Key?>? = null
+    var mKeys: MutableList<Key>? = null
 
     /** Width of the screen available to fit the keyboard  */
     private var mDisplayWidth = 0
@@ -223,6 +223,21 @@ class MyKeyboard {
 
 
             a.recycle()
+        }
+
+        /**
+         * Content description for talkback functional
+         */
+        fun getContentDescription(context: Context): CharSequence {
+            return when (code) {
+                KEYCODE_SHIFT -> context.getString(R.string.keycode_shift)
+                KEYCODE_MODE_CHANGE -> context.getString(R.string.keycode_mode_change)
+                KEYCODE_ENTER -> context.getString(R.string.keycode_enter)
+                KEYCODE_DELETE -> context.getString(R.string.keycode_delete)
+                KEYCODE_SPACE -> context.getString(R.string.keycode_space)
+                KEYCODE_EMOJI -> context.getString(R.string.emojis)
+                else -> label
+            }
         }
 
         /** Create an empty key with no attributes.  */

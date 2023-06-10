@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">Schimbați tipul de tastatură</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Afișează conținutul clipboard-ului, dacă este disponibil</string>
     <string name="show_popup">Afișați o fereastră pop-up la apăsarea unei taste</string>

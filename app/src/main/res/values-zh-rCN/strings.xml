@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">更改键盘类型</string>
     <string name="keycode_shift">上档</string>
     <string name="keycode_enter">输入</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">如可用显示剪贴板内容</string>
     <string name="show_popup">按键时显示弹框</string>

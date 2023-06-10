@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">Keisti klaviatūros tipą</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Jei prieinama, rodyti iškarpinės turinį</string>
     <string name="show_popup">Show a popup on keypress</string>

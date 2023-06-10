@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">キーボードの種類を変更する</string>
     <string name="keycode_shift">シフト</string>
     <string name="keycode_enter">エンター</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">クリップボードの内容がある場合、それを表示する</string>
     <string name="show_popup">キー入力時にポップアップを表示する</string>
