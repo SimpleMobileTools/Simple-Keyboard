@@ -230,33 +230,13 @@ class MyKeyboard {
          */
         fun getContentDescription(context: Context): CharSequence {
             return when (code) {
-                KEYCODE_SHIFT -> {
-                    context.getString(R.string.keycode_shift)
-                }
-
-                KEYCODE_MODE_CHANGE -> {
-                    context.getString(R.string.keycode_mode_change)
-                }
-
-                KEYCODE_ENTER -> {
-                    context.getString(R.string.keycode_enter)
-                }
-
-                KEYCODE_DELETE -> {
-                    context.getString(R.string.keycode_delete)
-                }
-
-                KEYCODE_SPACE -> {
-                    context.getString(R.string.keycode_space)
-                }
-
-                KEYCODE_EMOJI -> {
-                    context.getString(R.string.emojis)
-                }
-
-                else -> {
-                    label
-                }
+                KEYCODE_SHIFT -> context.getString(R.string.keycode_shift)
+                KEYCODE_MODE_CHANGE -> context.getString(R.string.keycode_mode_change)
+                KEYCODE_ENTER -> context.getString(R.string.keycode_enter)
+                KEYCODE_DELETE -> context.getString(R.string.keycode_delete)
+                KEYCODE_SPACE -> context.getString(R.string.keycode_space)
+                KEYCODE_EMOJI -> context.getString(R.string.emojis)
+                else -> label
             }
         }
 
