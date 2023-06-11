@@ -22,11 +22,11 @@
     <string name="export_clipboard_items">Elemente der Zwischenablage exportieren</string>
     <string name="import_clipboard_items">Elemente der Zwischenablage importieren</string>
     <!-- Accessibility -->
-    <string name="keycode_delete">Löschen</string>
+    <string name="keycode_delete">Entfernen</string>
     <string name="keycode_mode_change">Tastaturtyp ändern</string>
     <string name="keycode_shift">Umschalttaste</string>
     <string name="keycode_enter">Eingabe</string>
-    <string name="keycode_space">Spacebar</string>
+    <string name="keycode_space">Leertaste</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Inhalt der Zwischenablage anzeigen, falls vorhanden</string>
     <string name="show_popup">Bei Tastendruck ein Popup anzeigen</string>
