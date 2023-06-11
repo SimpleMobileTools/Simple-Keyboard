@@ -7,7 +7,7 @@
     <!-- Clipboard -->
     <string name="manage_clipboard_items">Hantera urklippsobjekt</string>
     <string name="manage_clipboard_empty">Ditt urklipp är tomt.</string>
-    <string name="manage_clipboard_label">När du väl kopierar viss text, så dyker det up här. Du kan också pinna klipp så de inte försvinner senare.</string>
+    <string name="manage_clipboard_label">När du kopierar text visas den här. Du kan också fästa klipp så att de inte försvinner senare.</string>
     <string name="clear_clipboard_data">Rensa urklippsdata</string>
     <string name="clear_clipboard_data_confirmation">Är du säker på att du vill rensa datan från urklippet\?</string>
     <string name="clipboard">Urklipp</string>
@@ -26,7 +26,7 @@
     <string name="keycode_mode_change">Ändra tangentbordstyp</string>
     <string name="keycode_shift">Skift</string>
     <string name="keycode_enter">Enter</string>
-    <string name="keycode_space">Spacebar</string>
+    <string name="keycode_space">Blanksteg</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Visa urklippets innehåll om tillgängligt</string>
     <string name="show_popup">Visa en popupp vid knapptryck</string>
