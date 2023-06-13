@@ -1079,8 +1079,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                 // fix a glitch with long pressing backspace, then clicking some letter
                 if (mRepeatKeyIndex != NOT_A_KEY) {
-                    val key = mKeys[mRepeatKeyIndex]
-                    if (key.code == KEYCODE_DELETE) {
+                    val key = mKeys.getOrNull(mRepeatKeyIndex)
+                    if (key?.code == KEYCODE_DELETE) {
                         mHandler?.removeMessages(MSG_REPEAT)
                         mRepeatKeyIndex = NOT_A_KEY
                     }
@@ -1315,12 +1315,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
                 showPreview(NOT_A_KEY)
                 Arrays.fill(mKeyIndices, NOT_A_KEY)
+
+                val currentKeyCode = mKeys.getOrNull(mCurrentKey)?.code
+
                 // If we're not on a repeating key (which sends on a DOWN event)
                 if (mRepeatKeyIndex == NOT_A_KEY && !mMiniKeyboardOnScreen && !mAbortKey) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
-                }
-
-                if (mKeys.getOrNull(mCurrentKey)?.code == KEYCODE_SPACE && !mIsLongPressingSpace) {
+                } else if (currentKeyCode == KEYCODE_SPACE && !mIsLongPressingSpace) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
                 }
 
