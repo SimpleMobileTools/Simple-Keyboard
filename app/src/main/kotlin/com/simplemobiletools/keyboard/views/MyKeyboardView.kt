@@ -225,9 +225,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mLabelTextSize = resources.getDimension(R.dimen.label_text_size).toInt()
         mPreviewHeight = resources.getDimension(R.dimen.key_height).toInt()
         mSpaceMoveThreshold = resources.getDimension(R.dimen.medium_margin).toInt()
-        mTextColor = context.safeStorageContext.getProperTextColor()
-        mBackgroundColor = context.safeStorageContext.getProperBackgroundColor()
-        mPrimaryColor = context.safeStorageContext.getProperPrimaryColor()
+
+        with (context.safeStorageContext) {
+            mTextColor = getProperTextColor()
+            mBackgroundColor = getProperBackgroundColor()
+            mPrimaryColor = getProperPrimaryColor()
+        }
 
         mPreviewPopup = PopupWindow(context)
         mPreviewText = inflater.inflate(resources.getLayout(R.layout.keyboard_key_preview), null) as TextView
@@ -383,7 +386,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mUsingSystemTheme = config.isUsingSystemTheme
         }
 
-
         val isMainKeyboard = changedView == null || changedView != mini_keyboard_view
         mKeyBackground = if (mShowKeyBorders && isMainKeyboard) {
             resources.getDrawable(R.drawable.keyboard_key_selector_outlined, context.theme)
@@ -429,7 +431,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             pinned_clipboard_items.applyColorFilter(mTextColor)
             clipboard_clear.applyColorFilter(mTextColor)
 
-            toolbar_holder.beInvisibleIf(!context.shouldShowKeyboardToolbar)
+            toolbar_holder.beInvisibleIf(context.isDeviceLocked)
         }
 
         mClipboardManagerHolder?.apply {
@@ -1492,7 +1494,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
         }
 
-        val adapter = ClipsKeyboardAdapter(context, clips, refreshClipsListener) { clip ->
+        val adapter = ClipsKeyboardAdapter(context.safeStorageContext, clips, refreshClipsListener) { clip ->
             mOnKeyboardActionListener!!.onText(clip.value)
             vibrateIfNeeded()
         }

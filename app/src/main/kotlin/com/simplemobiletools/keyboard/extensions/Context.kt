@@ -4,7 +4,6 @@ import android.app.KeyguardManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Color
-import android.os.Build
 import android.os.IBinder
 import android.view.*
 import android.widget.TextView
@@ -28,9 +27,6 @@ val Context.safeStorageContext: Context
     } else {
         this
     }
-
-val Context.shouldShowKeyboardToolbar: Boolean
-    get() = !isDeviceLocked
 
 val Context.isDeviceLocked: Boolean
     get() = (getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager).isDeviceLocked
@@ -60,7 +56,7 @@ fun Context.getStrokeColor(): Int {
     }
 }
 
-fun Context.getKeyboardDialogBuilder() = if (baseConfig.isUsingSystemTheme) {
+fun Context.getKeyboardDialogBuilder() = if (safeStorageContext.baseConfig.isUsingSystemTheme) {
     MaterialAlertDialogBuilder(this, R.style.MyKeyboard_Alert)
 } else {
     AlertDialog.Builder(this, R.style.MyKeyboard_Alert)
