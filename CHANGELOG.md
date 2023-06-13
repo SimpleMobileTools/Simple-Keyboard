@@ -1,6 +1,15 @@
 Changelog
 ==========
 
+Version 5.4.3 *(2023-06-13)*
+----------------------------
+
+ * Allow using the app directly after startup, for unlocking the device
+ * Improve Talkback support
+ * Added an option to disable starting sentences with a capital letter
+ * Added a couple more language layouts
+ * Added some stability, UI and translation improvements
+
 Version 5.4.2 *(2023-05-04)*
 ----------------------------
 
