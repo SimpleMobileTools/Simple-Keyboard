@@ -19,7 +19,7 @@ abstract class ClipsDatabase : RoomDatabase() {
             if (db == null) {
                 synchronized(ClipsDatabase::class) {
                     if (db == null) {
-                        db = Room.databaseBuilder(context.applicationContext, ClipsDatabase::class.java, "clips.db").build()
+                        db = Room.databaseBuilder(context, ClipsDatabase::class.java, "clips.db").build()
                         db!!.openHelper.setWriteAheadLoggingEnabled(true)
                     }
                 }

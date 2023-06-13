@@ -12,6 +12,7 @@ import com.simplemobiletools.commons.extensions.onGlobalLayout
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.getKeyboardDialogBuilder
+import com.simplemobiletools.keyboard.extensions.safeStorageContext
 import com.simplemobiletools.keyboard.extensions.setupKeyboardDialogStuff
 
 class KeyboardRadioGroupDialog(
@@ -23,7 +24,7 @@ class KeyboardRadioGroupDialog(
     private val cancelCallback: (() -> Unit)? = null,
     private val callback: (newValue: Any) -> Unit
 ) {
-    private val context = ContextThemeWrapper(inputView.context, R.style.MyKeyboard_Alert)
+    private val context = ContextThemeWrapper(inputView.context.safeStorageContext, R.style.MyKeyboard_Alert)
     private var dialog: AlertDialog? = null
     private var wasInit = false
     private var selectedItemId = -1

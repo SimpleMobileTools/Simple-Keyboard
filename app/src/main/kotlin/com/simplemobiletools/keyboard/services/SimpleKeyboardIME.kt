@@ -14,6 +14,7 @@ import android.view.inputmethod.ExtractedTextRequest
 import com.simplemobiletools.commons.extensions.getSharedPrefs
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
+import com.simplemobiletools.keyboard.extensions.safeStorageContext
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.interfaces.OnKeyboardActionListener
 import com.simplemobiletools.keyboard.views.MyKeyboardView
@@ -39,7 +40,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
 
     override fun onInitializeInterface() {
         super.onInitializeInterface()
-        getSharedPrefs().registerOnSharedPreferenceChangeListener(this)
+        safeStorageContext.getSharedPrefs().registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onCreateInputView(): View {
@@ -62,7 +63,6 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
         super.onStartInput(attribute, restarting)
         inputTypeClass = attribute!!.inputType and TYPE_MASK_CLASS
         inputTypeClassVariation = attribute.inputType and TYPE_MASK_VARIATION
-
         enterKeyType = attribute.imeOptions and (IME_MASK_ACTION or IME_FLAG_NO_ENTER_ACTION)
         keyboard = createNewKeyboard()
         keyboardView?.setKeyboard(keyboard!!)
@@ -108,6 +108,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                     inputConnection.commitText("", 1)
                 }
             }
+
             MyKeyboard.KEYCODE_SHIFT -> {
                 if (keyboardMode == KEYBOARD_LETTERS) {
                     when {
@@ -131,6 +132,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                 }
                 keyboardView!!.invalidateAllKeys()
             }
+
             MyKeyboard.KEYCODE_ENTER -> {
                 val imeOptionsActionId = getImeOptionsActionId()
                 if (imeOptionsActionId != IME_ACTION_NONE) {
@@ -140,6 +142,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                     inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
                 }
             }
+
             MyKeyboard.KEYCODE_MODE_CHANGE -> {
                 val keyboardXml = if (keyboardMode == KEYBOARD_LETTERS) {
                     keyboardMode = KEYBOARD_SYMBOLS
@@ -151,9 +154,11 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                 keyboard = MyKeyboard(this, keyboardXml, enterKeyType)
                 keyboardView!!.setKeyboard(keyboard!!)
             }
+
             MyKeyboard.KEYCODE_EMOJI -> {
                 keyboardView?.openEmojiPalette()
             }
+
             else -> {
                 var codeChar = code.toChar()
                 val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text ?: return
@@ -225,14 +230,17 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                 keyboardMode = KEYBOARD_NUMBERS
                 R.xml.keys_numbers
             }
+
             TYPE_CLASS_PHONE -> {
                 keyboardMode = KEYBOARD_PHONE
                 R.xml.keys_phone
             }
+
             TYPE_CLASS_DATETIME -> {
                 keyboardMode = KEYBOARD_SYMBOLS
                 R.xml.keys_symbols
             }
+
             else -> {
                 keyboardMode = KEYBOARD_LETTERS
                 getKeyboardLayoutXML()

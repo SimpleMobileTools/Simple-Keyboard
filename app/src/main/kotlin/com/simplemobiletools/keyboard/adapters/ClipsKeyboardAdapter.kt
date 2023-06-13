@@ -31,6 +31,7 @@ class ClipsKeyboardAdapter(
 ) : RecyclerView.Adapter<ClipsKeyboardAdapter.ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
+
     private var textColor = context.getProperTextColor()
     private var backgroundColor = context.getProperBackgroundColor()
 

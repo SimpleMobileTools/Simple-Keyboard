@@ -1,5 +1,6 @@
 package com.simplemobiletools.keyboard.extensions
 
+import android.app.KeyguardManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Color
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.isNougatPlus
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.views.MyTextView
 import com.simplemobiletools.keyboard.R
@@ -17,9 +19,20 @@ import com.simplemobiletools.keyboard.databases.ClipsDatabase
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.interfaces.ClipsDao
 
-val Context.config: Config get() = Config.newInstance(applicationContext)
+val Context.config: Config get() = Config.newInstance(applicationContext.safeStorageContext)
 
-val Context.clipsDB: ClipsDao get() = ClipsDatabase.getInstance(applicationContext).ClipsDao()
+val Context.safeStorageContext: Context
+    get() = if (isNougatPlus() && isDeviceLocked) {
+        createDeviceProtectedStorageContext()
+    } else {
+        this
+    }
+
+val Context.isDeviceLocked: Boolean
+    get() = (getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager).isDeviceLocked
+
+val Context.clipsDB: ClipsDao
+    get() = ClipsDatabase.getInstance(applicationContext.safeStorageContext).ClipsDao()
 
 fun Context.getCurrentClip(): String? {
     val clipboardManager = (getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
@@ -34,7 +47,7 @@ fun Context.getStrokeColor(): Int {
             resources.getColor(R.color.md_grey_400, theme)
         }
     } else {
-        val lighterColor = getProperBackgroundColor().lightenColor()
+        val lighterColor = safeStorageContext.getProperBackgroundColor().lightenColor()
         if (lighterColor == Color.WHITE || lighterColor == Color.BLACK) {
             resources.getColor(R.color.divider_grey, theme)
         } else {
@@ -43,7 +56,7 @@ fun Context.getStrokeColor(): Int {
     }
 }
 
-fun Context.getKeyboardDialogBuilder() = if (baseConfig.isUsingSystemTheme) {
+fun Context.getKeyboardDialogBuilder() = if (safeStorageContext.baseConfig.isUsingSystemTheme) {
     MaterialAlertDialogBuilder(this, R.style.MyKeyboard_Alert)
 } else {
     AlertDialog.Builder(this, R.style.MyKeyboard_Alert)
