@@ -1396,9 +1396,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 // If we're not on a repeating key (which sends on a DOWN event)
                 if (mRepeatKeyIndex == NOT_A_KEY && !mMiniKeyboardOnScreen && !mAbortKey) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
-                }
-
-                if (currentKeyCode == KEYCODE_SPACE && !mIsLongPressingSpace) {
+                } else if (currentKeyCode == KEYCODE_SPACE && !mIsLongPressingSpace) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
                 }
 
