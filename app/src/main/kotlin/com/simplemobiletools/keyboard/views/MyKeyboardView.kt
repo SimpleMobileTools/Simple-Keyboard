@@ -226,7 +226,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mPreviewHeight = resources.getDimension(R.dimen.key_height).toInt()
         mSpaceMoveThreshold = resources.getDimension(R.dimen.medium_margin).toInt()
 
-        with (context.safeStorageContext) {
+        with(context.safeStorageContext) {
             mTextColor = getProperTextColor()
             mBackgroundColor = getProperBackgroundColor()
             mPrimaryColor = getProperPrimaryColor()
@@ -431,7 +431,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             pinned_clipboard_items.applyColorFilter(mTextColor)
             clipboard_clear.applyColorFilter(mTextColor)
 
-            toolbar_holder.beInvisibleIf(context.isDeviceLocked)
+            toolbar_holder.beInvisibleIf(context.isDeviceInDirectBootMode)
         }
 
         mClipboardManagerHolder?.apply {
