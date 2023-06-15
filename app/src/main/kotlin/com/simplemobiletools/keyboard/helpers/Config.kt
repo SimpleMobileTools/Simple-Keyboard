@@ -2,9 +2,9 @@ package com.simplemobiletools.keyboard.helpers
 
 import android.content.Context
 import com.simplemobiletools.commons.helpers.BaseConfig
-import com.simplemobiletools.keyboard.extensions.isDeviceLocked
+import com.simplemobiletools.keyboard.extensions.isDeviceInDirectBootMode
 import com.simplemobiletools.keyboard.extensions.safeStorageContext
-import java.util.*
+import java.util.Locale
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {
@@ -44,7 +44,7 @@ class Config(context: Context) : BaseConfig(context) {
         set(showClipboardContent) = prefs.edit().putBoolean(SHOW_CLIPBOARD_CONTENT, showClipboardContent).apply()
 
     var showNumbersRow: Boolean
-        get() = if (!context.isDeviceLocked) {
+        get() = if (!context.isDeviceInDirectBootMode) {
             prefs.getBoolean(SHOW_NUMBERS_ROW, false)
         } else {
             true
