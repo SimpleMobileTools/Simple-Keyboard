@@ -16,14 +16,13 @@ import android.os.Message
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.*
-import android.view.accessibility.AccessibilityEvent
-import android.view.accessibility.AccessibilityManager
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
+import androidx.core.view.ViewCompat
 import androidx.emoji2.text.EmojiCompat
 import androidx.emoji2.text.EmojiCompat.EMOJI_SUPPORTED
 import com.simplemobiletools.commons.extensions.*
@@ -43,6 +42,7 @@ import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_ENTER
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_MODE_CHANGE
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SHIFT
 import com.simplemobiletools.keyboard.helpers.MyKeyboard.Companion.KEYCODE_SPACE
+import com.simplemobiletools.keyboard.interfaces.OnKeyboardActionListener
 import com.simplemobiletools.keyboard.interfaces.RefreshClipsListener
 import com.simplemobiletools.keyboard.models.Clip
 import com.simplemobiletools.keyboard.models.ClipsSectionLabel
@@ -52,48 +52,17 @@ import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 import java.util.*
 
 @SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility")
-class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int = 0) :
-    View(context, attrs, defStyleRes) {
+class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int = 0) : View(context, attrs, defStyleRes) {
 
-    interface OnKeyboardActionListener {
-        /**
-         * Called when the user presses a key. This is sent before the [.onKey] is called. For keys that repeat, this is only called once.
-         * @param primaryCode the unicode of the key being pressed. If the touch is not on a valid key, the value will be zero.
-         */
-        fun onPress(primaryCode: Int)
-
-        /**
-         * Send a key press to the listener.
-         * @param code this is the key that was pressed
-         */
-        fun onKey(code: Int)
-
-        /**
-         * Called when the finger has been lifted after pressing a key
-         */
-        fun onActionUp()
-
-        /**
-         * Called when the user long presses Space and moves to the left
-         */
-        fun moveCursorLeft()
-
-        /**
-         * Called when the user long presses Space and moves to the right
-         */
-        fun moveCursorRight()
-
-        /**
-         * Sends a sequence of characters to the listener.
-         * @param text the string to be displayed.
-         */
-        fun onText(text: String)
-
-        /**
-         * Called to force the KeyboardView to reload the keyboard
-         */
-        fun reloadKeyboard()
+    override fun dispatchHoverEvent(event: MotionEvent): Boolean {
+        return if (accessHelper?.dispatchHoverEvent(event) == true) {
+            true
+        } else {
+            super.dispatchHoverEvent(event)
+        }
     }
+
+    private var accessHelper: AccessHelper? = null
 
     private var mKeyboard: MyKeyboard? = null
     private var mCurrentKeyIndex: Int = NOT_A_KEY
@@ -184,9 +153,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     /** The canvas for the above mutable keyboard bitmap  */
     private var mCanvas: Canvas? = null
 
-    /** The accessibility manager for accessibility support  */
-    private val mAccessibilityManager: AccessibilityManager
-
     private var mHandler: Handler? = null
 
     companion object {
@@ -248,7 +214,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         mPaint.textAlign = Align.CENTER
         mPaint.alpha = 255
         mMiniKeyboardCache = HashMap()
-        mAccessibilityManager = (context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager)
         mPopupMaxMoveDistance = resources.getDimension(R.dimen.popup_max_move_distance)
         mTopSmallNumberSize = resources.getDimension(R.dimen.small_text_size)
         mTopSmallNumberMarginWidth = resources.getDimension(R.dimen.top_small_number_margin_width)
@@ -304,6 +269,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         invalidateAllKeys()
         computeProximityThreshold(keyboard)
         mMiniKeyboardCache.clear()
+
+        accessHelper = AccessHelper(this, mKeyboard?.mKeys.orEmpty())
+        ViewCompat.setAccessibilityDelegate(this, accessHelper)
+
         // Not really necessary to do every time, but will free up views
         // Switching to a different keyboard should abort any pending keys so that the key up
         // doesn't get delivered to the old or new keyboard
@@ -486,7 +455,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun adjustCase(label: CharSequence): CharSequence? {
         var newLabel: CharSequence? = label
-        if (newLabel != null && newLabel.isNotEmpty() && mKeyboard!!.mShiftState != ShiftState.OFF && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
+        if (!newLabel.isNullOrEmpty() && mKeyboard!!.mShiftState != ShiftState.OFF && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
             newLabel = newLabel.toString().uppercase(Locale.getDefault())
         }
         return newLabel
@@ -651,10 +620,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     val secondaryIconBottom = secondaryIconTop + secondaryIconHeight
 
                     secondaryIcon.setBounds(
-                        secondaryIconLeft,
-                        secondaryIconTop,
-                        secondaryIconRight,
-                        secondaryIconBottom
+                        secondaryIconLeft, secondaryIconTop, secondaryIconRight, secondaryIconBottom
                     )
                     secondaryIcon.draw(canvas)
 
@@ -840,29 +806,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         val oldKeyIndex = mCurrentKeyIndex
         val previewPopup = mPreviewPopup
         mCurrentKeyIndex = keyIndex
-        // Release the old key and press the new key
-        val keys = mKeys
-        if (oldKeyIndex != mCurrentKeyIndex) {
-            if (oldKeyIndex != NOT_A_KEY && keys.size > oldKeyIndex) {
-                val oldKey = keys[oldKeyIndex]
-                oldKey.pressed = false
-                invalidateKey(oldKeyIndex)
-                val keyCode = oldKey.code
-                sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED, keyCode)
-            }
-
-            if (mCurrentKeyIndex != NOT_A_KEY && keys.size > mCurrentKeyIndex) {
-                val newKey = keys[mCurrentKeyIndex]
-
-                val code = newKey.code
-                if (context.config.showKeyBorders || (code == KEYCODE_SHIFT || code == KEYCODE_MODE_CHANGE || code == KEYCODE_DELETE || code == KEYCODE_ENTER || code == KEYCODE_SPACE)) {
-                    newKey.pressed = true
-                }
-
-                invalidateKey(mCurrentKeyIndex)
-                sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, code)
-            }
-        }
 
         if (!context.config.showPopupOnKeypress) {
             return
@@ -873,8 +816,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             if (previewPopup.isShowing) {
                 if (keyIndex == NOT_A_KEY) {
                     mHandler!!.sendMessageDelayed(
-                        mHandler!!.obtainMessage(MSG_REMOVE_PREVIEW),
-                        DELAY_AFTER_PREVIEW.toLong()
+                        mHandler!!.obtainMessage(MSG_REMOVE_PREVIEW), DELAY_AFTER_PREVIEW.toLong()
                     )
                 }
             }
@@ -964,22 +906,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             previewPopup.height = popupHeight
             previewPopup.showAtLocation(mPopupParent, Gravity.NO_GRAVITY, mPopupPreviewX, mPopupPreviewY)
             mPreviewText!!.visibility = VISIBLE
-        }
-    }
-
-    private fun sendAccessibilityEventForUnicodeCharacter(eventType: Int, code: Int) {
-        if (mAccessibilityManager.isEnabled) {
-            val event = AccessibilityEvent.obtain(eventType)
-            onInitializeAccessibilityEvent(event)
-            val text: String = when (code) {
-                KEYCODE_DELETE -> context.getString(R.string.keycode_delete)
-                KEYCODE_ENTER -> context.getString(R.string.keycode_enter)
-                KEYCODE_MODE_CHANGE -> context.getString(R.string.keycode_mode_change)
-                KEYCODE_SHIFT -> context.getString(R.string.keycode_shift)
-                else -> code.toChar().toString()
-            }
-            event.text.add(text)
-            mAccessibilityManager.sendAccessibilityEvent(event)
         }
     }
 
@@ -1097,8 +1023,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     mMiniKeyboard!!.setKeyboard(keyboard)
                     mPopupParent = this
                     mMiniKeyboardContainer!!.measure(
-                        MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
-                        MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
+                        MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST)
                     )
                     mMiniKeyboardCache[popupKey] = mMiniKeyboardContainer
                 } else {
@@ -1161,8 +1086,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                 // fix a glitch with long pressing backspace, then clicking some letter
                 if (mRepeatKeyIndex != NOT_A_KEY) {
-                    val key = mKeys[mRepeatKeyIndex]
-                    if (key.code == KEYCODE_DELETE) {
+                    val key = mKeys.getOrNull(mRepeatKeyIndex)
+                    if (key?.code == KEYCODE_DELETE) {
                         mHandler?.removeMessages(MSG_REPEAT)
                         mRepeatKeyIndex = NOT_A_KEY
                     }
@@ -1397,12 +1322,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
                 showPreview(NOT_A_KEY)
                 Arrays.fill(mKeyIndices, NOT_A_KEY)
+
+                val currentKeyCode = mKeys.getOrNull(mCurrentKey)?.code
+
                 // If we're not on a repeating key (which sends on a DOWN event)
                 if (mRepeatKeyIndex == NOT_A_KEY && !mMiniKeyboardOnScreen && !mAbortKey) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
-                }
-
-                if (mKeys.getOrNull(mCurrentKey)?.code == KEYCODE_SPACE && !mIsLongPressingSpace) {
+                } else if (currentKeyCode == KEYCODE_SPACE && !mIsLongPressingSpace) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime)
                 }
 

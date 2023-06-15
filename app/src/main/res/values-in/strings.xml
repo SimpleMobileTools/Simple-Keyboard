@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">Ubah tipe keyboard</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Tampilkan konten papan klip jika tersedia</string>
     <string name="show_popup">Tampilkan sebuah popup pada penekanan tombol</string>

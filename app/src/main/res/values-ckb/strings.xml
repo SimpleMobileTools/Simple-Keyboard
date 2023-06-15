@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">گۆڕینی شێواز</string>
     <string name="keycode_shift">شێفت</string>
     <string name="keycode_enter">ئینتەر</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">پیشاندانی دوایین لەبەرگیراوە</string>
     <string name="show_popup">بچووککراوەی پیت</string>

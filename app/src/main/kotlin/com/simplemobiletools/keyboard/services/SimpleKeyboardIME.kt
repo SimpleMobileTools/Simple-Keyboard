@@ -16,11 +16,12 @@ import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.extensions.safeStorageContext
 import com.simplemobiletools.keyboard.helpers.*
+import com.simplemobiletools.keyboard.interfaces.OnKeyboardActionListener
 import com.simplemobiletools.keyboard.views.MyKeyboardView
 import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 
 // based on https://www.androidauthority.com/lets-build-custom-keyboard-android-832362/
-class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionListener, SharedPreferences.OnSharedPreferenceChangeListener {
+class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, SharedPreferences.OnSharedPreferenceChangeListener {
     private var SHIFT_PERM_TOGGLE_SPEED = 500   // how quickly do we have to doubletap shift to enable permanent caps lock
     private val KEYBOARD_LETTERS = 0
     private val KEYBOARD_SYMBOLS = 1
@@ -283,15 +284,19 @@ class SimpleKeyboardIME : InputMethodService(), MyKeyboardView.OnKeyboardActionL
         return when (baseContext.config.keyboardLanguage) {
             LANGUAGE_BENGALI -> R.xml.keys_letters_bengali
             LANGUAGE_BULGARIAN -> R.xml.keys_letters_bulgarian
+            LANGUAGE_DANISH -> R.xml.keys_letters_danish
             LANGUAGE_ENGLISH_DVORAK -> R.xml.keys_letters_english_dvorak
             LANGUAGE_ENGLISH_QWERTZ -> R.xml.keys_letters_english_qwertz
-            LANGUAGE_FRENCH -> R.xml.keys_letters_french
+            LANGUAGE_FRENCH_AZERTY -> R.xml.keys_letters_french_azerty
+            LANGUAGE_FRENCH_BEPO -> R.xml.keys_letters_french_bepo
             LANGUAGE_GERMAN -> R.xml.keys_letters_german
             LANGUAGE_GREEK -> R.xml.keys_letters_greek
             LANGUAGE_LITHUANIAN -> R.xml.keys_letters_lithuanian
+            LANGUAGE_NORWEGIAN -> R.xml.keys_letters_norwegian
             LANGUAGE_ROMANIAN -> R.xml.keys_letters_romanian
             LANGUAGE_RUSSIAN -> R.xml.keys_letters_russian
             LANGUAGE_SLOVENIAN -> R.xml.keys_letters_slovenian
+            LANGUAGE_SWEDISH -> R.xml.keys_letters_swedish
             LANGUAGE_SPANISH -> R.xml.keys_letters_spanish_qwerty
             LANGUAGE_TURKISH_Q -> R.xml.keys_letters_turkish_q
             else -> R.xml.keys_letters_english_qwerty

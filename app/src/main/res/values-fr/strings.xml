@@ -26,6 +26,7 @@
     <string name="keycode_mode_change">Changer de type de clavier</string>
     <string name="keycode_shift">Majuscule</string>
     <string name="keycode_enter">Entrée</string>
+    <string name="keycode_space">Spacebar</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Afficher le contenu du presse-papiers si disponible</string>
     <string name="show_popup">Afficher une fenêtre contextuelle en cas de pression sur une touche</string>
