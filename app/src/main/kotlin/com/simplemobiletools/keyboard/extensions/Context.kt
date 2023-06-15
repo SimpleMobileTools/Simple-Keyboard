@@ -19,7 +19,6 @@ import com.simplemobiletools.keyboard.databases.ClipsDatabase
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.interfaces.ClipsDao
 
-
 val Context.config: Config get() = Config.newInstance(applicationContext.safeStorageContext)
 
 val Context.safeStorageContext: Context
@@ -32,7 +31,7 @@ val Context.safeStorageContext: Context
 val Context.isDeviceInDirectBootMode: Boolean
     get() {
         val userManager = getSystemService(Context.USER_SERVICE) as UserManager
-        return isNougatPlus() && userManager.isUserUnlocked
+        return isNougatPlus() && !userManager.isUserUnlocked
     }
 
 val Context.clipsDB: ClipsDao
