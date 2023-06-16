@@ -17,7 +17,8 @@ import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.interfaces.OnKeyboardActionListener
 import com.simplemobiletools.keyboard.views.MyKeyboardView
-import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
+import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.keyboard_holder
+import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.keyboard_view
 
 // based on https://www.androidauthority.com/lets-build-custom-keyboard-android-832362/
 class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -67,11 +68,11 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
         keyboard = createNewKeyboard()
         keyboardView?.setKeyboard(keyboard!!)
         keyboardView?.setEditorInfo(attribute)
-        updateShiftKeyState(null)
+        updateShiftKeyState()
     }
 
-    private fun updateShiftKeyState(code: Int?) {
-        if (code == MyKeyboard.KEYCODE_SHIFT) {
+    private fun updateShiftKeyState() {
+        if (keyboard!!.mShiftState == ShiftState.ON_PERMANENT) {
             return
         }
 
@@ -176,10 +177,6 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                 }
             }
         }
-
-        if (keyboard!!.mShiftState != ShiftState.ON_PERMANENT) {
-            updateShiftKeyState(code)
-        }
     }
 
     override fun onActionUp() {
@@ -250,6 +247,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
         if (newSelStart == newSelEnd) {
             keyboardView?.closeClipboardManager()
         }
+        updateShiftKeyState()
     }
 
     private fun moveCursor(moveRight: Boolean) {
