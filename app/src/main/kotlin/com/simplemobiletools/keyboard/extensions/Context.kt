@@ -1,5 +1,6 @@
 package com.simplemobiletools.keyboard.extensions
 
+import android.app.KeyguardManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Color
@@ -32,6 +33,12 @@ val Context.isDeviceInDirectBootMode: Boolean
     get() {
         val userManager = getSystemService(Context.USER_SERVICE) as UserManager
         return isNougatPlus() && !userManager.isUserUnlocked
+    }
+
+val Context.isDeviceLocked: Boolean
+    get() {
+        val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        return keyguardManager.isDeviceLocked || isDeviceInDirectBootMode
     }
 
 val Context.clipsDB: ClipsDao

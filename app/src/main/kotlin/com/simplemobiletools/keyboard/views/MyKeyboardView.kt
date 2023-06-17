@@ -400,7 +400,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             pinned_clipboard_items.applyColorFilter(mTextColor)
             clipboard_clear.applyColorFilter(mTextColor)
 
-            toolbar_holder.beInvisibleIf(context.isDeviceInDirectBootMode)
+            beInvisibleIf(context.isDeviceLocked)
         }
 
         mClipboardManagerHolder?.apply {
