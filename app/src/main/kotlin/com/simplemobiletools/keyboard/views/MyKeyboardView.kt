@@ -269,6 +269,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         invalidateAllKeys()
         computeProximityThreshold(keyboard)
         mMiniKeyboardCache.clear()
+        mToolbarHolder?.beInvisibleIf(context.isDeviceLocked)
 
         accessHelper = AccessHelper(this, mKeyboard?.mKeys.orEmpty())
         ViewCompat.setAccessibilityDelegate(this, accessHelper)

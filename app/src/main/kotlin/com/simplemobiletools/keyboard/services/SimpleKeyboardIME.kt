@@ -46,8 +46,8 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
     override fun onCreateInputView(): View {
         val keyboardHolder = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null)
         keyboardView = keyboardHolder.keyboard_view as MyKeyboardView
-        keyboardView!!.setKeyboard(keyboard!!)
         keyboardView!!.setKeyboardHolder(keyboardHolder.keyboard_holder)
+        keyboardView!!.setKeyboard(keyboard!!)
         keyboardView!!.setEditorInfo(currentInputEditorInfo)
         keyboardView!!.mOnKeyboardActionListener = this
         return keyboardHolder!!
