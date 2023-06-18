@@ -68,12 +68,12 @@
             app:topSmallNumber="6" />
         <Key
             app:keyLabel="u"
-            app:popupCharacters="űúù7ûüū"
+            app:popupCharacters="űúùû7üūů"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="7" />
         <Key
             app:keyLabel="i"
-            app:popupCharacters="íìî8ïī"
+            app:popupCharacters="íìîï8īį"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="8" />
         <Key
