@@ -6,6 +6,7 @@ import android.text.InputType.*
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.CursorAnchorInfo
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.EditorInfo.IME_ACTION_NONE
 import android.view.inputmethod.EditorInfo.IME_FLAG_NO_ENTER_ACTION
@@ -72,7 +73,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
     }
 
     private fun updateShiftKeyState() {
-        if (keyboard!!.mShiftState == ShiftState.ON_PERMANENT) {
+        if (keyboard?.mShiftState == ShiftState.ON_PERMANENT) {
             return
         }
 
@@ -255,6 +256,11 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
         if (newSelStart == newSelEnd) {
             keyboardView?.closeClipboardManager()
         }
+        updateShiftKeyState()
+    }
+
+    override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
+        super.onUpdateCursorAnchorInfo(cursorAnchorInfo)
         updateShiftKeyState()
     }
 
