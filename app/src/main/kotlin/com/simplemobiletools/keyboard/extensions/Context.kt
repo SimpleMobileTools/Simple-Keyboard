@@ -38,7 +38,7 @@ val Context.isDeviceInDirectBootMode: Boolean
 val Context.isDeviceLocked: Boolean
     get() {
         val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-        return keyguardManager.isDeviceLocked || isDeviceInDirectBootMode
+        return keyguardManager.isDeviceLocked || keyguardManager.isKeyguardLocked || isDeviceInDirectBootMode
     }
 
 val Context.clipsDB: ClipsDao
