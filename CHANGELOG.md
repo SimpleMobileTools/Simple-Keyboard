@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.4.5 *(2023-06-18)*
+----------------------------
+
+ * Added some letter capitalization related fixes
+ * Added some stability, UI and translation improvements
+
 Version 5.4.4 *(2023-06-15)*
 ----------------------------
 
