@@ -749,12 +749,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun clearClipboardContent() {
-        val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager)
+        val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager) ?: return
         if (isPiePlus()) {
-            clipboardManager?.clearPrimaryClip()
+            clipboardManager.clearPrimaryClip()
         } else {
             val clip = ClipData.newPlainText("", "")
-            clipboardManager?.setPrimaryClip(clip)
+            clipboardManager.setPrimaryClip(clip)
         }
     }
 
