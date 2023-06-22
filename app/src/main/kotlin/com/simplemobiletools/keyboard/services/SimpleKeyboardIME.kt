@@ -104,8 +104,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
             MyKeyboard.KEYCODE_DELETE -> {
                 val selectedText = inputConnection.getSelectedText(0)
                 if (TextUtils.isEmpty(selectedText)) {
-                    inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
-                    inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL))
+                    inputConnection.deleteSurroundingText(1, 0)
                 } else {
                     inputConnection.commitText("", 1)
                 }
