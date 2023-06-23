@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.4.6 *(2023-06-23)*
+----------------------------
+
+ * Fixed some glitches with keyboard not working properly
+ * Added some stability, UI and translation improvements
+
 Version 5.4.5 *(2023-06-18)*
 ----------------------------
 
