@@ -162,7 +162,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
 
             else -> {
                 var codeChar = code.toChar()
-                val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text ?: return
+                val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text
 
                 if (Character.isLetter(codeChar) && keyboard!!.mShiftState > ShiftState.OFF) {
                     codeChar = Character.toUpperCase(codeChar)
@@ -179,6 +179,9 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                     }
                 } else {
                     inputConnection.commitText(codeChar.toString(), 1)
+                    if (originalText == null) {
+                        updateShiftKeyState()
+                    }
                 }
             }
         }
