@@ -163,7 +163,6 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
 
             else -> {
                 var codeChar = code.toChar()
-                val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text ?: return
 
                 if (Character.isLetter(codeChar) && keyboard!!.mShiftState > ShiftState.OFF) {
                     codeChar = Character.toUpperCase(codeChar)
@@ -175,6 +174,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                 if (keyboardMode != KEYBOARD_LETTERS && inputTypeClass == TYPE_CLASS_TEXT && code == MyKeyboard.KEYCODE_SPACE) {
                     inputConnection.commitText(codeChar.toString(), 1)
                     val newText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text
+                    val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text
                     if (originalText != newText) {
                         switchToLetters = true
                     }
