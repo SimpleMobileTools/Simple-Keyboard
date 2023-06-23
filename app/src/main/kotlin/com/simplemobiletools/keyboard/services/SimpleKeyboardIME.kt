@@ -163,6 +163,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
 
             else -> {
                 var codeChar = code.toChar()
+                val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text
 
                 if (Character.isLetter(codeChar) && keyboard!!.mShiftState > ShiftState.OFF) {
                     codeChar = Character.toUpperCase(codeChar)
@@ -172,7 +173,6 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                 // However, avoid doing that in cases when the EditText for example requires numbers as the input.
                 // We can detect that by the text not changing on pressing Space.
                 if (keyboardMode != KEYBOARD_LETTERS && inputTypeClass == TYPE_CLASS_TEXT && code == MyKeyboard.KEYCODE_SPACE) {
-                    val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text
                     inputConnection.commitText(codeChar.toString(), 1)
                     val newText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text
                     if (originalText != newText) {
@@ -180,6 +180,9 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                     }
                 } else {
                     inputConnection.commitText(codeChar.toString(), 1)
+                    if (originalText == null) {
+                        updateShiftKeyState()
+                    }
                 }
             }
         }
