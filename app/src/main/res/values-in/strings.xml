@@ -26,7 +26,7 @@
     <string name="keycode_mode_change">Ubah tipe keyboard</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
-    <string name="keycode_space">Spacebar</string>
+    <string name="keycode_space">Bar spasi</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Tampilkan konten papan klip jika tersedia</string>
     <string name="show_popup">Tampilkan sebuah popup pada penekanan tombol</string>
@@ -35,7 +35,7 @@
     <string name="keyboard_height">Tinggi papan tik</string>
     <string name="show_key_borders">Tampilkan garis luar tombol</string>
     <string name="show_numbers_row">Tampilkan nomor di baris terpisah</string>
-    <string name="start_sentences_capitalized">Start sentences with a capital letter</string>
+    <string name="start_sentences_capitalized">Mulai kalimat dengan huruf kapital</string>
     <!-- Emojis -->
     <string name="emojis">Emoji</string>
     <!--
