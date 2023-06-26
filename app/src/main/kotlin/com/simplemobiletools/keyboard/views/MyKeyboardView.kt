@@ -418,6 +418,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         setupEmojiPalette(toolbarColor = toolbarColor, backgroundColor = mBackgroundColor, textColor = mTextColor)
+        if(context.config.keyboardLanguage == LANGUAGE_VIETNAMESE_TELEX){
+            setupLanguageTelex()
+        }else{
+            cachedVNTelexData.clear()
+        }
         setupStoredClips()
     }
 
@@ -1503,6 +1508,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             Handler(Looper.getMainLooper()).post {
                 setupEmojiAdapter(emojis)
             }
+        }
+    }
+
+    // For Vietnamese - Telex
+    private fun setupLanguageTelex() {
+        ensureBackgroundThread {
+            parseRawJsonSpecsFile(context, LANGUAGE_VN_TELEX)
         }
     }
 

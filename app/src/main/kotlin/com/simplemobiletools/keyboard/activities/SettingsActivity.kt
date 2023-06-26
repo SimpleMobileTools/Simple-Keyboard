@@ -14,6 +14,7 @@ import com.simplemobiletools.keyboard.extensions.getKeyboardLanguages
 import com.simplemobiletools.keyboard.helpers.KEYBOARD_HEIGHT_MULTIPLIER_LARGE
 import com.simplemobiletools.keyboard.helpers.KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM
 import com.simplemobiletools.keyboard.helpers.KEYBOARD_HEIGHT_MULTIPLIER_SMALL
+import com.simplemobiletools.keyboard.helpers.LANGUAGE_VIETNAMESE_TELEX
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 import kotlin.system.exitProcess

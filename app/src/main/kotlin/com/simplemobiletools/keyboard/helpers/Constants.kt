@@ -51,3 +51,4 @@ const val KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM = 2
 const val KEYBOARD_HEIGHT_MULTIPLIER_LARGE = 3
 
 const val EMOJI_SPEC_FILE_PATH = "media/emoji_spec.txt"
+const val LANGUAGE_VN_TELEX = "language/extension.json"
