@@ -178,9 +178,35 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                         switchToLetters = true
                     }
                 } else {
-                    inputConnection.commitText(codeChar.toString(), 1)
-                    if (originalText == null) {
-                        updateShiftKeyState()
+                    when {
+                        originalText != null && originalText.isNotEmpty() && cachedVNTelexData.isNotEmpty() -> {
+                            val fullText = originalText.toString() + codeChar.toString()
+                            val lastIndexEmpty = if (fullText.contains(" ")) {
+                                fullText.lastIndexOf(" ")
+                            } else 0
+                            if (lastIndexEmpty >= 0) {
+                                val word = fullText.subSequence(lastIndexEmpty, fullText.length).trim().toString()
+                                val wordChars = word.toCharArray()
+                                val predictWord = StringBuilder()
+                                for (char in wordChars.size - 1 downTo 0) {
+                                    predictWord.append(wordChars[char])
+                                    val shouldChangeText = predictWord.reverse().toString()
+                                    if (cachedVNTelexData.containsKey(shouldChangeText)) {
+                                        inputConnection.setComposingRegion(fullText.length - shouldChangeText.length, fullText.length)
+                                        inputConnection.setComposingText(cachedVNTelexData[shouldChangeText], fullText.length)
+                                        inputConnection.setComposingRegion(fullText.length, fullText.length)
+                                        return
+                                    }
+                                }
+                                inputConnection.commitText(codeChar.toString(), 1)
+                            }
+                        }
+                        else -> {
+                            inputConnection.commitText(codeChar.toString(), 1)
+                            if (originalText == null) {
+                                updateShiftKeyState()
+                            }
+                        }
                     }
                 }
             }

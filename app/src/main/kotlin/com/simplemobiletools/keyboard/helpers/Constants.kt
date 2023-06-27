@@ -43,6 +43,7 @@ const val LANGUAGE_NORWEGIAN = 14
 const val LANGUAGE_SWEDISH = 15
 const val LANGUAGE_DANISH = 16
 const val LANGUAGE_FRENCH_BEPO = 17
+const val LANGUAGE_VIETNAMESE_TELEX = 18
 
 // keyboard height multiplier options
 const val KEYBOARD_HEIGHT_MULTIPLIER_SMALL = 1
@@ -50,3 +51,4 @@ const val KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM = 2
 const val KEYBOARD_HEIGHT_MULTIPLIER_LARGE = 3
 
 const val EMOJI_SPEC_FILE_PATH = "media/emoji_spec.txt"
+const val LANGUAGE_VN_TELEX = "language/extension.json"
