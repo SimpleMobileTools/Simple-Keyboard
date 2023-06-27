@@ -63,7 +63,6 @@ fun parseRawEmojiSpecsFile(context: Context, path: String): MutableList<String> 
     return emojis
 }
 
-
 fun parseRawJsonSpecsFile(context: Context, path: String): HashMap<String, String> {
     if (cachedVNTelexData.isNotEmpty()) {
         return cachedVNTelexData
@@ -80,8 +79,7 @@ fun parseRawJsonSpecsFile(context: Context, path: String): HashMap<String, Strin
             val value = rulesObj.getString(key)
             cachedVNTelexData[key] = value
         }
-    } catch (ex: Exception) {
-        ex.printStackTrace()
+    } catch (ignored: Exception) {
         return HashMap()
     }
     return cachedVNTelexData
