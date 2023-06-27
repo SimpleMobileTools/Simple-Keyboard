@@ -5,7 +5,7 @@ import org.json.JSONObject
 import java.io.InputStream
 
 private var cachedEmojiData: MutableList<String>? = null
-val cachedVNTelexData: HashMap<String,String> = HashMap()
+val cachedVNTelexData: HashMap<String, String> = HashMap()
 
 /**
  * Reads the emoji list at the given [path] and returns an parsed [MutableList]. If the
@@ -64,18 +64,18 @@ fun parseRawEmojiSpecsFile(context: Context, path: String): MutableList<String> 
 }
 
 
-fun parseRawJsonSpecsFile(context: Context, path: String): HashMap<String,String> {
+fun parseRawJsonSpecsFile(context: Context, path: String): HashMap<String, String> {
     if (cachedVNTelexData.isNotEmpty()) {
         return cachedVNTelexData
     }
 
     try {
-        val  inputStream: InputStream = context.assets.open(path)
-        val jsonString = inputStream.bufferedReader().use{it.readText()}
+        val inputStream: InputStream = context.assets.open(path)
+        val jsonString = inputStream.bufferedReader().use { it.readText() }
         val jsonData = JSONObject(jsonString)
         val rulesObj = jsonData.getJSONObject("rules")
         val ruleKeys = rulesObj.keys()
-        while (ruleKeys.hasNext()){
+        while (ruleKeys.hasNext()) {
             val key = ruleKeys.next()
             val value = rulesObj.getString(key)
             cachedVNTelexData[key] = value

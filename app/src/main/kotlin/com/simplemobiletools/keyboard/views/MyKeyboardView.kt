@@ -418,9 +418,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         setupEmojiPalette(toolbarColor = toolbarColor, backgroundColor = mBackgroundColor, textColor = mTextColor)
-        if(context.config.keyboardLanguage == LANGUAGE_VIETNAMESE_TELEX){
+        if (context.config.keyboardLanguage == LANGUAGE_VIETNAMESE_TELEX) {
             setupLanguageTelex()
-        }else{
+        } else {
             cachedVNTelexData.clear()
         }
         setupStoredClips()

@@ -188,7 +188,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                                 val word = fullText.subSequence(lastIndexEmpty, fullText.length).trim().toString()
                                 val wordChars = word.toCharArray()
                                 val predictWord = StringBuilder()
-                                for (char in wordChars.size -1 downTo 0) {
+                                for (char in wordChars.size - 1 downTo 0) {
                                     predictWord.append(wordChars[char])
                                     val shouldChangeText = predictWord.reverse().toString()
                                     if (cachedVNTelexData.containsKey(shouldChangeText)) {
@@ -208,8 +208,6 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                             }
                         }
                     }
-
-
                 }
             }
         }
