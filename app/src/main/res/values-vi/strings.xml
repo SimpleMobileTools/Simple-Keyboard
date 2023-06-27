@@ -4,7 +4,7 @@
     <string name="app_launcher_name">Bàn phím</string>
     <string name="redirection_note">Vui lòng bật Bàn phím đơn giản trên màn hình tiếp theo để biến nó thành bàn phím khả dụng. Nhấn \'Quay lại\' sau khi được bật.</string>
     <string name="change_keyboard">Thay đổi bàn phím</string>
-    <!-- Bảng nhớ tạm -->
+    <!-- Clipboard -->
     <string name="manage_clipboard_items">Quản lý các mục trong khay nhớ tạm</string>
     <string name="manage_clipboard_empty">Khay nhớ tạm của bạn trống.</string>
     <string name="manage_clipboard_label">Sau khi bạn sao chép một số văn bản, văn bản đó sẽ hiển thị ở đây. Bạn cũng có thể ghim các clip để sau này chúng không biến mất.</string>
@@ -21,7 +21,7 @@
     <string name="text_pinned">Văn bản đã được ghim</string>
     <string name="export_clipboard_items">Xuất các mục trong khay nhớ tạm</string>
     <string name="import_clipboard_items">Nhập các mục trong khay nhớ tạm</string>
-    <!-- Khả năng truy cập -->
+    <!-- Accessibility -->
     <string name="keycode_delete">Xóa</string>
     <string name="keycode_mode_change">Thay đổi kiểu bàn phím</string>
     <string name="keycode_shift">Shift</string>
@@ -38,4 +38,8 @@
     <string name="start_sentences_capitalized">Bắt đầu câu bằng chữ in hoa</string>
     <!-- Emojis -->
     <string name="emojis">Biểu tượng cảm xúc</string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
 </resources>
