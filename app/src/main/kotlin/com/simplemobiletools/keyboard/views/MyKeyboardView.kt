@@ -224,7 +224,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         if (mHandler == null) {
-            mHandler = object : Handler() {
+            mHandler = object : Handler(Looper.getMainLooper()) {
                 override fun handleMessage(msg: Message) {
                     when (msg.what) {
                         MSG_REMOVE_PREVIEW -> mPreviewText!!.visibility = INVISIBLE
@@ -800,7 +800,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun detectAndSendKey(index: Int, x: Int, y: Int, eventTime: Long) {
-        if (index != NOT_A_KEY && index < mKeys.size) {
+        if (index != NOT_A_KEY && index in mKeys.indices) {
             val key = mKeys[index]
             getPressedKeyIndex(x, y)
             mOnKeyboardActionListener!!.onKey(key.code)
@@ -1194,12 +1194,15 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 val newPointerY = me.getY(1).toInt()
                 val secondKeyIndex = getPressedKeyIndex(newPointerX, newPointerY)
                 showPreview(secondKeyIndex)
-                detectAndSendKey(secondKeyIndex, newPointerX, newPointerY, eventTime)
 
-                val secondKeyCode = mKeys.getOrNull(secondKeyIndex)?.code
-                if (secondKeyCode != null) {
-                    mOnKeyboardActionListener!!.onPress(secondKeyCode)
-                }
+                mHandler!!.postDelayed({
+                    detectAndSendKey(secondKeyIndex, newPointerX, newPointerY, eventTime)
+
+                    val secondKeyCode = mKeys.getOrNull(secondKeyIndex)?.code
+                    if (secondKeyCode != null) {
+                        mOnKeyboardActionListener!!.onPress(secondKeyCode)
+                    }
+                }, REPEAT_INTERVAL.toLong())
 
                 showPreview(NOT_A_KEY)
                 invalidateKey(mCurrentKey)
