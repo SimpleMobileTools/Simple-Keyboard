@@ -241,7 +241,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
     }
 
     override fun onText(text: String) {
-        currentInputConnection?.commitText(text, 0)
+        currentInputConnection?.commitText(text, 1)
     }
 
     override fun reloadKeyboard() {
