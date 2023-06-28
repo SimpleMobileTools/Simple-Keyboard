@@ -1,5 +1,8 @@
 package com.simplemobiletools.keyboard.interfaces
 
+/**
+ * The SimpleKeyboardIME class uses this interface to communicate with the input connection
+ */
 interface OnKeyboardActionListener {
     /**
      * Called when the user presses a key. This is sent before the [.onKey] is called. For keys that repeat, this is only called once.
