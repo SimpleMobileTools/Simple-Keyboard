@@ -179,7 +179,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                     }
                 } else {
                     when {
-                        originalText != null && originalText.isNotEmpty() && cachedVNTelexData.isNotEmpty() -> {
+                        !originalText.isNullOrEmpty() && cachedVNTelexData.isNotEmpty() -> {
                             val fullText = originalText.toString() + codeChar.toString()
                             val lastIndexEmpty = if (fullText.contains(" ")) {
                                 fullText.lastIndexOf(" ")
