@@ -52,6 +52,18 @@
                     android:inputType="textCapSentences"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autofillHints="emailAddress"
+                    android:layout_marginStart="@dimen/activity_margin"
+                    android:layout_marginTop="@dimen/activity_margin"
+                    android:layout_marginEnd="@dimen/activity_margin"
+                    android:layout_marginBottom="@dimen/activity_margin" />
+
+                <com.simplemobiletools.commons.views.MyEditText
+                    android:id="@+id/text_password"
+                    android:inputType="textPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="password"
                     android:layout_marginStart="@dimen/activity_margin"
                     android:layout_marginTop="@dimen/activity_margin"
                     android:layout_marginEnd="@dimen/activity_margin"

@@ -57,6 +57,52 @@
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/suggestion_strip"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/normal_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/pinned_clipboard_items"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/pinned_suggestions_start"
+                style="@style/PinnedSuggestionArea"
+                android:orientation="horizontal" />
+
+            <com.simplemobiletools.keyboard.views.InlineContentClipView
+                android:id="@+id/scrollable_suggestions_clip"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                >
+
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:id="@+id/scrollable_suggestions"
+                        style="@style/KeyboardRowHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </HorizontalScrollView>
+
+            </com.simplemobiletools.keyboard.views.InlineContentClipView>
+
+            <LinearLayout
+                android:id="@+id/pinned_suggestions_end"
+                style="@style/PinnedSuggestionArea"
+                android:orientation="horizontal" />
+
+        </LinearLayout>
+
         <ImageView
             android:id="@+id/pinned_clipboard_items"
             android:layout_width="@dimen/toolbar_icon_height"
