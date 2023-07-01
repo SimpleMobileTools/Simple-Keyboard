@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.Color
 import android.os.IBinder
 import android.os.UserManager
+import android.util.TypedValue
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -43,6 +44,13 @@ val Context.isDeviceLocked: Boolean
 
 val Context.clipsDB: ClipsDao
     get() = ClipsDatabase.getInstance(applicationContext.safeStorageContext).ClipsDao()
+
+fun Context.toPixel(dp: Int): Int {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(),
+        resources.displayMetrics
+    ).toInt()
+}
 
 fun Context.getCurrentClip(): String? {
     val clipboardManager = (getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)

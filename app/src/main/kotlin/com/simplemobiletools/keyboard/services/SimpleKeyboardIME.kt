@@ -27,6 +27,7 @@ import androidx.autofill.inline.common.ImageViewStyle
 import androidx.autofill.inline.common.TextViewStyle
 import androidx.autofill.inline.common.ViewStyle
 import androidx.autofill.inline.v1.InlineSuggestionUi
+import androidx.core.view.isEmpty
 import com.simplemobiletools.commons.extensions.getSharedPrefs
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
@@ -60,6 +61,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
     private var inputTypeClassVariation = TYPE_CLASS_TEXT
     private var enterKeyType = IME_ACTION_NONE
     private var switchToLetters = false
+
     /**
      * Inline suggestion
      * */
@@ -78,6 +80,9 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
     private val MOVE_SUGGESTIONS_TO_FG_TIMEOUT: Long = 15000
     private val MOVE_SUGGESTIONS_UP_TIMEOUT: Long = 5000
     private val MOVE_SUGGESTIONS_DOWN_TIMEOUT: Long = 10000
+    private val DELAY_MILISECOND: Long = 200
+    private val SIZE_MIN: Int = 100
+    private val SIZE_MAX: Int = 740
 
     @RequiresApi(Build.VERSION_CODES.R)
     private val mMoveScrollableSuggestionsToBg = Runnable {
@@ -381,6 +386,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest {
         val stylesBuilder = UiVersions.newStylesBuilder()
+
         @SuppressLint("RestrictedApi")
         val style = InlineSuggestionUi.newStyleBuilder()
             .setSingleIconChipStyle(
@@ -388,7 +394,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                     .setBackground(
                         Icon.createWithResource(this, R.drawable.auto_fill_chip_background)
                     )
-                    .setPadding(0,0, 0, 0)
+                    .setPadding(0, 0, 0, 0)
                     .build()
             )
             .setChipStyle(
@@ -396,7 +402,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                     .setBackground(
                         Icon.createWithResource(this, R.drawable.auto_fill_chip_background)
                     )
-                    .setPadding(toPixel(5 + 8), 0, toPixel(5 + 8), 0)
+                    .setPadding(toPixel(12), 0, toPixel(12), 0)
                     .build()
             )
             .setStartIconStyle(ImageViewStyle.Builder().setLayoutMargin(0, 0, 0, 0).build())
@@ -410,7 +416,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
             .setSubtitleStyle(
                 TextViewStyle.Builder()
                     .setLayoutMargin(0, 0, toPixel(4), 0)
-                    .setTextColor(Color.parseColor("#ffffff")) // 60% opacity
+                    .setTextColor(Color.parseColor("#ffffff"))
                     .setTextSize(14f)
                     .build()
             )
@@ -422,14 +428,14 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
         val presentationSpecs = ArrayList<InlinePresentationSpec>()
         presentationSpecs.add(
             InlinePresentationSpec.Builder(
-                Size(100, getHeight()),
-                Size(740, getHeight())
+                Size(SIZE_MIN, getHeight()),
+                Size(SIZE_MAX, getHeight())
             ).setStyle(stylesBundle).build()
         )
         presentationSpecs.add(
             InlinePresentationSpec.Builder(
-                Size(100, getHeight()),
-                Size(740, getHeight())
+                Size(SIZE_MIN, getHeight()),
+                Size(SIZE_MAX, getHeight())
             ).setStyle(stylesBundle).build()
         )
 
@@ -473,7 +479,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                 delayedDeletion = null
                 clearInlineSuggestionStrip()
             }
-            handler.postDelayed(delayedDeletion!!, 200)
+            handler.postDelayed(delayedDeletion!!, DELAY_MILISECOND)
         }
     }
 
@@ -484,9 +490,6 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
         }
     }
 
-    /**
-    * cancel
-    * */
     private fun cancelDelayedDeletion() {
         if (delayedDeletion != null) {
             handler.removeCallbacks(delayedDeletion!!)
@@ -517,7 +520,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
         for (suggestionItem in suggestionItems) {
             val suggestionView: InlineContentView = suggestionItem.view
             if (suggestionItem.isPinned) {
-                if (pinnedSuggestionsStart!!.childCount <= 0) {
+                if (pinnedSuggestionsStart!!.isEmpty()) {
                     pinnedSuggestionsStart!!.addView(suggestionView)
                 } else {
                     pinnedSuggestionsEnd!!.addView(suggestionView)
@@ -569,7 +572,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
             inlineSuggestion.inflate(this, size, executor) { suggestionView: InlineContentView? ->
                 if (suggestionView != null) {
                     suggestionMap[i] = SuggestionItem(
-                        suggestionView,  inlineSuggestion.info.isPinned
+                        suggestionView, inlineSuggestion.info.isPinned
                     )
                 } else {
                     suggestionMap[i] = null

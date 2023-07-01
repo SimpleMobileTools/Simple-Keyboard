@@ -7,7 +7,7 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.helpers.ClipsHelper
 import com.simplemobiletools.keyboard.models.Clip
-import kotlinx.android.synthetic.main.dialog_add_or_edit_clip.view.*
+import kotlinx.android.synthetic.main.dialog_add_or_edit_clip.view.add_clip_value
 
 class AddOrEditClipDialog(val activity: BaseSimpleActivity, val originalClip: Clip?, val callback: () -> Unit) {
     init {

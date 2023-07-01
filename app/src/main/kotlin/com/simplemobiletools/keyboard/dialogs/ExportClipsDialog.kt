@@ -7,7 +7,9 @@ import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
-import kotlinx.android.synthetic.main.dialog_export_clips.view.*
+import kotlinx.android.synthetic.main.dialog_export_clips.view.export_clips_filename
+import kotlinx.android.synthetic.main.dialog_export_clips.view.export_clips_path
+import kotlinx.android.synthetic.main.dialog_export_clips.view.export_clips_path_label
 
 class ExportClipsDialog(
     val activity: BaseSimpleActivity, path: String, val hidePath: Boolean, callback: (path: String, filename: String) -> Unit

@@ -23,8 +23,10 @@ import com.simplemobiletools.keyboard.dialogs.AddOrEditClipDialog
 import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.helpers.ClipsHelper
 import com.simplemobiletools.keyboard.models.Clip
-import kotlinx.android.synthetic.main.item_clip_in_activity.view.*
-import java.util.*
+import kotlinx.android.synthetic.main.item_clip_in_activity.view.clip_drag_handle
+import kotlinx.android.synthetic.main.item_clip_in_activity.view.clip_holder
+import kotlinx.android.synthetic.main.item_clip_in_activity.view.clip_value
+import java.util.Collections
 
 class ClipsActivityAdapter(
     activity: BaseSimpleActivity, var items: ArrayList<Clip>, recyclerView: MyRecyclerView, val listener: RefreshRecyclerViewListener, itemClick: (Any) -> Unit

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.emoji2.text.EmojiCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.keyboard.R
-import kotlinx.android.synthetic.main.item_emoji.view.*
+import kotlinx.android.synthetic.main.item_emoji.view.emoji_value
 
 class EmojisAdapter(val context: Context, var items: List<String>, val itemClick: (emoji: String) -> Unit) : RecyclerView.Adapter<EmojisAdapter.ViewHolder>() {
     private val layoutInflater = LayoutInflater.from(context)

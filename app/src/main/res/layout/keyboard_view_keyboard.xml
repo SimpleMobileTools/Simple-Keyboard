@@ -59,17 +59,17 @@
 
         <LinearLayout
             android:id="@+id/suggestion_strip"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/normal_margin"
             android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/pinned_clipboard_items"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/pinned_suggestions_start"
@@ -79,21 +79,20 @@
             <com.simplemobiletools.keyboard.views.InlineContentClipView
                 android:id="@+id/scrollable_suggestions_clip"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/toolbar_height"
-                >
+                android:layout_height="@dimen/toolbar_height">
 
                 <HorizontalScrollView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:layout_gravity="center|start"
-                        android:gravity="center|start"
-                        android:orientation="horizontal"
                         android:id="@+id/scrollable_suggestions"
                         style="@style/KeyboardRowHeader"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:gravity="center|start"
+                        android:orientation="horizontal" />
 
                 </HorizontalScrollView>
 

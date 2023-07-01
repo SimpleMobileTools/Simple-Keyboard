@@ -5,11 +5,7 @@ import android.graphics.PixelFormat
 import android.graphics.Rect
 import android.os.Build
 import android.util.AttributeSet
-import android.view.Choreographer
-import android.view.SurfaceHolder
-import android.view.SurfaceView
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.ViewTreeObserver.OnDrawListener
 import android.widget.FrameLayout
 import android.widget.inline.InlineContentView
