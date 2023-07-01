@@ -106,6 +106,9 @@ class InlineContentClipView @JvmOverloads constructor(
     }
 
     private fun clipDescendantInlineContentViews() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            return
+        }
         parentBounds.right = width
         parentBounds.bottom = height
         clippedDescendants.clear()
