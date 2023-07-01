@@ -739,6 +739,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
     }
 
+    fun showClipboardViews(isShow:Boolean) {
+        mToolbarHolder?.apply {
+            clipboard_value_holder?.alpha = if (isShow) 1f else 0f
+            clipboard_clear?.alpha = if (isShow) 1f else 0f
+        }
+    }
+
     private fun hideClipboardViews() {
         mToolbarHolder?.apply {
             clipboard_value_holder?.beGone()

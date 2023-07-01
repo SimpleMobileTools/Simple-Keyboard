@@ -23,13 +23,12 @@
 
     <style name="PinnedSuggestionArea">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/toolbar_icon_height</item>
+        <item name="android:layout_height">@dimen/toolbar_height</item>
         <item name="android:layout_weight">0</item>
-        <item name="android:background">@color/md_grey_800</item>
     </style>
 
     <style name="KeyboardRowHeader">
-        <item name="android:layout_height">@dimen/toolbar_icon_height</item>
+        <item name="android:layout_height">@dimen/toolbar_height</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
 </resources>

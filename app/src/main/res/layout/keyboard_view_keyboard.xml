@@ -63,8 +63,9 @@
             tools:visibility="visible"
             android:orientation="horizontal"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_marginEnd="@dimen/normal_margin"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/pinned_clipboard_items"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +79,7 @@
             <com.simplemobiletools.keyboard.views.InlineContentClipView
                 android:id="@+id/scrollable_suggestions_clip"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="@dimen/toolbar_height"
                 >
 
                 <HorizontalScrollView
@@ -86,6 +87,8 @@
                     android:layout_height="wrap_content">
 
                     <LinearLayout
+                        android:layout_gravity="center|start"
+                        android:gravity="center|start"
                         android:orientation="horizontal"
                         android:id="@+id/scrollable_suggestions"
                         style="@style/KeyboardRowHeader"

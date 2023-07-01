@@ -11,11 +11,9 @@ import android.os.Handler
 import android.os.Looper
 import android.text.InputType.*
 import android.text.TextUtils
-import android.util.Log
 import android.util.Size
 import android.view.KeyEvent
 import android.view.View
-import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.view.inputmethod.*
 import android.view.inputmethod.EditorInfo.IME_ACTION_NONE
@@ -74,7 +72,6 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
     private var suggestionStrip: ViewGroup? = null
     private var pinnedSuggestionsStart: ViewGroup? = null
     private var pinnedSuggestionsEnd: ViewGroup? = null
-    private val TAG = "SimpleKeyboardIME"
     private val SHOWCASE_BG_FG_TRANSITION = false
     private val SHOWCASE_UP_DOWN_TRANSITION = false
     private val MOVE_SUGGESTIONS_TO_BG_TIMEOUT: Long = 5000
@@ -389,15 +386,15 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
             .setSingleIconChipStyle(
                 ViewStyle.Builder()
                     .setBackground(
-                        Icon.createWithResource(this, R.drawable.clipboard_background)
+                        Icon.createWithResource(this, R.drawable.auto_fill_chip_background)
                     )
-                    .setPadding(0, 0, 0, 0)
+                    .setPadding(0,0, 0, 0)
                     .build()
             )
             .setChipStyle(
                 ViewStyle.Builder()
                     .setBackground(
-                        Icon.createWithResource(this, R.drawable.clipboard_background)
+                        Icon.createWithResource(this, R.drawable.auto_fill_chip_background)
                     )
                     .setPadding(toPixel(5 + 8), 0, toPixel(5 + 8), 0)
                     .build()
@@ -426,13 +423,13 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
         presentationSpecs.add(
             InlinePresentationSpec.Builder(
                 Size(100, getHeight()),
-                Size(1000, getHeight())
+                Size(740, getHeight())
             ).setStyle(stylesBundle).build()
         )
         presentationSpecs.add(
             InlinePresentationSpec.Builder(
                 Size(100, getHeight()),
-                Size(1000, getHeight())
+                Size(740, getHeight())
             ).setStyle(stylesBundle).build()
         )
 
@@ -509,6 +506,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
         pinnedSuggestionsStart!!.removeAllViews()
         scrollableSuggestions!!.removeAllViews()
         pinnedSuggestionsEnd!!.removeAllViews()
+        keyboardView?.showClipboardViews(isShow = suggestionItems.isEmpty())
         if (suggestionItems.isEmpty()) {
             return
         }
