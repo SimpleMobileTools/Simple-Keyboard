@@ -388,6 +388,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
 
         val padding4dp = toPixel(resources.getDimension(R.dimen.suggestion_size).toInt())
         val padding12dp = toPixel(resources.getDimension(R.dimen.suggestion_size).toInt())
+
         @SuppressLint("RestrictedApi")
         val style = InlineSuggestionUi.newStyleBuilder()
             .setSingleIconChipStyle(
@@ -403,13 +404,13 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                     .setBackground(
                         Icon.createWithResource(this, R.drawable.auto_fill_chip_background)
                     )
-                    .setPadding(padding12dp, 0,padding12dp, 0)
+                    .setPadding(padding12dp, 0, padding12dp, 0)
                     .build()
             )
             .setStartIconStyle(ImageViewStyle.Builder().setLayoutMargin(0, 0, 0, 0).build())
             .setTitleStyle(
                 TextViewStyle.Builder()
-                    .setLayoutMargin(padding4dp, 0,padding4dp, 0)
+                    .setLayoutMargin(padding4dp, 0, padding4dp, 0)
                     .setTextColor(Color.WHITE)
                     .setTextSize(resources.getDimension(R.dimen.label_text_size))
                     .build()
