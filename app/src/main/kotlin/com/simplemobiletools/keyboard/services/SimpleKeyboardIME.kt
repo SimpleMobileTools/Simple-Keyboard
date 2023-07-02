@@ -115,7 +115,6 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
         keyboardView!!.setEditorInfo(currentInputEditorInfo)
         keyboardView!!.mOnKeyboardActionListener = this
         // Inline Suggestion Views
-        // Inline Suggestion Views
         suggestionStrip = keyboardHolder.findViewById(R.id.suggestion_strip)
         pinnedSuggestionsStart = keyboardHolder.findViewById(R.id.pinned_suggestions_start)
         pinnedSuggestionsEnd = keyboardHolder.findViewById(R.id.pinned_suggestions_end)
@@ -387,6 +386,8 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
     override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest {
         val stylesBuilder = UiVersions.newStylesBuilder()
 
+        val padding4dp = toPixel(resources.getDimension(R.dimen.suggestion_size).toInt())
+        val padding12dp = toPixel(resources.getDimension(R.dimen.suggestion_size).toInt())
         @SuppressLint("RestrictedApi")
         val style = InlineSuggestionUi.newStyleBuilder()
             .setSingleIconChipStyle(
@@ -402,22 +403,22 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                     .setBackground(
                         Icon.createWithResource(this, R.drawable.auto_fill_chip_background)
                     )
-                    .setPadding(toPixel(12), 0, toPixel(12), 0)
+                    .setPadding(padding12dp, 0,padding12dp, 0)
                     .build()
             )
             .setStartIconStyle(ImageViewStyle.Builder().setLayoutMargin(0, 0, 0, 0).build())
             .setTitleStyle(
                 TextViewStyle.Builder()
-                    .setLayoutMargin(toPixel(4), 0, toPixel(4), 0)
-                    .setTextColor(Color.parseColor("#ffffff"))
-                    .setTextSize(16f)
+                    .setLayoutMargin(padding4dp, 0,padding4dp, 0)
+                    .setTextColor(Color.WHITE)
+                    .setTextSize(resources.getDimension(R.dimen.label_text_size))
                     .build()
             )
             .setSubtitleStyle(
                 TextViewStyle.Builder()
-                    .setLayoutMargin(0, 0, toPixel(4), 0)
-                    .setTextColor(Color.parseColor("#ffffff"))
-                    .setTextSize(14f)
+                    .setLayoutMargin(0, 0, padding4dp, 0)
+                    .setTextColor(Color.WHITE)
+                    .setTextSize(resources.getDimension(R.dimen.label_text_size_14sp))
                     .build()
             )
             .setEndIconStyle(ImageViewStyle.Builder().setLayoutMargin(0, 0, 0, 0).build())
