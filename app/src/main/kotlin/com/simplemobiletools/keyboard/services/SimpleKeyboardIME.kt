@@ -325,6 +325,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
             LANGUAGE_GREEK -> R.xml.keys_letters_greek
             LANGUAGE_LITHUANIAN -> R.xml.keys_letters_lithuanian
             LANGUAGE_NORWEGIAN -> R.xml.keys_letters_norwegian
+            LANGUAGE_POLISH -> R.xml.keys_letters_polish
             LANGUAGE_ROMANIAN -> R.xml.keys_letters_romanian
             LANGUAGE_RUSSIAN -> R.xml.keys_letters_russian
             LANGUAGE_SLOVENIAN -> R.xml.keys_letters_slovenian
