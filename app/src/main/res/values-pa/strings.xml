@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ਸਾਦਾ ਕੀਬੋਰਡ</string>
+    <string name="app_name">ਸਿੰਪਲ ਕੀਬੋਰਡ</string>
     <string name="app_launcher_name">ਕੀਬੋਰਡ</string>
     <string name="redirection_note">ਇਸ ਨੂੰ ਇੱਕ ਉਪਲਬਧ ਕੀ-ਬੋਰਡ ਬਣਾਉਣ ਲਈ, ਕਿਰਪਾ ਕਰਕੇ ਅਗਲੀ ਸਕ੍ਰੀਨ \'ਤੇ ਸਿੰਪਲ ਕੀ-ਬੋਰਡ ਨੂੰ ਸਮਰੱਥ ਕਰੋ। ਸਮਰੱਥ ਕੀਤੇ ਜਾਣ ਤੋਂ ਬਾਅਦ \'ਪਿੱਛੇ\' ਨੂੰ ਦਬਾਓ।</string>
     <string name="change_keyboard">ਕੀਬੋਰਡ ਬਦਲੋ</string>
@@ -31,7 +31,7 @@
     <string name="show_clipboard_content">ਜੇ ਉਪਲੱਬਧ ਹੋਵੇ ਤਾਂ ਕਲਿੱਪਬੋਰਡ ਸਮੱਗਰੀ ਵੇਖੋ</string>
     <string name="show_popup">ਕੀ- ਦਬਾਉਣ ਉੱਤੇ ਇੱਕ ਪੋਪਅੱਪ ਵੇਖੋ</string>
     <string name="vibrate_on_keypress">ਕੀ- ਦਬਾਉਣ ਉੱਤੇ ਵਾਈਬ੍ਰੇਟ ਕਰੋ</string>
-    <string name="keyboard_language">ਕੀਬੋਰਡ ਦੀ ਬੋਲੀ</string>
+    <string name="keyboard_language">ਕੀਬੋਰਡ ਭਾਸ਼ਾ</string>
     <string name="keyboard_height">ਕੀਬੋਰਡ ਦੀ ਉਚਾਈ</string>
     <string name="show_key_borders">ਕੁੰਜੀ ਬਾਰਡਰ ਵੇਖੋ</string>
     <string name="show_numbers_row">ਇੱਕ ਵੱਖਰੀ ਕਤਾਰ ਉੱਤੇ ਨੰਬਰ ਵੇਖੋ</string>
