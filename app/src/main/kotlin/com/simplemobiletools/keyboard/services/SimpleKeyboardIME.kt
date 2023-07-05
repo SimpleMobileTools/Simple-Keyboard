@@ -1,17 +1,28 @@
 package com.simplemobiletools.keyboard.services
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import android.graphics.drawable.Icon
 import android.inputmethodservice.InputMethodService
+import android.os.Build
+import android.os.Bundle
 import android.text.InputType.*
 import android.text.TextUtils
+import android.util.Size
 import android.view.KeyEvent
 import android.view.View
-import android.view.inputmethod.CursorAnchorInfo
-import android.view.inputmethod.EditorInfo
+import android.view.ViewGroup
+import android.view.inputmethod.*
 import android.view.inputmethod.EditorInfo.IME_ACTION_NONE
 import android.view.inputmethod.EditorInfo.IME_FLAG_NO_ENTER_ACTION
 import android.view.inputmethod.EditorInfo.IME_MASK_ACTION
-import android.view.inputmethod.ExtractedTextRequest
+import android.widget.inline.InlinePresentationSpec
+import androidx.annotation.RequiresApi
+import androidx.autofill.inline.UiVersions
+import androidx.autofill.inline.common.ImageViewStyle
+import androidx.autofill.inline.common.TextViewStyle
+import androidx.autofill.inline.common.ViewStyle
+import androidx.autofill.inline.v1.InlineSuggestionUi
 import com.simplemobiletools.commons.extensions.getSharedPrefs
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
@@ -88,6 +99,38 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
 
         keyboard?.setShifted(ShiftState.OFF)
         keyboardView?.invalidateAllKeys()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest {
+        val minWidth = resources.getDimensionPixelSize(R.dimen.suggestion_min_width)
+        val maxWidth = resources.getDimensionPixelSize(R.dimen.suggestion_max_width)
+
+        return InlineSuggestionsRequest.Builder(
+            listOf(
+                InlinePresentationSpec.Builder(
+                    Size(minWidth, ViewGroup.LayoutParams.WRAP_CONTENT),
+                    Size(maxWidth, ViewGroup.LayoutParams.WRAP_CONTENT)
+                ).setStyle(buildSuggestionTextStyle()).build()
+            )
+        ).setMaxSuggestionCount(InlineSuggestionsRequest.SUGGESTION_COUNT_UNLIMITED)
+            .build()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun onInlineSuggestionsResponse(response: InlineSuggestionsResponse): Boolean {
+        keyboardView?.clearClipboardViews()
+
+        response.inlineSuggestions.forEach {
+            it.inflate(this, Size(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT), this.mainExecutor) { view ->
+                // If inflation fails for whatever reason, passed view will be null
+                if (view != null) {
+                    keyboardView?.addToClipboardViews(view, addToFront = it.info.isPinned)
+                }
+            }
+        }
+
+        return true
     }
 
     override fun onKey(code: Int) {
@@ -201,6 +244,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                                 inputConnection.commitText(codeChar.toString(), 1)
                             }
                         }
+
                         else -> {
                             inputConnection.commitText(codeChar.toString(), 1)
                             if (originalText == null) {
@@ -333,6 +377,48 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
             LANGUAGE_TURKISH_Q -> R.xml.keys_letters_turkish_q
             else -> R.xml.keys_letters_english_qwerty
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    @SuppressLint("RestrictedApi", "UseCompatLoadingForDrawables")
+    private fun buildSuggestionTextStyle(): Bundle {
+        val stylesBuilder = UiVersions.newStylesBuilder()
+
+        val verticalPadding = resources.getDimensionPixelSize(R.dimen.small_margin)
+        val horizontalPadding = resources.getDimensionPixelSize(R.dimen.activity_margin)
+
+        val textSize = resources.getDimension(R.dimen.label_text_size) / resources.displayMetrics.scaledDensity
+
+        val chipStyle =
+            ViewStyle.Builder()
+                .setBackground(Icon.createWithResource(this, R.drawable.clipboard_background))
+                .setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
+                .build()
+
+        val iconStyle = ImageViewStyle.Builder().build()
+
+        val style = InlineSuggestionUi.newStyleBuilder()
+            .setSingleIconChipStyle(chipStyle)
+            .setChipStyle(chipStyle)
+            .setStartIconStyle(iconStyle)
+            .setEndIconStyle(iconStyle)
+            .setSingleIconChipIconStyle(iconStyle)
+            .setTitleStyle(
+                TextViewStyle.Builder()
+                    .setLayoutMargin(0, 0, horizontalPadding, 0)
+                    .setTextColor(resources.getColor(R.color.default_text_color, theme))
+                    .setTextSize(textSize)
+                    .build()
+            )
+            .setSubtitleStyle(
+                TextViewStyle.Builder()
+                    .setTextColor(resources.getColor(R.color.default_text_color, theme))
+                    .setTextSize(textSize)
+                    .build()
+            )
+            .build()
+        stylesBuilder.addStyle(style)
+        return stylesBuilder.build()
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {

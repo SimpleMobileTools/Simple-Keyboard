@@ -49,13 +49,13 @@
 
                 <com.simplemobiletools.commons.views.MyEditText
                     android:id="@+id/text_edittext"
-                    android:inputType="textCapSentences"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/activity_margin"
                     android:layout_marginTop="@dimen/activity_margin"
                     android:layout_marginEnd="@dimen/activity_margin"
-                    android:layout_marginBottom="@dimen/activity_margin" />
+                    android:layout_marginBottom="@dimen/activity_margin"
+                    android:inputType="textCapSentences" />
 
                 <com.simplemobiletools.commons.views.MyEditText
                     android:id="@+id/text_editphone"
@@ -66,6 +66,26 @@
                     android:layout_marginEnd="@dimen/activity_margin"
                     android:layout_marginBottom="@dimen/activity_margin"
                     android:inputType="phone" />
+
+                <com.simplemobiletools.commons.views.MyEditText
+                    android:id="@+id/text_editemail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_margin"
+                    android:layout_marginTop="@dimen/activity_margin"
+                    android:layout_marginEnd="@dimen/activity_margin"
+                    android:layout_marginBottom="@dimen/activity_margin"
+                    android:inputType="textEmailAddress" />
+
+                <com.simplemobiletools.commons.views.MyEditText
+                    android:id="@+id/text_editpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_margin"
+                    android:layout_marginTop="@dimen/activity_margin"
+                    android:layout_marginEnd="@dimen/activity_margin"
+                    android:layout_marginBottom="@dimen/activity_margin"
+                    android:inputType="textPassword" />
 
             </LinearLayout>
         </RelativeLayout>

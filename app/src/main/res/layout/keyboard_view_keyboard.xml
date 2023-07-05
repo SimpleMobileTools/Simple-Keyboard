@@ -27,8 +27,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <RelativeLayout
-            android:id="@+id/clipboard_value_holder"
+        <com.simplemobiletools.keyboard.views.InlineContentViewHorizontalScrollView
+            android:id="@+id/suggestions_holder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/medium_margin"
@@ -38,24 +38,41 @@
             app:layout_constraintStart_toEndOf="@+id/clipboard_clear"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/clipboard_value"
+            <LinearLayout
+                android:id="@+id/suggestions_items_holder"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:autoLink="none"
-                android:background="@drawable/clipboard_background"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
-                android:paddingStart="@dimen/activity_margin"
-                android:paddingTop="@dimen/small_margin"
-                android:paddingEnd="@dimen/activity_margin"
-                android:paddingBottom="@dimen/small_margin"
-                android:textSize="@dimen/label_text_size"
-                tools:text="Clipboard content" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/clipboard_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="none"
+                    android:background="@drawable/clipboard_background"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:maxWidth="@dimen/suggestion_max_width"
+                    android:minWidth="@dimen/suggestion_min_width"
+                    android:paddingStart="@dimen/activity_margin"
+                    android:paddingTop="@dimen/small_margin"
+                    android:paddingEnd="@dimen/activity_margin"
+                    android:paddingBottom="@dimen/small_margin"
+                    android:textSize="@dimen/label_text_size"
+                    app:drawableStartCompat="@drawable/ic_clipboard_vector"
+                    tools:text="Clipboard content" />
+
+                <LinearLayout
+                    android:id="@+id/autofill_suggestions_holder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+
+
+        </com.simplemobiletools.keyboard.views.InlineContentViewHorizontalScrollView>
 
         <ImageView
             android:id="@+id/pinned_clipboard_items"
