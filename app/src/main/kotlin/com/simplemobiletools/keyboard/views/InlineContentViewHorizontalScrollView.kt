@@ -12,6 +12,7 @@ import androidx.annotation.AttrRes
 import androidx.core.view.allViews
 import com.simplemobiletools.commons.extensions.beInvisible
 import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.helpers.isRPlus
 
 
 /**
@@ -46,7 +47,7 @@ class InlineContentViewHorizontalScrollView @JvmOverloads constructor(
     }
 
     fun hideAllInlineContentViews() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+        if (!isRPlus()) {
             return
         }
         allViews.forEach {
@@ -57,7 +58,7 @@ class InlineContentViewHorizontalScrollView @JvmOverloads constructor(
     }
 
     fun showAllInlineContentViews() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+        if (!isRPlus()) {
             return
         }
         allViews.forEach {
@@ -69,7 +70,7 @@ class InlineContentViewHorizontalScrollView @JvmOverloads constructor(
 
     private fun clipDescendantInlineContentViews() {
         // This is only needed for InlineContentViews which are not available before this version
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+        if (!isRPlus()) {
             return
         }
 
