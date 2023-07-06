@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/medium_margin"
             android:layout_marginEnd="@dimen/normal_margin"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/pinned_clipboard_items"
             app:layout_constraintStart_toEndOf="@+id/clipboard_clear"
@@ -46,7 +47,7 @@
 
                 <TextView
                     android:id="@+id/clipboard_value"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoLink="none"
                     android:background="@drawable/clipboard_background"
@@ -60,7 +61,6 @@
                     android:paddingEnd="@dimen/activity_margin"
                     android:paddingBottom="@dimen/small_margin"
                     android:textSize="@dimen/label_text_size"
-                    app:drawableStartCompat="@drawable/ic_clipboard_vector"
                     tools:text="Clipboard content" />
 
                 <LinearLayout
