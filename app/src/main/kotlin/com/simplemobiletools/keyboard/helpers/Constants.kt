@@ -46,12 +46,13 @@ const val LANGUAGE_FRENCH_BEPO = 17
 const val LANGUAGE_VIETNAMESE_TELEX = 18
 
 // keyboard height percentage options
-const val KEYBOARD_HEIGHT_75_PERCENT = 75
+const val KEYBOARD_HEIGHT_70_PERCENT = 70
+const val KEYBOARD_HEIGHT_80_PERCENT = 80
 const val KEYBOARD_HEIGHT_90_PERCENT = 90
 const val KEYBOARD_HEIGHT_100_PERCENT = 100
 const val KEYBOARD_HEIGHT_120_PERCENT = 120
 const val KEYBOARD_HEIGHT_140_PERCENT = 140
-const val KEYBOARD_HEIGHT_175_PERCENT = 175
+const val KEYBOARD_HEIGHT_160_PERCENT = 160
 
 const val EMOJI_SPEC_FILE_PATH = "media/emoji_spec.txt"
 const val LANGUAGE_VN_TELEX = "language/extension.json"
