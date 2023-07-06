@@ -1637,8 +1637,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     @RequiresApi(Build.VERSION_CODES.R)
     fun clearClipboardViews() {
-        if (mToolbarHolder?.autofill_suggestions_holder != null) {
-            mToolbarHolder?.autofill_suggestions_holder?.removeAllViews()
-        }
+        mToolbarHolder?.autofill_suggestions_holder?.removeAllViews()
     }
 }
