@@ -11,9 +11,7 @@ import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.extensions.getKeyboardLanguageText
 import com.simplemobiletools.keyboard.extensions.getKeyboardLanguages
-import com.simplemobiletools.keyboard.helpers.KEYBOARD_HEIGHT_MULTIPLIER_LARGE
-import com.simplemobiletools.keyboard.helpers.KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM
-import com.simplemobiletools.keyboard.helpers.KEYBOARD_HEIGHT_MULTIPLIER_SMALL
+import com.simplemobiletools.keyboard.helpers.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 import kotlin.system.exitProcess
@@ -130,29 +128,26 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupKeyboardHeightMultiplier() {
-        settings_keyboard_height_multiplier.text = getKeyboardHeightMultiplierText(config.keyboardHeightMultiplier)
+        settings_keyboard_height_multiplier.text = getKeyboardHeightPercentageText(config.keyboardHeightPercentage)
         settings_keyboard_height_multiplier_holder.setOnClickListener {
             val items = arrayListOf(
-                RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_SMALL, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_SMALL)),
-                RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM)),
-                RadioItem(KEYBOARD_HEIGHT_MULTIPLIER_LARGE, getKeyboardHeightMultiplierText(KEYBOARD_HEIGHT_MULTIPLIER_LARGE)),
+                RadioItem(KEYBOARD_HEIGHT_70_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_70_PERCENT)),
+                RadioItem(KEYBOARD_HEIGHT_80_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_80_PERCENT)),
+                RadioItem(KEYBOARD_HEIGHT_90_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_90_PERCENT)),
+                RadioItem(KEYBOARD_HEIGHT_100_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_100_PERCENT)),
+                RadioItem(KEYBOARD_HEIGHT_120_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_120_PERCENT)),
+                RadioItem(KEYBOARD_HEIGHT_140_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_140_PERCENT)),
+                RadioItem(KEYBOARD_HEIGHT_160_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_160_PERCENT)),
             )
 
-            RadioGroupDialog(this@SettingsActivity, items, config.keyboardHeightMultiplier) {
-                config.keyboardHeightMultiplier = it as Int
-                settings_keyboard_height_multiplier.text = getKeyboardHeightMultiplierText(config.keyboardHeightMultiplier)
+            RadioGroupDialog(this@SettingsActivity, items, config.keyboardHeightPercentage) {
+                config.keyboardHeightPercentage = it as Int
+                settings_keyboard_height_multiplier.text = getKeyboardHeightPercentageText(config.keyboardHeightPercentage)
             }
         }
     }
 
-    private fun getKeyboardHeightMultiplierText(multiplier: Int): String {
-        return when (multiplier) {
-            KEYBOARD_HEIGHT_MULTIPLIER_SMALL -> getString(R.string.small)
-            KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM -> getString(R.string.medium)
-            KEYBOARD_HEIGHT_MULTIPLIER_LARGE -> getString(R.string.large)
-            else -> getString(R.string.small)
-        }
-    }
+    private fun getKeyboardHeightPercentageText(keyboardHeightPercentage: Int): String = "$keyboardHeightPercentage%"
 
     private fun setupShowClipboardContent() {
         settings_show_clipboard_content.isChecked = config.showClipboardContent
