@@ -17,7 +17,7 @@ const val SHOW_KEY_BORDERS = "show_key_borders"
 const val SENTENCES_CAPITALIZATION = "sentences_capitalization"
 const val LAST_EXPORTED_CLIPS_FOLDER = "last_exported_clips_folder"
 const val KEYBOARD_LANGUAGE = "keyboard_language"
-const val HEIGHT_MULTIPLIER = "height_multiplier"
+const val HEIGHT_PERCENTAGE = "height_percentage"
 const val SHOW_CLIPBOARD_CONTENT = "show_clipboard_content"
 const val SHOW_NUMBERS_ROW = "show_numbers_row"
 
@@ -45,10 +45,18 @@ const val LANGUAGE_DANISH = 16
 const val LANGUAGE_FRENCH_BEPO = 17
 const val LANGUAGE_VIETNAMESE_TELEX = 18
 
-// keyboard height multiplier options
-const val KEYBOARD_HEIGHT_MULTIPLIER_SMALL = 1
-const val KEYBOARD_HEIGHT_MULTIPLIER_MEDIUM = 2
-const val KEYBOARD_HEIGHT_MULTIPLIER_LARGE = 3
+// keyboard height percentage options
+const val KEYBOARD_HEIGHT_50_PERCENT = 50
+const val KEYBOARD_HEIGHT_60_PERCENT = 60
+const val KEYBOARD_HEIGHT_75_PERCENT = 75
+const val KEYBOARD_HEIGHT_90_PERCENT = 90
+const val KEYBOARD_HEIGHT_100_PERCENT = 100
+const val KEYBOARD_HEIGHT_125_PERCENT = 125
+const val KEYBOARD_HEIGHT_150_PERCENT = 150
+const val KEYBOARD_HEIGHT_175_PERCENT = 175
+const val KEYBOARD_HEIGHT_200_PERCENT = 200
+const val KEYBOARD_HEIGHT_250_PERCENT = 250
+const val KEYBOARD_HEIGHT_300_PERCENT = 300
 
 const val EMOJI_SPEC_FILE_PATH = "media/emoji_spec.txt"
 const val LANGUAGE_VN_TELEX = "language/extension.json"
