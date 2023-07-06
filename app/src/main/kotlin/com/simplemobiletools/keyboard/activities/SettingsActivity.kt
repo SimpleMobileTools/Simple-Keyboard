@@ -131,17 +131,12 @@ class SettingsActivity : SimpleActivity() {
         settings_keyboard_height_multiplier.text = getKeyboardHeightPercentageText(config.keyboardHeightPercentage)
         settings_keyboard_height_multiplier_holder.setOnClickListener {
             val items = arrayListOf(
-                RadioItem(KEYBOARD_HEIGHT_50_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_50_PERCENT)),
-                RadioItem(KEYBOARD_HEIGHT_60_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_60_PERCENT)),
                 RadioItem(KEYBOARD_HEIGHT_75_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_75_PERCENT)),
                 RadioItem(KEYBOARD_HEIGHT_90_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_90_PERCENT)),
                 RadioItem(KEYBOARD_HEIGHT_100_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_100_PERCENT)),
-                RadioItem(KEYBOARD_HEIGHT_125_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_125_PERCENT)),
-                RadioItem(KEYBOARD_HEIGHT_150_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_150_PERCENT)),
+                RadioItem(KEYBOARD_HEIGHT_120_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_120_PERCENT)),
+                RadioItem(KEYBOARD_HEIGHT_140_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_140_PERCENT)),
                 RadioItem(KEYBOARD_HEIGHT_175_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_175_PERCENT)),
-                RadioItem(KEYBOARD_HEIGHT_200_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_200_PERCENT)),
-                RadioItem(KEYBOARD_HEIGHT_250_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_250_PERCENT)),
-                RadioItem(KEYBOARD_HEIGHT_300_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_300_PERCENT))
             )
 
             RadioGroupDialog(this@SettingsActivity, items, config.keyboardHeightPercentage) {
