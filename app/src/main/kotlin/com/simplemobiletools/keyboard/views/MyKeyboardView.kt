@@ -1632,11 +1632,18 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             } else {
                 mToolbarHolder?.autofill_suggestions_holder?.addView(it)
             }
+
+            // make room on suggestion toolbar for inline views
+            mToolbarHolder?.suggestions_items_holder?.gravity = Gravity.NO_GRAVITY
+            mToolbarHolder?.clipboard_value?.maxWidth = resources.getDimensionPixelSize(R.dimen.suggestion_max_width)
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
     fun clearClipboardViews() {
         mToolbarHolder?.autofill_suggestions_holder?.removeAllViews()
+        // restore original clipboard toolbar appearance
+        mToolbarHolder?.suggestions_items_holder?.gravity = Gravity.CENTER_HORIZONTAL
+        mToolbarHolder?.clipboard_value?.maxWidth = Integer.MAX_VALUE
     }
 }

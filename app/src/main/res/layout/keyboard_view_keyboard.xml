@@ -43,18 +43,18 @@
                 android:id="@+id/suggestions_items_holder"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/clipboard_value"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:autoLink="none"
                     android:background="@drawable/clipboard_background"
                     android:ellipsize="end"
                     android:gravity="center"
                     android:lines="1"
-                    android:maxWidth="@dimen/suggestion_max_width"
                     android:minWidth="@dimen/suggestion_min_width"
                     android:paddingStart="@dimen/activity_margin"
                     android:paddingTop="@dimen/small_margin"
