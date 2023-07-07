@@ -33,7 +33,7 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_clipboard_items)
         setupOptionsMenu()
-        updateTextColors(clipboard_items_holder)
+        updateTextColors(suggestions_items_holder)
         updateClips()
 
         updateMaterialActivityViews(clipboard_coordinator, clipboard_items_list, useTransparentNavigation = true, useTopSearchMenu = false)
@@ -73,14 +73,17 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
                     addOrEditClip()
                     true
                 }
+
                 R.id.export_clips -> {
                     exportClips()
                     true
                 }
+
                 R.id.import_clips -> {
                     importClips()
                     true
                 }
+
                 else -> false
             }
         }

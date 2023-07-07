@@ -23,7 +23,7 @@
         android:scrollbars="none">
 
         <RelativeLayout
-            android:id="@+id/clipboard_items_holder"
+            android:id="@+id/suggestions_items_holder"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <input-method xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:icon="@mipmap/ic_launcher"
-    android:settingsActivity="com.simplemobiletools.keyboard.activities.SettingsActivity">
+    android:settingsActivity="com.simplemobiletools.keyboard.activities.SettingsActivity"
+    android:supportsInlineSuggestions="true"
+    tools:targetApi="r">
 
     <subtype android:imeSubtypeMode="Keyboard" />
 

@@ -10,6 +10,7 @@ import android.content.Intent
 import android.graphics.*
 import android.graphics.Paint.Align
 import android.graphics.drawable.*
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
@@ -18,11 +19,14 @@ import android.util.TypedValue
 import android.view.*
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
+import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.inline.InlineContentView
+import androidx.annotation.RequiresApi
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
-import androidx.core.view.ViewCompat
+import androidx.core.view.*
 import androidx.emoji2.text.EmojiCompat
 import androidx.emoji2.text.EmojiCompat.EMOJI_SUPPORTED
 import com.simplemobiletools.commons.extensions.*
@@ -308,6 +312,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 clearClipboardContent()
                 toggleClipboardVisibility(false)
             }
+
+            suggestions_holder.addOnLayoutChangeListener(object : OnLayoutChangeListener {
+                override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+                    updateSuggestionsToolbarLayout()
+                    suggestions_holder.removeOnLayoutChangeListener(this)
+                }
+            })
         }
 
         val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
@@ -746,8 +757,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     private fun hideClipboardViews() {
         mToolbarHolder?.apply {
-            clipboard_value_holder?.beGone()
-            clipboard_value_holder?.alpha = 0f
+            clipboard_value?.beGone()
+            clipboard_value?.alpha = 0f
             clipboard_clear?.beGone()
             clipboard_clear?.alpha = 0f
         }
@@ -764,10 +775,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun toggleClipboardVisibility(show: Boolean) {
-        if ((show && mToolbarHolder?.clipboard_value_holder!!.alpha == 0f) || (!show && mToolbarHolder?.clipboard_value_holder!!.alpha == 1f)) {
+        if ((show && mToolbarHolder?.clipboard_value!!.alpha == 0f) || (!show && mToolbarHolder?.clipboard_value!!.alpha == 1f)) {
             val newAlpha = if (show) 1f else 0f
             val animations = ArrayList<ObjectAnimator>()
-            val clipboardValueAnimation = ObjectAnimator.ofFloat(mToolbarHolder!!.clipboard_value_holder!!, "alpha", newAlpha)
+            val clipboardValueAnimation = ObjectAnimator.ofFloat(mToolbarHolder!!.clipboard_value!!, "alpha", newAlpha)
             animations.add(clipboardValueAnimation)
 
             val clipboardClearAnimation = ObjectAnimator.ofFloat(mToolbarHolder!!.clipboard_clear!!, "alpha", newAlpha)
@@ -779,13 +790,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             animSet.interpolator = AccelerateInterpolator()
             animSet.doOnStart {
                 if (show) {
-                    mToolbarHolder?.clipboard_value_holder?.beVisible()
+                    mToolbarHolder?.clipboard_value?.beVisible()
                     mToolbarHolder?.clipboard_clear?.beVisible()
                 }
             }
             animSet.doOnEnd {
                 if (!show) {
-                    mToolbarHolder?.clipboard_value_holder?.beGone()
+                    mToolbarHolder?.clipboard_value?.beGone()
                     mToolbarHolder?.clipboard_clear?.beGone()
                 }
             }
@@ -1381,10 +1392,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     fun closeClipboardManager() {
         mClipboardManagerHolder?.clipboard_manager_holder?.beGone()
+        mToolbarHolder?.suggestions_holder?.showAllInlineContentViews()
     }
 
     private fun openClipboardManager() {
         mClipboardManagerHolder!!.clipboard_manager_holder.beVisible()
+        mToolbarHolder?.suggestions_holder?.hideAllInlineContentViews()
         setupStoredClips()
     }
 
@@ -1614,4 +1627,46 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
         return keyColor
     }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun addToClipboardViews(it: InlineContentView, addToFront: Boolean = false) {
+        if (mToolbarHolder?.autofill_suggestions_holder != null) {
+            val newLayoutParams = LinearLayout.LayoutParams(it.layoutParams)
+            newLayoutParams.updateMarginsRelative(start = resources.getDimensionPixelSize(R.dimen.normal_margin))
+            it.layoutParams = newLayoutParams
+            if (addToFront) {
+                mToolbarHolder?.autofill_suggestions_holder?.addView(it, 0)
+            } else {
+                mToolbarHolder?.autofill_suggestions_holder?.addView(it)
+            }
+            updateSuggestionsToolbarLayout()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun clearClipboardViews() {
+        mToolbarHolder?.autofill_suggestions_holder?.removeAllViews()
+        updateSuggestionsToolbarLayout()
+    }
+
+    private fun updateSuggestionsToolbarLayout() {
+        mToolbarHolder?.apply {
+            if (hasInlineViews()) {
+                // make room on suggestion toolbar for inline views
+                suggestions_items_holder?.gravity = Gravity.NO_GRAVITY
+                clipboard_value?.maxWidth = resources.getDimensionPixelSize(R.dimen.suggestion_max_width)
+            } else {
+                // restore original clipboard toolbar appearance
+                suggestions_items_holder?.gravity = Gravity.CENTER_HORIZONTAL
+                suggestions_holder?.measuredWidth?.also { maxWidth ->
+                    clipboard_value?.maxWidth = maxWidth
+                }
+            }
+        }
+    }
+
+    /**
+     * Returns true if there are [InlineContentView]s in [autofill_suggestions_holder]
+     */
+    private fun hasInlineViews() = (mToolbarHolder?.autofill_suggestions_holder?.childCount ?: 0) > 0
 }
