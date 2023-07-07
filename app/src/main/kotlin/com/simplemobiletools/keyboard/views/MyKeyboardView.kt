@@ -1650,15 +1650,17 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun updateSuggestionsToolbarLayout() {
-        if (hasInlineViews()) {
-            // make room on suggestion toolbar for inline views
-            mToolbarHolder?.suggestions_items_holder?.gravity = Gravity.NO_GRAVITY
-            mToolbarHolder?.clipboard_value?.maxWidth = resources.getDimensionPixelSize(R.dimen.suggestion_max_width)
-        } else {
-            // restore original clipboard toolbar appearance
-            mToolbarHolder?.suggestions_items_holder?.gravity = Gravity.CENTER_HORIZONTAL
-            mToolbarHolder?.suggestions_holder?.measuredWidth?.also { maxWidth ->
-                mToolbarHolder?.clipboard_value?.maxWidth = maxWidth
+        mToolbarHolder?.apply {
+            if (hasInlineViews()) {
+                // make room on suggestion toolbar for inline views
+                suggestions_items_holder?.gravity = Gravity.NO_GRAVITY
+                clipboard_value?.maxWidth = resources.getDimensionPixelSize(R.dimen.suggestion_max_width)
+            } else {
+                // restore original clipboard toolbar appearance
+                suggestions_items_holder?.gravity = Gravity.CENTER_HORIZONTAL
+                suggestions_holder?.measuredWidth?.also { maxWidth ->
+                    clipboard_value?.maxWidth = maxWidth
+                }
             }
         }
     }
