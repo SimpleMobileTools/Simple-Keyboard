@@ -2,9 +2,7 @@ package com.simplemobiletools.keyboard.views
 
 import android.content.Context
 import android.graphics.Rect
-import android.os.Build
 import android.util.AttributeSet
-import android.view.View
 import android.view.ViewTreeObserver.OnDrawListener
 import android.widget.HorizontalScrollView
 import android.widget.inline.InlineContentView
@@ -13,7 +11,6 @@ import androidx.core.view.allViews
 import com.simplemobiletools.commons.extensions.beInvisible
 import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.helpers.isRPlus
-
 
 /**
  * [HorizontalScrollView] adapted for holding [InlineContentView] instances
