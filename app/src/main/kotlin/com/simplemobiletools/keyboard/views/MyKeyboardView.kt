@@ -312,6 +312,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 clearClipboardContent()
                 toggleClipboardVisibility(false)
             }
+
+            suggestions_holder.addOnLayoutChangeListener(object : OnLayoutChangeListener {
+                override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+                    updateSuggestionsToolbarLayout()
+                    suggestions_holder.removeOnLayoutChangeListener(this)
+                }
+            })
         }
 
         val clipboardManager = (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
@@ -1632,18 +1639,32 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             } else {
                 mToolbarHolder?.autofill_suggestions_holder?.addView(it)
             }
-
-            // make room on suggestion toolbar for inline views
-            mToolbarHolder?.suggestions_items_holder?.gravity = Gravity.NO_GRAVITY
-            mToolbarHolder?.clipboard_value?.maxWidth = resources.getDimensionPixelSize(R.dimen.suggestion_max_width)
+            updateSuggestionsToolbarLayout()
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
     fun clearClipboardViews() {
         mToolbarHolder?.autofill_suggestions_holder?.removeAllViews()
-        // restore original clipboard toolbar appearance
-        mToolbarHolder?.suggestions_items_holder?.gravity = Gravity.CENTER_HORIZONTAL
-        mToolbarHolder?.clipboard_value?.maxWidth = Integer.MAX_VALUE
+        updateSuggestionsToolbarLayout()
     }
+
+    private fun updateSuggestionsToolbarLayout() {
+        if (hasInlineViews()) {
+            // make room on suggestion toolbar for inline views
+            mToolbarHolder?.suggestions_items_holder?.gravity = Gravity.NO_GRAVITY
+            mToolbarHolder?.clipboard_value?.maxWidth = resources.getDimensionPixelSize(R.dimen.suggestion_max_width)
+        } else {
+            // restore original clipboard toolbar appearance
+            mToolbarHolder?.suggestions_items_holder?.gravity = Gravity.CENTER_HORIZONTAL
+            mToolbarHolder?.suggestions_holder?.measuredWidth?.also { maxWidth ->
+                mToolbarHolder?.clipboard_value?.maxWidth = maxWidth
+            }
+        }
+    }
+
+    /**
+     * Returns true if there are [InlineContentView]s in [autofill_suggestions_holder]
+     */
+    private fun hasInlineViews() = (mToolbarHolder?.autofill_suggestions_holder?.childCount ?: 0) > 0
 }
