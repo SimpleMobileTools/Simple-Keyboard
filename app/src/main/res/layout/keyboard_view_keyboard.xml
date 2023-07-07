@@ -55,7 +55,6 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:lines="1"
-                    android:minWidth="@dimen/suggestion_min_width"
                     android:paddingStart="@dimen/activity_margin"
                     android:paddingTop="@dimen/small_margin"
                     android:paddingEnd="@dimen/activity_margin"

@@ -103,13 +103,12 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest {
-        val minWidth = resources.getDimensionPixelSize(R.dimen.suggestion_min_width)
         val maxWidth = resources.getDimensionPixelSize(R.dimen.suggestion_max_width)
 
         return InlineSuggestionsRequest.Builder(
             listOf(
                 InlinePresentationSpec.Builder(
-                    Size(minWidth, ViewGroup.LayoutParams.WRAP_CONTENT),
+                    Size(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT),
                     Size(maxWidth, ViewGroup.LayoutParams.WRAP_CONTENT)
                 ).setStyle(buildSuggestionTextStyle()).build()
             )
