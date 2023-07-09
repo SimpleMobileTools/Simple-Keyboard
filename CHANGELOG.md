@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 5.4.7 *(2023-07-09)*
+----------------------------
+
+ * Added more keyboard height options
+ * Added support for autofilling passwords, addresses etc
+ * Added Vietnamese language support
+ * Added some stability, UI and translation improvements
+
 Version 5.4.6 *(2023-06-23)*
 ----------------------------
 
