@@ -3,6 +3,8 @@ package com.simplemobiletools.keyboard.services
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.graphics.drawable.Icon
+import android.graphics.drawable.LayerDrawable
+import android.graphics.drawable.RippleDrawable
 import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.Bundle
@@ -23,9 +25,11 @@ import androidx.autofill.inline.common.ImageViewStyle
 import androidx.autofill.inline.common.TextViewStyle
 import androidx.autofill.inline.common.ViewStyle
 import androidx.autofill.inline.v1.InlineSuggestionUi
-import com.simplemobiletools.commons.extensions.getSharedPrefs
+import androidx.core.graphics.drawable.toBitmap
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
+import com.simplemobiletools.keyboard.extensions.getStrokeColor
 import com.simplemobiletools.keyboard.extensions.safeStorageContext
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.interfaces.OnKeyboardActionListener
@@ -388,9 +392,17 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
 
         val textSize = resources.getDimension(R.dimen.label_text_size) / resources.displayMetrics.scaledDensity
 
+        val rippleBg = resources.getDrawable(R.drawable.clipboard_background, theme) as RippleDrawable
+        val layerDrawable = rippleBg.findDrawableByLayerId(R.id.clipboard_background_holder) as LayerDrawable
+        layerDrawable.findDrawableByLayerId(R.id.clipboard_background_stroke).applyColorFilter(getStrokeColor())
+        layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(getProperBackgroundColor())
+
+        val maxWidth = resources.getDimensionPixelSize(R.dimen.suggestion_max_width)
+        val height = resources.getDimensionPixelSize(R.dimen.label_text_size) + verticalPadding * 2
+
         val chipStyle =
             ViewStyle.Builder()
-                .setBackground(Icon.createWithResource(this, R.drawable.clipboard_background))
+                .setBackground(Icon.createWithBitmap(rippleBg.toBitmap(width = maxWidth, height = height)))
                 .setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
                 .build()
 
@@ -405,13 +417,13 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
             .setTitleStyle(
                 TextViewStyle.Builder()
                     .setLayoutMargin(0, 0, horizontalPadding, 0)
-                    .setTextColor(resources.getColor(R.color.default_text_color, theme))
+                    .setTextColor(getProperTextColor())
                     .setTextSize(textSize)
                     .build()
             )
             .setSubtitleStyle(
                 TextViewStyle.Builder()
-                    .setTextColor(resources.getColor(R.color.default_text_color, theme))
+                    .setTextColor(getProperTextColor())
                     .setTextSize(textSize)
                     .build()
             )
