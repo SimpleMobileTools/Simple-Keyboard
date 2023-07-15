@@ -473,7 +473,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private fun adjustCase(label: CharSequence): CharSequence? {
         var newLabel: CharSequence? = label
         if (!newLabel.isNullOrEmpty() && mKeyboard!!.mShiftState != ShiftState.OFF && newLabel.length < 3 && Character.isLowerCase(newLabel[0])) {
-            newLabel = newLabel.toString().uppercase(Locale.getDefault())
+            if (context.config.keyboardLanguage == LANGUAGE_TURKISH_Q) {
+                newLabel = newLabel.toString().uppercase(Locale.forLanguageTag("tr"))
+            } else {
+                newLabel = newLabel.toString().uppercase(Locale.getDefault())
+            }
         }
         return newLabel
     }
