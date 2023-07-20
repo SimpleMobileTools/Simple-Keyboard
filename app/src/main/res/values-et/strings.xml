@@ -3,7 +3,7 @@
     <string name="app_name">Lihtne klahvistik</string>
     <string name="app_launcher_name">Klahvistik</string>
     <string name="redirection_note">Et saaksid Lihtsat klaviatuuri kasutada, siis palun võta ta järgmises vaates kasutusele. Peale seda vajuta „Tagasi“ nuppu.</string>
-    <string name="change_keyboard">Muuda klviatuuri</string>
+    <string name="change_keyboard">Muuda klaviatuuri</string>
     <!-- Clipboard -->
     <string name="manage_clipboard_items">Halda kirjeid lõikelaual</string>
     <string name="manage_clipboard_empty">Lõikelaud on tühi.</string>
@@ -18,14 +18,14 @@
     <string name="manage_clips">Siin saad hallata lõikelaua kirjeid, mida on mugav sisestusel kasutada.</string>
     <string name="clip_text">Tekst lõikelaual</string>
     <string name="pin_text">Teksti kinnitamine</string>
-    <string name="text_pinned">Teks on klammerdatud</string>
-    <string name="export_clipboard_items">Lõikelaua üksuste eksportimine</string>
-    <string name="import_clipboard_items">Lõikelaua üksuste importimine</string>
+    <string name="text_pinned">Tekst on klammerdatud</string>
+    <string name="export_clipboard_items">Ekspordi lõikelaua kirjed</string>
+    <string name="import_clipboard_items">Impordi lõikelaua kirjed</string>
     <!-- Accessibility -->
     <string name="keycode_delete">Kustuta</string>
     <string name="keycode_mode_change">Muuda klaviatuuri tüüpi</string>
     <string name="keycode_shift">Shift</string>
-    <string name="keycode_enter">Sisenema</string>
+    <string name="keycode_enter">Sisestusklahv</string>
     <string name="keycode_space">Tühikuklahv</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Näita lõikelaua kirjeid</string>
