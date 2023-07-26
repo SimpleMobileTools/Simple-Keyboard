@@ -36,6 +36,7 @@ import com.simplemobiletools.keyboard.interfaces.OnKeyboardActionListener
 import com.simplemobiletools.keyboard.views.MyKeyboardView
 import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.keyboard_holder
 import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.keyboard_view
+import java.util.Locale
 
 // based on https://www.androidauthority.com/lets-build-custom-keyboard-android-832362/
 class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -211,7 +212,11 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                 val originalText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text
 
                 if (Character.isLetter(codeChar) && keyboard!!.mShiftState > ShiftState.OFF) {
-                    codeChar = Character.toUpperCase(codeChar)
+                    if (baseContext.config.keyboardLanguage == LANGUAGE_TURKISH_Q) {
+                        codeChar = codeChar.toString().uppercase(Locale.forLanguageTag("tr")).single()
+                    } else {
+                        codeChar = Character.toUpperCase(codeChar)
+                    }
                 }
 
                 // If the keyboard is set to symbols and the user presses space, we usually should switch back to the letters keyboard.
