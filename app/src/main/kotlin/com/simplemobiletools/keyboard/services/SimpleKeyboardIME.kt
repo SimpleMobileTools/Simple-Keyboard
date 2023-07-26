@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import android.graphics.drawable.Icon
 import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.RippleDrawable
+import android.icu.text.BreakIterator
+import android.icu.util.ULocale
 import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.Bundle
@@ -27,6 +29,7 @@ import androidx.autofill.inline.common.ViewStyle
 import androidx.autofill.inline.v1.InlineSuggestionUi
 import androidx.core.graphics.drawable.toBitmap
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.isNougatPlus
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.extensions.getStrokeColor
@@ -55,6 +58,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
     private var inputTypeClassVariation = TYPE_CLASS_TEXT
     private var enterKeyType = IME_ACTION_NONE
     private var switchToLetters = false
+    private var breakIterator: BreakIterator? = null
 
     override fun onInitializeInterface() {
         super.onInitializeInterface()
@@ -85,6 +89,9 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
         keyboard = createNewKeyboard()
         keyboardView?.setKeyboard(keyboard!!)
         keyboardView?.setEditorInfo(attribute)
+        if (isNougatPlus()) {
+            breakIterator = BreakIterator.getCharacterInstance(ULocale.getDefault())
+        }
         updateShiftKeyState()
     }
 
@@ -151,7 +158,8 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
             MyKeyboard.KEYCODE_DELETE -> {
                 val selectedText = inputConnection.getSelectedText(0)
                 if (TextUtils.isEmpty(selectedText)) {
-                    inputConnection.deleteSurroundingText(1, 0)
+                    val count = getCountToDelete(inputConnection)
+                    inputConnection.deleteSurroundingText(count, 0)
                 } else {
                     inputConnection.commitText("", 1)
                 }
@@ -263,6 +271,26 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                 }
             }
         }
+    }
+
+    private fun getCountToDelete(inputConnection: InputConnection): Int {
+        if (breakIterator == null || !isNougatPlus()) {
+            return 1
+        }
+
+        val prevText = inputConnection.getTextBeforeCursor(8, 0)
+
+
+        if (!TextUtils.isEmpty(prevText)) {
+            return breakIterator?.let {
+                it.setText(prevText.toString())
+                val end = it.last()
+                val start = it.previous()
+                (end - (if (start == BreakIterator.DONE) 0 else start)).coerceIn(0, prevText?.length)
+            } ?: 1
+        }
+
+        return 1
     }
 
     override fun onActionUp() {
