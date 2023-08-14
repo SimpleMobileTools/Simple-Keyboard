@@ -1,1 +1,1 @@
-Ľahká klávesnica na vkladanie rôznych textov, špeciálnych znakov a čísel.
+Jednoduchá klávesnica pre vkladanie všetkých druhov textov, špeciálnych znakov a čísel
