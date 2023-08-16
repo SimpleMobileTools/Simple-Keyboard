@@ -7,29 +7,31 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.helpers.isTiramisuPlus
 import com.simplemobiletools.commons.models.RadioItem
-import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.databinding.ActivitySettingsBinding
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.extensions.getKeyboardLanguageText
 import com.simplemobiletools.keyboard.extensions.getKeyboardLanguages
 import com.simplemobiletools.keyboard.helpers.*
-import kotlinx.android.synthetic.main.activity_settings.*
-import java.util.*
+import java.util.Locale
 import kotlin.system.exitProcess
 
 class SettingsActivity : SimpleActivity() {
+    private val binding by lazy(LazyThreadSafetyMode.NONE) { ActivitySettingsBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        setContentView(binding.root)
 
-        updateMaterialActivityViews(settings_coordinator, settings_holder, useTransparentNavigation = false, useTopSearchMenu = false)
-        setupMaterialScrollListener(settings_nested_scrollview, settings_toolbar)
+        binding.apply {
+            updateMaterialActivityViews(settingsCoordinator, settingsHolder, useTransparentNavigation = false, useTopSearchMenu = false)
+            setupMaterialScrollListener(settingsNestedScrollview, settingsToolbar)
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(settings_toolbar, NavigationIcon.Arrow)
+        setupToolbar(binding.settingsToolbar, NavigationIcon.Arrow)
 
         setupPurchaseThankYou()
         setupCustomizeColors()
@@ -45,47 +47,57 @@ class SettingsActivity : SimpleActivity() {
         setupSentencesCapitalization()
         setupShowNumbersRow()
 
-        updateTextColors(settings_nested_scrollview)
+        binding.apply {
+            updateTextColors(settingsNestedScrollview)
 
-        arrayOf(settings_color_customization_section_label, settings_general_settings_label).forEach {
-            it.setTextColor(getProperPrimaryColor())
+            arrayOf(settingsColorCustomizationSectionLabel, settingsGeneralSettingsLabel).forEach {
+                it.setTextColor(getProperPrimaryColor())
+            }
         }
     }
 
     private fun setupPurchaseThankYou() {
-        settings_purchase_thank_you_holder.beGoneIf(isOrWasThankYouInstalled())
-        settings_purchase_thank_you_holder.setOnClickListener {
-            launchPurchaseThankYouIntent()
+        binding.apply {
+            settingsPurchaseThankYouHolder.beGoneIf(isOrWasThankYouInstalled())
+            settingsPurchaseThankYouHolder.setOnClickListener {
+                launchPurchaseThankYouIntent()
+            }
         }
     }
 
     private fun setupCustomizeColors() {
-        settings_color_customization_label.text = getCustomizeColorsString()
-        settings_color_customization_holder.setOnClickListener {
-            handleCustomizeColorsClick()
+        binding.apply {
+            settingsColorCustomizationLabel.text = getCustomizeColorsString()
+            settingsColorCustomizationHolder.setOnClickListener {
+                handleCustomizeColorsClick()
+            }
         }
     }
 
     private fun setupUseEnglish() {
-        settings_use_english_holder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") && !isTiramisuPlus())
-        settings_use_english.isChecked = config.useEnglish
-        settings_use_english_holder.setOnClickListener {
-            settings_use_english.toggle()
-            config.useEnglish = settings_use_english.isChecked
-            exitProcess(0)
+        binding.apply {
+            settingsUseEnglishHolder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") && !isTiramisuPlus())
+            settingsUseEnglish.isChecked = config.useEnglish
+            settingsUseEnglishHolder.setOnClickListener {
+                settingsUseEnglish.toggle()
+                config.useEnglish = settingsUseEnglish.isChecked
+                exitProcess(0)
+            }
         }
     }
 
     private fun setupLanguage() {
-        settings_language.text = Locale.getDefault().displayLanguage
-        settings_language_holder.beVisibleIf(isTiramisuPlus())
-        settings_language_holder.setOnClickListener {
-            launchChangeAppLanguageIntent()
+        binding.apply {
+            settingsLanguage.text = Locale.getDefault().displayLanguage
+            settingsLanguageHolder.beVisibleIf(isTiramisuPlus())
+            settingsLanguageHolder.setOnClickListener {
+                launchChangeAppLanguageIntent()
+            }
         }
     }
 
     private fun setupManageClipboardItems() {
-        settings_manage_clipboard_items_holder.setOnClickListener {
+        binding.settingsManageClipboardItemsHolder.setOnClickListener {
             Intent(this, ManageClipboardItemsActivity::class.java).apply {
                 startActivity(this)
             }
@@ -93,56 +105,66 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupVibrateOnKeypress() {
-        settings_vibrate_on_keypress.isChecked = config.vibrateOnKeypress
-        settings_vibrate_on_keypress_holder.setOnClickListener {
-            settings_vibrate_on_keypress.toggle()
-            config.vibrateOnKeypress = settings_vibrate_on_keypress.isChecked
+        binding.apply {
+            settingsVibrateOnKeypress.isChecked = config.vibrateOnKeypress
+            settingsVibrateOnKeypressHolder.setOnClickListener {
+                settingsVibrateOnKeypress.toggle()
+                config.vibrateOnKeypress = settingsVibrateOnKeypress.isChecked
+            }
         }
     }
 
     private fun setupShowPopupOnKeypress() {
-        settings_show_popup_on_keypress.isChecked = config.showPopupOnKeypress
-        settings_show_popup_on_keypress_holder.setOnClickListener {
-            settings_show_popup_on_keypress.toggle()
-            config.showPopupOnKeypress = settings_show_popup_on_keypress.isChecked
+        binding.apply {
+            settingsShowPopupOnKeypress.isChecked = config.showPopupOnKeypress
+            settingsShowPopupOnKeypressHolder.setOnClickListener {
+                settingsShowPopupOnKeypress.toggle()
+                config.showPopupOnKeypress = settingsShowPopupOnKeypress.isChecked
+            }
         }
     }
 
     private fun setupShowKeyBorders() {
-        settings_show_key_borders.isChecked = config.showKeyBorders
-        settings_show_key_borders_holder.setOnClickListener {
-            settings_show_key_borders.toggle()
-            config.showKeyBorders = settings_show_key_borders.isChecked
+        binding.apply {
+            settingsShowKeyBorders.isChecked = config.showKeyBorders
+            settingsShowKeyBordersHolder.setOnClickListener {
+                settingsShowKeyBorders.toggle()
+                config.showKeyBorders = settingsShowKeyBorders.isChecked
+            }
         }
     }
 
     private fun setupKeyboardLanguage() {
-        settings_keyboard_language.text = getKeyboardLanguageText(config.keyboardLanguage)
-        settings_keyboard_language_holder.setOnClickListener {
-            val items = getKeyboardLanguages()
-            RadioGroupDialog(this@SettingsActivity, items, config.keyboardLanguage) {
-                config.keyboardLanguage = it as Int
-                settings_keyboard_language.text = getKeyboardLanguageText(config.keyboardLanguage)
+        binding.apply {
+            settingsKeyboardLanguage.text = getKeyboardLanguageText(config.keyboardLanguage)
+            settingsKeyboardLanguageHolder.setOnClickListener {
+                val items = getKeyboardLanguages()
+                RadioGroupDialog(this@SettingsActivity, items, config.keyboardLanguage) {
+                    config.keyboardLanguage = it as Int
+                    settingsKeyboardLanguage.text = getKeyboardLanguageText(config.keyboardLanguage)
+                }
             }
         }
     }
 
     private fun setupKeyboardHeightMultiplier() {
-        settings_keyboard_height_multiplier.text = getKeyboardHeightPercentageText(config.keyboardHeightPercentage)
-        settings_keyboard_height_multiplier_holder.setOnClickListener {
-            val items = arrayListOf(
-                RadioItem(KEYBOARD_HEIGHT_70_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_70_PERCENT)),
-                RadioItem(KEYBOARD_HEIGHT_80_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_80_PERCENT)),
-                RadioItem(KEYBOARD_HEIGHT_90_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_90_PERCENT)),
-                RadioItem(KEYBOARD_HEIGHT_100_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_100_PERCENT)),
-                RadioItem(KEYBOARD_HEIGHT_120_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_120_PERCENT)),
-                RadioItem(KEYBOARD_HEIGHT_140_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_140_PERCENT)),
-                RadioItem(KEYBOARD_HEIGHT_160_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_160_PERCENT)),
-            )
+        binding.apply {
+            settingsKeyboardHeightMultiplier.text = getKeyboardHeightPercentageText(config.keyboardHeightPercentage)
+            settingsKeyboardHeightMultiplierHolder.setOnClickListener {
+                val items = arrayListOf(
+                    RadioItem(KEYBOARD_HEIGHT_70_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_70_PERCENT)),
+                    RadioItem(KEYBOARD_HEIGHT_80_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_80_PERCENT)),
+                    RadioItem(KEYBOARD_HEIGHT_90_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_90_PERCENT)),
+                    RadioItem(KEYBOARD_HEIGHT_100_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_100_PERCENT)),
+                    RadioItem(KEYBOARD_HEIGHT_120_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_120_PERCENT)),
+                    RadioItem(KEYBOARD_HEIGHT_140_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_140_PERCENT)),
+                    RadioItem(KEYBOARD_HEIGHT_160_PERCENT, getKeyboardHeightPercentageText(KEYBOARD_HEIGHT_160_PERCENT)),
+                )
 
-            RadioGroupDialog(this@SettingsActivity, items, config.keyboardHeightPercentage) {
-                config.keyboardHeightPercentage = it as Int
-                settings_keyboard_height_multiplier.text = getKeyboardHeightPercentageText(config.keyboardHeightPercentage)
+                RadioGroupDialog(this@SettingsActivity, items, config.keyboardHeightPercentage) {
+                    config.keyboardHeightPercentage = it as Int
+                    settingsKeyboardHeightMultiplier.text = getKeyboardHeightPercentageText(config.keyboardHeightPercentage)
+                }
             }
         }
     }
@@ -150,26 +172,32 @@ class SettingsActivity : SimpleActivity() {
     private fun getKeyboardHeightPercentageText(keyboardHeightPercentage: Int): String = "$keyboardHeightPercentage%"
 
     private fun setupShowClipboardContent() {
-        settings_show_clipboard_content.isChecked = config.showClipboardContent
-        settings_show_clipboard_content_holder.setOnClickListener {
-            settings_show_clipboard_content.toggle()
-            config.showClipboardContent = settings_show_clipboard_content.isChecked
+        binding.apply {
+            settingsShowClipboardContent.isChecked = config.showClipboardContent
+            settingsShowClipboardContentHolder.setOnClickListener {
+                settingsShowClipboardContent.toggle()
+                config.showClipboardContent = settingsShowClipboardContent.isChecked
+            }
         }
     }
 
     private fun setupSentencesCapitalization() {
-        settings_start_sentences_capitalized.isChecked = config.enableSentencesCapitalization
-        settings_start_sentences_capitalized_holder.setOnClickListener {
-            settings_start_sentences_capitalized.toggle()
-            config.enableSentencesCapitalization = settings_start_sentences_capitalized.isChecked
+        binding.apply {
+            settingsStartSentencesCapitalized.isChecked = config.enableSentencesCapitalization
+            settingsStartSentencesCapitalizedHolder.setOnClickListener {
+                settingsStartSentencesCapitalized.toggle()
+                config.enableSentencesCapitalization = settingsStartSentencesCapitalized.isChecked
+            }
         }
     }
 
     private fun setupShowNumbersRow() {
-        settings_show_numbers_row.isChecked = config.showNumbersRow
-        settings_show_numbers_row_holder.setOnClickListener {
-            settings_show_numbers_row.toggle()
-            config.showNumbersRow = settings_show_numbers_row.isChecked
+        binding.apply {
+            settingsShowNumbersRow.isChecked = config.showNumbersRow
+            settingsShowNumbersRowHolder.setOnClickListener {
+                settingsShowNumbersRow.toggle()
+                config.showNumbersRow = settingsShowNumbersRow.isChecked
+            }
         }
     }
 }
