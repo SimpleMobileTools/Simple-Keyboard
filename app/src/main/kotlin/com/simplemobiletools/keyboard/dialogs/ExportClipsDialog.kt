@@ -6,8 +6,8 @@ import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.databinding.DialogExportClipsBinding
 import com.simplemobiletools.keyboard.extensions.config
-import kotlinx.android.synthetic.main.dialog_export_clips.view.*
 
 class ExportClipsDialog(
     val activity: BaseSimpleActivity, path: String, val hidePath: Boolean, callback: (path: String, filename: String) -> Unit
@@ -19,17 +19,17 @@ class ExportClipsDialog(
             activity.internalStoragePath
         }
 
-        val view = activity.layoutInflater.inflate(R.layout.dialog_export_clips, null).apply {
-            export_clips_filename.setText("${activity.getString(R.string.app_launcher_name)}_${activity.getCurrentFormattedDateTime()}")
+        val binding = DialogExportClipsBinding.inflate(activity.layoutInflater).apply {
+            exportClipsFilename.setText("${activity.getString(R.string.app_launcher_name)}_${activity.getCurrentFormattedDateTime()}")
 
             if (hidePath) {
-                export_clips_path_label.beGone()
-                export_clips_path.beGone()
+                exportClipsPathLabel.beGone()
+                exportClipsPath.beGone()
             } else {
-                export_clips_path.text = activity.humanizePath(folder)
-                export_clips_path.setOnClickListener {
+                exportClipsPath.text = activity.humanizePath(folder)
+                exportClipsPath.setOnClickListener {
                     FilePickerDialog(activity, folder, false, showFAB = true) {
-                        export_clips_path.text = activity.humanizePath(it)
+                        exportClipsPath.text = activity.humanizePath(it)
                         folder = it
                     }
                 }
@@ -40,10 +40,10 @@ class ExportClipsDialog(
             .setPositiveButton(R.string.ok, null)
             .setNegativeButton(R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(view, this, R.string.export_clipboard_items) { alertDialog ->
-                    alertDialog.showKeyboard(view.export_clips_filename)
+                activity.setupDialogStuff(binding.root, this, R.string.export_clipboard_items) { alertDialog ->
+                    alertDialog.showKeyboard(binding.exportClipsFilename)
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                        val filename = view.export_clips_filename.value
+                        val filename = binding.exportClipsFilename.value
                         if (filename.isEmpty()) {
                             activity.toast(R.string.filename_cannot_be_empty)
                             return@setOnClickListener
