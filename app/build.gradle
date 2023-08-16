@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -10,12 +9,13 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdk 33
+    namespace "com.simplemobiletools.keyboard"
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.simplemobiletools.keyboard"
         minSdk 23
-        targetSdk 33
+        targetSdk 34
         versionCode 22
         versionName "5.4.7"
         multiDexEnabled true
@@ -34,6 +34,11 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig true
+        viewBinding true
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
@@ -47,7 +52,16 @@ android {
         }
     }
 
-    flavorDimensions "variants"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    flavorDimensions = ["variants"]
     productFlavors {
         core {}
         fdroid {}
@@ -65,7 +79,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:2d4e07e5f4'
+    implementation 'com.github.SimpleMobileTools:Simple-Commons:d1629c7f1a'
     implementation 'androidx.emoji2:emoji2-bundled:1.2.0'
     implementation 'androidx.autofill:autofill:1.1.0'
 
