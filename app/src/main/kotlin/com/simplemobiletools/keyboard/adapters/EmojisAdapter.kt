@@ -6,15 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.emoji2.text.EmojiCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.simplemobiletools.keyboard.R
-import kotlinx.android.synthetic.main.item_emoji.view.*
+import com.simplemobiletools.keyboard.databinding.ItemEmojiBinding
 
 class EmojisAdapter(val context: Context, var items: List<String>, val itemClick: (emoji: String) -> Unit) : RecyclerView.Adapter<EmojisAdapter.ViewHolder>() {
     private val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmojisAdapter.ViewHolder {
-        val layoutId = R.layout.item_emoji
-        val view = layoutInflater.inflate(layoutId, parent, false)
+        val view = ItemEmojiBinding.inflate(layoutInflater, parent, false).root
         return ViewHolder(view)
     }
 
@@ -29,7 +27,7 @@ class EmojisAdapter(val context: Context, var items: List<String>, val itemClick
 
     private fun setupEmoji(view: View, emoji: String) {
         val processed = EmojiCompat.get().process(emoji)
-        view.emoji_value.text = processed
+        ItemEmojiBinding.bind(view).emojiValue.text = processed
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
