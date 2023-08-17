@@ -4,10 +4,10 @@ import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.databinding.DialogRadioGroupBinding
+import com.simplemobiletools.commons.databinding.RadioButtonBinding
 import com.simplemobiletools.commons.extensions.onGlobalLayout
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.keyboard.R
@@ -34,7 +34,7 @@ class KeyboardRadioGroupDialog(
         val binding = DialogRadioGroupBinding.inflate(layoutInflater)
         binding.dialogRadioGroup.apply {
             for (i in 0 until items.size) {
-                val radioButton = (layoutInflater.inflate(R.layout.radio_button, null) as RadioButton).apply {
+                val radioButton = RadioButtonBinding.inflate(layoutInflater).dialogRadioButton.apply {
                     text = items[i].title
                     isChecked = items[i].id == checkedItemId
                     id = i

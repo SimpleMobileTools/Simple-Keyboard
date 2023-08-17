@@ -37,6 +37,7 @@ import com.simplemobiletools.keyboard.activities.ManageClipboardItemsActivity
 import com.simplemobiletools.keyboard.activities.SettingsActivity
 import com.simplemobiletools.keyboard.adapters.ClipsKeyboardAdapter
 import com.simplemobiletools.keyboard.adapters.EmojisAdapter
+import com.simplemobiletools.keyboard.databinding.KeyboardKeyPreviewBinding
 import com.simplemobiletools.keyboard.databinding.KeyboardPopupKeyboardBinding
 import com.simplemobiletools.keyboard.databinding.KeyboardViewKeyboardBinding
 import com.simplemobiletools.keyboard.dialogs.ChangeLanguagePopup
@@ -206,7 +207,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         mPreviewPopup = PopupWindow(context)
-        mPreviewText = inflater.inflate(resources.getLayout(R.layout.keyboard_key_preview), null) as TextView
+        mPreviewText = KeyboardKeyPreviewBinding.inflate(inflater).root
         mPreviewTextSizeLarge = context.resources.getDimension(R.dimen.preview_text_size).toInt()
         mPreviewPopup.contentView = mPreviewText
         mPreviewPopup.setBackgroundDrawable(null)

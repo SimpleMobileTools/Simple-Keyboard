@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.simplemobiletools.commons.databinding.DialogTitleBinding
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.isNougatPlus
 import com.simplemobiletools.commons.models.RadioItem
@@ -120,8 +121,7 @@ fun Context.setupKeyboardDialogStuff(
     } else {
         var title: TextView? = null
         if (titleId != 0 || titleText.isNotEmpty()) {
-            title = LayoutInflater.from(this).inflate(R.layout.dialog_title, null) as TextView
-            title.apply {
+            title = DialogTitleBinding.inflate(LayoutInflater.from(this)).dialogTitleTextview.apply {
                 if (titleText.isNotEmpty()) {
                     text = titleText
                 } else {
