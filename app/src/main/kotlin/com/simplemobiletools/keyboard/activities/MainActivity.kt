@@ -15,7 +15,7 @@ import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.databinding.ActivityMainBinding
 
 class MainActivity : SimpleActivity() {
-    private val binding by lazy(LazyThreadSafetyMode.NONE) { ActivityMainBinding.inflate(layoutInflater) }
+    private val binding by viewBinding(ActivityMainBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true

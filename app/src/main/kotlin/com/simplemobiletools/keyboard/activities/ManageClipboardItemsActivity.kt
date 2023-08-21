@@ -30,7 +30,7 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
         private const val PICK_IMPORT_CLIPS_SOURCE_INTENT = 22
     }
 
-    private val binding by lazy(LazyThreadSafetyMode.NONE) { ActivityManageClipboardItemsBinding.inflate(layoutInflater) }
+    private val binding by viewBinding(ActivityManageClipboardItemsBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
