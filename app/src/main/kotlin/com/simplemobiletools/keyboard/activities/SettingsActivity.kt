@@ -24,7 +24,7 @@ class SettingsActivity : SimpleActivity() {
         setContentView(binding.root)
 
         binding.apply {
-            updateMaterialActivityViews(settingsCoordinator, settingsHolder, useTransparentNavigation = false, useTopSearchMenu = false)
+            updateMaterialActivityViews(settingsCoordinator, settingsHolder, useTransparentNavigation = true, useTopSearchMenu = false)
             setupMaterialScrollListener(settingsNestedScrollview, settingsToolbar)
         }
     }
