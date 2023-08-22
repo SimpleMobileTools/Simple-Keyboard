@@ -31,14 +31,13 @@ import androidx.core.graphics.drawable.toBitmap
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.isNougatPlus
 import com.simplemobiletools.keyboard.R
+import com.simplemobiletools.keyboard.databinding.KeyboardViewKeyboardBinding
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.extensions.getStrokeColor
 import com.simplemobiletools.keyboard.extensions.safeStorageContext
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.interfaces.OnKeyboardActionListener
 import com.simplemobiletools.keyboard.views.MyKeyboardView
-import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.keyboard_holder
-import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.keyboard_view
 import java.util.Locale
 
 // based on https://www.androidauthority.com/lets-build-custom-keyboard-android-832362/
@@ -60,19 +59,22 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
     private var switchToLetters = false
     private var breakIterator: BreakIterator? = null
 
+    private lateinit var binding: KeyboardViewKeyboardBinding
+
     override fun onInitializeInterface() {
         super.onInitializeInterface()
         safeStorageContext.getSharedPrefs().registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onCreateInputView(): View {
-        val keyboardHolder = layoutInflater.inflate(R.layout.keyboard_view_keyboard, null)
-        keyboardView = keyboardHolder.keyboard_view as MyKeyboardView
-        keyboardView!!.setKeyboardHolder(keyboardHolder.keyboard_holder)
-        keyboardView!!.setKeyboard(keyboard!!)
-        keyboardView!!.setEditorInfo(currentInputEditorInfo)
-        keyboardView!!.mOnKeyboardActionListener = this
-        return keyboardHolder!!
+        binding = KeyboardViewKeyboardBinding.inflate(layoutInflater)
+        keyboardView = binding.keyboardView.apply {
+            setKeyboardHolder(binding)
+            setKeyboard(keyboard!!)
+            setEditorInfo(currentInputEditorInfo)
+            mOnKeyboardActionListener = this@SimpleKeyboardIME
+        }
+        return binding.root
     }
 
     override fun onPress(primaryCode: Int) {

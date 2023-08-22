@@ -37,6 +37,9 @@ import com.simplemobiletools.keyboard.activities.ManageClipboardItemsActivity
 import com.simplemobiletools.keyboard.activities.SettingsActivity
 import com.simplemobiletools.keyboard.adapters.ClipsKeyboardAdapter
 import com.simplemobiletools.keyboard.adapters.EmojisAdapter
+import com.simplemobiletools.keyboard.databinding.KeyboardKeyPreviewBinding
+import com.simplemobiletools.keyboard.databinding.KeyboardPopupKeyboardBinding
+import com.simplemobiletools.keyboard.databinding.KeyboardViewKeyboardBinding
 import com.simplemobiletools.keyboard.dialogs.ChangeLanguagePopup
 import com.simplemobiletools.keyboard.extensions.*
 import com.simplemobiletools.keyboard.helpers.*
@@ -51,8 +54,6 @@ import com.simplemobiletools.keyboard.interfaces.RefreshClipsListener
 import com.simplemobiletools.keyboard.models.Clip
 import com.simplemobiletools.keyboard.models.ClipsSectionLabel
 import com.simplemobiletools.keyboard.models.ListItem
-import kotlinx.android.synthetic.main.keyboard_popup_keyboard.view.*
-import kotlinx.android.synthetic.main.keyboard_view_keyboard.view.*
 import java.util.*
 
 @SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility")
@@ -65,6 +66,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             super.dispatchHoverEvent(event)
         }
     }
+
+    private var keyboardPopupBinding: KeyboardPopupKeyboardBinding? = null
+    private var keyboardViewBinding: KeyboardViewKeyboardBinding? = null
 
     private var accessHelper: AccessHelper? = null
 
@@ -203,7 +207,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         mPreviewPopup = PopupWindow(context)
-        mPreviewText = inflater.inflate(resources.getLayout(R.layout.keyboard_key_preview), null) as TextView
+        mPreviewText = KeyboardKeyPreviewBinding.inflate(inflater).root
         mPreviewTextSizeLarge = context.resources.getDimension(R.dimen.preview_text_size).toInt()
         mPreviewPopup.contentView = mPreviewText
         mPreviewPopup.setBackgroundDrawable(null)
@@ -285,14 +289,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     /** Sets the top row above the keyboard containing a couple buttons and the clipboard **/
-    fun setKeyboardHolder(keyboardHolder: View) {
-        mToolbarHolder = keyboardHolder.toolbar_holder
-        mClipboardManagerHolder = keyboardHolder.clipboard_manager_holder
-        mEmojiPaletteHolder = keyboardHolder.emoji_palette_holder
+    fun setKeyboardHolder(binding: KeyboardViewKeyboardBinding) {
+        keyboardViewBinding = binding.apply {
+            mToolbarHolder = toolbarHolder
+            mClipboardManagerHolder = clipboardManagerHolder
+            mEmojiPaletteHolder = emojiPaletteHolder
 
-        mToolbarHolder!!.apply {
-            settings_cog.setOnLongClickListener { context.toast(R.string.settings); true; }
-            settings_cog.setOnClickListener {
+            settingsCog.setOnLongClickListener { context.toast(R.string.settings); true; }
+            settingsCog.setOnClickListener {
                 vibrateIfNeeded()
                 Intent(context, SettingsActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -300,23 +304,23 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
             }
 
-            pinned_clipboard_items.setOnLongClickListener { context.toast(R.string.clipboard); true; }
-            pinned_clipboard_items.setOnClickListener {
+            pinnedClipboardItems.setOnLongClickListener { context.toast(R.string.clipboard); true; }
+            pinnedClipboardItems.setOnClickListener {
                 vibrateIfNeeded()
                 openClipboardManager()
             }
 
-            clipboard_clear.setOnLongClickListener { context.toast(R.string.clear_clipboard_data); true; }
-            clipboard_clear.setOnClickListener {
+            clipboardClear.setOnLongClickListener { context.toast(R.string.clear_clipboard_data); true; }
+            clipboardClear.setOnClickListener {
                 vibrateIfNeeded()
                 clearClipboardContent()
                 toggleClipboardVisibility(false)
             }
 
-            suggestions_holder.addOnLayoutChangeListener(object : OnLayoutChangeListener {
+            suggestionsHolder.addOnLayoutChangeListener(object : OnLayoutChangeListener {
                 override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
                     updateSuggestionsToolbarLayout()
-                    suggestions_holder.removeOnLayoutChangeListener(this)
+                    binding.suggestionsHolder.removeOnLayoutChangeListener(this)
                 }
             })
         }
@@ -330,23 +334,21 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             setupStoredClips()
         }
 
-        mClipboardManagerHolder!!.apply {
-            clipboard_manager_close.setOnClickListener {
+        binding.apply {
+            clipboardManagerClose.setOnClickListener {
                 vibrateIfNeeded()
                 closeClipboardManager()
             }
 
-            clipboard_manager_manage.setOnLongClickListener { context.toast(R.string.manage_clipboard_items); true; }
-            clipboard_manager_manage.setOnClickListener {
+            clipboardManagerManage.setOnLongClickListener { context.toast(R.string.manage_clipboard_items); true; }
+            clipboardManagerManage.setOnClickListener {
                 Intent(context, ManageClipboardItemsActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(this)
                 }
             }
-        }
 
-        mEmojiPaletteHolder!!.apply {
-            emoji_palette_close.setOnClickListener {
+            emojiPaletteClose.setOnClickListener {
                 vibrateIfNeeded()
                 closeEmojiPalette()
             }
@@ -367,7 +369,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             mUsingSystemTheme = config.isUsingSystemTheme
         }
 
-        val isMainKeyboard = changedView == null || changedView != mini_keyboard_view
+        val isMainKeyboard = changedView == null || changedView != keyboardPopupBinding?.miniKeyboardView
         mKeyBackground = if (mShowKeyBorders && isMainKeyboard) {
             resources.getDrawable(R.drawable.keyboard_key_selector_outlined, context.theme)
         } else {
@@ -397,35 +399,33 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         layerDrawable.findDrawableByLayerId(R.id.clipboard_background_shape).applyColorFilter(mBackgroundColor)
 
         val wasDarkened = mBackgroundColor != mBackgroundColor.darkenColor()
-        mToolbarHolder?.apply {
-            top_keyboard_divider.beGoneIf(wasDarkened)
-            top_keyboard_divider.background = ColorDrawable(strokeColor)
+        keyboardViewBinding?.apply {
+            topKeyboardDivider.beGoneIf(wasDarkened)
+            topKeyboardDivider.background = ColorDrawable(strokeColor)
+            mToolbarHolder?.background = ColorDrawable(toolbarColor)
 
-            background = ColorDrawable(toolbarColor)
-            clipboard_value.apply {
+            clipboardValue.apply {
                 background = rippleBg
                 setTextColor(mTextColor)
                 setLinkTextColor(mTextColor)
             }
 
-            settings_cog.applyColorFilter(mTextColor)
-            pinned_clipboard_items.applyColorFilter(mTextColor)
-            clipboard_clear.applyColorFilter(mTextColor)
+            settingsCog.applyColorFilter(mTextColor)
+            pinnedClipboardItems.applyColorFilter(mTextColor)
+            clipboardClear.applyColorFilter(mTextColor)
 
-            beInvisibleIf(context.isDeviceLocked)
-        }
+            mToolbarHolder?.beInvisibleIf(context.isDeviceLocked)
 
-        mClipboardManagerHolder?.apply {
-            top_clipboard_divider.beGoneIf(wasDarkened)
-            top_clipboard_divider.background = ColorDrawable(strokeColor)
-            clipboard_manager_holder.background = ColorDrawable(toolbarColor)
+            topClipboardDivider.beGoneIf(wasDarkened)
+            topClipboardDivider.background = ColorDrawable(strokeColor)
+            clipboardManagerHolder.background = ColorDrawable(toolbarColor)
 
-            clipboard_manager_close.applyColorFilter(mTextColor)
-            clipboard_manager_manage.applyColorFilter(mTextColor)
+            clipboardManagerClose.applyColorFilter(mTextColor)
+            clipboardManagerManage.applyColorFilter(mTextColor)
 
-            clipboard_manager_label.setTextColor(mTextColor)
-            clipboard_content_placeholder_1.setTextColor(mTextColor)
-            clipboard_content_placeholder_2.setTextColor(mTextColor)
+            clipboardManagerLabel.setTextColor(mTextColor)
+            clipboardContentPlaceholder1.setTextColor(mTextColor)
+            clipboardContentPlaceholder2.setTextColor(mTextColor)
         }
 
         setupEmojiPalette(toolbarColor = toolbarColor, backgroundColor = mBackgroundColor, textColor = mTextColor)
@@ -739,8 +739,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         if (mToolbarHolder != null && mPopupParent.id != R.id.mini_keyboard_view && context.config.showClipboardContent) {
             val clipboardContent = context.getCurrentClip()
             if (clipboardContent?.isNotEmpty() == true) {
-                mToolbarHolder?.apply {
-                    clipboard_value.apply {
+                keyboardViewBinding?.apply {
+                    clipboardValue.apply {
                         text = clipboardContent
                         removeUnderlines()
                         setOnClickListener {
@@ -760,11 +760,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun hideClipboardViews() {
-        mToolbarHolder?.apply {
-            clipboard_value?.beGone()
-            clipboard_value?.alpha = 0f
-            clipboard_clear?.beGone()
-            clipboard_clear?.alpha = 0f
+        keyboardViewBinding?.apply {
+            clipboardValue.beGone()
+            clipboardValue.alpha = 0f
+            clipboardClear.beGone()
+            clipboardClear.alpha = 0f
         }
     }
 
@@ -779,13 +779,13 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun toggleClipboardVisibility(show: Boolean) {
-        if ((show && mToolbarHolder?.clipboard_value!!.alpha == 0f) || (!show && mToolbarHolder?.clipboard_value!!.alpha == 1f)) {
+        if ((show && keyboardViewBinding?.clipboardValue!!.alpha == 0f) || (!show && keyboardViewBinding?.clipboardValue!!.alpha == 1f)) {
             val newAlpha = if (show) 1f else 0f
             val animations = ArrayList<ObjectAnimator>()
-            val clipboardValueAnimation = ObjectAnimator.ofFloat(mToolbarHolder!!.clipboard_value!!, "alpha", newAlpha)
+            val clipboardValueAnimation = ObjectAnimator.ofFloat(keyboardViewBinding!!.clipboardValue, "alpha", newAlpha)
             animations.add(clipboardValueAnimation)
 
-            val clipboardClearAnimation = ObjectAnimator.ofFloat(mToolbarHolder!!.clipboard_clear!!, "alpha", newAlpha)
+            val clipboardClearAnimation = ObjectAnimator.ofFloat(keyboardViewBinding!!.clipboardClear, "alpha", newAlpha)
             animations.add(clipboardClearAnimation)
 
             val animSet = AnimatorSet()
@@ -794,14 +794,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             animSet.interpolator = AccelerateInterpolator()
             animSet.doOnStart {
                 if (show) {
-                    mToolbarHolder?.clipboard_value?.beVisible()
-                    mToolbarHolder?.clipboard_clear?.beVisible()
+                    keyboardViewBinding?.clipboardValue?.beVisible()
+                    keyboardViewBinding?.clipboardClear?.beVisible()
                 }
             }
             animSet.doOnEnd {
                 if (!show) {
-                    mToolbarHolder?.clipboard_value?.beGone()
-                    mToolbarHolder?.clipboard_clear?.beGone()
+                    keyboardViewBinding?.clipboardValue?.beGone()
+                    keyboardViewBinding?.clipboardClear?.beGone()
                 }
             }
             animSet.start()
@@ -1001,8 +1001,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 mMiniKeyboardContainer = mMiniKeyboardCache[popupKey]
                 if (mMiniKeyboardContainer == null) {
                     val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                    mMiniKeyboardContainer = inflater.inflate(mPopupLayout, null)
-                    mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.mini_keyboard_view) as MyKeyboardView
+                    keyboardPopupBinding = KeyboardPopupKeyboardBinding.inflate(inflater).apply {
+                        mMiniKeyboardContainer = root
+                        mMiniKeyboard = miniKeyboardView
+                    }
 
                     mMiniKeyboard!!.mOnKeyboardActionListener = object : OnKeyboardActionListener {
                         override fun onKey(code: Int) {
@@ -1048,7 +1050,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     )
                     mMiniKeyboardCache[popupKey] = mMiniKeyboardContainer
                 } else {
-                    mMiniKeyboard = mMiniKeyboardContainer!!.findViewById<View>(R.id.mini_keyboard_view) as MyKeyboardView
+                    mMiniKeyboard = keyboardPopupBinding!!.miniKeyboardView
                 }
 
                 getLocationInWindow(mCoordinates)
@@ -1395,13 +1397,17 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     fun closeClipboardManager() {
-        mClipboardManagerHolder?.clipboard_manager_holder?.beGone()
-        mToolbarHolder?.suggestions_holder?.showAllInlineContentViews()
+        keyboardViewBinding?.apply {
+            clipboardManagerHolder.beGone()
+            suggestionsHolder.showAllInlineContentViews()
+        }
     }
 
     private fun openClipboardManager() {
-        mClipboardManagerHolder!!.clipboard_manager_holder.beVisible()
-        mToolbarHolder?.suggestions_holder?.hideAllInlineContentViews()
+        keyboardViewBinding?.apply {
+            clipboardManagerHolder.beVisible()
+            suggestionsHolder.hideAllInlineContentViews()
+        }
         setupStoredClips()
     }
 
@@ -1434,10 +1440,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun setupClipsAdapter(clips: ArrayList<ListItem>) {
-        mClipboardManagerHolder?.apply {
-            clipboard_content_placeholder_1.beVisibleIf(clips.isEmpty())
-            clipboard_content_placeholder_2.beVisibleIf(clips.isEmpty())
-            clips_list.beVisibleIf(clips.isNotEmpty())
+        keyboardViewBinding?.apply {
+            clipboardContentPlaceholder1.beVisibleIf(clips.isEmpty())
+            clipboardContentPlaceholder2.beVisibleIf(clips.isEmpty())
+            clipsList.beVisibleIf(clips.isNotEmpty())
         }
 
         val refreshClipsListener = object : RefreshClipsListener {
@@ -1451,26 +1457,27 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             vibrateIfNeeded()
         }
 
-        mClipboardManagerHolder?.clips_list?.adapter = adapter
+        keyboardViewBinding?.clipsList?.adapter = adapter
     }
 
     private fun setupEmojiPalette(toolbarColor: Int, backgroundColor: Int, textColor: Int) {
-        mEmojiPaletteHolder?.apply {
-            emoji_palette_top_bar.background = ColorDrawable(toolbarColor)
-            emoji_palette_holder.background = ColorDrawable(backgroundColor)
-            emoji_palette_close.applyColorFilter(textColor)
-            emoji_palette_label.setTextColor(textColor)
+        keyboardViewBinding?.apply {
+            emojiPaletteTopBar.background = ColorDrawable(toolbarColor)
+            emojiPaletteHolder.background = ColorDrawable(backgroundColor)
+            emojiPaletteClose.applyColorFilter(textColor)
+            emojiPaletteLabel.setTextColor(textColor)
 
-            emoji_palette_bottom_bar.background = ColorDrawable(backgroundColor)
+            emojiPaletteBottomBar.background = ColorDrawable(backgroundColor)
             val bottomTextColor = textColor.darkenColor()
-            emoji_palette_mode_change.apply {
+            emojiPaletteModeChange.apply {
                 setTextColor(bottomTextColor)
                 setOnClickListener {
                     vibrateIfNeeded()
                     closeEmojiPalette()
                 }
             }
-            emoji_palette_backspace.apply {
+
+            emojiPaletteBackspace.apply {
                 applyColorFilter(bottomTextColor)
                 setOnTouchListener { _, event ->
                     when (event.action) {
@@ -1498,18 +1505,19 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
             }
         }
+
         setupEmojis()
     }
 
     fun openEmojiPalette() {
-        mEmojiPaletteHolder!!.emoji_palette_holder.beVisible()
+        keyboardViewBinding!!.emojiPaletteHolder.beVisible()
         setupEmojis()
     }
 
     private fun closeEmojiPalette() {
-        mEmojiPaletteHolder?.apply {
-            emoji_palette_holder?.beGone()
-            mEmojiPaletteHolder?.emojis_list?.scrollToPosition(0)
+        keyboardViewBinding?.apply {
+            emojiPaletteHolder.beGone()
+            emojisList?.scrollToPosition(0)
         }
     }
 
@@ -1539,7 +1547,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun setupEmojiAdapter(emojis: List<String>) {
-        mEmojiPaletteHolder?.emojis_list?.apply {
+        keyboardViewBinding?.emojisList?.apply {
             val emojiItemWidth = context.resources.getDimensionPixelSize(R.dimen.emoji_item_size)
             val emojiTopBarElevation = context.resources.getDimensionPixelSize(R.dimen.emoji_top_bar_elevation).toFloat()
 
@@ -1550,7 +1558,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             onScroll {
-                mEmojiPaletteHolder!!.emoji_palette_top_bar.elevation = if (it > 4) emojiTopBarElevation else 0f
+                keyboardViewBinding!!.emojiPaletteTopBar.elevation = if (it > 4) emojiTopBarElevation else 0f
             }
         }
     }
@@ -1634,14 +1642,14 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     @RequiresApi(Build.VERSION_CODES.R)
     fun addToClipboardViews(it: InlineContentView, addToFront: Boolean = false) {
-        if (mToolbarHolder?.autofill_suggestions_holder != null) {
+        if (keyboardViewBinding?.autofillSuggestionsHolder != null) {
             val newLayoutParams = LinearLayout.LayoutParams(it.layoutParams)
             newLayoutParams.updateMarginsRelative(start = resources.getDimensionPixelSize(R.dimen.normal_margin))
             it.layoutParams = newLayoutParams
             if (addToFront) {
-                mToolbarHolder?.autofill_suggestions_holder?.addView(it, 0)
+                keyboardViewBinding?.autofillSuggestionsHolder?.addView(it, 0)
             } else {
-                mToolbarHolder?.autofill_suggestions_holder?.addView(it)
+                keyboardViewBinding?.autofillSuggestionsHolder?.addView(it)
             }
             updateSuggestionsToolbarLayout()
         }
@@ -1649,21 +1657,21 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     @RequiresApi(Build.VERSION_CODES.R)
     fun clearClipboardViews() {
-        mToolbarHolder?.autofill_suggestions_holder?.removeAllViews()
+        keyboardViewBinding?.autofillSuggestionsHolder?.removeAllViews()
         updateSuggestionsToolbarLayout()
     }
 
     private fun updateSuggestionsToolbarLayout() {
-        mToolbarHolder?.apply {
+        keyboardViewBinding?.apply {
             if (hasInlineViews()) {
                 // make room on suggestion toolbar for inline views
-                suggestions_items_holder?.gravity = Gravity.NO_GRAVITY
-                clipboard_value?.maxWidth = resources.getDimensionPixelSize(R.dimen.suggestion_max_width)
+                suggestionsItemsHolder.gravity = Gravity.NO_GRAVITY
+                clipboardValue.maxWidth = resources.getDimensionPixelSize(R.dimen.suggestion_max_width)
             } else {
                 // restore original clipboard toolbar appearance
-                suggestions_items_holder?.gravity = Gravity.CENTER_HORIZONTAL
-                suggestions_holder?.measuredWidth?.also { maxWidth ->
-                    clipboard_value?.maxWidth = maxWidth
+                suggestionsItemsHolder.gravity = Gravity.CENTER_HORIZONTAL
+                suggestionsHolder.measuredWidth.also { maxWidth ->
+                    clipboardValue.maxWidth = maxWidth
                 }
             }
         }
@@ -1672,5 +1680,5 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     /**
      * Returns true if there are [InlineContentView]s in [autofill_suggestions_holder]
      */
-    private fun hasInlineViews() = (mToolbarHolder?.autofill_suggestions_holder?.childCount ?: 0) > 0
+    private fun hasInlineViews() = (keyboardViewBinding?.autofillSuggestionsHolder?.childCount ?: 0) > 0
 }

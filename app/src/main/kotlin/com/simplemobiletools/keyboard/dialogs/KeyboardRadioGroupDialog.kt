@@ -4,10 +4,10 @@ import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
+import com.simplemobiletools.commons.databinding.DialogRadioGroupBinding
+import com.simplemobiletools.commons.databinding.RadioButtonBinding
 import com.simplemobiletools.commons.extensions.onGlobalLayout
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.keyboard.R
@@ -31,10 +31,10 @@ class KeyboardRadioGroupDialog(
     private val layoutInflater = LayoutInflater.from(context)
 
     init {
-        val view = layoutInflater.inflate(R.layout.dialog_radio_group, null)
-        val radioGroup = view.findViewById<RadioGroup>(R.id.dialog_radio_group).apply {
+        val binding = DialogRadioGroupBinding.inflate(layoutInflater)
+        binding.dialogRadioGroup.apply {
             for (i in 0 until items.size) {
-                val radioButton = (layoutInflater.inflate(R.layout.radio_button, null) as RadioButton).apply {
+                val radioButton = RadioButtonBinding.inflate(layoutInflater).dialogRadioButton.apply {
                     text = items[i].title
                     isChecked = items[i].id == checkedItemId
                     id = i
@@ -57,15 +57,15 @@ class KeyboardRadioGroupDialog(
         }
 
         builder.apply {
-            context.setupKeyboardDialogStuff(inputView.windowToken, view, this, titleId) { alertDialog ->
+            context.setupKeyboardDialogStuff(inputView.windowToken, binding.root, this, titleId) { alertDialog ->
                 dialog = alertDialog
             }
         }
 
         if (selectedItemId != -1) {
-            view.findViewById<ScrollView>(R.id.dialog_radio_holder).apply {
+            binding.dialogRadioHolder.apply {
                 onGlobalLayout {
-                    scrollY = radioGroup.findViewById<View>(selectedItemId).bottom - height
+                    scrollY = binding.dialogRadioGroup.findViewById<View>(selectedItemId).bottom - height
                 }
             }
         }

@@ -13,45 +13,51 @@ import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.keyboard.R
 import com.simplemobiletools.keyboard.adapters.ClipsActivityAdapter
+import com.simplemobiletools.keyboard.databinding.ActivityManageClipboardItemsBinding
 import com.simplemobiletools.keyboard.dialogs.AddOrEditClipDialog
 import com.simplemobiletools.keyboard.dialogs.ExportClipsDialog
 import com.simplemobiletools.keyboard.extensions.clipsDB
 import com.simplemobiletools.keyboard.extensions.config
 import com.simplemobiletools.keyboard.helpers.ClipsHelper
 import com.simplemobiletools.keyboard.models.Clip
-import kotlinx.android.synthetic.main.activity_manage_clipboard_items.*
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
 
 class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListener {
-    private val PICK_EXPORT_CLIPS_INTENT = 21
-    private val PICK_IMPORT_CLIPS_SOURCE_INTENT = 22
+    companion object {
+        private const val PICK_EXPORT_CLIPS_INTENT = 21
+        private const val PICK_IMPORT_CLIPS_SOURCE_INTENT = 22
+    }
+
+    private val binding by viewBinding(ActivityManageClipboardItemsBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_manage_clipboard_items)
+        setContentView(binding.root)
         setupOptionsMenu()
-        updateTextColors(suggestions_items_holder)
+        updateTextColors(binding.suggestionsItemsHolder)
         updateClips()
 
-        updateMaterialActivityViews(clipboard_coordinator, clipboard_items_list, useTransparentNavigation = true, useTopSearchMenu = false)
-        setupMaterialScrollListener(clipboard_nested_scrollview, clipboard_toolbar)
+        binding.apply {
+            updateMaterialActivityViews(clipboardCoordinator, clipboardItemsList, useTransparentNavigation = true, useTopSearchMenu = false)
+            setupMaterialScrollListener(clipboardNestedScrollview, clipboardToolbar)
 
-        clipboard_items_placeholder.text = "${getText(R.string.manage_clipboard_empty)}\n\n${getText(R.string.manage_clips)}"
-        clipboard_items_placeholder_2.apply {
-            underlineText()
-            setTextColor(getProperPrimaryColor())
-            setOnClickListener {
-                addOrEditClip()
+            clipboardItemsPlaceholder.text = "${getText(R.string.manage_clipboard_empty)}\n\n${getText(R.string.manage_clips)}"
+            clipboardItemsPlaceholder2.apply {
+                underlineText()
+                setTextColor(getProperPrimaryColor())
+                setOnClickListener {
+                    addOrEditClip()
+                }
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(clipboard_toolbar, NavigationIcon.Arrow)
+        setupToolbar(binding.clipboardToolbar, NavigationIcon.Arrow)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
@@ -67,7 +73,7 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
 
 
     private fun setupOptionsMenu() {
-        clipboard_toolbar.setOnMenuItemClickListener { menuItem ->
+        binding.clipboardToolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.add_clipboard_item -> {
                     addOrEditClip()
@@ -97,15 +103,17 @@ class ManageClipboardItemsActivity : SimpleActivity(), RefreshRecyclerViewListen
         ensureBackgroundThread {
             val clips = clipsDB.getClips().toMutableList() as ArrayList<Clip>
             runOnUiThread {
-                ClipsActivityAdapter(this, clips, clipboard_items_list, this) {
+                ClipsActivityAdapter(this, clips, binding.clipboardItemsList, this) {
                     addOrEditClip(it as Clip)
                 }.apply {
-                    clipboard_items_list.adapter = this
+                    binding.clipboardItemsList.adapter = this
                 }
 
-                clipboard_items_list.beVisibleIf(clips.isNotEmpty())
-                clipboard_items_placeholder.beVisibleIf(clips.isEmpty())
-                clipboard_items_placeholder_2.beVisibleIf(clips.isEmpty())
+                binding.apply {
+                    clipboardItemsList.beVisibleIf(clips.isNotEmpty())
+                    clipboardItemsPlaceholder.beVisibleIf(clips.isEmpty())
+                    clipboardItemsPlaceholder2.beVisibleIf(clips.isEmpty())
+                }
             }
         }
     }
