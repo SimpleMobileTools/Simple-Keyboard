@@ -164,6 +164,23 @@
                 android:text="@string/emojis"
                 android:textSize="@dimen/big_text_size" />
 
+            <HorizontalScrollView
+                android:id="@+id/emoji_categories_scrollable_strip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/activity_margin"
+                android:layout_toEndOf="@+id/emoji_palette_label">
+                <RadioGroup
+                    android:id="@+id/emoji_categories_strip"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:gravity="center_vertical"/>
+            </HorizontalScrollView>
+
+
         </RelativeLayout>
 
         <RelativeLayout

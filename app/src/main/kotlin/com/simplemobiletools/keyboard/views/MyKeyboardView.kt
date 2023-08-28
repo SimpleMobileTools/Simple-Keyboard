@@ -7,6 +7,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.*
 import android.graphics.Paint.Align
 import android.graphics.drawable.*
@@ -21,6 +22,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.inline.InlineContentView
 import androidx.annotation.RequiresApi
@@ -29,6 +31,9 @@ import androidx.core.animation.doOnStart
 import androidx.core.view.*
 import androidx.emoji2.text.EmojiCompat
 import androidx.emoji2.text.EmojiCompat.EMOJI_SUPPORTED
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isPiePlus
@@ -37,6 +42,7 @@ import com.simplemobiletools.keyboard.activities.ManageClipboardItemsActivity
 import com.simplemobiletools.keyboard.activities.SettingsActivity
 import com.simplemobiletools.keyboard.adapters.ClipsKeyboardAdapter
 import com.simplemobiletools.keyboard.adapters.EmojisAdapter
+import com.simplemobiletools.keyboard.databinding.ItemEmojiCategoryBinding
 import com.simplemobiletools.keyboard.databinding.KeyboardKeyPreviewBinding
 import com.simplemobiletools.keyboard.databinding.KeyboardPopupKeyboardBinding
 import com.simplemobiletools.keyboard.databinding.KeyboardViewKeyboardBinding
@@ -1529,8 +1535,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             val emojis = fullEmojiList.filter { emoji ->
-                systemFontPaint.hasGlyph(emoji) || (EmojiCompat.get().loadState == EmojiCompat.LOAD_STATE_SUCCEEDED && EmojiCompat.get()
-                    .getEmojiMatch(emoji, emojiCompatMetadataVersion) == EMOJI_SUPPORTED)
+                systemFontPaint.hasGlyph(emoji.emoji) || (EmojiCompat.get().loadState == EmojiCompat.LOAD_STATE_SUCCEEDED && EmojiCompat.get()
+                    .getEmojiMatch(emoji.emoji, emojiCompatMetadataVersion) == EMOJI_SUPPORTED)
             }
 
             Handler(Looper.getMainLooper()).post {
@@ -1546,19 +1552,76 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
     }
 
-    private fun setupEmojiAdapter(emojis: List<String>) {
+    private fun setupEmojiAdapter(emojis: List<EmojiData>) {
+        val categories = emojis.groupBy { it.category }
+        val allItems = mutableListOf<EmojisAdapter.Item>()
+        categories.entries.forEach { (category, emojis) ->
+            allItems.add(EmojisAdapter.Item.Category(category))
+            allItems.addAll(emojis.map(EmojisAdapter.Item::Emoji))
+        }
+        val checkIds = mutableMapOf<Int, String>()
+        val checkedChangedListener: (RadioGroup, Int) -> Unit = { _, checkedId ->
+            (keyboardViewBinding?.emojisList?.layoutManager as? GridLayoutManager)?.scrollToPositionWithOffset(
+                allItems.indexOfFirst { it is EmojisAdapter.Item.Category && it.value == checkIds[checkedId] },
+                0
+            )
+        }
+        keyboardViewBinding?.emojiCategoriesStrip?.apply {
+            removeAllViews()
+            this.setOnCheckedChangeListener(checkedChangedListener)
+            categories.entries.forEach { (category, emojis) ->
+                ItemEmojiCategoryBinding.inflate(LayoutInflater.from(context), this, true).apply {
+                    root.id = generateViewId()
+                    checkIds[root.id] = category
+                    root.setButtonDrawable(emojis.first().getCategoryIcon())
+                    root.buttonTintList = ColorStateList(
+                        arrayOf(
+                            intArrayOf(android.R.attr.state_checked),
+                            intArrayOf(-android.R.attr.state_checked),
+                        ),
+                        intArrayOf(
+                            context.getProperPrimaryColor(),
+                            Color.WHITE
+                        )
+                    )
+                }
+            }
+        }
         keyboardViewBinding?.emojisList?.apply {
             val emojiItemWidth = context.resources.getDimensionPixelSize(R.dimen.emoji_item_size)
             val emojiTopBarElevation = context.resources.getDimensionPixelSize(R.dimen.emoji_top_bar_elevation).toFloat()
 
-            layoutManager = AutoGridLayoutManager(context, emojiItemWidth)
-            adapter = EmojisAdapter(context = context, items = emojis) { emoji ->
-                mOnKeyboardActionListener!!.onText(emoji)
+            layoutManager = AutoGridLayoutManager(context, emojiItemWidth).apply {
+                spanSizeLookup = object : SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int =
+                        if (allItems[position] is EmojisAdapter.Item.Category) {
+                            spanCount
+                        } else {
+                            1
+                        }
+                }
+            }
+            adapter = EmojisAdapter(context = context, items = allItems) { emoji ->
+                mOnKeyboardActionListener!!.onText(emoji.emoji)
                 vibrateIfNeeded()
             }
 
+            clearOnScrollListeners()
             onScroll {
                 keyboardViewBinding!!.emojiPaletteTopBar.elevation = if (it > 4) emojiTopBarElevation else 0f
+                (keyboardViewBinding?.emojisList?.layoutManager as? LinearLayoutManager)?.findFirstCompletelyVisibleItemPosition()?.also { firstVisibleIndex ->
+                    allItems
+                        .withIndex()
+                        .lastOrNull { it.value is EmojisAdapter.Item.Category && it.index <= firstVisibleIndex }
+                        ?.also { activeCategory ->
+                            val id = checkIds.entries.first { it.value == (activeCategory.value as EmojisAdapter.Item.Category).value }.key
+                            keyboardViewBinding?.emojiCategoriesStrip?.apply {
+                                setOnCheckedChangeListener(null)
+                                check(id)
+                                setOnCheckedChangeListener(checkedChangedListener)
+                            }
+                        }
+                }
             }
         }
     }

@@ -6,39 +6,72 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.emoji2.text.EmojiCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.simplemobiletools.commons.databinding.DividerBinding
+import com.simplemobiletools.commons.extensions.beInvisible
 import com.simplemobiletools.keyboard.databinding.ItemEmojiBinding
+import com.simplemobiletools.keyboard.helpers.EmojiData
 
-class EmojisAdapter(val context: Context, var items: List<String>, val itemClick: (emoji: String) -> Unit) : RecyclerView.Adapter<EmojisAdapter.ViewHolder>() {
+class EmojisAdapter(val context: Context, private val items: List<Item>, val itemClick: (emoji: EmojiData) -> Unit) :
+    RecyclerView.Adapter<EmojisAdapter.ViewHolder>() {
     private val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmojisAdapter.ViewHolder {
-        val view = ItemEmojiBinding.inflate(layoutInflater, parent, false).root
-        return ViewHolder(view)
+        return when (viewType) {
+            ITEM_TYPE_EMOJI -> {
+                val view = ItemEmojiBinding.inflate(layoutInflater, parent, false).root
+                ViewHolder(view)
+            }
+
+            else -> {
+                val view = DividerBinding.inflate(layoutInflater, parent, false).root.apply { beInvisible() }
+                ViewHolder(view)
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: EmojisAdapter.ViewHolder, position: Int) {
         val item = items[position]
-        holder.bindView(item) { itemView ->
-            setupEmoji(itemView, item)
+        if (item is Item.Emoji) {
+            holder.bindView(item) { itemView ->
+                setupEmoji(itemView, item)
+            }
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (items[position] is Item.Emoji) {
+            ITEM_TYPE_EMOJI
+        } else {
+            ITEM_TYPE_CATEGORY
         }
     }
 
     override fun getItemCount() = items.size
 
-    private fun setupEmoji(view: View, emoji: String) {
-        val processed = EmojiCompat.get().process(emoji)
+    private fun setupEmoji(view: View, emoji: Item.Emoji) {
+        val processed = EmojiCompat.get().process(emoji.value.emoji)
         ItemEmojiBinding.bind(view).emojiValue.text = processed
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(emoji: String, callback: (itemView: View) -> Unit): View {
+        fun bindView(emoji: Item.Emoji, callback: (itemView: View) -> Unit): View {
             return itemView.apply {
                 callback(this)
 
                 setOnClickListener {
-                    itemClick.invoke(emoji)
+                    itemClick.invoke(emoji.value)
                 }
             }
         }
+    }
+
+    sealed interface Item {
+        data class Emoji(val value: EmojiData) : Item
+        data class Category(val value: String) : Item
+    }
+
+    companion object {
+        private const val ITEM_TYPE_EMOJI = 0
+        private const val ITEM_TYPE_CATEGORY = 1
     }
 }
