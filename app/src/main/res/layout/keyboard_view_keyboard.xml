@@ -167,7 +167,7 @@
             <HorizontalScrollView
                 android:id="@+id/emoji_categories_scrollable_strip"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/activity_margin"
                 android:layout_toEndOf="@+id/emoji_palette_label">
