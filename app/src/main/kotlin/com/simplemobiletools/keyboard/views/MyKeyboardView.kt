@@ -1474,9 +1474,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             emojiPaletteLabel.setTextColor(textColor)
 
             emojiPaletteBottomBar.background = ColorDrawable(backgroundColor)
-            val bottomTextColor = textColor.darkenColor()
             emojiPaletteModeChange.apply {
-                setTextColor(bottomTextColor)
+                setTextColor(textColor)
                 setOnClickListener {
                     vibrateIfNeeded()
                     closeEmojiPalette()
@@ -1484,7 +1483,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             emojiPaletteBackspace.apply {
-                applyColorFilter(bottomTextColor)
+                applyColorFilter(textColor)
                 setOnTouchListener { _, event ->
                     when (event.action) {
                         MotionEvent.ACTION_DOWN -> {
@@ -1560,7 +1559,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             allItems.addAll(emojis.map(EmojisAdapter.Item::Emoji))
         }
         val checkIds = mutableMapOf<Int, String>()
-        val inactiveColor = mTextColor.darkenColor()
         keyboardViewBinding?.emojiCategoriesStrip?.apply {
             weightSum = categories.count().toFloat()
             val strip = this
@@ -1577,7 +1575,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     )
                     root.setOnClickListener {
                         strip.children.filterIsInstance<ImageButton>().forEach {
-                            it.imageTintList = ColorStateList.valueOf(inactiveColor)
+                            it.imageTintList = ColorStateList.valueOf(mTextColor)
                         }
                         root.imageTintList = ColorStateList.valueOf(context.getProperPrimaryColor())
                         keyboardViewBinding?.emojisList?.stopScroll()
@@ -1586,7 +1584,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                             0
                         )
                     }
-                    root.imageTintList = ColorStateList.valueOf(inactiveColor)
+                    root.imageTintList = ColorStateList.valueOf(mTextColor)
                 }
             }
         }
@@ -1622,7 +1620,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                                 if (it.id == id) {
                                     it.imageTintList = ColorStateList.valueOf(context.getProperPrimaryColor())
                                 } else {
-                                    it.imageTintList = ColorStateList.valueOf(inactiveColor)
+                                    it.imageTintList = ColorStateList.valueOf(mTextColor)
                                 }
                             }
                         }
