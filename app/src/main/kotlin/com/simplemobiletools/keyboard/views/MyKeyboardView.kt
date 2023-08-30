@@ -1581,7 +1581,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         ),
                         intArrayOf(
                             context.getProperPrimaryColor(),
-                            Color.WHITE
+                            context.getProperTextColor()
                         )
                     )
                 }
