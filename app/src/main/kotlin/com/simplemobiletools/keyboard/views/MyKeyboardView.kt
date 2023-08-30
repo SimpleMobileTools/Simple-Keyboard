@@ -1560,6 +1560,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             allItems.addAll(emojis.map(EmojisAdapter.Item::Emoji))
         }
         val checkIds = mutableMapOf<Int, String>()
+        val inactiveColor = mTextColor.darkenColor()
         keyboardViewBinding?.emojiCategoriesStrip?.apply {
             weightSum = categories.count().toFloat()
             val strip = this
@@ -1576,7 +1577,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     )
                     root.setOnClickListener {
                         strip.children.filterIsInstance<ImageButton>().forEach {
-                            it.imageTintList = ColorStateList.valueOf(context.getProperTextColor())
+                            it.imageTintList = ColorStateList.valueOf(inactiveColor)
                         }
                         root.imageTintList = ColorStateList.valueOf(context.getProperPrimaryColor())
                         (keyboardViewBinding?.emojisList?.layoutManager as? GridLayoutManager)?.scrollToPositionWithOffset(
@@ -1584,7 +1585,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                             0
                         )
                     }
-                    root.imageTintList = ColorStateList.valueOf(context.getProperTextColor())
+                    root.imageTintList = ColorStateList.valueOf(inactiveColor)
                 }
             }
         }
@@ -1620,7 +1621,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                                 if (it.id == id) {
                                     it.imageTintList = ColorStateList.valueOf(context.getProperPrimaryColor())
                                 } else {
-                                    it.imageTintList = ColorStateList.valueOf(context.getProperTextColor())
+                                    it.imageTintList = ColorStateList.valueOf(inactiveColor)
                                 }
                             }
                         }
