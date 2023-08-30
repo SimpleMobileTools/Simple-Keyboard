@@ -20,6 +20,7 @@ import android.util.TypedValue
 import android.view.*
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.RadioGroup
@@ -1560,30 +1561,25 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             allItems.addAll(emojis.map(EmojisAdapter.Item::Emoji))
         }
         val checkIds = mutableMapOf<Int, String>()
-        val checkedChangedListener: (RadioGroup, Int) -> Unit = { _, checkedId ->
-            (keyboardViewBinding?.emojisList?.layoutManager as? GridLayoutManager)?.scrollToPositionWithOffset(
-                allItems.indexOfFirst { it is EmojisAdapter.Item.Category && it.value == checkIds[checkedId] },
-                0
-            )
-        }
         keyboardViewBinding?.emojiCategoriesStrip?.apply {
+            val strip = this
             removeAllViews()
-            this.setOnCheckedChangeListener(checkedChangedListener)
             categories.entries.forEach { (category, emojis) ->
                 ItemEmojiCategoryBinding.inflate(LayoutInflater.from(context), this, true).apply {
                     root.id = generateViewId()
                     checkIds[root.id] = category
-                    root.setButtonDrawable(emojis.first().getCategoryIcon())
-                    root.buttonTintList = ColorStateList(
-                        arrayOf(
-                            intArrayOf(android.R.attr.state_checked),
-                            intArrayOf(-android.R.attr.state_checked),
-                        ),
-                        intArrayOf(
-                            context.getProperPrimaryColor(),
-                            context.getProperTextColor()
+                    root.setImageResource(emojis.first().getCategoryIcon())
+                    root.setOnClickListener {
+                        strip.children.filterIsInstance<ImageButton>().forEach {
+                            it.imageTintList = ColorStateList.valueOf(context.getProperTextColor())
+                        }
+                        root.imageTintList = ColorStateList.valueOf(context.getProperPrimaryColor())
+                        (keyboardViewBinding?.emojisList?.layoutManager as? GridLayoutManager)?.scrollToPositionWithOffset(
+                            allItems.indexOfFirst { it is EmojisAdapter.Item.Category && it.value == category },
+                            0
                         )
-                    )
+                    }
+                    root.imageTintList = ColorStateList.valueOf(context.getProperTextColor())
                 }
             }
         }
@@ -1615,10 +1611,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         .lastOrNull { it.value is EmojisAdapter.Item.Category && it.index <= firstVisibleIndex }
                         ?.also { activeCategory ->
                             val id = checkIds.entries.first { it.value == (activeCategory.value as EmojisAdapter.Item.Category).value }.key
-                            keyboardViewBinding?.emojiCategoriesStrip?.apply {
-                                setOnCheckedChangeListener(null)
-                                check(id)
-                                setOnCheckedChangeListener(checkedChangedListener)
+                            keyboardViewBinding?.emojiCategoriesStrip?.children?.filterIsInstance<ImageButton>()?.forEach {
+                                if (it.id == id) {
+                                    it.imageTintList = ColorStateList.valueOf(context.getProperPrimaryColor())
+                                } else {
+                                    it.imageTintList = ColorStateList.valueOf(context.getProperTextColor())
+                                }
                             }
                         }
                 }
