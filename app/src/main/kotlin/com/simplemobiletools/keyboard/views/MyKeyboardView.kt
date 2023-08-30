@@ -23,7 +23,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.PopupWindow
-import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.inline.InlineContentView
 import androidx.annotation.RequiresApi
@@ -1562,6 +1561,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
         val checkIds = mutableMapOf<Int, String>()
         keyboardViewBinding?.emojiCategoriesStrip?.apply {
+            weightSum = categories.count().toFloat()
             val strip = this
             removeAllViews()
             categories.entries.forEach { (category, emojis) ->
@@ -1569,6 +1569,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     root.id = generateViewId()
                     checkIds[root.id] = category
                     root.setImageResource(emojis.first().getCategoryIcon())
+                    root.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        1f
+                    )
                     root.setOnClickListener {
                         strip.children.filterIsInstance<ImageButton>().forEach {
                             it.imageTintList = ColorStateList.valueOf(context.getProperTextColor())

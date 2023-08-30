@@ -207,6 +207,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_marginEnd="@dimen/medium_margin"
                 android:layout_toStartOf="@+id/emoji_palette_backspace"
                 android:layout_toEndOf="@+id/emoji_palette_mode_change"
                 android:gravity="center"

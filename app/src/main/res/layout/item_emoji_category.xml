@@ -6,5 +6,6 @@
     android:background="@drawable/ripple_all_corners_medium"
     android:gravity="center"
     android:importantForAccessibility="no"
-    android:padding="@dimen/small_margin"
+    android:padding="@dimen/tiny_margin"
+    android:scaleType="centerInside"
     android:src="@drawable/ic_emoji_category_activities" />
