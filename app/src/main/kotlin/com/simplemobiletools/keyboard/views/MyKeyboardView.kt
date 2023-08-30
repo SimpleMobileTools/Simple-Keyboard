@@ -1580,6 +1580,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                             it.imageTintList = ColorStateList.valueOf(inactiveColor)
                         }
                         root.imageTintList = ColorStateList.valueOf(context.getProperPrimaryColor())
+                        keyboardViewBinding?.emojisList?.stopScroll()
                         (keyboardViewBinding?.emojisList?.layoutManager as? GridLayoutManager)?.scrollToPositionWithOffset(
                             allItems.indexOfFirst { it is EmojisAdapter.Item.Category && it.value == category },
                             0
