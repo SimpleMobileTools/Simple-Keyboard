@@ -1,10 +1,11 @@
 package com.simplemobiletools.keyboard.helpers
 
 import android.content.Context
+import com.simplemobiletools.keyboard.R
 import org.json.JSONObject
 import java.io.InputStream
 
-private var cachedEmojiData: MutableList<String>? = null
+private var cachedEmojiData: MutableList<EmojiData>? = null
 val cachedVNTelexData: HashMap<String, String> = HashMap()
 
 /**
@@ -14,18 +15,21 @@ val cachedVNTelexData: HashMap<String, String> = HashMap()
  * @param context The initiating view's context.
  * @param path The path to the asset file.
  */
-fun parseRawEmojiSpecsFile(context: Context, path: String): MutableList<String> {
+fun parseRawEmojiSpecsFile(context: Context, path: String): MutableList<EmojiData> {
     if (cachedEmojiData != null) {
         return cachedEmojiData!!
     }
 
-    val emojis = mutableListOf<String>()
+    val emojis = mutableListOf<EmojiData>()
     var emojiEditorList: MutableList<String>? = null
+    var category: String? = null
 
     fun commitEmojiEditorList() {
         emojiEditorList?.let {
             // add only the base emoji for now, ignore the variations
-            emojis.add(it.first())
+            val base = it.first()
+            val variants = it.drop(1)
+            emojis.add(EmojiData(category ?: "none", base, variants))
         }
         emojiEditorList = null
     }
@@ -36,6 +40,7 @@ fun parseRawEmojiSpecsFile(context: Context, path: String): MutableList<String> 
                 // Comment line
             } else if (line.startsWith("[")) {
                 commitEmojiEditorList()
+                category = line.replace("[", "").replace("]", "")
             } else if (line.trim().isEmpty()) {
                 // Empty line
                 continue
@@ -83,4 +88,23 @@ fun parseRawJsonSpecsFile(context: Context, path: String): HashMap<String, Strin
         return HashMap()
     }
     return cachedVNTelexData
+}
+
+data class EmojiData(
+    val category: String,
+    val emoji: String,
+    val variants: List<String>
+) {
+    fun getCategoryIcon(): Int =
+        when (category) {
+            "people_body" -> R.drawable.ic_emoji_category_people
+            "animals_nature" -> R.drawable.ic_emoji_category_animals
+            "food_drink" -> R.drawable.ic_emoji_category_food
+            "travel_places" -> R.drawable.ic_emoji_category_travel
+            "activities" -> R.drawable.ic_emoji_category_activities
+            "objects" -> R.drawable.ic_emoji_category_objects
+            "symbols" -> R.drawable.ic_emoji_category_symbols
+            "flags" -> R.drawable.ic_emoji_category_flags
+            else -> R.drawable.ic_emoji_category_smileys
+        }
 }
