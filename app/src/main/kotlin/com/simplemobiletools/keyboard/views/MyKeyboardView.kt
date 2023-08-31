@@ -1218,14 +1218,12 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 val secondKeyIndex = getPressedKeyIndex(newPointerX, newPointerY)
                 showPreview(secondKeyIndex)
 
-                mHandler!!.postDelayed({
-                    detectAndSendKey(secondKeyIndex, newPointerX, newPointerY, eventTime)
+                detectAndSendKey(secondKeyIndex, newPointerX, newPointerY, eventTime)
 
-                    val secondKeyCode = mKeys.getOrNull(secondKeyIndex)?.code
-                    if (secondKeyCode != null) {
-                        mOnKeyboardActionListener!!.onPress(secondKeyCode)
-                    }
-                }, REPEAT_INTERVAL.toLong())
+                val secondKeyCode = mKeys.getOrNull(secondKeyIndex)?.code
+                if (secondKeyCode != null) {
+                    mOnKeyboardActionListener!!.onPress(secondKeyCode)
+                }
 
                 showPreview(NOT_A_KEY)
                 invalidateKey(mCurrentKey)

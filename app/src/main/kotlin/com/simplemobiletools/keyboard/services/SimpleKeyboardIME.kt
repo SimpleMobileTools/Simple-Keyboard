@@ -260,14 +260,13 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                                     }
                                 }
                                 inputConnection.commitText(codeChar.toString(), 1)
+                                updateShiftKeyState()
                             }
                         }
 
                         else -> {
                             inputConnection.commitText(codeChar.toString(), 1)
-                            if (originalText == null) {
-                                updateShiftKeyState()
-                            }
+                            updateShiftKeyState()
                         }
                     }
                 }
