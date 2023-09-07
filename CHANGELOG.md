@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.4.8 *(2023-09-07)*
+----------------------------
+
+ * Split emojis into groups
+ * Added some stability, UI and translation improvements
+
 Version 5.4.7 *(2023-07-09)*
 ----------------------------
 
