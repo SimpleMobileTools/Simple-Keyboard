@@ -3,7 +3,7 @@
 kotlin = "1.9.0"
 #AndroidX
 androidx-autofill = "1.1.0"
-androidx-emoji2 = "1.4.0"
+androidx-emoji2 = "1.2.0"
 #KSP
 ksp = "1.9.0-1.0.12"
 #Room
