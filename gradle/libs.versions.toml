@@ -20,8 +20,8 @@ app-build-javaVersion = "VERSION_17"
 app-build-kotlinJVMTarget = "17"
 #versioning
 app-version-appId = "com.simplemobiletools.keyboard"
-app-version-versionCode = "22"
-app-version-versionName = "5.4.7"
+app-version-versionCode = "23"
+app-version-versionName = "5.4.8"
 [libraries]
 #AndroidX
 androidx-autofill = { module = "androidx.autofill:autofill", version.ref = "androidx-autofill" }
