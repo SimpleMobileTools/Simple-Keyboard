@@ -9,7 +9,7 @@ ksp = "1.9.0-1.0.12"
 #Room
 room = "2.6.0-beta01"
 #Simple tools
-simple-commons = "0e173dc5ad"
+simple-commons = "de113ad025"
 #Gradle
 gradlePlugins-agp = "8.1.0"
 #build
