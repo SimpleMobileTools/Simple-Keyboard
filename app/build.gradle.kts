@@ -6,6 +6,11 @@ plugins {
     alias(libs.plugins.android)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.ksp)
+    base
+}
+
+base {
+    archivesName.set("keyboard")
 }
 
 val keystorePropertiesFile: File = rootProject.file("keystore.properties")
@@ -24,7 +29,6 @@ android {
         versionName = project.libs.versions.app.version.versionName.get()
         versionCode = project.libs.versions.app.version.versionCode.get().toInt()
         multiDexEnabled = true
-        setProperty("archivesBaseName", "keyboard")
         vectorDrawables.useSupportLibrary = true
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
