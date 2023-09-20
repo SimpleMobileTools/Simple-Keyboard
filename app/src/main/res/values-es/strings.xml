@@ -26,7 +26,7 @@
     <string name="keycode_mode_change">Cambiar el tipo de teclado</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
-    <string name="keycode_space">Spacebar</string>
+    <string name="keycode_space">Barra espaciadora</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Mostrar el contenido del portapapeles si está disponible</string>
     <string name="show_popup">Mostrar una ventana emergente al pulsar una tecla</string>
