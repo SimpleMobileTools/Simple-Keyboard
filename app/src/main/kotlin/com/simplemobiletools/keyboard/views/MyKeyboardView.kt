@@ -1025,9 +1025,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     )
                     mMiniKeyboardCache[popupKey] = mMiniKeyboardContainer
                 } else {
-                    //Using 'miniKeyboardView' from cache
                     mMiniKeyboard = mMiniKeyboardCache[popupKey]?.let(KeyboardPopupKeyboardBinding::bind)?.miniKeyboardView
-                        ?: keyboardPopupBinding!!.miniKeyboardView
                 }
 
                 getLocationInWindow(mCoordinates)
