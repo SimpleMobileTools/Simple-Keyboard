@@ -1012,37 +1012,6 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                         mMiniKeyboard = miniKeyboardView
                     }
 
-                    mMiniKeyboard!!.mOnKeyboardActionListener = object : OnKeyboardActionListener {
-                        override fun onKey(code: Int) {
-                            mOnKeyboardActionListener!!.onKey(code)
-                            dismissPopupKeyboard()
-                        }
-
-                        override fun onPress(primaryCode: Int) {
-                            mOnKeyboardActionListener!!.onPress(primaryCode)
-                        }
-
-                        override fun onActionUp() {
-                            mOnKeyboardActionListener!!.onActionUp()
-                        }
-
-                        override fun moveCursorLeft() {
-                            mOnKeyboardActionListener!!.moveCursorLeft()
-                        }
-
-                        override fun moveCursorRight() {
-                            mOnKeyboardActionListener!!.moveCursorRight()
-                        }
-
-                        override fun onText(text: String) {
-                            mOnKeyboardActionListener!!.onText(text)
-                        }
-
-                        override fun reloadKeyboard() {
-                            mOnKeyboardActionListener!!.reloadKeyboard()
-                        }
-                    }
-
                     val keyboard = if (popupKey.popupCharacters != null) {
                         MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!, popupKey.width)
                     } else {
@@ -1056,7 +1025,9 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     )
                     mMiniKeyboardCache[popupKey] = mMiniKeyboardContainer
                 } else {
-                    mMiniKeyboard = keyboardPopupBinding!!.miniKeyboardView
+                    //Using 'miniKeyboardView' from cache
+                    mMiniKeyboard = mMiniKeyboardCache[popupKey]?.let(KeyboardPopupKeyboardBinding::bind)?.miniKeyboardView
+                        ?: keyboardPopupBinding!!.miniKeyboardView
                 }
 
                 getLocationInWindow(mCoordinates)
