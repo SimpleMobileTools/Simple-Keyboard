@@ -24,7 +24,7 @@ class AddOrEditClipDialog(val activity: BaseSimpleActivity, val originalClip: Cl
                 activity.setupDialogStuff(binding.root, this) { alertDialog ->
                     alertDialog.showKeyboard(binding.addClipValue)
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                        val clipValue = binding.addClipValue.value
+                        val clipValue = binding.addClipValue.text.toString()
                         if (clipValue.isEmpty()) {
                             activity.toast(R.string.value_cannot_be_empty)
                             return@setOnClickListener
