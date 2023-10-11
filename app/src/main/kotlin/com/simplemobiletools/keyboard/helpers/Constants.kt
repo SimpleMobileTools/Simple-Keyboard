@@ -44,6 +44,7 @@ const val LANGUAGE_SWEDISH = 15
 const val LANGUAGE_DANISH = 16
 const val LANGUAGE_FRENCH_BEPO = 17
 const val LANGUAGE_VIETNAMESE_TELEX = 18
+const val LANGUAGE_POLISH = 19
 
 // keyboard height percentage options
 const val KEYBOARD_HEIGHT_70_PERCENT = 70
