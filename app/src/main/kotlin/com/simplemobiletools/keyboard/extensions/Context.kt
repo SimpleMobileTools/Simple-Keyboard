@@ -47,7 +47,7 @@ val Context.clipsDB: ClipsDao
 
 fun Context.getCurrentClip(): String? {
     val clipboardManager = (getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
-    return clipboardManager.primaryClip?.getItemAt(0)?.text?.trim()?.toString()
+    return clipboardManager.primaryClip?.getItemAt(0)?.text?.toString()
 }
 
 fun Context.getStrokeColor(): Int {
