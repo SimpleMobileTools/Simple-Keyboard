@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple Keyboard</string>
+    <string name="app_name">Simpelt tangentbord</string>
     <string name="app_launcher_name">Tangentbord</string>
     <string name="redirection_note">Aktivera Simpelt tangentbord på nästa skärm så att det blir ett tillgängligt tangentbord. Tryck på \"Tillbaka\" när du har aktiverat det.</string>
     <string name="change_keyboard">Skifta tangentbord</string>
