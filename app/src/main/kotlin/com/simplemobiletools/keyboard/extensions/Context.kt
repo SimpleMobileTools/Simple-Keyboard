@@ -181,12 +181,14 @@ fun Context.getKeyboardLanguages(): ArrayList<RadioItem> {
         RadioItem(LANGUAGE_GREEK, getKeyboardLanguageText(LANGUAGE_GREEK)),
         RadioItem(LANGUAGE_LITHUANIAN, getKeyboardLanguageText(LANGUAGE_LITHUANIAN)),
         RadioItem(LANGUAGE_NORWEGIAN, getKeyboardLanguageText(LANGUAGE_NORWEGIAN)),
+        RadioItem(LANGUAGE_POLISH, getKeyboardLanguageText(LANGUAGE_POLISH)),
         RadioItem(LANGUAGE_ROMANIAN, getKeyboardLanguageText(LANGUAGE_ROMANIAN)),
         RadioItem(LANGUAGE_RUSSIAN, getKeyboardLanguageText(LANGUAGE_RUSSIAN)),
         RadioItem(LANGUAGE_SLOVENIAN, getKeyboardLanguageText(LANGUAGE_SLOVENIAN)),
         RadioItem(LANGUAGE_SPANISH, getKeyboardLanguageText(LANGUAGE_SPANISH)),
         RadioItem(LANGUAGE_SWEDISH, getKeyboardLanguageText(LANGUAGE_SWEDISH)),
         RadioItem(LANGUAGE_TURKISH_Q, getKeyboardLanguageText(LANGUAGE_TURKISH_Q)),
+        RadioItem(LANGUAGE_UKRAINIAN, getKeyboardLanguageText(LANGUAGE_UKRAINIAN)),
         RadioItem(LANGUAGE_VIETNAMESE_TELEX, getKeyboardLanguageText(LANGUAGE_VIETNAMESE_TELEX)),
     )
 }
@@ -204,12 +206,14 @@ fun Context.getKeyboardLanguageText(language: Int): String {
         LANGUAGE_GREEK -> getString(R.string.translation_greek)
         LANGUAGE_LITHUANIAN -> getString(R.string.translation_lithuanian)
         LANGUAGE_NORWEGIAN -> getString(R.string.translation_norwegian)
+        LANGUAGE_POLISH -> getString(R.string.translation_polish)
         LANGUAGE_ROMANIAN -> getString(R.string.translation_romanian)
         LANGUAGE_RUSSIAN -> getString(R.string.translation_russian)
         LANGUAGE_SLOVENIAN -> getString(R.string.translation_slovenian)
         LANGUAGE_SPANISH -> getString(R.string.translation_spanish)
         LANGUAGE_SWEDISH -> getString(R.string.translation_swedish)
         LANGUAGE_TURKISH_Q -> "${getString(R.string.translation_turkish)} (Q)"
+        LANGUAGE_UKRAINIAN -> getString(R.string.translation_ukrainian)
         LANGUAGE_VIETNAMESE_TELEX -> "${getString(R.string.translation_vietnamese)} (Telex)"
         else -> "${getString(R.string.translation_english)} (QWERTY)"
     }
