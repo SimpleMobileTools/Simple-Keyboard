@@ -59,7 +59,7 @@
         <Key
             app:keyLabel="0"
             app:keyWidth="25%p"
-            app:popupCharacters="+-,."
+            app:popupCharacters="-+,./"
             app:popupKeyboard="@xml/keyboard_popup_template"
             app:topSmallNumber="+" />
         <Key

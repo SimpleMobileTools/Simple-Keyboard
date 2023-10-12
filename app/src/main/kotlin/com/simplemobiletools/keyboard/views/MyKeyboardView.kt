@@ -1005,6 +1005,11 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
             val popupKeyboardId = popupKey.popupResId
             if (popupKeyboardId != 0) {
                 mMiniKeyboardContainer = mMiniKeyboardCache[popupKey]
+
+                // For 'number' and 'phone' keyboards the count of popup keys might be bigger than count of keys in the main keyboard.
+                // And therefore the width of the key might be smaller than width declared in MyKeyboard.Key.width for the main keyboard.
+                val popupKeyWidth = popupKey.calcKeyWidth(containerWidth = mMiniKeyboardContainer?.measuredWidth ?: width)
+
                 if (mMiniKeyboardContainer == null) {
                     val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
                     keyboardPopupBinding = KeyboardPopupKeyboardBinding.inflate(inflater).apply {
@@ -1013,11 +1018,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     }
 
                     val keyboard = if (popupKey.popupCharacters != null) {
-                        MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!, popupKey.width)
+                        MyKeyboard(context, popupKeyboardId, popupKey.popupCharacters!!, popupKeyWidth)
                     } else {
                         MyKeyboard(context, popupKeyboardId, 0)
                     }
-
                     mMiniKeyboard!!.setKeyboard(keyboard)
                     mPopupParent = this
                     mMiniKeyboardContainer!!.measure(
@@ -1032,8 +1036,8 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 mPopupX = popupKey.x
                 mPopupY = popupKey.y
 
-                val widthToUse = mMiniKeyboardContainer!!.measuredWidth - (popupKey.popupCharacters!!.length / 2) * popupKey.width
-                mPopupX = mPopupX + popupKey.width - widthToUse
+                val widthToUse = mMiniKeyboardContainer!!.measuredWidth - (popupKey.popupCharacters!!.length / 2) * popupKeyWidth
+                mPopupX = mPopupX + popupKeyWidth - widthToUse
                 mPopupY -= mMiniKeyboardContainer!!.measuredHeight
                 val x = mPopupX + mCoordinates[0]
                 val y = mPopupY + mCoordinates[1]
@@ -1048,7 +1052,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                 }
 
                 val keysCnt = mMiniKeyboard!!.mKeys.size
-                var selectedKeyIndex = Math.floor((me.x - miniKeyboardX) / popupKey.width.toDouble()).toInt()
+                var selectedKeyIndex = Math.floor((me.x - miniKeyboardX) / popupKeyWidth.toDouble()).toInt()
                 if (keysCnt > MAX_KEYS_PER_MINI_ROW) {
                     selectedKeyIndex += MAX_KEYS_PER_MINI_ROW
                 }
@@ -1714,4 +1718,16 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
      * Returns true if there are [InlineContentView]s in [autofill_suggestions_holder]
      */
     private fun hasInlineViews() = (keyboardViewBinding?.autofillSuggestionsHolder?.childCount ?: 0) > 0
+
+    /**
+     * Returns: Popup Key width depends on popup keys count
+     */
+    private fun MyKeyboard.Key.calcKeyWidth(containerWidth: Int): Int {
+        val popupKeyCount = this.popupCharacters!!.length
+
+        return if (popupKeyCount > containerWidth / this.width)
+            containerWidth / popupKeyCount
+        else
+            this.width
+    }
 }
