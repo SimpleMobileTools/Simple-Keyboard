@@ -1725,9 +1725,10 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
     private fun MyKeyboard.Key.calcKeyWidth(containerWidth: Int): Int {
         val popupKeyCount = this.popupCharacters!!.length
 
-        return if (popupKeyCount > containerWidth / this.width)
+        return if (popupKeyCount > containerWidth / this.width) {
             containerWidth / popupKeyCount
-        else
+        } else {
             this.width
+        }
     }
 }
