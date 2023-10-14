@@ -598,7 +598,7 @@ class MyKeyboardView @JvmOverloads constructor(context: Context, attrs: Attribut
                     label, (key.width / 2).toFloat(), key.height / 2 + (paint.textSize - paint.descent()) / 2, paint
                 )
 
-                if (key.topSmallNumber.isNotEmpty() && !context.config.showNumbersRow) {
+                if (key.topSmallNumber.isNotEmpty() && !(context.config.showNumbersRow && Regex("\\d").matches(key.topSmallNumber))) {
                     canvas.drawText(key.topSmallNumber, key.width - mTopSmallNumberMarginWidth, mTopSmallNumberMarginHeight, smallLetterPaint)
                 }
 
