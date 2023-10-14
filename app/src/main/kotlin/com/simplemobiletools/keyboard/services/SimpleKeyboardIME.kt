@@ -2,6 +2,7 @@ package com.simplemobiletools.keyboard.services
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.graphics.drawable.Icon
 import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.RippleDrawable
@@ -38,6 +39,7 @@ import com.simplemobiletools.keyboard.extensions.safeStorageContext
 import com.simplemobiletools.keyboard.helpers.*
 import com.simplemobiletools.keyboard.interfaces.OnKeyboardActionListener
 import com.simplemobiletools.keyboard.views.MyKeyboardView
+import java.io.ByteArrayOutputStream
 import java.util.Locale
 
 // based on https://www.androidauthority.com/lets-build-custom-keyboard-android-832362/
@@ -435,10 +437,12 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
 
         val maxWidth = resources.getDimensionPixelSize(R.dimen.suggestion_max_width)
         val height = resources.getDimensionPixelSize(R.dimen.label_text_size) + verticalPadding * 2
+        val chipBackgroundIcon: Icon = rippleBg.toBitmap(width = maxWidth, height = height).toIcon()
 
         val chipStyle =
             ViewStyle.Builder()
-                .setBackground(Icon.createWithBitmap(rippleBg.toBitmap(width = maxWidth, height = height)))
+                //Don't use Icon.createWithBitmap(), it crashes the app. Issue https://github.com/SimpleMobileTools/Simple-Keyboard/issues/248
+                .setBackground(chipBackgroundIcon)
                 .setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
                 .build()
 
@@ -470,5 +474,15 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         keyboardView?.setupKeyboard()
+    }
+
+    private fun Bitmap.toIcon(): Icon {
+        val byteArray: ByteArray = ByteArrayOutputStream().let { outputStream ->
+            this.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+            outputStream.toByteArray()
+        }
+        this.recycle()
+
+        return Icon.createWithData(byteArray, 0, byteArray.size)
     }
 }
