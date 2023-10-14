@@ -441,7 +441,7 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
 
         val chipStyle =
             ViewStyle.Builder()
-                //Don't use Icon.createWithBitmap(), it crashes the app. Issue https://github.com/SimpleMobileTools/Simple-Keyboard/issues/248
+                // don't use Icon.createWithBitmap(), it crashes the app. Issue https://github.com/SimpleMobileTools/Simple-Keyboard/issues/248
                 .setBackground(chipBackgroundIcon)
                 .setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
                 .build()
