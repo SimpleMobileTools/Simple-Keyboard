@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 5.4.9 *(2023-10-15)*
+----------------------------
+
+ * Added polish and ukrainian layouts
+ * Added a slash at numeric keyboard
+ * Do not trim text in clipboard
+ * Added some stability, UI and translation improvements
+
 Version 5.4.8 *(2023-09-07)*
 ----------------------------
 
