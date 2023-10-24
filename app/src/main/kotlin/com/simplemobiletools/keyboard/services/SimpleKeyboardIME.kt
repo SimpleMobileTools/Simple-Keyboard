@@ -243,7 +243,9 @@ class SimpleKeyboardIME : InputMethodService(), OnKeyboardActionListener, Shared
                     inputConnection.commitText(codeChar.toString(), 1)
                     val newText = inputConnection.getExtractedText(ExtractedTextRequest(), 0)?.text
                     if (originalText != newText) {
-                        switchToLetters = true
+                        if (keyboardMode != KEYBOARD_NUMBERS_ALT) {
+                            switchToLetters = true
+                        }
                     }
                 } else {
                     when {
