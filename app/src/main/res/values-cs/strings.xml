@@ -26,7 +26,7 @@
     <string name="keycode_mode_change">Změnit typ klávesnice</string>
     <string name="keycode_shift">Shift</string>
     <string name="keycode_enter">Enter</string>
-    <string name="keycode_space">Spacebar</string>
+    <string name="keycode_space">Mezerník</string>
     <!-- Settings -->
     <string name="show_clipboard_content">Zobrazit obsah schránky, pokud je k dispozici</string>
     <string name="show_popup">Zobrazit vyskakovací okno při stisknutí klávesy</string>
