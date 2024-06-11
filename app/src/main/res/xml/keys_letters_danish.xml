@@ -116,7 +116,7 @@
         <Key
             app:keyLabel="d"
             app:keyWidth="9.05%p"
-            app:popupCharacters="ďđ"
+            app:popupCharacters="ďð"
             app:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
             app:keyLabel="f"
